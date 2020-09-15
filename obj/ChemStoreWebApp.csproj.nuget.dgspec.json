@@ -40,6 +40,52 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Devart.Data": {
+              "target": "Package",
+              "version": "[5.0.2488, )"
+            },
+            "Devart.Data.MySql": {
+              "target": "Package",
+              "version": "[8.17.1696, )"
+            },
+            "Devart.Data.MySql.EFCore": {
+              "target": "Package",
+              "version": "[8.17.1696, )"
+            },
+            "Devart.Data.MySql.EFCore.Design": {
+              "target": "Package",
+              "version": "[8.17.1696, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.21, )"
+            },
+            "MySql.Data.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.21, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
