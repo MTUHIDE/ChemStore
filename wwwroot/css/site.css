@@ -24,6 +24,10 @@ a {
   border-color: #1861ac;
 }
 
+.user-nav-bar {
+    justify-content: end;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
