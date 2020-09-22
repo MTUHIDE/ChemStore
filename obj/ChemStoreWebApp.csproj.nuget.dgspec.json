@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/ChemStoreWebApp.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/ChemStoreWebApp.csproj",
         "packagesPath": "/Users/mikeboisvert/.nuget/packages/",
         "outputPath": "/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/",
+=======
+    "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "projectName": "ChemStoreWebApp",
+        "projectPath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "packagesPath": "C:\\Users\\Jason\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\obj\\",
+>>>>>>> development
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/mikeboisvert/.config/NuGet/NuGet.Config"

@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "fHsBOD9AYPid4zr10NMW/VcksAgAU6nHsIhRLnAPmmIWvW7FnUhV+wnfEMPJLrl+U3E1ibJb4EDP4y0qiPDx/A==",
   "success": true,
   "projectFilePath": "/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/ChemStoreWebApp.csproj",
+=======
+  "dgSpecHash": "9ICl4jUJeq6+EV81dM0A5hyQBYPPJdKLfpJ623BfvWehgh0zOkm9mXsqWdAn1Ld+n1fSMbvup+6+QqvAqCj1zQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+>>>>>>> development
   "expectedPackageFiles": [
     "/Users/mikeboisvert/.nuget/packages/bouncycastle.netcore/1.8.3/bouncycastle.netcore.1.8.3.nupkg.sha512",
     "/Users/mikeboisvert/.nuget/packages/devart.data/5.0.2488/devart.data.5.0.2488.nupkg.sha512",
