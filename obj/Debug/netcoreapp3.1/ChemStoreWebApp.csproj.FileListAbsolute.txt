@@ -1,97 +1,362 @@
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\appsettings.Development.json
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.exe
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.deps.json
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.runtimeconfig.json
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.runtimeconfig.dev.json
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.pdb
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.Views.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\ChemStoreWebApp.Views.pdb
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csprojAssemblyReference.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.AssemblyInfoInputs.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.AssemblyInfo.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorAssemblyInfo.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorAssemblyInfo.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.TagHelpers.input.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.TagHelpers.output.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorCoreGenerate.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Error.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Index.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Privacy.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_Layout.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_ValidationScriptsPartial.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\_ViewImports.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\_ViewStart.cshtml.g.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorTargetAssemblyInfo.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorTargetAssemblyInfo.cs
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.Views.pdb
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\staticwebassets\ChemStoreWebApp.StaticWebAssets.Manifest.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\staticwebassets\ChemStoreWebApp.StaticWebAssets.xml
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.pdb
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.genruntimeconfig.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csproj.CopyComplete
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Google.Protobuf.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\K4os.Compression.LZ4.Streams.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\K4os.Hash.xxHash.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\MySql.Data.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Ubiety.Dns.Core.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Zstandard.Net.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Renci.SshNet.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\SshNet.Security.Cryptography.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Xml.XPath.XmlDocument.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Memory.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Collections.Immutable.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Devart.Data.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Devart.Data.MySql.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Diagnostics.PerformanceCounter.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Diagnostics.PerformanceCounter.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Devart.Data.MySql.Entity.EFCore.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Devart.Data.MySql.Entity.EFCore.Design.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Relational.Design.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.ServiceModel.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Data.SqlClient.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.SqlServer.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.Identity.Client.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\System.Runtime.Caching.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\Microsoft.Data.SqlClient.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\bin\Debug\netcoreapp3.1\MySql.Data.EntityFrameworkCore.dll
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csproj.CoreCompileInputs.cache
-C:\Users\Jason\source\repos\ChemStoreWebApp\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/appsettings.Development.json
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/appsettings.json
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.exe
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.deps.json
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.runtimeconfig.json
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.runtimeconfig.dev.json
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.pdb
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.Views.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/ChemStoreWebApp.Views.pdb
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csprojAssemblyReference.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.AssemblyInfoInputs.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.AssemblyInfo.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorAssemblyInfo.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorAssemblyInfo.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.TagHelpers.input.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.TagHelpers.output.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorCoreGenerate.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/Error.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/Index.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/Privacy.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/Shared/_Layout.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/Shared/_ValidationScriptsPartial.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/_ViewImports.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/Razor/Pages/_ViewStart.cshtml.g.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorTargetAssemblyInfo.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorTargetAssemblyInfo.cs
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.Views.pdb
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/staticwebassets/ChemStoreWebApp.StaticWebAssets.Manifest.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/staticwebassets/ChemStoreWebApp.StaticWebAssets.xml
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.pdb
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.genruntimeconfig.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csproj.CopyComplete
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Google.Protobuf.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.Streams.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/K4os.Hash.xxHash.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/MySql.Data.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Ubiety.Dns.Core.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Zstandard.Net.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Renci.SshNet.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Binder.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Options.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Primitives.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Devart.Data.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Devart.Data.MySql.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Diagnostics.PerformanceCounter.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.PerformanceCounter.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Devart.Data.MySql.Entity.EFCore.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Devart.Data.MySql.Entity.EFCore.Design.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.Design.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.ServiceModel.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/bin/Debug/netcoreapp3.1/MySql.Data.EntityFrameworkCore.dll
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csproj.CoreCompileInputs.cache
+C:/Users/Jason/source/repos/ChemStoreWebApp/obj/Debug/netcoreapp3.1/ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.deps.json
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.runtimeconfig.json
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.runtimeconfig.dev.json
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.pdb
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.Views.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.Views.pdb
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.MySql.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.MySql.Entity.EFCore.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.MySql.Entity.EFCore.Design.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Google.Protobuf.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.Streams.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/K4os.Hash.xxHash.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.Design.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Binder.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Options.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Primitives.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.ServiceModel.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/MySql.Data.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Ubiety.Dns.Core.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Zstandard.Net.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/MySql.Data.EntityFrameworkCore.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Renci.SshNet.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Diagnostics.PerformanceCounter.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.PerformanceCounter.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csprojAssemblyReference.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.AssemblyInfoInputs.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.AssemblyInfo.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csproj.CoreCompileInputs.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorAssemblyInfo.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.TagHelpers.input.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.TagHelpers.output.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorCoreGenerate.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Error.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Index.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Privacy.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Shared/_Layout.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Shared/_ValidationScriptsPartial.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/_ViewImports.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/_ViewStart.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorTargetAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorTargetAssemblyInfo.cs
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.Views.pdb
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csproj.CopyComplete
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/staticwebassets/ChemStoreWebApp.StaticWebAssets.Manifest.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/staticwebassets/ChemStoreWebApp.StaticWebAssets.xml
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.dll
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.pdb
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.genruntimeconfig.cache
+/Users/mikeboisvert/Desktop/ENT 3950     (HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/login.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.deps.json
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.runtimeconfig.json
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.runtimeconfig.dev.json
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.pdb
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.Views.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ChemStoreWebApp.Views.pdb
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.MySql.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.MySql.Entity.EFCore.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Devart.Data.MySql.Entity.EFCore.Design.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Google.Protobuf.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/K4os.Compression.LZ4.Streams.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/K4os.Hash.xxHash.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Razor.Language.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Bcl.HashCode.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Razor.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Workspaces.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Data.SqlClient.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Design.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.Relational.Design.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Caching.Memory.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Configuration.Binder.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Options.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Primitives.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.Identity.Client.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.ServiceModel.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/dotnet-aspnet-codegenerator-design.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/MySql.Data.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Ubiety.Dns.Core.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Zstandard.Net.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/MySql.Data.EntityFrameworkCore.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/NuGet.Frameworks.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/Renci.SshNet.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/SshNet.Security.Cryptography.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Collections.Immutable.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Composition.AttributedModel.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Composition.Convention.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Composition.Hosting.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Composition.Runtime.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Composition.TypedParts.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Configuration.ConfigurationManager.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Diagnostics.DiagnosticSource.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Diagnostics.PerformanceCounter.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Runtime.Caching.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Security.Cryptography.ProtectedData.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/System.Xml.XPath.XmlDocument.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win-arm64/native/sni.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/sni.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/sni.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.PerformanceCounter.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/bin/Debug/netcoreapp3.1/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csprojAssemblyReference.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.AssemblyInfoInputs.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.AssemblyInfo.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csproj.CoreCompileInputs.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorAssemblyInfo.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.TagHelpers.input.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.TagHelpers.output.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorCoreGenerate.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Error.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Index.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Privacy.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Shared/_Layout.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/Shared/_ValidationScriptsPartial.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/_ViewImports.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/Razor/Pages/_ViewStart.cshtml.g.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorTargetAssemblyInfo.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.RazorTargetAssemblyInfo.cs
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.Views.pdb
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.csproj.CopyComplete
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/staticwebassets/ChemStoreWebApp.StaticWebAssets.Manifest.cache
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/staticwebassets/ChemStoreWebApp.StaticWebAssets.xml
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.dll
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.pdb
+/Users/mikeboisvert/Desktop/ENT_3950(HIDE)/ChemStore/obj/Debug/netcoreapp3.1/ChemStoreWebApp.genruntimeconfig.cache
