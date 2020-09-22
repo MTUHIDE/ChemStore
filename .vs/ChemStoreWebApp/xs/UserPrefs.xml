@@ -1,22 +1,27 @@
 ﻿<Properties StartupConfiguration="{B8780F7A-E6F7-4DA5-AB96-27B78AF76256}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pages/Index.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
     <Files>
-      <File FileName="Pages/Shared/_Layout.cshtml" Line="28" Column="88" />
-      <File FileName="Pages/Index.cshtml" Line="9" Column="32" />
-      <File FileName="Pages/Index.cshtml.cs" />
+      <File FileName="Pages/Shared/_Layout.cshtml" Line="35" Column="30" />
+      <File FileName="Pages/Index.cshtml" Line="12" Column="65" />
+      <File FileName="Pages/Index.cshtml.cs" Line="1" Column="1" />
+      <File FileName="Program.cs" Line="13" Column="6" />
+      <File FileName="Pages/login.cshtml" Line="12" Column="1" />
+      <File FileName="Startup.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ChemStoreWebApp" expanded="True">
             <Node name="ChemStoreWebApp" expanded="True">
-              <Node name="Dependencies" expanded="True">
-                <Node name="PackageDependencies" expanded="True" />
-              </Node>
+              <Node name="Dependencies" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Pages" expanded="True">
                 <Node name="Shared" expanded="True" />
-                <Node name="Index.cshtml" expanded="True" selected="True" />
+                <Node name="Index.cshtml" expanded="True" />
               </Node>
+              <Node name="Properties" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>
