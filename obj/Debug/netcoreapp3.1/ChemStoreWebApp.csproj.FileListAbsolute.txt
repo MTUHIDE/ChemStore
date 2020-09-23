@@ -429,9 +429,6 @@ C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\runtimes\win\lib\n
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csprojAssemblyReference.cache
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.AssemblyInfoInputs.cache
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.AssemblyInfo.cs
-C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csproj.CoreCompileInputs.cache
-C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorAssemblyInfo.cache
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.RazorAssemblyInfo.cs
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.TagHelpers.input.cache
@@ -495,3 +492,11 @@ C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\staticwebassets\Ch
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.dll
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.pdb
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.genruntimeconfig.cache
+C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\Azure.Identity.dll
+C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\Azure.Security.KeyVault.Certificates.dll
+C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\Microsoft.Identity.Web.dll
+C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csproj.CoreCompileInputs.cache
+C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache

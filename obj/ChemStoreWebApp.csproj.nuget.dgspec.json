@@ -57,6 +57,14 @@
               "target": "Package",
               "version": "[8.17.1696, )"
             },
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.8, )"
@@ -92,6 +100,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[3.1.8, )"
+            },
+            "Microsoft.Identity.Web": {
+              "target": "Package",
+              "version": "[0.4.0-preview, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration": {
               "target": "Package",
