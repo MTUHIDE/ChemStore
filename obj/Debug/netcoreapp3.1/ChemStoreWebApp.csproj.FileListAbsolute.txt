@@ -500,3 +500,4 @@ C:\Users\Jason\source\repos\ChemStore\bin\Debug\netcoreapp3.1\Microsoft.Identity
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.csproj.CoreCompileInputs.cache
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\ChemStoreWebApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Jason\source\repos\ChemStore\obj\Debug\netcoreapp3.1\Razor\Pages\ContactUs.cshtml.g.cs
