@@ -21,20 +21,23 @@ namespace ChemStoreWebApp.Pages.Chemicals
 
         public IList<Chemical> Chemical { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string SearchString { get; set; }
-        public SelectList Hazards { get; set; }
+        public string searchString { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string HazardId { get; set; }
+        public string searchCAS { get; set; }
 
         public async Task OnGetAsync()
         {
+
             var chemicals = from m in _context.Chemical select m;
-            if (!string.IsNullOrEmpty(SearchString))
+            if (!string.IsNullOrEmpty(searchCAS))
             {
-                chemicals = chemicals.Where(s => s.ChemName.Contains(SearchString));
+                chemicals = chemicals.Where(s => s.CasNumber.Equals(Int32.Parse(searchCAS)));
+            } else if (!string.IsNullOrEmpty(searchString))
+            {
+                chemicals = chemicals.Where(s => s.ChemName.Contains(searchString));
             }
 
-            Chemical = await _context.Chemical.ToListAsync();
+            Chemical = await chemicals.ToListAsync();
         }
     }
 }
