@@ -1,0 +1,40 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Chemicals.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Chemical</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Chemical.CasNumber" />
+            <div class="form-group">
+                <label asp-for="Chemical.ChemName" class="control-label"></label>
+                <input asp-for="Chemical.ChemName" class="form-control" />
+                <span asp-validation-for="Chemical.ChemName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chemical.HazardId" class="control-label"></label>
+                <input asp-for="Chemical.HazardId" class="form-control" />
+                <span asp-validation-for="Chemical.HazardId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
