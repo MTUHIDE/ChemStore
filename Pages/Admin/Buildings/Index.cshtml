@@ -1,0 +1,45 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.Buildings.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Buildings</h1>
+
+<p>
+    <a asp-page="../../Admin/Index">Return</a>
+</p>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Building[0].BuildingId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Building[0].BuildingName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Building) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuildingId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BuildingName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.BuildingId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.BuildingId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.BuildingId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
