@@ -9,6 +9,9 @@
     <PackageReference Include="Devart.Data.MySql" Version="8.18.1730" />
     <PackageReference Include="Devart.Data.MySql.EFCore" Version="8.18.1730" />
     <PackageReference Include="Devart.Data.MySql.EFCore.Design" Version="8.18.1730" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
