@@ -1,0 +1,11 @@
+@page
+@model ChemStoreWebApp.Pages.loginModel
+@{
+    ViewData["Title"] = "login";
+}
+
+<h1>login</h1>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
