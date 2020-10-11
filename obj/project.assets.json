@@ -9670,23 +9670,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jason\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Mike Boisvert\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jason\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\Mike Boisvert\\Desktop\\HIDE\\ChemStore\\ChemStoreWebApp.csproj",
       "projectName": "ChemStoreWebApp",
-      "projectPath": "C:\\Users\\Jason\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj",
-      "packagesPath": "C:\\Users\\Jason\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jason\\Source\\Repos\\ChemStore\\obj\\",
+      "projectPath": "C:\\Users\\Mike Boisvert\\Desktop\\HIDE\\ChemStore\\ChemStoreWebApp.csproj",
+      "packagesPath": "C:\\Users\\Mike Boisvert\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Mike Boisvert\\Desktop\\HIDE\\ChemStore\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Jason\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Mike Boisvert\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
