@@ -35,18 +35,43 @@ namespace ChemStoreWebApp.Pages
 
         public int getNumLocations(Chemical chem)
         {
-            var containers = from m in _context.Container select m;
-            containers = containers.Where(s => s.ChemId.Equals(chem.CasNumber));
+            var containers = from m in _context.Container
+                             where m.ChemId == chem.CasNumber
+                             select m;
             return (from container in containers select container.LocationId).Distinct().Count();
         }
 
-        public Boolean inLocation(Chemical chem, Location loc)
+        public Boolean isInLocation(Chemical chem, String loc)
         {
-            var containers = from m in _context.Container select m;
-            containers = containers.Where(s => s.ChemId.Equals(chem.CasNumber));
-            var locations = (from container in containers select container.LocationId);
-            //return locations.Where(s => s.Building
-            return false;
+            var containers = from m in _context.Container
+                             where m.ChemId == chem.CasNumber
+                             select m;
+            var buildings = from m in _context.Building
+                            where m.BuildingName.Contains(loc)
+                            select m;
+            return (from c in containers
+                    join b in buildings on c.LocationId equals b.BuildingId
+                    select new { id = c.LocationId }).Distinct().Count() > 0;
+        }
+
+        public Boolean isInSize(Chemical chem, int size)
+        {
+            return (from c in _context.Container
+                    where c.ChemId == chem.CasNumber && c.Size == size
+                    select c).Count() > 0;
+        }
+
+        public Boolean hasPicEmail(Chemical chem, string email)
+        {
+            var containers = from m in _context.Container
+                             where m.ChemId == chem.CasNumber
+                             select m;
+            var Pics = from m in _context.PersonInCharge
+                       where m.Email.Contains(email)
+                       select m;
+            return (from c in containers
+                    join p in Pics on c.ContainerNavigation.PersonInCharge.PicId equals p.PicId
+                    select new { id = p.PicId }).Distinct().Count() > 0;
         }
 
         public Boolean textEntered()
@@ -59,36 +84,31 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchSize));
         }
 
+        public Boolean isValidSearchItem(Chemical chem)
+        {
+            //var result = true;
+            if (!string.IsNullOrEmpty(searchCAS) && chem.CasNumber != Int32.Parse(searchCAS)) 
+                return false;
+            if (!string.IsNullOrEmpty(searchString) && !chem.ChemName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return false;
+            if (!string.IsNullOrEmpty(searchNumLocation) && getNumLocations(chem) != Int32.Parse(searchNumLocation))
+                return false;
+            if (!string.IsNullOrEmpty(searchLocation) && !isInLocation(chem, searchLocation))
+                return false;
+            if (!string.IsNullOrEmpty(searchSize) && !isInSize(chem, Int32.Parse(searchSize)))
+                return false;
+            if (!string.IsNullOrEmpty(searchEmail) && !hasPicEmail(chem, searchEmail))
+                return false;
+
+            return true;
+        }
 
         public async Task OnGetAsync()
         {
-            var chemicals = from m in _context.Chemical select m;
-            if (!string.IsNullOrEmpty(searchCAS))
-            {
-                chemicals = chemicals.Where(s => s.CasNumber.Equals(Int32.Parse(searchCAS)));
-            }
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                chemicals = chemicals.Where(s => s.ChemName.Contains(searchString));
-            }
-            if (!string.IsNullOrEmpty(searchNumLocation))
-            {
-                //chemicals = chemicals.Where(s => s.numLocations.Equals(Int32.Parse(searchNumLocation)));
-            }
-            if (!string.IsNullOrEmpty(searchLocation))
-            {
-                //chemicals = chemicals.Where(s => s.inLocation(searchLocation));
-            }
-            if (!string.IsNullOrEmpty(searchSize))
-            {
-
-            }
-            if (!string.IsNullOrEmpty(searchEmail))
-            {
-
-            }
-            //Chemical = await Task.FromResult(chemicals.ToList());
-            Chemical = await chemicals.ToListAsync();
+            var chemicals = _context.Chemical
+                .AsEnumerable()
+                .Where(s => isValidSearchItem(s));
+            Chemical = await Task.FromResult(chemicals.ToList());
         }
     }
 }

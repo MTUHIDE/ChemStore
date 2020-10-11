@@ -40,19 +40,35 @@
           "dependencies": {
             "Devart.Data": {
               "target": "Package",
-              "version": "[5.0.2488, )"
+              "version": "[5.0.2522, )"
             },
             "Devart.Data.MySql": {
               "target": "Package",
-              "version": "[8.17.1696, )"
+              "version": "[8.18.1730, )"
             },
             "Devart.Data.MySql.EFCore": {
               "target": "Package",
-              "version": "[8.17.1696, )"
+              "version": "[8.18.1730, )"
             },
             "Devart.Data.MySql.EFCore.Design": {
               "target": "Package",
-              "version": "[8.17.1696, )"
+              "version": "[8.18.1730, )"
+            },
+            "Microsoft.AspNetCore.Identity": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[3.1.8, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
