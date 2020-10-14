@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {}
+    "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {
+    "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj",
         "projectName": "ChemStoreWebApp",
-        "projectPath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
-        "packagesPath": "C:\\Users\\Jason\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\obj\\",
+        "projectPath": "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "packagesPath": "C:\\Users\\ryant\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Jason\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ryant\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,23 +40,23 @@
           "dependencies": {
             "Devart.Data": {
               "target": "Package",
-              "version": "[5.0.2488, )"
+              "version": "[5.0.2531, )"
             },
             "Devart.Data.MySql": {
               "target": "Package",
-              "version": "[8.17.1696, )"
+              "version": "[8.18.1739, )"
             },
             "Devart.Data.MySql.EFCore": {
               "target": "Package",
-              "version": "[8.17.1696, )"
+              "version": "[8.18.1739, )"
             },
             "Devart.Data.MySql.EFCore.Design": {
               "target": "Package",
-              "version": "[8.17.1696, )"
+              "version": "[8.18.1739, )"
             },
             "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
@@ -67,15 +64,15 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.Azure.AppConfiguration.AspNetCore": {
               "target": "Package",
@@ -83,27 +80,31 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[0.4.0-preview, )"
+              "version": "[1.1.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration": {
               "target": "Package",
