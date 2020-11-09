@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj": {}
+    "C:\\Users\\ljohn\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj": {
+    "C:\\Users\\ljohn\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\ljohn\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
         "projectName": "ChemStoreWebApp",
-        "projectPath": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj",
-        "packagesPath": "C:\\Users\\jhoff\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\obj\\",
+        "projectPath": "C:\\Users\\ljohn\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "packagesPath": "C:\\Users\\ljohn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ljohn\\source\\repos\\ChemStore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\jhoff\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ljohn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

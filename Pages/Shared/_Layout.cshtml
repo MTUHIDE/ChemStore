@@ -4,14 +4,54 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="~/assets/beaker_icon.ico" />
+    <link rel="shortcut icon" href="~/assets/mtulogo.png" />
     <title>@ViewData["Title"] - ChemStoreWebApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .button {
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button1 {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+        }
+
+            .button1:hover {
+                background-color: black;
+                color: yellow;
+            }
+
+        .button2 {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 4px;
+        }
+
+            .button2:hover {
+                background-color: yellow;
+                color: black;
+            }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                <img title="" alt="MTULogo" src="~/assets/mtulogo2.png"/>
                 <img title="" alt="ChemStoreIcon" src="~/assets/beaker_icon.ico"/>
                 <a class="navbar-brand" asp-area="" asp-page="/Index">ChemStore</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -50,6 +90,8 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - ChemStore - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <button class="button button1">Request Chemicals</button>
+            <button class="button button1">Contact Us</button>
         </div>
     </footer>
 
