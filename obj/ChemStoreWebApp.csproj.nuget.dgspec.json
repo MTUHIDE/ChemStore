@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ryant\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {}
+    "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ryant\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {
+    "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ryant\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
         "projectName": "ChemStoreWebApp",
-        "projectPath": "C:\\Users\\ryant\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
-        "packagesPath": "C:\\Users\\ryant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ryant\\source\\repos\\ChemStore\\obj\\",
+        "projectPath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "packagesPath": "C:\\Users\\Jason\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jason\\source\\repos\\ChemStore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ryant\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jason\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -102,6 +105,10 @@
               "target": "Package",
               "version": "[3.1.9, )"
             },
+            "Microsoft.Identity.Web": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration": {
               "target": "Package",
               "version": "[3.1.4, )"
@@ -137,7 +144,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
