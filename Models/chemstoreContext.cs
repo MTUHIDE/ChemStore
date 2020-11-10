@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ChemStoreWebApp.Models;
 
 namespace ChemStoreWebApp.Models
 {
@@ -30,7 +31,7 @@ namespace ChemStoreWebApp.Models
             if (!optionsBuilder.IsConfigured)
             {
 //warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySQL("server=localhost; database=chemstore; user id=root; password=Blissfest18!;");
+                optionsBuilder.UseMySQL("server=127.0.0.1:3306; database=chemstore; user id=jasonhoffman; password=password;");
             }
         }
 
@@ -42,7 +43,7 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.BuildingId)
                     .HasColumnName("building_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.BuildingName)
                     .HasColumnName("building_name")
@@ -56,19 +57,19 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
             });
 
             modelBuilder.Entity<Chemical>(entity =>
             {
                 entity.HasKey(e => e.CasNumber)
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY_CAS");
 
                 entity.ToTable("chemical");
 
                 entity.Property(e => e.CasNumber)
                     .HasColumnName("cas_number")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.ChemName)
                     .HasColumnName("chem_name")
@@ -77,7 +78,7 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.HazardId)
                     .HasColumnName("hazard_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
             });
 
             modelBuilder.Entity<Container>(entity =>
@@ -86,15 +87,15 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.ContainerId)
                     .HasColumnName("container_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.ChemId)
                     .HasColumnName("chem_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.LocationId)
                     .HasColumnName("location_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.Size).HasColumnName("size");
 
@@ -122,15 +123,15 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.ChemicalId)
                     .HasColumnName("chemical_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.HazardId)
                     .HasColumnName("hazard_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.HasOne(d => d.Chemical)
                     .WithMany(p => p.HasHazard)
@@ -149,7 +150,7 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
             });
 
             modelBuilder.Entity<Hazard>(entity =>
@@ -158,11 +159,11 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.HazardId)
                     .HasColumnName("hazard_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.HazardDetails)
                     .HasColumnName("hazard_details")
-                    .HasColumnType("mediumtext");
+                    .HasColumnType("varchar(255)");
             });
 
             modelBuilder.Entity<Location>(entity =>
@@ -176,23 +177,23 @@ namespace ChemStoreWebApp.Models
 
                 entity.Property(e => e.LocationId)
                     .HasColumnName("location_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.Building)
                     .HasColumnName("building")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.Department)
                     .HasColumnName("department")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.LocationFid)
                     .HasColumnName("location_fid")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.Room)
                     .HasColumnName("room")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.HasOne(d => d.LocationF)
                     .WithMany(p => p.Location)
@@ -204,13 +205,13 @@ namespace ChemStoreWebApp.Models
             modelBuilder.Entity<PersonInCharge>(entity =>
             {
                 entity.HasKey(e => e.PicId)
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY_ID");
 
                 entity.ToTable("person_in_charge");
 
                 entity.Property(e => e.PicId)
                     .HasColumnName("pic_id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
@@ -233,5 +234,7 @@ namespace ChemStoreWebApp.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<ChemStoreWebApp.Models.Role> Role { get; set; }
     }
 }
