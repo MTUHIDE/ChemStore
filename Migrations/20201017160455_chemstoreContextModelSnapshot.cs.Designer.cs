@@ -4,14 +4,16 @@ using ChemStoreWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    partial class chemstoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201017160455_chemstoreContextModelSnapshot.cs")]
+    partial class chemstoreContextModelSnapshotcs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
