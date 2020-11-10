@@ -4,12 +4,39 @@
     ViewData["Title"] = "Home page";
 }
 
+<style>
+    .button {
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .button1 {
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 4px;
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
-    <a asp-page="Admin/Index">View/edit database</a>
+    <a asp-page="Admin/Index">View/edit database</a>   
 
     <form method="post">
+        <p>
+            Search: <input type="text" />
+            @*asp-for="search"????*@
+            <button class="button button1">Search</button>
+            <button class="button button1">Filter Options</button>
+        </p>
         <p>
             Email: <input type="text" asp-for="email" />
         </p>
