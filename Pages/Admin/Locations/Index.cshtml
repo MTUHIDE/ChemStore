@@ -1,0 +1,63 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.Locations.IndexModel
+
+@{
+    ViewData["Title"] = "Locations";
+}
+
+<h1>Locations</h1>
+
+<p>
+    <a asp-page="../../Admin/Index">Return</a>
+</p>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Location[0].LocationId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location[0].Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location[0].Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location[0].Building)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location[0].LocationF)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Location) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Building)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationF.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.LocationId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.LocationId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.LocationId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
