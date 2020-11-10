@@ -1,0 +1,82 @@
+﻿@page
+@model ChemStoreWebApp.Pages.SearchModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+
+<form>
+    <p>
+        Email: <input type="text" asp-for="searchEmail" />
+    </p>
+    <p>
+        CAS number: <input type="text" asp-for="searchCAS" />
+    </p>
+    <p>
+        Name: <input type="text" asp-for="searchString" />
+    </p>
+    <p>
+        Location: <input type="text" asp-for="searchLocation" />
+    </p>
+    <p>
+        Number of locations: <input type="text" asp-for="searchNumLocation" />
+    </p>
+    <p>
+        Container size: <input type="text" asp-for="searchSize" />
+        Units: <input type="checkbox" />
+    </p>
+    <p>
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chemical[0].ChemName)
+            </th>
+            <th>
+                # of Locations
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Chemical.Count() > 0) 
+        {
+            @if (!Model.textEntered())
+            {
+                <p>Enter Text</p>
+            }
+
+            @foreach (var item in Model.Chemical)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CasNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChemName)
+                    </td>
+                    <td>
+                        @{  var numLocations = Model.getNumLocations(item); }
+                        @numLocations
+                    </td>
+                    <td>
+                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">Details</a>
+                    </td>
+                    <td>
+                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.HazardId">Safety Data Sheet</a>
+                    </td>
+                </tr>
+            }
+         } else {
+            <p>No results found</p>
+         }
+    </tbody>
+</table>

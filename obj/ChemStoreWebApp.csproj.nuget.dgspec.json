@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj": {}
+    "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj": {
+    "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj",
         "projectName": "ChemStoreWebApp",
-        "projectPath": "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\ChemStoreWebApp.csproj",
-        "packagesPath": "C:\\Users\\ryant\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ryant\\Source\\Repos\\ChemStore\\obj\\",
+        "projectPath": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj",
+        "packagesPath": "C:\\Users\\jhoff\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ryant\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jhoff\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -74,10 +74,6 @@
               "target": "Package",
               "version": "[3.1.9, )"
             },
-            "Microsoft.Azure.AppConfiguration.AspNetCore": {
-              "target": "Package",
-              "version": "[4.0.0, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.9, )"
@@ -96,6 +92,10 @@
               "target": "Package",
               "version": "[3.1.9, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -105,10 +105,6 @@
             "Microsoft.Identity.Web": {
               "target": "Package",
               "version": "[1.1.0, )"
-            },
-            "Microsoft.VisualStudio.Web.CodeGeneration": {
-              "target": "Package",
-              "version": "[3.1.4, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

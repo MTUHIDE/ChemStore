@@ -1,0 +1,39 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Admin Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Admin</h1>
+
+    <p>
+        <a asp-page="Buildings/Index">Edit buildings</a>
+    </p>
+    <p>
+        <a asp-page="Chemicals/Index">Edit chemicals</a>
+    </p>
+    <p>
+        <a asp-page="Containers/Index">Edit containers</a>
+    </p>
+    <p>
+        <a asp-page="Hazards/Index">Edit hazards</a>
+    </p>
+    <p>
+        <a asp-page="Locations/Index">Edit locations</a>
+    </p>
+    <p>
+        <a asp-page="PeopleInCharge/Index">Edit people in charge</a>
+    </p>
+    <p>
+        <a asp-page="ChemInContainers/Index">Edit chemical-container relations</a>
+    </p>
+    <p>
+        <a asp-page="HasHazards/Index">Edit chemical-hazard relations</a>
+    </p>
+    <p>
+        <a asp-page="HasLocations/Index">Edit location relations</a>
+    </p>
+
+
+</div>
