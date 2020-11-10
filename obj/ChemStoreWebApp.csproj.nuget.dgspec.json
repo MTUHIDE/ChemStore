@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj": {}
+    "C:\\Users\\Mya Davis\\OneDrive\\Documents\\GitHub\\ChemStore\\ChemStoreWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj": {
+    "C:\\Users\\Mya Davis\\OneDrive\\Documents\\GitHub\\ChemStore\\ChemStoreWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\Mya Davis\\OneDrive\\Documents\\GitHub\\ChemStore\\ChemStoreWebApp.csproj",
         "projectName": "ChemStoreWebApp",
-        "projectPath": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\ChemStoreWebApp.csproj",
-        "packagesPath": "C:\\Users\\jhoff\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jhoff\\Source\\Repos\\BrettPost\\ChemStore\\obj\\",
+        "projectPath": "C:\\Users\\Mya Davis\\OneDrive\\Documents\\GitHub\\ChemStore\\ChemStoreWebApp.csproj",
+        "packagesPath": "C:\\Users\\Mya Davis\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mya Davis\\OneDrive\\Documents\\GitHub\\ChemStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jhoff\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Mya Davis\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,19 +40,19 @@
           "dependencies": {
             "Devart.Data": {
               "target": "Package",
-              "version": "[5.0.2522, )"
+              "version": "[5.0.2531, )"
             },
             "Devart.Data.MySql": {
               "target": "Package",
-              "version": "[8.18.1730, )"
+              "version": "[8.18.1739, )"
             },
             "Devart.Data.MySql.EFCore": {
               "target": "Package",
-              "version": "[8.18.1730, )"
+              "version": "[8.18.1739, )"
             },
             "Devart.Data.MySql.EFCore.Design": {
               "target": "Package",
-              "version": "[8.18.1730, )"
+              "version": "[8.18.1739, )"
             },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
@@ -60,39 +60,39 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.8, )"
+              "version": "[3.1.9, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
