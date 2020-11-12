@@ -42,7 +42,7 @@ namespace ChemStoreWebApp
             services.AddRazorPages();
 
             services.AddDbContext<chemstoreContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ChemStoreWebAppContextConnection")));
+                options.UseMySql(Configuration.GetConnectionString("ChemStoreDB")));
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

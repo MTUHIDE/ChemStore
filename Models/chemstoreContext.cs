@@ -235,6 +235,6 @@ namespace ChemStoreWebApp.Models
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public DbSet<ChemStoreWebApp.Models.Role> Role { get; set; }
+        public DbSet<Role> Role { get; set; }
     }
 }

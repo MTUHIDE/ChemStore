@@ -1,28 +1,37 @@
 ﻿using System;
+using System.Configuration;
 using ChemStoreWebApp.Areas.Identity.Data;
-using ChemStoreWebApp.Data;
+using ChemStoreWebApp.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+
+
 
 [assembly: HostingStartup(typeof(ChemStoreWebApp.Areas.Identity.IdentityHostingStartup))]
 namespace ChemStoreWebApp.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {
+        public IConfiguration Configuration { get; }
+        public IdentityHostingStartup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<ChemStoreWebAppContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("ChemStoreWebAppContextConnection")));
 
                 services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<ChemStoreWebAppContext>();
+                    .AddEntityFrameworkStores<chemstoreContext>();
             });
+        }
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddDbContext<chemstoreContext>(options =>
+                options.UseMySql(Configuration.GetConnectionString("ChemStoreDB")));
         }
     }
 }
