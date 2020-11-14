@@ -30,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\ExternalLogin.cshtml" />

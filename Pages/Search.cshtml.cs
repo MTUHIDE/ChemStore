@@ -19,6 +19,7 @@ namespace ChemStoreWebApp.Pages
             _context = context;
         }
 
+        // variables bound to the URL storing search terms
         [BindProperty(SupportsGet = true)]
         public string searchEmail { get; set; }
         public IList<Chemical> Chemical { get; set; }
@@ -33,6 +34,11 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public string searchSize { get; set; }
 
+        /// <summary>
+        /// Gets the number of locations a chemical is stored in
+        /// </summary>
+        /// <param name="chem">The specified chemical</param>
+        /// <returns>Number of locations it's stored in</returns>
         public int getNumLocations(Chemical chem)
         {
             var containers = from m in _context.Container
@@ -40,7 +46,12 @@ namespace ChemStoreWebApp.Pages
                              select m;
             return (from container in containers select container.LocationId).Distinct().Count();
         }
-
+        /// <summary>
+        /// Checks whether a chemical is in any locations matching the <c>loc</c> search string
+        /// </summary>
+        /// <param name="chem">The specified chemical</param>
+        /// <param name="loc">Search string for the name of the location</param>
+        /// <returns>True if any location matching <c>loc</c> stores <c>chem</c></returns>
         public Boolean isInLocation(Chemical chem, String loc)
         {
             var containers = from m in _context.Container
@@ -53,14 +64,24 @@ namespace ChemStoreWebApp.Pages
                     join b in buildings on c.LocationId equals b.BuildingId
                     select new { id = c.LocationId }).Distinct().Count() > 0;
         }
-
+        /// <summary>
+        /// Checks whether a chemical is in any containers matching the specified size
+        /// </summary>
+        /// <param name="chem">The specified chemical</param>
+        /// <param name="size">Size of container, without units</param>
+        /// <returns>True if any container of size <c>size</c> contains <c>chem</c></returns>
         public Boolean isInSize(Chemical chem, int size)
         {
             return (from c in _context.Container
                     where c.ChemId == chem.CasNumber && c.Size == size
                     select c).Count() > 0;
         }
-
+        /// <summary>
+        /// Checks whether a chemical is stored in any containers under a PIC having an email with the search string <c>email</c>
+        /// </summary>
+        /// <param name="chem">The specified chemical</param>
+        /// <param name="email">Disired email address for PIC</param>
+        /// <returns>True if any container under a PIC with <c>email</c> stores <c>chem</c></returns>
         public Boolean hasPicEmail(Chemical chem, string email)
         {
             var containers = from m in _context.Container
@@ -73,7 +94,10 @@ namespace ChemStoreWebApp.Pages
                     join p in Pics on c.ContainerNavigation.PersonInCharge.PicId equals p.PicId
                     select new { id = p.PicId }).Distinct().Count() > 0;
         }
-
+        /// <summary>
+        /// Check if text was input to any of the search fields
+        /// </summary>
+        /// <returns>True if any search field contains text</returns>
         public Boolean textEntered()
         {
             return !(string.IsNullOrEmpty(searchEmail) &&
@@ -83,7 +107,11 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchLocation) &&
                 string.IsNullOrEmpty(searchSize));
         }
-
+        /// <summary>
+        /// Check if <c>chem</c> matches the desired search parameters
+        /// </summary>
+        /// <param name="chem">The chemical to check against</param>
+        /// <returns>True if <c>chem</c> matches the search parameters</returns>
         public Boolean isValidSearchItem(Chemical chem)
         {
             //var result = true;
@@ -105,10 +133,10 @@ namespace ChemStoreWebApp.Pages
 
         public async Task OnGetAsync()
         {
-            var chemicals = _context.Chemical
+            var chemicals = _context.Chemical // gets a list of chemicals that should be included, given a particular search
                 .AsEnumerable()
                 .Where(s => isValidSearchItem(s));
-            Chemical = await Task.FromResult(chemicals.ToList());
+            Chemical = await Task.FromResult(chemicals.ToList()); // lists the chemicals on the page
         }
     }
 }
