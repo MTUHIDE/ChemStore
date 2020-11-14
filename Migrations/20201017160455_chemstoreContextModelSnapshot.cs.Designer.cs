@@ -4,18 +4,19 @@ using ChemStoreWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    partial class chemstoreContextModelSnapshot : ModelSnapshot
+    [Migration("20201017160455_chemstoreContextModelSnapshot.cs")]
+    partial class chemstoreContextModelSnapshotcs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -25,7 +26,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("BuildingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("building_id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BuildingName")
                         .HasColumnName("building_name")
@@ -43,7 +45,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.HasKey("Id");
 
@@ -55,7 +58,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("CasNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("cas_number")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ChemName")
                         .HasColumnName("chem_name")
@@ -89,7 +93,7 @@ namespace ChemStoreWebApp.Migrations
 
                     b.Property<double?>("Size")
                         .HasColumnName("size")
-                        .HasColumnType("double");
+                        .HasColumnType("float");
 
                     b.Property<string>("Unit")
                         .HasColumnName("unit")
@@ -107,7 +111,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ChemicalId")
                         .HasColumnName("chemical_id")
@@ -133,7 +138,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.HasKey("Id");
 
@@ -145,7 +151,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("HazardId")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("hazard_id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("HazardDetails")
                         .HasColumnName("hazard_details")
@@ -161,7 +168,8 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("LocationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("location_id")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("Building")
                         .HasColumnName("building")
@@ -211,44 +219,6 @@ namespace ChemStoreWebApp.Migrations
                         .HasName("PRIMARY_ID");
 
                     b.ToTable("person_in_charge");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.Role", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("NumberOfUsers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoleName")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.TABLE", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<int>("NumberOflegs")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TableHobbies")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("TableName")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Table");
                 });
 
             modelBuilder.Entity("ChemStoreWebApp.Models.Container", b =>

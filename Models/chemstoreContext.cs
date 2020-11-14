@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ChemStoreWebApp.Models;
 
 namespace ChemStoreWebApp.Models
 {
@@ -233,5 +234,7 @@ namespace ChemStoreWebApp.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<Role> Role { get; set; }
     }
 }

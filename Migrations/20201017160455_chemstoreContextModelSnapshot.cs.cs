@@ -2,14 +2,16 @@
 
 namespace ChemStoreWebApp.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class chemstoreContextModelSnapshotcs : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+
         }
     }
 }
