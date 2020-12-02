@@ -5,37 +5,49 @@
     ViewData["Title"] = "Search";
 }
 <head>
-    <link rel="stylesheet" href="C:\Users\Mya Davis\OneDrive\Documents\GitHub\ChemStore\wwwroot\css\searchItemLayout.css" />
+    <link rel="stylesheet" href="~\wwwroot\css\searchItemLayout.css" />
     <style>
         h1 {
             text-align: center;
         }
         .search{
             margin:auto;
-            width:70%;
-            text-align:center;
+            width:300px;
+            position: fixed;
+            z-index: 1;
+            padding-top: 20px;
         }
-        .default{
-            text-align: center;
-            display: inline;
-            padding: 10px;
-
-            margin:auto;
+        .main {
+            margin-left: 300px;
         }
-
-        button {
-            background-color: #e1e1e1;
-            cursor: pointer;
-            padding: 5px;
-            width: 30%;
-            text-align: center;
-            outline: none;
-            border: none;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
-        button:hover{
+        .filter{
             background-color: #cccccc;
+            border-radius: 10px;
+            border: none;
+        }
+        .s {
+            margin: 5px;
+            border-bottom: solid;
+            border-top: solid;
+            border-color: #cccccc;
+            padding: 5px;
+        }
+        .location-dropdown{
+            cursor: pointer;
+        }
+        .container-dropdown{
+            cursor: pointer;
+        }
+        .location-container {
+            display: none;
+            padding-left: 6px;
+        }
+        .container-container {
+            display: none;
+            padding-left: 10px;
+        }
+        .active{
+            
         }
         
         .more{
@@ -109,7 +121,7 @@
         }
         .a:nth-child(5){
             float: right;
-        }
+        } 
         
     </style>
 </head>
@@ -119,105 +131,96 @@
 
 <div class="search">
     <form>
-        <div class="default">
+        <input type="submit" value="Filter" class="filter" />
+        <div class="s">
             CAS number: <input type="text" asp-for="searchCAS" />
         </div>
-        <div class="default">
+        <div class="s">
             Name: <input type="text" asp-for="searchString" />
         </div>
-        <div class="default">
-            <input type="submit" value="Filter" />
-        </div>
-    </form>
-    <button type="button" class="collapsible">More Filters</button>
-    <form class="more">
-        <div class="default">
+        <div class="s">
             Email: <input type="text" asp-for="searchEmail" />
         </div>
-        <div class="default">
-            Location: <input type="text" asp-for="searchLocation" />
+        <div class="s location-dropdown"> Location </div>
+        <div class="location-container">
+            <!-- Location: <input type="text" asp-for="searchLocation" />
+        Number of locations: <input type="text" asp-for="searchNumLocation" />
+            -->
+            <p> one </p>
+            <p> two </p>
+            <p> three </p>
         </div>
-        <div class="default">
-            Number of locations: <input type="text" asp-for="searchNumLocation" />
-        </div>
-        <div class="default">
-            Container size: <input type="text" asp-for="searchSize" />
+        <div class="s container-dropdown"> Container </div>
+        <div class="container-container">
+            <p> Container Size</p>
             Units: <input type="checkbox" />
         </div>
+        <!-- Container size: <input type="text" asp-for="searchSize" />-->
     </form>
+    
+
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Chemical[0].ChemName)
-            </th>
-            <th>
-                # of Locations
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Chemical.Count() > 0) 
-        {
-            @if (!Model.textEntered())
+<div class="main">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Chemical[0].ChemName)
+                </th>
+                <th>
+                    # of Locations
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Chemical.Count() > 0)
             {
-                <p>Enter Text</p>
-            }
+                @if (!Model.textEntered())
+                {
+                    <p>Enter Text</p>
+                }
 
-            @foreach (var item in Model.Chemical)
+                @foreach (var item in Model.Chemical)
+                {
+                    <tr class="expandable">
+                        <td class="a">
+                            @Html.DisplayFor(modelItem => item.CasNumber)
+                        </td>
+                        <td class="a">
+                            @Html.DisplayFor(modelItem => item.ChemName)
+                        </td>
+                        <td class="a">
+                            @{ var numLocations = Model.getNumLocations(item); }
+                            @numLocations
+                        </td>
+                        <td class="a">
+                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">Details</a>
+                        </td>
+                        <td class="a">
+                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.HazardId">Safety Data Sheet</a>
+                        </td>
+                    </tr>
+                    <tr class="moreInformation">
+                        <td>
+                            More Information
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
-                <tr class="expandable">
-                    <td class="a">
-                        @Html.DisplayFor(modelItem => item.CasNumber)
-                    </td>
-                    <td class="a">
-                        @Html.DisplayFor(modelItem => item.ChemName)
-                    </td>
-                    <td class="a">
-                        @{  var numLocations = Model.getNumLocations(item); }
-                        @numLocations
-                    </td>
-                    <td class="a">
-                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">Details</a>
-                    </td>
-                    <td class="a">
-                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.HazardId">Safety Data Sheet</a>
-                    </td>
-                </tr>
-                <tr class="moreInformation">
-                    <td>
-                        More Information
-                    </td>
-                </tr>
+                <p>No results found</p>
             }
-         } else {
-            <p>No results found</p>
-         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
-<script>
-var coll = document.getElementsByClassName("collapsible");
-var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script>
 <script>
     var coll = document.getElementsByClassName("expandable");
     var i;
@@ -232,6 +235,44 @@ for (i = 0; i < coll.length; i++) {
             } else {
                 content.style.display = "block";
                 this.style.backgroundColor = "rgb(204,204,204)";
+            }
+        });
+    }
+</script>
+
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - 
+     * This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("location-dropdown");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
+     * This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("container-dropdown");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
             }
         });
     }
