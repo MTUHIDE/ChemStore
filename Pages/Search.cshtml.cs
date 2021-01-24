@@ -32,6 +32,8 @@ namespace ChemStoreWebApp.Pages
         public string searchNumLocation { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchSize { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string searchBuilding { get; set; }
 
         public int getNumLocations(Chemical chem)
         {
@@ -39,6 +41,21 @@ namespace ChemStoreWebApp.Pages
                              where m.ChemId == chem.CasNumber
                              select m;
             return (from container in containers select container.LocationId).Distinct().Count();
+        }
+        public string getBuilding(string building)
+        {
+            
+            return "";
+        }
+        public string getDepartment(string department)
+        {
+
+            return "";
+        }
+        public string getRoom(string room)
+        {
+
+            return "";
         }
 
         public Boolean isInLocation(Chemical chem, String loc)
@@ -99,7 +116,6 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchEmail) && !hasPicEmail(chem, searchEmail))
                 return false;
-
             return true;
         }
 

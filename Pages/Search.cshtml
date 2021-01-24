@@ -5,111 +5,8 @@
     ViewData["Title"] = "Search";
 }
 <head>
-    <link rel="stylesheet" href="C:\Users\Mya Davis\OneDrive\Documents\GitHub\ChemStore\wwwroot\css\searchItemLayout.css" />
+    <link rel="stylesheet" href="~/css/searchItemLayout.css" asp-append-version="true" />
     <style>
-        h1 {
-            text-align: center;
-        }
-        .search{
-            margin:auto;
-            width:70%;
-            text-align:center;
-        }
-        .default{
-            text-align: center;
-            display: inline;
-            padding: 10px;
-
-            margin:auto;
-        }
-
-        button {
-            background-color: #e1e1e1;
-            cursor: pointer;
-            padding: 5px;
-            width: 30%;
-            text-align: center;
-            outline: none;
-            border: none;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
-        button:hover{
-            background-color: #cccccc;
-        }
-        
-        .more{
-            display:none;
-            overflow:hidden;
-
-        }
-        thead{
-            display: none;
-        }
-        table{
-            border: none;
-        }
-        tr {
-            display: block;
-            border-radius: 15px;
-            width: 75%;
-            margin: auto;
-        }
-        .expandable {
-            
-            background-color: #e1e1e1;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-        .expandable:hover{
-            background-color: #cccccc;
-        }
-        .moreInformation {
-            display: none;
-            background-color: #f0f0f0;
-            border: solid;
-            border-color: #cccccc;
-            border-width: 3px;
-            border-top: none;
-            border-top-left-radius: 0px;
-            border-top-right-radius: 0px;
-            width: 72%;
-        }
-        td{
-            display: inline-block;
-            padding: 5px;
-            margin: auto;
-            font-weight:400;
-            vertical-align: middle;
-            color: #101010;
-        }
-        td::before{
-            float: left;
-            font-size: .8em;
-            color: #696969;
-            font-weight: bold;
-            padding: 5px;
-            margin-right: 5px;
-            vertical-align: middle;
-        }
-        .a:nth-child(1)::before{
-            content: "CAS Number:";
-        }
-
-
-        .a:nth-child(2)::before {
-            content: "Chemical Name:";
-        }
-        .a:nth-child(3)::before{
-            content: "Hazard ID:";
-            
-        }
-        .a:nth-child(4){
-            float: right;
-        }
-        .a:nth-child(5){
-            float: right;
-        }
         
     </style>
 </head>
@@ -165,11 +62,6 @@
     <tbody>
         @if (Model.Chemical.Count() > 0) 
         {
-            @if (!Model.textEntered())
-            {
-                <p>Enter Text</p>
-            }
-
             @foreach (var item in Model.Chemical)
             {
                 <tr class="expandable">
