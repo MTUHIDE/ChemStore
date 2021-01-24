@@ -36,6 +36,8 @@ namespace ChemStoreWebApp.Pages
         public string numLocation { get; set; }
         [BindProperty(SupportsGet = true)]
         public string size { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string units { get; set; }
 
         public void OnGet()
         {
@@ -50,6 +52,7 @@ namespace ChemStoreWebApp.Pages
                 searchLocation = location,
                 searchNumLocation = numLocation,
                 searchSize = size,
+                searchUnits = units
             });
             
         }

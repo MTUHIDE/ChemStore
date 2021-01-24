@@ -52,7 +52,7 @@
         tr {
             display: block;
             border-radius: 15px;
-            width: 75%;
+            width: 95%; /* was 75%, TODO restore*/
             margin: auto;
         }
         .expandable {
@@ -73,7 +73,7 @@
             border-top: none;
             border-top-left-radius: 0px;
             border-top-right-radius: 0px;
-            width: 72%;
+            width: 90%; /* was 72%, TODO restore*/
         }
         td{
             display: inline-block;
@@ -95,19 +95,28 @@
         .a:nth-child(1)::before{
             content: "CAS Number:";
         }
-
-
         .a:nth-child(2)::before {
             content: "Chemical Name:";
         }
         .a:nth-child(3)::before{
             content: "Hazard ID:";
-            
         }
-        .a:nth-child(4){
+        .a:nth-child(4)::before{
+            content: "# Locations:";
+        }
+        .a:nth-child(5)::before {
+            content: "units:";
+        }
+        .a:nth-child(6)::before {
+            content: "size:";
+        }
+        .a:nth-child(7)::before {
+            content: "room #:";
+        }
+        .a:nth-last-child(2){
             float: right;
         }
-        .a:nth-child(5){
+        .a:nth-last-child(1){
             float: right;
         }
         
@@ -144,50 +153,72 @@
             Container size: <input type="text" asp-for="searchSize" />
             Units: <input type="checkbox" />
         </div>
+        <div class="default">
+            <input type="submit" value="temp submit extra filters" />
+        </div>
     </form>
 </div>
 
 <table class="table">
     <thead>
+        <!-- not using table head I think
         <tr>
             <th>
-                @Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
+                Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Chemical[0].ChemName)
+                Html.DisplayNameFor(model => model.Chemical[0].ChemName)
+            </th>
+            <th>
+                Html.DisplayNameFor(model => model.Chemical[0].HazardId)
             </th>
             <th>
                 # of Locations
             </th>
             <th></th>
-        </tr>
+        </tr> -->
     </thead>
     <tbody>
-        @if (Model.Chemical.Count() > 0) 
+        @if (Model.Container.Count() > 0) 
         {
             @if (!Model.textEntered())
             {
                 <p>Enter Text</p>
             }
 
-            @foreach (var item in Model.Chemical)
+            @foreach (var item in Model.Container)
             {
                 <tr class="expandable">
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.CasNumber)
+                        @Html.DisplayFor(modelItem => item.ChemId)
                     </td>
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.ChemName)
+                        @{ var chemName = Model.getChem(item).Result.ChemName; }
+                        @chemName
+                    </td>
+                    <td class="a">
+                        @{ var hazard = Model.getHazardId(item); }
+                        @hazard.ToString()
                     </td>
                     <td class="a">
                         @{  var numLocations = Model.getNumLocations(item); }
-                        @numLocations
+                        @numLocations.ToString()
                     </td>
                     <td class="a">
-                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">Details</a>
+                        @Html.DisplayFor(modelItem => item.Unit)
                     </td>
                     <td class="a">
-                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.HazardId">Safety Data Sheet</a>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td class="a">
+                        @{ var roomNum = Model.getRoomNum(item);}
+                        @roomNum
+                    </td>
+                    <td class="a">
+                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.ChemId">Details</a>
+                    </td>
+                    <td class="a">
+                        <a asp-page="Admin/Hazards/Details" asp-route-id="@Model.getHazardId(item)">Safety Data Sheet</a>
                     </td>
                 </tr>
                 <tr class="moreInformation">
