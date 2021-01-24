@@ -23,7 +23,6 @@ namespace ChemStoreWebApp.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-
                 services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<chemstoreContext>();
             });
@@ -31,7 +30,9 @@ namespace ChemStoreWebApp.Areas.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<chemstoreContext>(options =>
+
                 options.UseSqlServer(Configuration.GetConnectionString("ChemStoreDB")));
+
         }
     }
 }
