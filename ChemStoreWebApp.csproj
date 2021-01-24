@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Devart.Data" Version="5.0.2604" />
-    <PackageReference Include="Devart.Data.MySql" Version="8.19.1812" />
-    <PackageReference Include="Devart.Data.MySql.EFCore" Version="8.19.1812" />
-    <PackageReference Include="Devart.Data.MySql.EFCore.Design" Version="8.19.1812" />
-    <PackageReference Include="dotConnect.Express.for.MySQL" Version="8.19.1812" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.11" />
