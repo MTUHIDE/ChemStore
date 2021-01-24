@@ -56,32 +56,5 @@ namespace ChemStoreWebApp.Pages
             });
             
         }
-
-        protected void createDb(object sender, EventArgs e)
-        {
-            try
-            {
-                String str = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-
-                using (MySqlConnection con = new MySqlConnection(str))
-                {
-                    //String query = "select * from table1 where str1 like '" + maskedTextBox1.Text + "%'";
-                    String query = "select * from chemical";
-                    MySqlDataAdapter sda = new MySqlDataAdapter(query, con);
-                    con.Open();
-                    DataSet ds = new DataSet();
-                    sda.Fill(ds);
-                    Console.WriteLine("yo");
-                    //MessageBox.Show("connect with sql server");
-                    //chemicalGrid.DataSource = ds;
-                    //DataGrid1.DataBind();
-                    //con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
-        }
     }
 }
