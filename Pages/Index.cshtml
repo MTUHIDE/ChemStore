@@ -1,137 +1,69 @@
 ﻿@page
-@model SearchModel
+@model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
-<head>
-    <link rel="stylesheet" href="/css/searchItemLayout.css" asp-append-version="true" />
-</head>
-<div class="sideFilters">
-    <div>
-        CAS number: <input type="text" asp-for="searchCAS" />
-    </div>
-    <div>
-        Name: <input type="text" asp-for="searchString" />
-    </div>
-    <div>
-        Location: <input type="text" asp-for="searchLocation" />
-    </div>
-    <div>
-        Number of locations: <input type="text" asp-for="searchNumLocation" />
-    </div>
-    <div>
-        Container size: <input type="text" asp-for="searchSize" />
-        Units: <input type="checkbox" />
-    </div>
-    <div>
-        Archived: <input type="checkbox" />
-    </div>
-    <div>
-        Head Researcher: <input type="checkbox" />
-    </div>
-    <div>
-        Number of containers: <input type="text" asp-for="searchString" />
-    </div>
-</div>
-<div class="search">
+
+<style>
+    .button {
+        border: none;
+        color: white;
+        padding: 6px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+    .button1 {
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: 4px;
+</style>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    <a asp-page="Admin/Index">View/edit database</a>   
+
     <form method="post">
-        <div class="default">
-            CAS number: <input type="text" asp-for="searchCAS" />
-        </div>
-        <div class="default">
-            Name: <input type="text" asp-for="searchString" />
-        </div>
-        <div class="button">
-            <input type="submit" value="Search" />
-        </div>
-        @*<button class="button button1">Search</button>
-        <button class="button button1">Filter Options</button>*@
+        <p>
+            Search: <input type="text" />
+            @*asp-for="search"????*@
+            <button class="button button1">Search</button>
+            <button class="button button1">Filter Options</button>
+        </p>
+        <p>
+            Email: <input type="text" asp-for="email" />
+        </p>
+        <p>
+            CAS number: <input type="text" asp-for="chemCAS" />
+        </p>
+        <p>
+            Name: <input type="text" asp-for="chemName" />
+        </p>
+        <p>
+            Location: <input type="text" asp-for="location" />
+        </p>
+        <p>
+            Number of locations: <input type="text" asp-for="numLocation" />
+        </p>
+        <p>
+            Container size: <input type="text" asp-for="size" />
+        </p>
+        <p>
+            Units: <input type="text" asp-for="units" />
+        </p>
+        <p>
+            <input type="submit" value="Filter" />
+        </p>
     </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Chemical[0].ChemName)
-                </th>
-                <th>
-                    # of Locations
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Chemical.Count() > 0)
-            {
-                @foreach (var item in Model.Chemical)
-                {
-                    <tr class="expandable">
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.CasNumber)
-                        </td>
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.ChemName)
-                        </td>
-                        <td class="a">
-                            @{ var numLocations = Model.getNumLocations(item); }
-                            @numLocations
-                        </td>
-                        <td class="a">
-                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">Details</a>
-                        </td>
-                        <td class="a">
-                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.HazardId">Safety Data Sheet</a>
-                        </td>
-                    </tr>
-                    <tr class="moreInformation">
-                        <td>
-                            More Information
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <p>No results found</p>
-            }
-        </tbody>
-    </table>
 
-    <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-    </script>
-    <script>
-        var coll = document.getElementsByClassName("expandable");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                    this.style.backgroundColor = "rgb(225,225,225)";
-                } else {
-                    content.style.display = "block";
-                    this.style.backgroundColor = "rgb(204,204,204)";
-                }
-            });
-        }
-    </script>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
 </div>
+<!-- This is a test comment I made to test committing something.-->

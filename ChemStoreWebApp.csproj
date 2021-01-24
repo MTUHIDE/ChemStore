@@ -5,19 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Admin\Chemicals\NewFolder\**" />
-    <Content Remove="Pages\Admin\Chemicals\NewFolder\**" />
-    <EmbeddedResource Remove="Pages\Admin\Chemicals\NewFolder\**" />
-    <None Remove="Pages\Admin\Chemicals\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Devart.Data" Version="5.0.2604" />
     <PackageReference Include="Devart.Data.MySql" Version="8.19.1812" />
+    <PackageReference Include="Devart.Data.MySql.EFCore" Version="8.19.1812" />
+    <PackageReference Include="Devart.Data.MySql.EFCore.Design" Version="8.19.1812" />
     <PackageReference Include="dotConnect.Express.for.MySQL" Version="8.19.1812" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.11" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -31,10 +26,12 @@
     </PackageReference>
     <PackageReference Include="microsoft.identity.web" Version="1.5.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.1" />
     <PackageReference Include="MySql.Data" Version="8.0.23" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Admin\Chemicals\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,8 +5,120 @@
     ViewData["Title"] = "Search";
 }
 <head>
-    <link rel="stylesheet" href="~/css/searchItemLayout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="C:\Users\Mya Davis\OneDrive\Documents\GitHub\ChemStore\wwwroot\css\searchItemLayout.css" />
     <style>
+        h1 {
+            text-align: center;
+        }
+        .search{
+            margin:auto;
+            width:70%;
+            text-align:center;
+        }
+        .default{
+            text-align: center;
+            display: inline;
+            padding: 10px;
+
+            margin:auto;
+        }
+
+        button {
+            background-color: #e1e1e1;
+            cursor: pointer;
+            padding: 5px;
+            width: 30%;
+            text-align: center;
+            outline: none;
+            border: none;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        button:hover{
+            background-color: #cccccc;
+        }
+        
+        .more{
+            display:none;
+            overflow:hidden;
+
+        }
+        thead{
+            display: none;
+        }
+        table{
+            border: none;
+        }
+        tr {
+            display: block;
+            border-radius: 15px;
+            width: 95%; /* was 75%, TODO restore*/
+            margin: auto;
+        }
+        .expandable {
+            
+            background-color: #e1e1e1;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        .expandable:hover{
+            background-color: #cccccc;
+        }
+        .moreInformation {
+            display: none;
+            background-color: #f0f0f0;
+            border: solid;
+            border-color: #cccccc;
+            border-width: 3px;
+            border-top: none;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            width: 90%; /* was 72%, TODO restore*/
+        }
+        td{
+            display: inline-block;
+            padding: 5px;
+            margin: auto;
+            font-weight:400;
+            vertical-align: middle;
+            color: #101010;
+        }
+        td::before{
+            float: left;
+            font-size: .8em;
+            color: #696969;
+            font-weight: bold;
+            padding: 5px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .a:nth-child(1)::before{
+            content: "CAS Number:";
+        }
+        .a:nth-child(2)::before {
+            content: "Chemical Name:";
+        }
+        .a:nth-child(3)::before{
+            content: "Hazard ID:";
+        }
+        .a:nth-child(4)::before{
+            content: "# Locations:";
+        }
+        .a:nth-child(5)::before {
+            content: "units:";
+        }
+        .a:nth-child(6)::before {
+            content: "size:";
+        }
+        .a:nth-child(7)::before {
+            content: "room #:";
+        }
+        .a:nth-last-child(2){
+            float: right;
+        }
+        .a:nth-last-child(1){
+            float: right;
+        }
         
     </style>
 </head>
@@ -41,45 +153,72 @@
             Container size: <input type="text" asp-for="searchSize" />
             Units: <input type="checkbox" />
         </div>
+        <div class="default">
+            <input type="submit" value="temp submit extra filters" />
+        </div>
     </form>
 </div>
 
 <table class="table">
     <thead>
+        <!-- not using table head I think
         <tr>
             <th>
-                @Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
+                Html.DisplayNameFor(Model => Model.Chemical[0].CasNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Chemical[0].ChemName)
+                Html.DisplayNameFor(model => model.Chemical[0].ChemName)
+            </th>
+            <th>
+                Html.DisplayNameFor(model => model.Chemical[0].HazardId)
             </th>
             <th>
                 # of Locations
             </th>
             <th></th>
-        </tr>
+        </tr> -->
     </thead>
     <tbody>
-        @if (Model.Chemical.Count() > 0) 
+        @if (Model.Container.Count() > 0) 
         {
-            @foreach (var item in Model.Chemical)
+            @if (!Model.textEntered())
+            {
+                <p>Enter Text</p>
+            }
+
+            @foreach (var item in Model.Container)
             {
                 <tr class="expandable">
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.CasNumber)
+                        @Html.DisplayFor(modelItem => item.ChemId)
                     </td>
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.ChemName)
+                        @{ var chemName = Model.getChem(item).Result.ChemName; }
+                        @chemName
+                    </td>
+                    <td class="a">
+                        @{ var hazard = Model.getHazardId(item); }
+                        @hazard.ToString()
                     </td>
                     <td class="a">
                         @{  var numLocations = Model.getNumLocations(item); }
-                        @numLocations
+                        @numLocations.ToString()
                     </td>
                     <td class="a">
-                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">Details</a>
+                        @Html.DisplayFor(modelItem => item.Unit)
                     </td>
                     <td class="a">
-                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.HazardId">Safety Data Sheet</a>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td class="a">
+                        @{ var roomNum = Model.getRoomNum(item);}
+                        @roomNum
+                    </td>
+                    <td class="a">
+                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.ChemId">Details</a>
+                    </td>
+                    <td class="a">
+                        <a asp-page="Admin/Hazards/Details" asp-route-id="@Model.getHazardId(item)">Safety Data Sheet</a>
                     </td>
                 </tr>
                 <tr class="moreInformation">
