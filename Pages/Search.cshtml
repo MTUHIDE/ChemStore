@@ -101,16 +101,13 @@
         .a:nth-child(3)::before{
             content: "Hazard ID:";
         }
-        .a:nth-child(4)::before{
-            content: "# Locations:";
-        }
-        .a:nth-child(5)::before {
+        .a:nth-child(4)::before {
             content: "units:";
         }
-        .a:nth-child(6)::before {
+        .a:nth-child(5)::before {
             content: "size:";
         }
-        .a:nth-child(7)::before {
+        .a:nth-child(6)::before {
             content: "room #:";
         }
         .a:nth-last-child(2){
@@ -199,9 +196,6 @@
                         @Html.DisplayFor(modelItem => item.chem.HazardId)
                     </td>
                     <td class="a">
-                        TEMP 1 <!--numLocations-->
-                    </td>
-                    <td class="a">
                         @Html.DisplayFor(modelItem => item.con.Unit)
                     </td>
                     <td class="a">
@@ -215,8 +209,7 @@
                         <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">Details</a>
                     </td>
                     <td class="a">
-                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet for Hazard
-                            @Html.DisplayFor(modelItem => item.chem.HazardId)</a>
+                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
                     </td>
                 </tr>
                 <tr class="moreInformation">

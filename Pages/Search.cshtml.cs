@@ -64,8 +64,6 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return false;
-            //if (!string.IsNullOrEmpty(searchNumLocation) && getNumLocations(con) != Int32.Parse(searchNumLocation))
-            //    return false; TODO determine if we still want to search by number of locations
             if (!string.IsNullOrEmpty(searchLocation) && !con.building.BuildingName.Contains(searchLocation, StringComparison.OrdinalIgnoreCase))
                 return false;
             if (!string.IsNullOrEmpty(searchSize) && con.con.Size != Int32.Parse(searchSize))
@@ -85,6 +83,7 @@ namespace ChemStoreWebApp.Pages
             var chemicals = _context.Chemical.ToList();
             var locations = _context.Location.ToList();
             var buildings = _context.Building.ToList();
+            //var pics = _context.PersonInCharge.ToList();
 
             DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
                 c => new DisplayContainer(c, chemicals, locations, buildings))

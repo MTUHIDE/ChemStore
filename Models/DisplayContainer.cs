@@ -11,7 +11,7 @@ namespace ChemStoreWebApp.Models
         public Container con { get; set; } // saves the container data
         public Location loc { get; set; } // saves the location data for the container
         public Building building { get; set; } // saves the building data for the container
-        //public PersonInCharge pic { get; set; }
+        //public PersonInCharge pic { get; set; } // saves the person in charge data for the container
 
         public DisplayContainer(Container container, List<Chemical> chemicals, List<Location> locations,
             List<Building> buildings)
