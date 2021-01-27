@@ -36,6 +36,8 @@ namespace ChemStoreWebApp.Pages
         public string numLocation { get; set; }
         [BindProperty(SupportsGet = true)]
         public string size { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string units { get; set; }
 
         public void OnGet()
         {
@@ -50,35 +52,9 @@ namespace ChemStoreWebApp.Pages
                 searchLocation = location,
                 searchNumLocation = numLocation,
                 searchSize = size,
+                searchUnits = units
             });
             
-        }
-
-        protected void createDb(object sender, EventArgs e)
-        {
-            try
-            {
-                String str = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
-
-                using (MySqlConnection con = new MySqlConnection(str))
-                {
-                    //String query = "select * from table1 where str1 like '" + maskedTextBox1.Text + "%'";
-                    String query = "select * from chemical";
-                    MySqlDataAdapter sda = new MySqlDataAdapter(query, con);
-                    con.Open();
-                    DataSet ds = new DataSet();
-                    sda.Fill(ds);
-                    Console.WriteLine("yo");
-                    //MessageBox.Show("connect with sql server");
-                    //chemicalGrid.DataSource = ds;
-                    //DataGrid1.DataBind();
-                    //con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message);
-            }
         }
     }
 }
