@@ -31,7 +31,7 @@ namespace ChemStoreWebApp.Areas.Identity
         {
             services.AddDbContext<chemstoreContext>(options =>
 
-                options.UseSqlServer(Configuration.GetConnectionString("ChemStoreDB")));
+                options.UseMySQL(Configuration.GetConnectionString("ChemStoreDB")));
 
         }
     }
