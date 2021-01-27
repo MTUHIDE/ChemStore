@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,7 +42,7 @@ namespace ChemStoreWebApp
             services.AddRazorPages();
 
             services.AddDbContext<chemstoreContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ChemStoreDB")));
+                options.UseMySQL(Configuration.GetConnectionString("ChemStoreDB")));
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

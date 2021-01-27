@@ -26,6 +26,7 @@ namespace ChemStoreWebApp.Models
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<PersonInCharge> PersonInCharge { get; set; }
 
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
