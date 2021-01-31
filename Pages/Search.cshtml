@@ -101,16 +101,13 @@
         .a:nth-child(3)::before{
             content: "Hazard ID:";
         }
-        .a:nth-child(4)::before{
-            content: "# Locations:";
-        }
-        .a:nth-child(5)::before {
+        .a:nth-child(4)::before {
             content: "units:";
         }
-        .a:nth-child(6)::before {
+        .a:nth-child(5)::before {
             content: "size:";
         }
-        .a:nth-child(7)::before {
+        .a:nth-child(6)::before {
             content: "room #:";
         }
         .a:nth-last-child(2){
@@ -179,46 +176,40 @@
         </tr> -->
     </thead>
     <tbody>
-        @if (Model.Container.Count() > 0) 
+        @if (Model.DisplayContainers.Count() > 0) 
         {
             @if (!Model.textEntered())
             {
                 <p>Enter Text</p>
             }
 
-            @foreach (var item in Model.Container)
+            @foreach (var item in Model.DisplayContainers)
             {
                 <tr class="expandable">
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.ChemId)
+                        @Html.DisplayFor(modelItem => item.chem.CasNumber)
                     </td>
                     <td class="a">
-                        @{ var chemName = Model.getChem(item).Result.ChemName; }
-                        @chemName
+                        @Html.DisplayFor(modelItem => item.chem.ChemName)
                     </td>
                     <td class="a">
-                        @{ var hazard = Model.getHazardId(item); }
-                        @hazard.ToString()
+                        @Html.DisplayFor(modelItem => item.chem.HazardId)
                     </td>
                     <td class="a">
-                        @{  var numLocations = Model.getNumLocations(item); }
-                        @numLocations.ToString()
+                        @Html.DisplayFor(modelItem => item.con.Unit)
                     </td>
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.Unit)
+                        @Html.DisplayFor(modelItem => item.con.Size)
                     </td>
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.Size)
+                        @Html.DisplayFor(modelItem => item.building.BuildingName)
+                        @Html.DisplayFor(modelItem => item.loc.Room)
                     </td>
                     <td class="a">
-                        @{ var roomNum = Model.getRoomNum(item);}
-                        @roomNum
+                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">Details</a>
                     </td>
                     <td class="a">
-                        <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.ChemId">Details</a>
-                    </td>
-                    <td class="a">
-                        <a asp-page="Admin/Hazards/Details" asp-route-id="@Model.getHazardId(item)">Safety Data Sheet</a>
+                        <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
                     </td>
                 </tr>
                 <tr class="moreInformation">
