@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace ChemStoreWebApp.Migrations
 {
@@ -9,7 +10,7 @@ namespace ChemStoreWebApp.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "PicId",
                 table: "container",
-                nullable: true);
+                nullable: true).Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
