@@ -68,8 +68,8 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchSize) && con.con.Size != Int32.Parse(searchSize))
                 return false;
-            if (!string.IsNullOrEmpty(searchEmail) && !con.pic.Email.Contains(searchEmail))
-                return false;
+            //if (!string.IsNullOrEmpty(searchEmail) && !con.pic.Email.Contains(searchEmail))
+            //    return false; TODO add a link to PersonInCharge on the database side
             if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals(searchUnits, StringComparison.OrdinalIgnoreCase))
                 return false;
 
@@ -83,10 +83,10 @@ namespace ChemStoreWebApp.Pages
             var chemicals = _context.Chemical.ToList();
             var locations = _context.Location.ToList();
             var buildings = _context.Building.ToList();
-            var pics = _context.PersonInCharge.ToList();
+            //var pics = _context.PersonInCharge.ToList();
 
             DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
-                c => new DisplayContainer(c, chemicals, locations, buildings, pics))
+                c => new DisplayContainer(c, chemicals, locations, buildings))
                 .Where(c => isValidSearchItem(c))
                 .ToList());
         }
