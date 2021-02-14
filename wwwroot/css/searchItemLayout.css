@@ -1,18 +1,55 @@
-﻿h1 {
+﻿
+h1 {
     text-align: center;
+    width: 100%;
+    padding-left: 400px;
+}
+
+.openFilter{
+    display: inline;
+}
+
+.closeFilter{
+    top: 0;
+    right: 25px;
+    margin-left: 350px;
+    width: 30px;
+    height: 20px;
+    background-color: transparent;
+    font-size: 24px;
+    color: gray;
+}
+    .closeFilter:hover{
+        background-color: transparent;
+        color: black;
+    }
+
+.container{
+    margin: 0px;
 }
 
 .search {
-    margin: auto;
-    width: 70%;
+    left: 0;
+    width: 399px;
     text-align: center;
+    float: left;
+    background-color: yellow;
 }
-
+.results{
+    float:left;
+    margin-left: 400px;
+}
 .default {
     text-align: center;
     display: inline;
     padding: 10px;
     margin: auto;
+}
+
+.filter {
+    background-color: #cccccc;
+    border-radius: 10px;
+    border: none;
 }
 
 button {
@@ -30,6 +67,36 @@ button {
     button:hover {
         background-color: #cccccc;
     }
+
+.s {
+    margin: 5px;
+    border-bottom: solid;
+    border-top: solid;
+    border-color: #cccccc;
+    padding: 5px;
+}
+
+.location-dropdown {
+    cursor: pointer;
+}
+
+.container-dropdown {
+    cursor: pointer;
+}
+
+.location-container {
+    display: none;
+    padding-left: 6px;
+}
+
+.container-container {
+    display: none;
+    padding-left: 10px;
+}
+
+.active {
+}
+        
 
 .more {
     display: none;
