@@ -7,14 +7,23 @@ h1 {
 
 .openFilter{
     display: inline;
-}
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    font-size: 24px;
+    color: grey;
+}  
+    .openFilter:hover{
+        background-color: transparent;
+        color: black;
+    }
 
 .closeFilter{
     top: 0;
     right: 25px;
     margin-left: 350px;
     width: 30px;
-    height: 20px;
+    height: 30px;
     background-color: transparent;
     font-size: 24px;
     color: gray;
@@ -33,10 +42,8 @@ h1 {
     width: 399px;
     text-align: center;
     float: left;
-    background-color: yellow;
 }
 .results{
-    float:left;
     margin-left: 400px;
 }
 .default {

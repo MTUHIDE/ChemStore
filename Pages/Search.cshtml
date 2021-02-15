@@ -46,10 +46,11 @@
     </div>
 </div>
 
-
-<button class="openFilter" onclick="openFilter()">
-    Open Filters
-</button>
+<div id="openFilterContainer">
+    <button class="openFilter" id="openFilter" onclick="openFilter()">
+        >
+    </button>
+</div>
 
 <div id="results" class="results">
     <table class="table">
@@ -58,13 +59,21 @@
         <tbody>
             @if (Model.Container.Count() > 0)
             {
+                var count = Model.Container.Count();
+                var start = 0;
+                var end = 25;
+                var numOfPages = Model.Container.Count() / 25;
+
                 @if (!Model.textEntered())
                 {
                     <p>Enter Text</p>
                 }
 
-                @foreach (var item in Model.Container)
+
+                if (count - end < 0) { end = count - 1; }
+                @for (var i = start; i < end; i++)
                 {
+                    var item = Model.Container[i];
                     <tr class="expandable">
                         <td class="a">
                             @Html.DisplayFor(modelItem => item.ChemId)
@@ -116,7 +125,10 @@
         <a href=""> << </a>
         <a href=""> < </a>
 
-        <a href=""> 1 </a>
+        @for (var i =1; i<= Model.Container.Count()/25 + 1; i++)
+        { 
+            <a href=""> @i.ToString()  </a>
+        }
 
         <a href=""> > </a>
         <a href=""> >> </a>
@@ -126,11 +138,14 @@
 
 <script>
 
+    // Opens and closes the filter sections
     function closeFilter() {
         document.getElementById("search").style.display = "none";
+        document.getElementById("openFilter").style.display = "block";
     }
     function openFilter() {
         document.getElementById("search").style.display = "block";
+        document.getElementById("openFiler").style.display = "none";
     }
 
 </script>
@@ -170,8 +185,7 @@
 </script>
 
 <script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
-     * This allows the user to have multiple dropdowns without any conflict */
+    // The script to control the location filter selection
     var dropdown = document.getElementsByClassName("location-dropdown");
     var i;
 
@@ -189,8 +203,7 @@
 </script>
 
 <script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
-     * This allows the user to have multiple dropdowns without any conflict */
+    // The script to control the container filter selection
     var dropdown = document.getElementsByClassName("container-dropdown");
     var i;
 
