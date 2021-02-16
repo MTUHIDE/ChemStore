@@ -46,6 +46,7 @@
     </div>
 </div>
 
+
 <div id="openFilterContainer">
     <button class="openFilter" id="openFilter" onclick="openFilter()">
         >
@@ -63,7 +64,6 @@
                 var start = 0;
                 var end = 25;
                 var numOfPages = Model.Container.Count() / 25;
-
                 @if (!Model.textEntered())
                 {
                     <p>Enter Text</p>

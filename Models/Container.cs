@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace ChemStoreWebApp.Models
 {
@@ -10,6 +12,7 @@ namespace ChemStoreWebApp.Models
         public double? Size { get; set; }
         public int? ChemId { get; set; }
         public int? LocationId { get; set; }
+        public int? PicId { get; set; }
 
         public virtual HasLocation ContainerNavigation { get; set; }
     }
