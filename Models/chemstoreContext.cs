@@ -90,6 +90,10 @@ namespace ChemStoreWebApp.Models
                     .HasColumnName("location_id")
                     .HasColumnType("int");
 
+                entity.Property(e => e.PicId)
+                    .HasColumnName("pic_id")
+                    .HasColumnType("int");
+
                 entity.Property(e => e.Size).HasColumnName("size");
 
                 entity.Property(e => e.Unit)

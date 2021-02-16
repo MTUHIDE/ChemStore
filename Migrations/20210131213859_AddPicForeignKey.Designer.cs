@@ -87,6 +87,7 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("PicId")
+                        .HasColumnName("pic_id")
                         .HasColumnType("int");
 
                     b.Property<double?>("Size")
