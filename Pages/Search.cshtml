@@ -29,17 +29,16 @@
             </div>
             <div class="s location-dropdown"> Location </div>
             <div class="location-container">
-                <!-- Location: <input type="text" asp-for="searchLocation" />
-            Number of locations: <input type="text" asp-for="searchNumLocation" />
-                -->
-                <p> one </p>
-                <p> two </p>
-                <p> three </p>
+                <p>Building name: </p> <input type="text" asp-for="searchLocation" />
+                <p> TEST Leaving | one </p>
+                <p> this just in | two </p>
+                <p> case for Mya | three </p>
             </div>
             <div class="s container-dropdown"> Container </div>
             <div class="container-container">
-                <p> Container Size</p>
-                Units: <input type="checkbox" />
+                <p>Container Size: </p> <input type="text" asp-for="searchSize" />
+                <!---Units: <input type="checkbox" /> TODO add in this checkbox, temporarily I made it text -->
+                <p>Units: </p> <input type="text" asp-for="searchUnits" />
             </div>
             <!-- Container size: <input type="text" asp-for="searchSize" />-->
         </form>
@@ -58,53 +57,48 @@
         <thead>
         </thead>
         <tbody>
-            @if (Model.Container.Count() > 0)
+            @if (Model.DisplayContainers.Count() > 0)
             {
-                var count = Model.Container.Count();
+                var count = Model.DisplayContainers.Count();
                 var start = 0;
                 var end = 25;
-                var numOfPages = Model.Container.Count() / 25;
+                var numOfPages = Model.DisplayContainers.Count() / 25;
+
                 @if (!Model.textEntered())
                 {
                     <p>Enter Text</p>
                 }
 
 
-                if (count - end < 0) { end = count - 1; }
+                if (count < end) { end = count; }
                 @for (var i = start; i < end; i++)
                 {
-                    var item = Model.Container[i];
+                    var item = Model.DisplayContainers[i];
                     <tr class="expandable">
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.ChemId)
+                            @Html.DisplayFor(modelItem => item.chem.CasNumber)
                         </td>
                         <td class="a">
-                            @{ var chemName = Model.getChem(item).Result.ChemName; }
-                            @chemName
+                            @Html.DisplayFor(modelItem => item.chem.ChemName)
                         </td>
                         <td class="a">
-                            @{ var hazard = Model.getHazardId(item); }
-                            @hazard.ToString()
+                            @Html.DisplayFor(modelItem => item.chem.HazardId)
                         </td>
                         <td class="a">
-                            @{ var numLocations = Model.getNumLocations(item); }
-                            @numLocations.ToString()
+                            @Html.DisplayFor(modelItem => item.con.Unit)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.Unit)
+                            @Html.DisplayFor(modelItem => item.con.Size)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.Size)
+                            @Html.DisplayFor(modelItem => item.building.BuildingName)
+                            @Html.DisplayFor(modelItem => item.loc.Room)
                         </td>
                         <td class="a">
-                            @{ var roomNum = Model.getRoomNum(item);}
-                            @roomNum
+                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">Details</a>
                         </td>
                         <td class="a">
-                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.ChemId">Details</a>
-                        </td>
-                        <td class="a">
-                            <a asp-page="Admin/Hazards/Details" asp-route-id="@Model.getHazardId(item)">Safety Data Sheet</a>
+                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
                         </td>
                     </tr>
                     <tr class="moreInformation">
@@ -125,7 +119,7 @@
         <a href=""> << </a>
         <a href=""> < </a>
 
-        @for (var i =1; i<= Model.Container.Count()/25 + 1; i++)
+        @for (var i =1; i<= Model.DisplayContainers.Count()/25 + 1; i++)
         { 
             <a href=""> @i.ToString()  </a>
         }
