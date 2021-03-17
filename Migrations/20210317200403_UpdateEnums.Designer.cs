@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    [Migration("20210131213859_AddPicForeignKey")]
-    partial class AddPicForeignKey
+    [Migration("20210317200403_UpdateEnums")]
+    partial class UpdateEnums
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,9 +26,9 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("building_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("BuildingName")
+                    b.Property<int>("BuildingName")
                         .HasColumnName("building_name")
-                        .HasColumnType("varchar(45)")
+                        .HasColumnType("int")
                         .HasMaxLength(45)
                         .IsUnicode(false);
 
@@ -94,9 +94,9 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("size")
                         .HasColumnType("double");
 
-                    b.Property<string>("Unit")
+                    b.Property<int>("Unit")
                         .HasColumnName("unit")
-                        .HasColumnType("varchar(45)")
+                        .HasColumnType("int")
                         .HasMaxLength(45)
                         .IsUnicode(false);
 
@@ -170,7 +170,7 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("building")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Department")
+                    b.Property<int>("Department")
                         .HasColumnName("department")
                         .HasColumnType("int");
 

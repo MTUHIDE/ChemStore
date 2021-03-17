@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    [Migration("20210131205937_InitialCreate")]
+    [Migration("20210317190959_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,13 +86,17 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("location_id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PicId")
+                        .HasColumnName("pic_id")
+                        .HasColumnType("int");
+
                     b.Property<double?>("Size")
                         .HasColumnName("size")
                         .HasColumnType("double");
 
-                    b.Property<string>("Unit")
+                    b.Property<int>("Unit")
                         .HasColumnName("unit")
-                        .HasColumnType("varchar(45)")
+                        .HasColumnType("int")
                         .HasMaxLength(45)
                         .IsUnicode(false);
 
@@ -162,11 +166,11 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("location_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Building")
+                    b.Property<int>("Building")
                         .HasColumnName("building")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Department")
+                    b.Property<int>("Department")
                         .HasColumnName("department")
                         .HasColumnType("int");
 

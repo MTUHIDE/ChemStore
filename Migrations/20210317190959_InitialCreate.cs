@@ -90,7 +90,7 @@ namespace ChemStoreWebApp.Migrations
                 columns: table => new
                 {
                     container_id = table.Column<int>(type: "int", nullable: false),
-                    unit = table.Column<string>(unicode: false, maxLength: 45, nullable: true),
+                    unit = table.Column<int>(unicode: false, maxLength: 45, nullable: false),
                     size = table.Column<double>(nullable: true),
                     chem_id = table.Column<int>(type: "int", nullable: true),
                     location_id = table.Column<int>(type: "int", nullable: true),
@@ -105,7 +105,7 @@ namespace ChemStoreWebApp.Migrations
                         principalTable: "has_location",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
-                }); ;
+                });
 
             migrationBuilder.CreateTable(
                 name: "location",
@@ -113,9 +113,9 @@ namespace ChemStoreWebApp.Migrations
                 {
                     location_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    department = table.Column<int>(type: "int", nullable: true),
+                    department = table.Column<int>(type: "int", nullable: false),
                     room = table.Column<int>(type: "int", nullable: true),
-                    building = table.Column<int>(type: "int", nullable: true),
+                    building = table.Column<int>(type: "int", nullable: false),
                     location_fid = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

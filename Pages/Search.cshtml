@@ -29,16 +29,20 @@
             </div>
             <div class="s location-dropdown"> Location </div>
             <div class="location-container">
-                <p>Building name: </p> <input type="text" asp-for="searchLocation" />
-                <p> TEST Leaving | one </p>
-                <p> this just in | two </p>
-                <p> case for Mya | three </p>
+                <!--<p>Building name: </p> <input type="text" asp-for="searchLocation" />-->
+                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()">
+                    <option value="">Pick one</option>
+                </select>
+                <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()">
+                    <option value="">Pick one</option>
+                </select>
             </div>
             <div class="s container-dropdown"> Container </div>
             <div class="container-container">
                 <p>Container Size: </p> <input type="text" asp-for="searchSize" />
-                <!---Units: <input type="checkbox" /> TODO add in this checkbox, temporarily I made it text -->
-                <p>Units: </p> <input type="text" asp-for="searchUnits" />
+                <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                        <option value="">Pick one</option>
+                </select>
             </div>
             <!-- Container size: <input type="text" asp-for="searchSize" />-->
         </form>
@@ -71,6 +75,7 @@
 
 
                 if (count < end) { end = count; }
+                @Enum.GetName(typeof(Buildings), 2)
                 @for (var i = start; i < end; i++)
                 {
                     var item = Model.DisplayContainers[i];
@@ -93,6 +98,7 @@
                         <td class="a">
                             @Html.DisplayFor(modelItem => item.building.BuildingName)
                             @Html.DisplayFor(modelItem => item.loc.Room)
+                            @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
                         </td>
                         <td class="a">
                             <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">Details</a>
