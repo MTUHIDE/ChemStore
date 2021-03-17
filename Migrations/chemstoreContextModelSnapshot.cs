@@ -24,9 +24,9 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("building_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("BuildingName")
+                    b.Property<string>("BuildingName")
                         .HasColumnName("building_name")
-                        .HasColumnType("int")
+                        .HasColumnType("varchar(45)")
                         .HasMaxLength(45)
                         .IsUnicode(false);
 
@@ -85,16 +85,15 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("PicId")
-                        .HasColumnName("pic_id")
                         .HasColumnType("int");
 
                     b.Property<double?>("Size")
                         .HasColumnName("size")
                         .HasColumnType("double");
 
-                    b.Property<int>("Unit")
+                    b.Property<string>("Unit")
                         .HasColumnName("unit")
-                        .HasColumnType("int")
+                        .HasColumnType("varchar(45)")
                         .HasMaxLength(45)
                         .IsUnicode(false);
 
@@ -168,7 +167,7 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnName("building")
                         .HasColumnType("int");
 
-                    b.Property<int>("Department")
+                    b.Property<int?>("Department")
                         .HasColumnName("department")
                         .HasColumnType("int");
 

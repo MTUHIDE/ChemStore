@@ -31,15 +31,13 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public string searchCAS { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string searchBuilding { get; set; }
+        public string searchLocation { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchNumLocation { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchSize { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchUnits { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchDepartment { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -51,10 +49,9 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchCAS) &&
                 string.IsNullOrEmpty(searchString) &&
                 string.IsNullOrEmpty(searchNumLocation) &&
-                string.IsNullOrEmpty(searchBuilding) &&
+                string.IsNullOrEmpty(searchLocation) &&
                 string.IsNullOrEmpty(searchSize) &&
-                string.IsNullOrEmpty(searchUnits) &&
-                string.IsNullOrEmpty(searchDepartment));
+                string.IsNullOrEmpty(searchUnits));
         }
 
         /// <summary>
@@ -68,15 +65,13 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchBuilding) && !con.building.BuildingName.Equals((Buildings) Int32.Parse(searchBuilding)))
+            if (!string.IsNullOrEmpty(searchLocation) && !con.building.BuildingName.Contains(searchLocation, StringComparison.OrdinalIgnoreCase))
                 return false;
             if (!string.IsNullOrEmpty(searchSize) && con.con.Size != Int32.Parse(searchSize))
                 return false;
             if (!string.IsNullOrEmpty(searchEmail) && !con.pic.Email.Contains(searchEmail, StringComparison.OrdinalIgnoreCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units) Int32.Parse(searchUnits)))
-                return false;
-            if (!string.IsNullOrEmpty(searchDepartment) && !con.loc.Department.Equals((Departments) Int32.Parse(searchDepartment)))
+            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals(searchUnits, StringComparison.OrdinalIgnoreCase))
                 return false;
 
             return true;
