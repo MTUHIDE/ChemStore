@@ -40,6 +40,8 @@ namespace ChemStoreWebApp.Pages
         public string searchUnits { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchDepartment { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string searchRetired { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -77,6 +79,8 @@ namespace ChemStoreWebApp.Pages
             if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units) Int32.Parse(searchUnits)))
                 return false;
             if (!string.IsNullOrEmpty(searchDepartment) && !con.loc.Department.Equals((Departments) Int32.Parse(searchDepartment)))
+                return false;
+            if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
                 return false;
 
             return true;
