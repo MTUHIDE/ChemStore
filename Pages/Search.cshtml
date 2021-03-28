@@ -43,6 +43,7 @@
                 <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
                         <option value="">Pick one</option>
                 </select>
+                Retired? <input type="checkbox" asp-for="searchRetired" />
             </div>
             <!-- Container size: <input type="text" asp-for="searchSize" />-->
         </form>

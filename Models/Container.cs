@@ -22,6 +22,7 @@ namespace ChemStoreWebApp.Models
         public int? ChemId { get; set; }
         public int? LocationId { get; set; }
         public int? PicId { get; set; }
+        public bool? Retired { get; set; }
 
         public virtual HasLocation ContainerNavigation { get; set; }
     }
