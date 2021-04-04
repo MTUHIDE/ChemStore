@@ -1,5 +1,6 @@
 ﻿@page
 @model ChemStoreWebApp.Pages.SearchModel
+@using ChemStoreWebApp.Utilities
 
 @{
     ViewData["Title"] = "Search";
@@ -30,10 +31,11 @@
             <div class="s location-dropdown"> Location </div>
             <div class="location-container">
                 <!--<p>Building name: </p> <input type="text" asp-for="searchLocation" />-->
-                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()">
+                <select asp-for="searchBuilding" asp-items="EnumHelper.GetEnumSelectListName(Buildings.AdminBuilding)">
                     <option value="">Pick one</option>
                 </select>
-                <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()">
+
+                <select asp-for="searchDepartment" asp-items="EnumHelper.GetEnumSelectListName(Departments.AirForceROTC)">
                     <option value="">Pick one</option>
                 </select>
             </div>
@@ -76,7 +78,6 @@
 
 
                 if (count < end) { end = count; }
-                @Enum.GetName(typeof(Buildings), 2)
                 @for (var i = start; i < end; i++)
                 {
                     var item = Model.DisplayContainers[i];
@@ -97,9 +98,10 @@
                             @Html.DisplayFor(modelItem => item.con.Size)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.building.BuildingName)
+                            @EnumHelper.GetDisplayValue(item.building.BuildingName)
                             @Html.DisplayFor(modelItem => item.loc.Room)
-                            @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+                            @EnumHelper.GetDisplayValue(item.loc.Department)
+                            
                         </td>
                         <td class="a">
                             <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">Details</a>

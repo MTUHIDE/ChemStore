@@ -70,7 +70,7 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchBuilding) && !con.building.BuildingName.Equals((Buildings) Int32.Parse(searchBuilding)))
+            if (!string.IsNullOrEmpty(searchBuilding) && !con.building.BuildingName.ToString().Equals(searchBuilding))
                 return false;
             if (!string.IsNullOrEmpty(searchSize) && con.con.Size != Int32.Parse(searchSize))
                 return false;
@@ -78,7 +78,7 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units) Int32.Parse(searchUnits)))
                 return false;
-            if (!string.IsNullOrEmpty(searchDepartment) && !con.loc.Department.Equals((Departments) Int32.Parse(searchDepartment)))
+            if (!string.IsNullOrEmpty(searchDepartment) && !con.loc.Department.ToString().Equals(searchDepartment))
                 return false;
             if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
                 return false;
