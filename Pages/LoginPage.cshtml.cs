@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ChemStoreWebApp.Pages
 {
-    public class loginModel : PageModel
+    public class LoginPageModel : PageModel
     {
         public void OnGet()
         {
-
         }
     }
 }
