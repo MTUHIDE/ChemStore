@@ -22,6 +22,10 @@ a.navbar-brand {
     padding-top: 20px;
 }
 
+.moreFilters {
+    display: none;
+}
+
 .button {
     border: none;
     color: white;
