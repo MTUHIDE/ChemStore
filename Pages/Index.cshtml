@@ -28,42 +28,40 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
-    <a asp-page="Admin/Index">View/edit database</a>   
-
     <form method="post">
         <p>
-            Search: <input type="text" />
-            @*asp-for="search"????*@
+            Search: <input type="text" asp-for="searchString"/>
             <button class="button button1">Search</button>
             <button class="button button1">Filter Options</button>
         </p>
         <p>
-            Email: <input type="text" asp-for="email" />
+            Email: <input type="text" asp-for="searchEmail" />
         </p>
         <p>
-            CAS number: <input type="text" asp-for="chemCAS" />
+            CAS number: <input type="text" asp-for="searchCAS" />
         </p>
         <p>
-            Name: <input type="text" asp-for="chemName" />
+            Building:
+            <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()">
+                <option value="">Pick building</option>
+            </select>
         </p>
         <p>
-            Location: <input type="text" asp-for="location" />
+            Department:
+            <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()">
+                <option value="">Pick department</option>
+            </select>
         </p>
         <p>
-            Number of locations: <input type="text" asp-for="numLocation" />
+            Container Size: <input type="text" asp-for="searchSize" />
+            <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                <option value="">Select units</option>
+            </select>
         </p>
         <p>
-            Container size: <input type="text" asp-for="size" />
-        </p>
-        <p>
-            Units: <input type="text" asp-for="units" />
-        </p>
-        <p>
-            <input type="submit" value="Filter" />
+            Retired? <input type="checkbox" asp-for="searchRetired" />
         </p>
     </form>
-
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
 </div>
 <!-- This is a test comment I made to test committing something.-->

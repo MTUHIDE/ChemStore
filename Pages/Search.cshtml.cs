@@ -33,8 +33,6 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public string searchBuilding { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string searchNumLocation { get; set; }
-        [BindProperty(SupportsGet = true)]
         public string searchSize { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchUnits { get; set; }
@@ -52,7 +50,6 @@ namespace ChemStoreWebApp.Pages
             return !(string.IsNullOrEmpty(searchEmail) &&
                 string.IsNullOrEmpty(searchCAS) &&
                 string.IsNullOrEmpty(searchString) &&
-                string.IsNullOrEmpty(searchNumLocation) &&
                 string.IsNullOrEmpty(searchBuilding) &&
                 string.IsNullOrEmpty(searchSize) &&
                 string.IsNullOrEmpty(searchUnits) &&
