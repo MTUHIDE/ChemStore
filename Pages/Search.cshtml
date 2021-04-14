@@ -27,21 +27,27 @@
             <div class="s">
                 Email: <input type="text" asp-for="searchEmail" />
             </div>
-            <div class="s location-dropdown"> Location </div>
+            <div class="s location-dropdown"> Location     &#x25BC </div>
             <div class="location-container">
-                <!--<p>Building name: </p> <input type="text" asp-for="searchLocation" />-->
-                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()">
-                    <option value="">Pick one</option>
-                </select>
-                <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()">
-                    <option value="">Pick one</option>
-                </select>
+                <div class="s">
+                    <label for="selectBuilding">Building: </label>
+                    <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding">
+                        <option value="">Pick one</option>
+                    </select>
+                </div>
+                <div class="s">
+                    <label for="selectDepartment">Department: </label>
+                    <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()" id="selectDepartment" class="selectDepartment">
+                        <option value="">Pick one</option>
+                    </select>
+                </div>
+
             </div>
-            <div class="s container-dropdown"> Container </div>
+            <div class="s container-dropdown"> Container    &#x25BC </div>
             <div class="container-container">
                 <p>Container Size: </p> <input type="text" asp-for="searchSize" />
                 <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
-                        <option value="">Pick one</option>
+                    <option value="">Pick one</option>
                 </select>
             </div>
             <!-- Container size: <input type="text" asp-for="searchSize" />-->
@@ -70,12 +76,11 @@
 
                 @if (!Model.textEntered())
                 {
-                    <p>Enter Text</p>
+                    <p class="noFilters">No Filters Applied</p>
                 }
 
 
                 if (count < end) { end = count; }
-                @Enum.GetName(typeof(Buildings), 2)
                 @for (var i = start; i < end; i++)
                 {
                     var item = Model.DisplayContainers[i];
@@ -90,27 +95,26 @@
                             @Html.DisplayFor(modelItem => item.chem.HazardId)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.con.Unit)
-                        </td>
-                        <td class="a">
                             @Html.DisplayFor(modelItem => item.con.Size)
-                        </td>
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.building.BuildingName)
-                            @Html.DisplayFor(modelItem => item.loc.Room)
-                            @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
-                        </td>
-                        <td class="a">
-                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">Details</a>
-                        </td>
-                        <td class="a">
-                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
+                            @Html.DisplayFor(modelItem => item.con.Unit)
+
                         </td>
                     </tr>
                     <tr class="moreInformation">
-                        <td>
-                            More Information
+                        <td class="building">
+                            @Html.DisplayFor(modelItem => item.building.BuildingName)
+                            @Html.DisplayFor(modelItem => item.loc.Room)
                         </td>
+                        <td class="dpt">
+                            @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+                        </td>
+                        <td class="b">
+                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
+                        </td>
+                        <td class="b">
+                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
+                        </td>
+                     
                     </tr>
                 }
             }
