@@ -226,3 +226,8 @@ td {
 .dpt::before{
     content: "Department: ";
 }
+
+.pageSelectors{
+    text-align: center;
+    margin: 10px;
+}

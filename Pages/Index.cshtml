@@ -30,14 +30,18 @@
     <h1 class="display-4">Welcome</h1>
 
     <form method="post">
-        <label for="searchMain">Search:</label>
-        <input type="text" asp-for="searchString" class="searchMain" />
+        <!--<label for="searchMain">Search:</label> Leaving this in in case the onfocus doesn't work -->
+        <input type="text" asp-for="searchString" class="searchMain" onfocus="if(this.value == 'Search...') this.value = ''"
+               onblur="if(this.value == '') this.value = 'Search...'" value="Search..."/>
         <button type="submit" class="button button1">Search</button>
-        <button type="button" class="button button1">Filter Options</button>
 
-        <button type="button" class="expandFilters button button1" onclick="expandFilters()">
-            Expand filters
-        </button>
+        <div class="underSearchBar">
+            <button type="button" class="button button1">Filter Options</button>
+            <button type="button" class="expandFilters button button1" onclick="expandFilters()">
+                Expand filters
+            </button>
+        </div>
+
         <div class="moreFilters" id="moreFilters">
             <p>
                 Email: <input type="text" asp-for="searchEmail" />
