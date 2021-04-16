@@ -24,20 +24,23 @@ namespace ChemStoreWebApp.Pages
             _context = context;
         }
 
+        // variables bound to the URL storing search terms
         [BindProperty(SupportsGet = true)]
-        public string email { get; set; }
+        public string searchEmail { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string chemName { get; set; }
+        public string searchString { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string chemCAS { get; set; }
+        public string searchCAS { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string location { get; set; }
+        public string searchBuilding { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string numLocation { get; set; }
+        public string searchSize { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string size { get; set; }
+        public string searchUnits { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string units { get; set; }
+        public string searchDepartment { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string searchRetired { get; set; }
 
         public void OnGet()
         {
@@ -46,13 +49,14 @@ namespace ChemStoreWebApp.Pages
         public IActionResult OnPost()
         {
             return new RedirectToPageResult("Search", new {
-                searchEmail = email,
-                searchCAS = chemCAS, 
-                searchString = chemName,
-                searchLocation = location,
-                searchNumLocation = numLocation,
-                searchSize = size,
-                searchUnits = units
+                searchEmail = this.searchEmail,
+                searchString = this.searchString,
+                searchCAS = this.searchCAS, 
+                searchBuilding = this.searchBuilding,
+                searchSize = this.searchSize,
+                searchUnits = this.searchUnits,
+                searchDepartment = this.searchDepartment,
+                searchRetired = this.searchRetired
             });
             
         }
