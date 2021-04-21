@@ -22,6 +22,35 @@ a.navbar-brand {
     padding-top: 20px;
 }
 
+.moreFilters {
+    display: none;
+    margin-top: 10px;
+}
+
+input {
+    border-radius: 20px;
+    border-width: 1px;
+    padding: 5px;
+    padding-left: 10px;
+    outline-style: none;
+}
+
+.searchMain {
+    margin: 10px;
+    margin-top: 40px;
+    margin-left: 40px;
+    width: 40%;
+    border-radius: 20px;
+    border-width: 1px;
+    padding: 5px;
+    padding-left: 10px;
+    outline-style: none;
+}
+
+.underSearchBar{
+    display: block;
+}
+
 .button {
     border: none;
     color: white;

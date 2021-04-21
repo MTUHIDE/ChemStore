@@ -23,45 +23,67 @@
         color: black;
         border: none;
         border-radius: 4px;
+    }
 </style>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
     <form method="post">
-        <p>
-            Search: <input type="text" asp-for="searchString"/>
-            <button class="button button1">Search</button>
-            <button class="button button1">Filter Options</button>
-        </p>
-        <p>
-            Email: <input type="text" asp-for="searchEmail" />
-        </p>
-        <p>
-            CAS number: <input type="text" asp-for="searchCAS" />
-        </p>
-        <p>
-            Building:
-            <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()">
-                <option value="">Pick building</option>
-            </select>
-        </p>
-        <p>
-            Department:
-            <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()">
-                <option value="">Pick department</option>
-            </select>
-        </p>
-        <p>
-            Container Size: <input type="text" asp-for="searchSize" />
-            <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
-                <option value="">Select units</option>
-            </select>
-        </p>
-        <p>
-            Retired? <input type="checkbox" asp-for="searchRetired" />
-        </p>
+        <!--<label for="searchMain">Search:</label> Leaving this in in case the onfocus doesn't work -->
+        <input type="text" asp-for="searchString" class="searchMain" onfocus="if(this.value == 'Search...') this.value = ''"
+               onblur="if(this.value == '') this.value = 'Search...'" value="Search..."/>
+        <button type="submit" class="button button1">Search</button>
+
+        <div class="underSearchBar">
+            <button type="button" class="button button1">Filter Options</button>
+            <button type="button" class="expandFilters button button1" onclick="expandFilters()">
+                Expand filters
+            </button>
+        </div>
+
+        <div class="moreFilters" id="moreFilters">
+            <p>
+                Email: <input type="text" asp-for="searchEmail" />
+            </p>
+            <p>
+                CAS number: <input type="text" asp-for="searchCAS" />
+            </p>
+            <p>
+                Building:
+                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()">
+                    <option value="">Pick building</option>
+                </select>
+            </p>
+            <p>
+                Department:
+                <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()">
+                    <option value="">Pick department</option>
+                </select>
+            </p>
+            <p>
+                Container Size: <input type="text" asp-for="searchSize" />
+                <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                    <option value="">Select units</option>
+                </select>
+            </p>
+            <p>
+                Retired? <input type="checkbox" asp-for="searchRetired" />
+            </p>
+        </div>
+        
     </form>
 
 </div>
-<!-- This is a test comment I made to test committing something.-->
+
+<script>
+    function expandFilters() {
+        if (document.getElementById("moreFilters").style.display === "none") {
+            document.getElementById("moreFilters").style.display = "block";
+        }
+        else{
+            document.getElementById("moreFilters").style.display = "none";
+        }
+    }
+    
+</script>
