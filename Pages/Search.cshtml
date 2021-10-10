@@ -69,12 +69,12 @@
         <thead>
         </thead>
         <tbody>
-            @if (Model.Containers.Count() > 0)
+            @if (Model.DisplayContainers.Count() > 0)
             {
-                var count = Model.Containers.Count();
+                var count = Model.DisplayContainers.Count();
                 var start = 0;
                 var end = 25;
-                var numOfPages = Model.Containers.Count() / 25;
+                var numOfPages = Model.DisplayContainers.Count() / 25;
 
                 @if (!Model.textEntered())
                 {
@@ -85,37 +85,37 @@
                 if (count < end) { end = count; }
                 @for (var i = start; i < end; i++)
                 {
-                    var item = Model.Containers[i];
+                    var item = Model.DisplayContainers[i];
                     <tr class="expandable">
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.CasNumber)
+                            @Html.DisplayFor(modelItem => item.chem.CasNumber)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.Supervisor.Email)
+                            @Html.DisplayFor(modelItem => item.chem.ChemicalName)
                         </td>
                         <td class="a">
                             TODO <!--Change to list of hazard icons-->
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.Amount)
-                            @EnumHelper.GetDisplayValue((Units)item.Unit)
+                            @Html.DisplayFor(modelItem => item.con.Amount)
+                            @EnumHelper.GetDisplayValue((Units)item.con.Unit)
 
                         </td>
                     </tr>
                     <tr class="moreInformation">
                         <td class="building">
-                            @Html.DisplayFor(modelItem => item.Room.BuildingName)
-                            @Html.DisplayFor(modelItem => item.Room.RoomNumber)
+                            @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
+                            @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                         </td>
                         <td class="dpt">
-                            @Html.DisplayFor(modelItem => item.Supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
+                            @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
 
                         </td>
                         <td class="b">
-                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.CasNumber">More Details</a>
+                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                         </td>
                         <td class="b">
-                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.CasNumber">TODO Safety Data Sheet</a><!--Create proper link to safety data sheet-->
+                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">TODO Safety Data Sheet</a><!--Create proper link to safety data sheet-->
                         </td>
 
                     </tr>
@@ -132,7 +132,7 @@
         <!--<a href=""> << </a>
         <a href=""> < </a>-->
 
-        @for (var i =1; i<= Model.Containers.Count()/25 + 1; i++)
+        @for (var i =1; i<= Model.DisplayContainers.Count()/25 + 1; i++)
         { 
             <a href=""> @i.ToString()  </a>
         }
