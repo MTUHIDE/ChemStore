@@ -7,13 +7,17 @@ namespace ChemStoreWebApp.Models
     {
         public Chemical()
         {
-            HasHazard = new HashSet<HasHazard>();
+            ChemicalHazards = new HashSet<ChemicalHazards>();
+            Container = new HashSet<Container>();
         }
 
-        public int CasNumber { get; set; }
-        public string ChemName { get; set; }
-        public int? HazardId { get; set; }
+        public string CasNumber { get; set; }
+        public string ChemicalName { get; set; }
+        public int Quantity { get; set; }
+        public string Manufacturer { get; set; }
+        public string CatalogNumber { get; set; }
 
-        public virtual ICollection<HasHazard> HasHazard { get; set; }
+        public virtual ICollection<ChemicalHazards> ChemicalHazards { get; set; }
+        public virtual ICollection<Container> Container { get; set; }
     }
 }

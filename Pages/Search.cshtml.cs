@@ -19,9 +19,7 @@ namespace ChemStoreWebApp.Pages
         {
             _context = context;
         }
-
-        //public IList<Container> Container { get; set; }
-        public IList<DisplayContainer> DisplayContainers { get; set; }
+        public IList<Container> Containers { get; set; }
 
         // variables bound to the URL storing search terms
         [BindProperty(SupportsGet = true)]
@@ -61,8 +59,8 @@ namespace ChemStoreWebApp.Pages
         /// </summary>
         /// <param name="con">Container object</param>
         /// <returns>True if container should be listed</returns>
-        public Boolean isValidSearchItem(DisplayContainer con)
-        {
+        public Boolean isValidSearchItem(Container con)
+        {/*
             if (!string.IsNullOrEmpty(searchCAS) && con.chem.CasNumber != Int32.Parse(searchCAS))
                 return false;
             if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
@@ -80,24 +78,43 @@ namespace ChemStoreWebApp.Pages
             if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
                 return false;
             if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
-                return false;
+                return false;*/
 
             return true;
         }
-
+        /// <summary>
+        /// Runs on every search and returns a list of containers that fit the given search criteria
+        /// </summary>
+        /// <returns></returns>
         public async Task OnGetAsync()
         {
-            // stores data from database in arrays to limit amount of calls to database at once
-            var containers = _context.Container.ToList();
-            var chemicals = _context.Chemical.ToList();
-            var locations = _context.Location.ToList();
-            var buildings = _context.Building.ToList();
-            var pics = _context.PersonInCharge.ToList();
+            /*
+            var containers = from c in _context.Container select c;
+            bool ignoreCase = true; // temp variable to store whether or not case matters in search
+            var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
-            DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
-                c => new DisplayContainer(c, chemicals, locations, buildings, pics))
-                .Where(c => isValidSearchItem(c))
-                .ToList());
+            // Checks each search term against the current list of containers
+
+            if (!string.IsNullOrEmpty(searchCAS))
+                containers = containers.Where(c => c.CasNumber.Contains(searchCAS, checkCase));
+            if (!string.IsNullOrEmpty(searchString))
+                containers = containers.Where(c => c.CasNumberNavigation.ChemicalName.Contains(searchString, checkCase));
+            if (!string.IsNullOrEmpty(searchBuilding))
+                containers = containers.Where(c => c.Room.BuildingName.Equals((Buildings)Int32.Parse(searchBuilding)));
+            if (!string.IsNullOrEmpty(searchSize))
+                containers = containers.Where(c => c.Amount.Equals(Int32.Parse(searchSize)));
+            if (!string.IsNullOrEmpty(searchEmail))
+                containers = containers.Where(c => c.Supervisor.Email.Contains(searchEmail, checkCase));
+            if (!string.IsNullOrEmpty(searchUnits))
+                containers = containers.Where(c => c.Unit.Equals((Units)Int32.Parse(searchUnits)));
+            if (!string.IsNullOrEmpty(searchDepartment))
+                containers = containers.Where(c => c.Supervisor.Department.Equals((Departments)Int32.Parse(searchDepartment)));
+            if (!string.IsNullOrEmpty(searchRetired))
+                containers = containers.Where(c => c.Retired == bool.Parse(searchRetired));
+
+            Containers = await containers.ToListAsync();*/
+
+            Containers = await _context.Container.ToListAsync();
         }
     }
 }

@@ -7,7 +7,7 @@ using ChemStoreWebApp.Models;
 namespace ChemStoreWebApp.Utilities
 {
     public class DisplayContainer
-    {
+    {/*
         public Chemical chem { get; set; } // saves the chemical data for the chemical in the container
         public Container con { get; set; } // saves the container data
         public Location loc { get; set; } // saves the location data for the container
@@ -30,6 +30,6 @@ namespace ChemStoreWebApp.Utilities
                    where p.PicId == container.PicId
                    select p).First();
             con = container;
-        }
+        }*/
     }
 }

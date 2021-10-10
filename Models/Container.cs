@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 public enum Units
 {
     mL,
     L,
+    mg,
     g,
     kg,
     gallon,
@@ -16,14 +16,16 @@ namespace ChemStoreWebApp.Models
 {
     public partial class Container
     {
-        public int ContainerId { get; set; }
-        public Units Unit { get; set; }
-        public double? Size { get; set; }
-        public int? ChemId { get; set; }
-        public int? LocationId { get; set; }
-        public int? PicId { get; set; }
-        public bool? Retired { get; set; }
+        public long ContainerId { get; set; }
+        public int Unit { get; set; }
+        public int Amount { get; set; }
+        public bool Retired { get; set; }
+        public string CasNumber { get; set; }
+        public string RoomId { get; set; }
+        public int SupervisorId { get; set; }
 
-        public virtual HasLocation ContainerNavigation { get; set; }
+        public virtual Chemical CasNumberNavigation { get; set; }
+        public virtual Location Room { get; set; }
+        public virtual Account Supervisor { get; set; }
     }
 }
