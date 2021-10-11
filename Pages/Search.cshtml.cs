@@ -97,29 +97,6 @@ namespace ChemStoreWebApp.Pages
                 c => new DisplayContainer(c, chemicals, locations, accounts))
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
-
-            // Checks each search term against the current list of containers
-            /*
-            if (!string.IsNullOrEmpty(searchCAS))
-                containers = containers.Where(c => c.CasNumber.Contains(searchCAS, checkCase));
-            if (!string.IsNullOrEmpty(searchString))
-                containers = containers.Where(c => c.CasNumberNavigation.ChemicalName.Contains(searchString, checkCase));
-            //if (!string.IsNullOrEmpty(searchBuilding))
-            //    containers = containers.Where(c => c.Room.BuildingName.Equals((Buildings)Int32.Parse(searchBuilding)));
-            //if (!string.IsNullOrEmpty(searchSize))
-            //    containers = containers.Where(c => c.Amount.Equals(Int32.Parse(searchSize)));
-            //if (!string.IsNullOrEmpty(searchEmail))
-            //    containers = containers.Where(c => c.Supervisor.Email.Contains(searchEmail, checkCase));
-            //if (!string.IsNullOrEmpty(searchUnits))
-            //    containers = containers.Where(c => c.Unit.Equals((Units)Int32.Parse(searchUnits)));
-            //if (!string.IsNullOrEmpty(searchDepartment))
-            //    containers = containers.Where(c => c.Supervisor.Department.Equals((Departments)Int32.Parse(searchDepartment)));
-            //if (!string.IsNullOrEmpty(searchRetired))
-            //   containers = containers.Where(c => c.Retired == bool.Parse(searchRetired));
-
-            Containers = await containers.ToListAsync();
-
-            //Containers = await _context.Container.ToListAsync();*/
         }
     }
 }
