@@ -5,13 +5,12 @@
 @{
     ViewData["Title"] = "Search";
 }
+
 <head>
     <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
 </head>
 
-
 <h1>Search</h1>
-
 <div id="search">
     <div class="search">
         <button class="closeFilter" onclick="closeFilter()">
@@ -64,8 +63,9 @@
     </button>
 </div>
 
+
 <div id="results" class="results">
-    <form method="post">
+    <form method="post" id="deleteForm">
         <table class="table">
             <thead>
             </thead>
@@ -118,7 +118,7 @@
                                 <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
                             </td>
                             <td>
-                                <input name="chemicalsToDelete" type="checkbox" onchange="callFunction()" value="@item.con.ContainerId"> 
+                                <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" value="@item.con.ContainerId">
                             </td>
                         </tr>
                     }
@@ -142,23 +142,47 @@
             <a href=""> > </a>
             <a href=""> >> </a>
         </div>
-        <button type="submit" id="DelButton" disabled asp-page-handler="delete">
-            Delete
-        </button>
     </form>
+    <!-- Button trigger for modal -->
+    <button type="button" class="btn btn-danger" id="delModalBtn" data-toggle="modal" data-target="#confirmatioinModal" disabled>
+        Delete
+    </button>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger" id="DelButton" form="deleteForm" asp-page-handler="delete">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
     //Enables or disables the delete button
-    function callFunction() {
+    function toggleDeleteButton() {
         var checkboxes = document.getElementsByName('chemicalsToDelete'); //All the checkboxes on the chemicals
-        var sendbtn = document.getElementById('DelButton');
+        var sendbtn = document.getElementById('delModalBtn');
 
-        /*Determines if there is a check in one of the boxes. Can be simplified into a loop that checks the 
+        /*Determines if there is a check in one of the boxes. Can be simplified into a loop that checks the
          status of each of the checkboxes from the checkboxes array*/
         var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
 
-        //Enables or disables the submit button accordingly
+        //style="display: none/initial;"
         sendbtn.disabled = checkedOne ? false : true;
     }
 </script>

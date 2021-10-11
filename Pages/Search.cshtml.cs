@@ -59,12 +59,13 @@ namespace ChemStoreWebApp.Pages
         }
 
 
-
-        public List<int> deleteFromDatabase(List<int> indexes)
+        //Deletes containers from the database using a list of their ids
+        public List<int> deleteFromDatabase(List<int> containerIds)
         {
-            foreach (int containerId in indexes)
+            foreach (int id in containerIds)
             {
-                ChemStoreWebApp.Models.Container container = _context.Container.Find(containerId);
+                //Finds the container associated with the given id and deletes it
+                ChemStoreWebApp.Models.Container container = _context.Container.Find(id);
 
                 if (container != null)
                 {
@@ -72,7 +73,7 @@ namespace ChemStoreWebApp.Pages
                     _context.SaveChanges();
                 }
             }
-            return indexes;
+            return containerIds;
         }
 
         /// <summary>
@@ -102,6 +103,7 @@ namespace ChemStoreWebApp.Pages
             return true;
         }
 
+        //Deletes selected chemicals on delete button form submission
         public async Task<IActionResult> OnPostDelete()
         {
             deleteFromDatabase(chemicalsToDelete);
