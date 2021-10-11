@@ -65,86 +65,105 @@
 </div>
 
 <div id="results" class="results">
-    <table class="table">
-        <thead>
-        </thead>
-        <tbody>
-            @if (Model.DisplayContainers.Count() > 0)
-            {
-                var count = Model.DisplayContainers.Count();
-                var start = 0;
-                var end = 25;
-                var numOfPages = Model.DisplayContainers.Count() / 25;
-
-                @if (!Model.textEntered())
+    <form method="post">
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+                @if (Model.DisplayContainers.Count() > 0)
                 {
-                    <p class="noFilters">No Filters Applied</p>
+                    var count = Model.DisplayContainers.Count();
+                    var start = 0;
+                    var end = 25;
+                    var numOfPages = Model.DisplayContainers.Count() / 25;
+
+                    @if (!Model.textEntered())
+                    {
+                        <p class="noFilters">No Filters Applied</p>
+                    }
+
+
+                    if (count < end) { end = count; }
+                    @for (var i = start; i < end; i++)
+                    {
+                        var item = Model.DisplayContainers[i];
+                        <tr class="expandable">
+                            <td class="a">
+                                @Html.DisplayFor(modelItem => item.chem.CasNumber)
+                            </td>
+                            <td class="a">
+                                @Html.DisplayFor(modelItem => item.chem.ChemName)
+                            </td>
+                            <td class="a">
+                                @Html.DisplayFor(modelItem => item.chem.HazardId)
+                            </td>
+                            <td class="a">
+                                @Html.DisplayFor(modelItem => item.con.Size)
+                                @Html.DisplayFor(modelItem => item.con.Unit)
+                            </td>
+                        </tr>
+                        <tr class="moreInformation">
+                            <td class="building">
+                                @Html.DisplayFor(modelItem => item.building.BuildingName)
+                                @Html.DisplayFor(modelItem => item.loc.Room)
+                            </td>
+                            <td class="dpt">
+                                @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+
+                            </td>
+                            <td class="b">
+                                <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
+                            </td>
+                            <td class="b">
+                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
+                            </td>
+                            <td>
+                                <input name="chemicalsToDelete" type="checkbox" onchange="callFunction()" value="@item.con.ContainerId"> 
+                            </td>
+                        </tr>
+                    }
                 }
-
-
-                if (count < end) { end = count; }
-                @for (var i = start; i < end; i++)
+                else
                 {
-                    var item = Model.DisplayContainers[i];
-                    <tr class="expandable">
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.chem.CasNumber)
-                        </td>
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.chem.ChemName)
-                        </td>
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.chem.HazardId)
-                        </td>
-                        <td class="a">
-                            @Html.DisplayFor(modelItem => item.con.Size)
-                            @Html.DisplayFor(modelItem => item.con.Unit)
-
-                        </td>
-                    </tr>
-                    <tr class="moreInformation">
-                        <td class="building">
-                            @Html.DisplayFor(modelItem => item.building.BuildingName)
-                            @Html.DisplayFor(modelItem => item.loc.Room)
-                        </td>
-                        <td class="dpt">
-                            @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
-
-                        </td>
-                        <td class="b">
-                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
-                        </td>
-                        <td class="b">
-                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
-                        </td>
-                     
-                    </tr>
+                    <p>No results found</p>
                 }
-            }
-            else
+            </tbody>
+        </table>
+
+        <div class="pageSelectors">
+            <!--<a href=""> << </a>
+            <a href=""> < </a>-->
+
+            @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
             {
-                <p>No results found</p>
+                <a href=""> @i.ToString()  </a>
             }
-        </tbody>
-    </table>
 
-    <div class="pageSelectors">
-        <!--<a href=""> << </a>
-        <a href=""> < </a>-->
-
-        @for (var i =1; i<= Model.DisplayContainers.Count()/25 + 1; i++)
-        { 
-            <a href=""> @i.ToString()  </a>
-        }
-
-        <a href=""> > </a>
-        <a href=""> >> </a>
-    </div>
+            <a href=""> > </a>
+            <a href=""> >> </a>
+        </div>
+        <button type="submit" id="DelButton" disabled asp-page-handler="delete">
+            Delete
+        </button>
+    </form>
 </div>
 
+<script>
+    //Enables or disables the delete button
+    function callFunction() {
+        var checkboxes = document.getElementsByName('chemicalsToDelete'); //All the checkboxes on the chemicals
+        var sendbtn = document.getElementById('DelButton');
+
+        /*Determines if there is a check in one of the boxes. Can be simplified into a loop that checks the 
+         status of each of the checkboxes from the checkboxes array*/
+        var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+        //Enables or disables the submit button accordingly
+        sendbtn.disabled = checkedOne ? false : true;
+    }
+</script>
 
 <script>
-
     // Opens and closes the filter sections
     function closeFilter() {
         document.getElementById("search").style.display = "none";
@@ -222,7 +241,7 @@
                 dropdownContent.style.display = "none";
             } else {
                 dropdownContent.style.display = "block";
-            } 
+            }
         });
     }
 </script>

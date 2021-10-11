@@ -40,6 +40,8 @@ namespace ChemStoreWebApp.Pages
         public string searchDepartment { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchRetired { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<int> chemicalsToDelete { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -54,6 +56,23 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchSize) &&
                 string.IsNullOrEmpty(searchUnits) &&
                 string.IsNullOrEmpty(searchDepartment));
+        }
+
+
+
+        public List<int> deleteFromDatabase(List<int> indexes)
+        {
+            foreach (int containerId in indexes)
+            {
+                ChemStoreWebApp.Models.Container container = _context.Container.Find(containerId);
+
+                if (container != null)
+                {
+                    _context.Container.Remove(container);
+                    _context.SaveChanges();
+                }
+            }
+            return indexes;
         }
 
         /// <summary>
@@ -73,16 +92,20 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchEmail) && !con.pic.Email.Contains(searchEmail, StringComparison.OrdinalIgnoreCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units) Int32.Parse(searchUnits)))
+            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units)Int32.Parse(searchUnits)))
                 return false;
             if (!string.IsNullOrEmpty(searchDepartment) && !con.loc.Department.ToString().Equals(searchDepartment))
                 return false;
             if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
                 return false;
-            if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
-                return false;
 
             return true;
+        }
+
+        public async Task<IActionResult> OnPostDelete()
+        {
+            deleteFromDatabase(chemicalsToDelete);
+            return RedirectToPage();
         }
 
         public async Task OnGetAsync()
