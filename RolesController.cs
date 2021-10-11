@@ -9,6 +9,7 @@ using ChemStoreWebApp.Models;
 
 namespace ChemStoreWebApp
 {
+    
     public class RolesController : Controller
     {
         private readonly chemstoreContext _context;
@@ -149,4 +150,5 @@ namespace ChemStoreWebApp
             return _context.Role.Any(e => e.Id == id);
         }
     }
+    
 }

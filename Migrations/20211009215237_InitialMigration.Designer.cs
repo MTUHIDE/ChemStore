@@ -3,14 +3,16 @@ using System;
 using ChemStoreWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    partial class chemstoreContextModelSnapshot : ModelSnapshot
+    [Migration("20211009215237_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,10 +21,10 @@ namespace ChemStoreWebApp.Migrations
 
             modelBuilder.Entity("ChemStoreWebApp.Models.Account", b =>
                 {
-                    b.Property<int>("AccountId")
+                    b.Property<long>("AccountId")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("Account_ID")
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<int?>("Department")
                         .HasColumnType("int");
@@ -128,9 +130,9 @@ namespace ChemStoreWebApp.Migrations
                         .HasColumnType("varchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int>("SupervisorId")
+                    b.Property<long>("SupervisorId")
                         .HasColumnName("Supervisor_ID")
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasComment("FK(Supervisor.ID)");
 
                     b.Property<int>("Unit")

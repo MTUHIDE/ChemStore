@@ -91,33 +91,33 @@
                             @Html.DisplayFor(modelItem => item.chem.CasNumber)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.chem.ChemName)
+                            @Html.DisplayFor(modelItem => item.chem.ChemicalName)
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.chem.HazardId)
+                            TODO <!--Change to list of hazard icons-->
                         </td>
                         <td class="a">
-                            @Html.DisplayFor(modelItem => item.con.Size)
-                            @Html.DisplayFor(modelItem => item.con.Unit)
+                            @Html.DisplayFor(modelItem => item.con.Amount)
+                            @EnumHelper.GetDisplayValue((Units)item.con.Unit)
 
                         </td>
                     </tr>
                     <tr class="moreInformation">
                         <td class="building">
-                            @Html.DisplayFor(modelItem => item.building.BuildingName)
-                            @Html.DisplayFor(modelItem => item.loc.Room)
+                            @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
+                            @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                         </td>
                         <td class="dpt">
-                            @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+                            @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
 
                         </td>
                         <td class="b">
                             <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                         </td>
                         <td class="b">
-                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
+                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">TODO Safety Data Sheet</a><!--Create proper link to safety data sheet-->
                         </td>
-                     
+
                     </tr>
                 }
             }
@@ -226,3 +226,5 @@
         });
     }
 </script>
+
+
