@@ -2,72 +2,101 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-public enum Departments
+public enum Buildings
 {
-    [Display(Name = "Biomedical Engineering")]
-    BiomedicalEng,
-    [Display(Name = "Chemical Engineering")]
-    ChemEng,
-    [Display(Name = "Civil and Environmental Engineering")]
-    CivilAndEnviromentalEng,
-    [Display(Name = "Electrical and Computer Engineering")]
-    ElectricalAndComputerEng,
-    [Display(Name = "Engineering Fundamentals")]
-    EngFundamentals,
-    [Display(Name = "Geological and Mining Engineering and Sciences")]
-    GeoMiningEngAndSciences,
-    [Display(Name = "Manufacturing and Mechanical Engineering Technology")]
-    MandMEngTech,
-    [Display(Name = "Materials Science and Engineering")]
-    MaterialsScienceEng,
-    [Display(Name = "Mechanical Engineering-Engineering Mechanics")]
+    [Display(Name = "Administration Building")]
+    AdminBuilding,
+    [Display(Name = "Lakeshore Center")]
+    LakeshoreCenter,
+    [Display(Name = "ROTC Building")]
+    ROTC,
+    [Display(Name = "Academic Office Building")]
+    AOB,
+    [Display(Name = "Electrical Engineering Resources Center")]
+    EERC,
+    [Display(Name = "Dow Environmental Sciences and Engineering Building")]
+    Dow,
+    [Display(Name = "Alumni House")]
+    AlumniHouse,
+    [Display(Name = "Rozsa Center for the Performing Arts")]
+    Rozsa,
+    [Display(Name = "Walker Arts and Humanities Center")]
+    Walker,
+    [Display(Name = "Minerals and Materials Engineering Building")]
+    MandM,
+    [Display(Name = "Hamar House")]
+    Hamar,
+    [Display(Name = "Grover C Dillman Hall")]
+    Dillman,
+    [Display(Name = "Fisher Hall")]
+    Fisher,
+    [Display(Name = "Widmaier House")]
+    WidmaierHouse,
+    [Display(Name = "J. R. Van Pelt and John and Ruanne Opie Library")]
+    Library,
+    [Display(Name = "U. J. Noblet Forestry Building")]
+    Forestry,
+    [Display(Name = "Chemical Sciences and Engineering Building")]
+    ChemSci,
+    [Display(Name = "R. L. Smith Building")]
     MEEM,
-    [Display(Name = "Biological Sciences")]
-    BiologicalSciences,
-
-    Chemistry,
-    [Display(Name = "Cognitive and Learning Sciences")]
-    CognitiveAndLearning,
-    [Display(Name = "Kinesiology and Integrative Physiology")]
-    KinesiologyAndIntegrativePhysiology,
-
-    Humanities,
-    [Display(Name = "Mathematical Sciences")]
-    Math,
-
-    Physics,
-    [Display(Name = "Social Sciences")]
-    SocialSciences,
-    [Display(Name = "Visual and Performing Arts")]
-    VPA,
-    [Display(Name = "Air Force ROTC")]
-    AirForceROTC,
-    [Display(Name = "Army ROTC")]
-    ArmyROTC,
-    [Display(Name = "Applied Computing")]
-    AppliedComputing,
-    [Display(Name = "Computer Science")]
-    ComputerScience,
-    [Display(Name = "College of Business")]
-    Business,
-    [Display(Name = "College of Forest Resources and Environmental Science")]
-    ForestResourcesAndEnvironmentalScience,
-    [Display(Name = "Pavlis Honors College")]  
-    Pavlis,
-    [Display(Name = "Graduate School")]
-    GradSchool
+    [Display(Name = "Student Development Complex")]
+    SDC,
+    [Display(Name = "Sherman Field Press Box")]
+    ShermanFieldPressBox,
+    [Display(Name = "Ford Center")]
+    FordCenter,
+    [Display(Name = "Kanwal and Ann Rekhi Hall")]
+    Rekhi,
+    [Display(Name = "Little Huskies Child Development Center")]
+    LittleHuskies,
+    [Display(Name = "Douglass Houghton Hall")]
+    DHH,
+    [Display(Name = "Daniell Heights Apartments")]
+    DaniellHeights,
+    [Display(Name = "Memorial Union Building")]
+    MUB,
+    [Display(Name = "Wadsworth Hall")]
+    Wads,
+    [Display(Name = "West McNair Hall")]
+    WestMcNair,
+    [Display(Name = "East McNair Hall")]
+    EastMcNair,
+    [Display(Name = "Central Heating Plant")]
+    CentralHeatingPlant,
+    [Display(Name = "Lakeside Labratory")]
+    LakesideLabratory,
+    [Display(Name = "Storage-Service")]
+    Facilities,
+    [Display(Name = "Hillside Place")]
+    Hillside,
+    [Display(Name = "Gates Tennis Center")]
+    Gates,
+    [Display(Name = "Keweenaw Research Center")]
+    KRC,
+    [Display(Name = "Harold Meese Center")]
+    Meese,
+    [Display(Name = "Advanced Technology Development Complex")]
+    ATDC,
+    [Display(Name = "A. E. Seaman Mineral Museum")]
+    Museum,
+    [Display(Name = "Great Lakes Research Center")]
+    GLRC
 }
 
 namespace ChemStoreWebApp.Models
 {
     public partial class Location
     {
-        public int LocationId { get; set; }
-        public Departments Department { get; set; }
-        public int? Room { get; set; }
-        public int? Building { get; set; }
-        public int LocationFid { get; set; }
+        public Location()
+        {
+            Container = new HashSet<Container>();
+        }
 
-        public virtual HasLocation LocationF { get; set; }
+        public string RoomId { get; set; }
+        public string RoomNumber { get; set; }
+        public int BuildingName { get; set; }
+
+        public virtual ICollection<Container> Container { get; set; }
     }
 }

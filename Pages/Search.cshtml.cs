@@ -19,8 +19,6 @@ namespace ChemStoreWebApp.Pages
         {
             _context = context;
         }
-
-        //public IList<Container> Container { get; set; }
         public IList<DisplayContainer> DisplayContainers { get; set; }
 
         // variables bound to the URL storing search terms
@@ -81,28 +79,27 @@ namespace ChemStoreWebApp.Pages
         /// </summary>
         /// <param name="con">Container object</param>
         /// <returns>True if container should be listed</returns>
-        public Boolean isValidSearchItem(DisplayContainer con)
+        public Boolean isValidSearchItem(DisplayContainer con, bool ignoreCase)
         {
-            if (!string.IsNullOrEmpty(searchCAS) && con.chem.CasNumber != Int32.Parse(searchCAS))
+            var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            if (!string.IsNullOrEmpty(searchCAS) && !con.chem.CasNumber.Contains(searchString, checkCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemicalName.Contains(searchString, checkCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchBuilding) && !con.building.BuildingName.ToString().Equals(searchBuilding))
+            if (!string.IsNullOrEmpty(searchBuilding) && !con.loc.BuildingName.ToString().Equals(searchBuilding))
                 return false;
-            if (!string.IsNullOrEmpty(searchSize) && con.con.Size != Int32.Parse(searchSize))
+            if (!string.IsNullOrEmpty(searchSize) && con.con.Amount != Int32.Parse(searchSize))
                 return false;
-            if (!string.IsNullOrEmpty(searchEmail) && !con.pic.Email.Contains(searchEmail, StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(searchEmail) && !con.supervisor.Email.Contains(searchEmail, checkCase))
                 return false;
             if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units)Int32.Parse(searchUnits)))
                 return false;
-            if (!string.IsNullOrEmpty(searchDepartment) && !con.loc.Department.ToString().Equals(searchDepartment))
-                return false;
-            if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
+            if (!string.IsNullOrEmpty(searchDepartment) && !con.supervisor.Department.ToString().Equals(searchDepartment))
                 return false;
 
             return true;
         }
-
+        
         //Deletes selected chemicals on delete button form submission
         public async Task<IActionResult> OnPostDelete()
         {
@@ -110,18 +107,21 @@ namespace ChemStoreWebApp.Pages
             return RedirectToPage();
         }
 
+        /// <summary>
+        /// Runs on every search and returns a list of containers that fit the given search criteria
+        /// </summary>
+        /// <returns></returns>
         public async Task OnGetAsync()
         {
             // stores data from database in arrays to limit amount of calls to database at once
             var containers = _context.Container.ToList();
             var chemicals = _context.Chemical.ToList();
+            var accounts = _context.Account.ToList();
             var locations = _context.Location.ToList();
-            var buildings = _context.Building.ToList();
-            var pics = _context.PersonInCharge.ToList();
 
             DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
-                c => new DisplayContainer(c, chemicals, locations, buildings, pics))
-                .Where(c => isValidSearchItem(c))
+                c => new DisplayContainer(c, chemicals, locations, accounts))
+                .Where(c => isValidSearchItem(c, true))
                 .ToList());
         }
     }
