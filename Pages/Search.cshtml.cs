@@ -38,6 +38,8 @@ namespace ChemStoreWebApp.Pages
         public string searchDepartment { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchRetired { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public List<int> chemicalsToDelete { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -52,6 +54,24 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchSize) &&
                 string.IsNullOrEmpty(searchUnits) &&
                 string.IsNullOrEmpty(searchDepartment));
+        }
+
+
+        //Deletes containers from the database using a list of their ids
+        public List<int> deleteFromDatabase(List<int> containerIds)
+        {
+            foreach (int id in containerIds)
+            {
+                //Finds the container associated with the given id and deletes it
+                ChemStoreWebApp.Models.Container container = _context.Container.Find(id);
+
+                if (container != null)
+                {
+                    _context.Container.Remove(container);
+                    _context.SaveChanges();
+                }
+            }
+            return containerIds;
         }
 
         /// <summary>
@@ -72,15 +92,21 @@ namespace ChemStoreWebApp.Pages
                 return false;
             if (!string.IsNullOrEmpty(searchEmail) && !con.supervisor.Email.Contains(searchEmail, checkCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units) Int32.Parse(searchUnits)))
+            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units)Int32.Parse(searchUnits)))
                 return false;
             if (!string.IsNullOrEmpty(searchDepartment) && !con.supervisor.Department.ToString().Equals(searchDepartment))
-                return false;
-            if (!string.IsNullOrEmpty(searchRetired) && bool.Parse(searchRetired) != con.con.Retired)
                 return false;
 
             return true;
         }
+        
+        //Deletes selected chemicals on delete button form submission
+        public async Task<IActionResult> OnPostDelete()
+        {
+            deleteFromDatabase(chemicalsToDelete);
+            return RedirectToPage();
+        }
+
         /// <summary>
         /// Runs on every search and returns a list of containers that fit the given search criteria
         /// </summary>
