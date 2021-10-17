@@ -92,33 +92,33 @@
                                 @Html.DisplayFor(modelItem => item.chem.CasNumber)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.ChemName)
+                                @Html.DisplayFor(modelItem => item.chem.ChemicalName)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.HazardId)
+                                @Html.DisplayFor(modelItem => item.chem.ChemicalHazards)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.con.Size)
+                                @Html.DisplayFor(modelItem => item.con.Amount)
                                 @Html.DisplayFor(modelItem => item.con.Unit)
+                            </td>
+                            <td>
+                                <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
                             </td>
                         </tr>
                         <tr class="moreInformation">
                             <td class="building">
-                                @Html.DisplayFor(modelItem => item.building.BuildingName)
-                                @Html.DisplayFor(modelItem => item.loc.Room)
+                                @Html.DisplayFor(modelItem => item.loc.BuildingName)
+                                @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                             </td>
                             <td class="dpt">
-                                @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+                                @Html.DisplayFor(modelItem => item.loc.BuildingName) <!--Displayed department for testing, you can remove if not needed-->
 
                             </td>
                             <td class="b">
                                 <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                             </td>
                             <td class="b">
-                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
-                            </td>
-                            <td>
-                                <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" value="@item.con.ContainerId">
+                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.ChemicalHazards">Safety Data Sheet</a>
                             </td>
                         </tr>
                     }
@@ -143,131 +143,165 @@
             <a href=""> >> </a>
         </div>
     </form>
-    <!-- Button trigger for modal -->
-    <button type="button" class="btn btn-danger" id="delModalBtn" data-toggle="modal" data-target="#confirmatioinModal" disabled>
-        Delete
-    </button>
-</div>
-
-<!-- Confirmation Modal -->
-<div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-danger" id="DelButton" form="deleteForm" asp-page-handler="delete">
-                    Delete
-                </button>
-            </div>
-        </div>
+    <div id="regularDiv">
+        <button type="button" class="btn btn-danger" id="initiateDelBtn" onclick="deleteModeOn()">
+            Remove
+        </button>
+        <button type="button" class="btn btn-success" id="addChemicalBtn">
+            Add
+        </button>
+    </div>
+    <div id="deleteDiv" style="display: none">
+        <button type="button" class="btn btn-secondary" onclick="deleteModeOff()" id="cancelDelBtn">
+            Cancel
+        </button>
+        <!-- Button trigger for modal -->
+        <button type="button" class="btn btn-danger" id="delModalBtn" data-toggle="modal" data-target="#confirmatioinModal" disabled>
+            Delete
+        </button>
     </div>
 </div>
 
-<script>
-    //Enables or disables the delete button
-    function toggleDeleteButton() {
-        var checkboxes = document.getElementsByName('chemicalsToDelete'); //All the checkboxes on the chemicals
-        var sendbtn = document.getElementById('delModalBtn');
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" id="DelButton" form="deleteForm" asp-page-handler="delete">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        /*Determines if there is a check in one of the boxes. Can be simplified into a loop that checks the
-         status of each of the checkboxes from the checkboxes array*/
-        var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+    <script>
+        //Enables or disables the delete button
+        function toggleDeleteButton() {
+            var checkboxes = document.getElementsByName('chemicalsToDelete'); //All the checkboxes on the chemicals
+            var sendbtn = document.getElementById('delModalBtn');
 
-        //style="display: none/initial;"
-        sendbtn.disabled = checkedOne ? false : true;
-    }
-</script>
+            /*Determines if there is a check in one of the boxes. Can be simplified into a loop that checks the
+             status of each of the checkboxes from the checkboxes array*/
+            var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
 
-<script>
-    // Opens and closes the filter sections
-    function closeFilter() {
-        document.getElementById("search").style.display = "none";
-        document.getElementById("openFilter").style.display = "block";
-    }
-    function openFilter() {
-        document.getElementById("search").style.display = "block";
-        document.getElementById("openFiler").style.display = "none";
-    }
+            //style="display: none/initial;"
+            sendbtn.disabled = checkedOne ? false : true;
+        }
+        function deleteModeOn() {
+            var checkboxes = document.getElementsByName('chemicalsToDelete');
+            checkboxes.forEach((val, index) => checkboxes[index].style.display = "initial");
 
-</script>
-<script>
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+            var deleteDiv = document.getElementById('deleteDiv');
+            deleteDiv.style.display = "initial";
+            var regularDiv = document.getElementById('regularDiv');
+            regularDiv.style.display = "none";
+        }
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "block";
-            }
-        });
-    }
-</script>
-<script>
-    var coll = document.getElementsByClassName("expandable");
-    var i;
+        function deleteModeOff()
+        {
+            var checkboxes = document.getElementsByName('chemicalsToDelete');
+            checkboxes.forEach((val, index) => checkboxes[index].style.display = "none");
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-                this.style.backgroundColor = "rgb(225,225,225)";
-            } else {
-                content.style.display = "block";
-                this.style.backgroundColor = "rgb(204,204,204)";
-            }
-        });
-    }
-</script>
+            var deleteDiv = document.getElementById('deleteDiv');
+            deleteDiv.style.display = "none";
+            var regularDiv = document.getElementById('regularDiv');
+            regularDiv.style.display = "initial";
+        }
 
-<script>
-    // The script to control the location filter selection
-    var dropdown = document.getElementsByClassName("location-dropdown");
-    var i;
+    </script>
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
+    <script>
+        // Opens and closes the filter sections
+        function closeFilter() {
+            document.getElementById("search").style.display = "none";
+            document.getElementById("openFilter").style.display = "block";
+        }
+        function openFilter() {
+            document.getElementById("search").style.display = "block";
+            document.getElementById("openFiler").style.display = "none";
+        }
 
-<script>
-    // The script to control the container filter selection
-    var dropdown = document.getElementsByClassName("container-dropdown");
-    var i;
+    </script>
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    </script>
+    <script>
+        var coll = document.getElementsByClassName("expandable");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                    this.style.backgroundColor = "rgb(225,225,225)";
+                } else {
+                    content.style.display = "block";
+                    this.style.backgroundColor = "rgb(204,204,204)";
+                }
+            });
+        }
+    </script>
+
+    <script>
+        // The script to control the location filter selection
+        var dropdown = document.getElementsByClassName("location-dropdown");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+    <script>
+        // The script to control the container filter selection
+        var dropdown = document.getElementsByClassName("container-dropdown");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 
 
