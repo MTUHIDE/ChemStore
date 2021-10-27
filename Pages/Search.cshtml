@@ -99,20 +99,22 @@
                             </td>
                             <td class="a">
                                 @Html.DisplayFor(modelItem => item.con.Amount)
-                                @Html.DisplayFor(modelItem => item.con.Unit)
+                                @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
-                            <td>
+                            <td class="a">
+                                <button type="button" class="blankImgButton" name="editTableBtn" onclick="event.stopPropagation()">
+                                    <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
+                                </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
                             </td>
                         </tr>
                         <tr class="moreInformation">
                             <td class="building">
-                                @Html.DisplayFor(modelItem => item.loc.BuildingName)
+                                @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
                                 @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                             </td>
                             <td class="dpt">
-                                @Html.DisplayFor(modelItem => item.loc.BuildingName) <!--Displayed department for testing, you can remove if not needed-->
-
+                                @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
                             </td>
                             <td class="b">
                                 <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
@@ -132,7 +134,7 @@
 
         <div class="pageSelectors">
             <!--<a href=""> << </a>
-            <a href=""> < </a>-->
+    <a href=""> < </a>-->
 
             @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
             {
@@ -141,44 +143,43 @@
 
             <a href=""> > </a>
             <a href=""> >> </a>
+            <div style="margin-left: auto">
+                <div id="regularDiv">
+                    <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn">
+                        Add
+                    </button>
+                    <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? "none" : "initial")" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? "disabled" : null)">
+                        Remove
+                    </button>
+                </div>
+                <div id="deleteDiv" style="display: none">
+                    <!-- Button trigger for modal -->
+                    <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
+                        Delete
+                    </button>
+                    <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
+                        Cancel
+                    </button>
+                </div>
+            </div>
         </div>
     </form>
-    <div id="regularDiv">
-        <button type="button" class="btn btn-danger" id="initiateDelBtn" onclick="deleteModeOn()">
-            Remove
-        </button>
-        <button type="button" class="btn btn-success" id="addChemicalBtn">
-            Add
-        </button>
-    </div>
-    <div id="deleteDiv" style="display: none">
-        <button type="button" class="btn btn-secondary" onclick="deleteModeOff()" id="cancelDelBtn">
-            Cancel
-        </button>
-        <!-- Button trigger for modal -->
-        <button type="button" class="btn btn-danger" id="delModalBtn" data-toggle="modal" data-target="#confirmatioinModal" disabled>
-            Delete
-        </button>
-    </div>
 </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+            <div class="modalcss">
+                <div class="modal-header" style="justify-content:center;">
+                    <h5 class="modal-title" style="font-size: 30px" id="modalLabel">Are You Sure?</h5>
+                    <button type="button"  class="close" style="position: absolute; right: 15px; width: 20%;" data-dismiss="modal">
+                        <span>&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    Are you sure you want to delete?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger" id="DelButton" form="deleteForm" asp-page-handler="delete">
-                        Delete
+                <div class="modal-body" style="text-align: center">
+                    <button type="button" class="btn modalBtns regBtn" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn modalBtns redBtn" id="DelButton" form="deleteForm" asp-page-handler="delete">
+                        Yes
                     </button>
                 </div>
             </div>
@@ -196,27 +197,49 @@
             var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
 
             //style="display: none/initial;"
+            sendbtn.style.pointerEvents = checkedOne ? "initial" : "none";
             sendbtn.disabled = checkedOne ? false : true;
         }
+
+        //Replaces edit image buttons with checkboxes to delete containers and changes buttons to cancel and delete
         function deleteModeOn() {
+            //Hides the edit image buttons
+            var editBtns = document.getElementsByName('editTableBtn');
+            editBtns.forEach((val, index) => editBtns[index].style.display = "none");
+
+            //Displays the checkboxes
             var checkboxes = document.getElementsByName('chemicalsToDelete');
             checkboxes.forEach((val, index) => checkboxes[index].style.display = "initial");
 
+            //Changes the buttons
             var deleteDiv = document.getElementById('deleteDiv');
             deleteDiv.style.display = "initial";
             var regularDiv = document.getElementById('regularDiv');
             regularDiv.style.display = "none";
         }
 
+        //Replaces checkboxes with edit image buttons to edit containers and changes buttons to remove and add
         function deleteModeOff()
         {
+            //Hides and deselects the checkboxes
             var checkboxes = document.getElementsByName('chemicalsToDelete');
-            checkboxes.forEach((val, index) => checkboxes[index].style.display = "none");
+            checkboxes.forEach((val, index) => {
+                checkboxes[index].style.display = "none";
+                checkboxes[index].checked = false;
+            });
 
+            //Shows edit image buttons
+            var editBtns = document.getElementsByName('editTableBtn');
+            editBtns.forEach((val, index) => editBtns[index].style.display = "initial");
+
+            //Changes buttons shown
             var deleteDiv = document.getElementById('deleteDiv');
             deleteDiv.style.display = "none";
             var regularDiv = document.getElementById('regularDiv');
             regularDiv.style.display = "initial";
+
+            var sendbtn = document.getElementById('delModalBtn');
+            sendbtn.disabled = true;
         }
 
     </script>
@@ -303,5 +326,3 @@
             });
         }
     </script>
-
-
