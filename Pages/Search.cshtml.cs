@@ -39,7 +39,7 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public string searchRetired { get; set; }
         [BindProperty(SupportsGet = true)]
-        public List<int> chemicalsToDelete { get; set; }
+        public List<long> chemicalsToDelete { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -58,9 +58,9 @@ namespace ChemStoreWebApp.Pages
 
 
         //Deletes containers from the database using a list of their ids
-        public List<int> deleteFromDatabase(List<int> containerIds)
+        public List<long> deleteFromDatabase(List<long> containerIds)
         {
-            foreach (int id in containerIds)
+            foreach (long id in containerIds)
             {
                 //Finds the container associated with the given id and deletes it
                 ChemStoreWebApp.Models.Container container = _context.Container.Find(id);
