@@ -81,7 +81,12 @@
                     {
                         <p class="noFilters">No Filters Applied</p>
                     }
-
+                    <tr>
+                        <td>Chemical Name</td>
+                        <td>CAS Number</td>
+                        <td>Hazard</td>
+                        <td>Size</td>
+                    </tr>
 
                     if (count < end) { end = count; }
                     @for (var i = start; i < end; i++)
@@ -89,33 +94,34 @@
                         var item = Model.DisplayContainers[i];
                         <tr class="expandable">
                             <td class="a">
+                                @Html.DisplayFor(modelItem => item.chem.ChemicalName)
+                            </td>
+                            <td class="a">
+                                
                                 @Html.DisplayFor(modelItem => item.chem.CasNumber)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.ChemName)
+                                TODO <!--Change to list of hazard icons-->
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.HazardId)
-                            </td>
-                            <td class="a">
-                                @Html.DisplayFor(modelItem => item.con.Size)
-                                @Html.DisplayFor(modelItem => item.con.Unit)
+                                @Html.DisplayFor(modelItem => item.con.Amount)
+                                @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                         </tr>
                         <tr class="moreInformation">
                             <td class="building">
-                                @Html.DisplayFor(modelItem => item.building.BuildingName)
-                                @Html.DisplayFor(modelItem => item.loc.Room)
+                                @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
+                                @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                             </td>
                             <td class="dpt">
-                                @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+                                @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
 
                             </td>
                             <td class="b">
                                 <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                             </td>
                             <td class="b">
-                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
+                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">TODO Safety Data Sheet</a>
                             </td>
                             <td>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" value="@item.con.ContainerId">

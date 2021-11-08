@@ -48,6 +48,7 @@ h1 {
 }
 .results{
     margin-left: 400px;
+    width: 1000px;
 }
 .default {
     text-align: center;
@@ -195,24 +196,30 @@ td {
         vertical-align: middle;
     }
 
+    tr {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 40% 25% 25% 10%;
+    }
+
 .a:nth-child(1)::before {
-    content: "CAS Number:";
+    /*content: "CAS Number:";*/
 }
 
 
 .a:nth-child(2)::before {
-    content: "Chemical Name:";
+    /*content: "Chemical Name:";*/
 }
 
 .a:nth-child(3)::before {
-    content: "Hazard ID:";
+    /*content: "Hazard ID:";*/
 }
 
-.a:nth-child(4){
-    float: right;
+.a:nth-child(4) {
+    /*float: right;*/
 }
     .a:nth-child(4)::before {
-        content: "Size: ";
+        /*content: "Size: ";*/
     }
 
 .a:nth-child(5) {
