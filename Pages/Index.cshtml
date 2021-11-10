@@ -84,15 +84,22 @@
 
 
                 if (count < end) { end = count; }
+
+                <tr>
+                    <td>Chemical Name</td>
+                    <td>CAS Number</td>
+                    <td>Hazard</td>
+                    <td>Size</td>
+                </tr>
                 @for (var i = start; i < end; i++)
                 {
                 var item = Model.DisplayContainers[i];
                 <tr class="expandable">
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.chem.CasNumber)
+                        @Html.DisplayFor(modelItem => item.chem.ChemicalName)
                     </td>
                     <td class="a">
-                        @Html.DisplayFor(modelItem => item.chem.ChemicalName)
+                        @Html.DisplayFor(modelItem => item.chem.CasNumber)
                     </td>
                     <td class="a">
                         @Html.DisplayFor(modelItem => item.chem.ChemicalHazards)

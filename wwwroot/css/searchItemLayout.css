@@ -198,8 +198,7 @@ td {
 
     tr {
         display: grid;
-        justify-content: center;
-        grid-template-columns: 40% 25% 25% 10%;
+        grid-template-columns: 20% 20% 20% 10% 5%;
     }
 
 .a:nth-child(1)::before {
