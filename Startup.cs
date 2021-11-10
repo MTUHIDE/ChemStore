@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Web.UI;
+using ChemStoreWebApp.Security;
 
 namespace ChemStoreWebApp
 {
@@ -33,19 +35,40 @@ namespace ChemStoreWebApp
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
 
-            services.AddControllersWithViews(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
-            services.AddRazorPages();
+
+            //services.AddControllersWithViews(options =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //        .RequireAuthenticatedUser()
+            //        .Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //});
+            //services.AddRazorPages();
 
             services.AddDbContext<chemstoreContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("ChemStoreDB")));
 
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+
+            services.AddRazorPages().AddMvcOptions(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddMicrosoftIdentityUI().AddRazorRuntimeCompilation();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                    policy.Requirements.Add(new AdminRequirement()));
+
+                options.AddPolicy("Employee", policy =>
+                    policy.Requirements.Add(new EmployeeRequirement()));
+
+                options.AddPolicy("Associate", policy =>
+                    policy.Requirements.Add(new AssociateRequirement()));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
