@@ -167,10 +167,10 @@
                     <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" />
                     <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" />
                     <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" />
-                    <select asp-for="buildingIndex" asp-items="Model.Categories">
+                    <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getComputer()">
                         <option value="" disabled selected hidden>Building</option>
                     </select>
-                    <select asp-for="SubCategoryId" value="@Request.Query["Room"]">
+                    <select asp-for="SubCategoryId" onchange="printValue()">
                         <option value="" disabled selected hidden>Room Number</option>
                     </select>
                     <select name="Hazard" value="@Request.Query["Hazard"]">
@@ -208,10 +208,21 @@
 </div>
 
 <script>
-    document.getElementById('buildingIndex').addEventListener('change', (e) => {
+    function printValue() {
+        var ex = document.getElementById('SubCategoryId');
+        var str = ex.options[ex.selectedIndex].value;
+        console.log('STR: ', str);
+    }
+</script>
+
+<script>
+    function getComputer() {
         console.log('buildingIndex', buildingIndex);
+        var ex = document.getElementById('buildingIndex');
+        var str = ex.options[ex.selectedIndex].value;
+        console.log("BUILDINGSTR", str);
         document.getElementById('SubCategoryId').innerHTML = "<option value=''>Select SubCategory</option>";
-        fetch(`?handler=SubCategories&categoryId=${e.target.value}`)
+        fetch(`?handler=SubCategories&buildingIndex=${str}`)
             .then((response) => {
                 return response.json();
             })
@@ -221,7 +232,7 @@
                     document.getElementById('SubCategoryId').innerHTML += `<option value="${item.roomNumber}"></option>`
                 });
             });
-    });
+    }
 </script>
 
 <script>

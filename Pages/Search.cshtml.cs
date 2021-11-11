@@ -64,7 +64,8 @@ namespace ChemStoreWebApp.Pages
         public List<SelectListItem> RoomNumbers { get; set; }
         [BindProperty(SupportsGet = true)]
         public int buildingIndex { get; set; }
-        public int SubCategoryId { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SubCategoryId { get; set; }
         public SelectList Categories { get; set; }
 
         /// <summary>
@@ -146,9 +147,9 @@ namespace ChemStoreWebApp.Pages
             newCon.CasNumber = Request.Form["CAS Number"];
             newCon.Unit = 0;
             newCon.Retired = false;
-            var roomName = Request.Form["Room"];
-            var buildingName = Request.Form["Building"];
-            var buildingInt = (int)(Buildings)Enum.Parse(typeof(Buildings), buildingName);
+            var roomName = SubCategoryId;
+            // var buildingName = Request.Form["Building"];
+            var buildingInt = buildingIndex;
             var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
             newCon.RoomId = location.RoomId;
             var supervisorName = Request.Form["Supervisor"];
