@@ -92,30 +92,29 @@
                                 @Html.DisplayFor(modelItem => item.chem.CasNumber)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.ChemName)
+                              @Html.DisplayFor(modelItem => item.chem.ChemicalName)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.HazardId)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.con.Size)
-                                @Html.DisplayFor(modelItem => item.con.Unit)
+                                @Html.DisplayFor(modelItem => item.con.Amount)
+                                @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                         </tr>
                         <tr class="moreInformation">
                             <td class="building">
-                                @Html.DisplayFor(modelItem => item.building.BuildingName)
-                                @Html.DisplayFor(modelItem => item.loc.Room)
+                                @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
+                                @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                             </td>
                             <td class="dpt">
-                                @Html.DisplayFor(modelItem => item.loc.Department) <!--Displayed department for testing, you can remove if not needed-->
+                                @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department)<!--Displayed department for testing, you can remove if not needed-->
 
                             </td>
                             <td class="b">
                                 <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                             </td>
                             <td class="b">
-                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.HazardId">Safety Data Sheet</a>
+                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">Safety Data Sheet</a>
                             </td>
                             <td>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" value="@item.con.ContainerId">
@@ -149,6 +148,42 @@
     </button>
 </div>
 
+<!--New Create Modal HTML-->
+
+<button data-toggle="modal" data-target="#details-modal">Add Chemical</button>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Chemical</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="form1">
+                    <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@Request.Query["Chemical Name"]" />
+                    <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" />
+                    <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" />
+                    <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" />
+                    <select asp-for="buildingIndex" asp-items="Model.Categories">
+                        <option value="" disabled selected hidden>Building</option>
+                    </select>
+                    <select asp-for="SubCategoryId" value="@Request.Query["Room"]">
+                        <option value="" disabled selected hidden>Room Number</option>
+                    </select>
+                    <select name="Hazard" value="@Request.Query["Hazard"]">
+                        <option value="" disabled selected hidden>Hazard</option>
+                    </select>
+                    <button type="button" data-dismiss="modal">Cancel</button>
+                    <input type="submit" value="Add" asp-page-handler="create" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -171,6 +206,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('buildingIndex').addEventListener('change', (e) => {
+        console.log('buildingIndex', buildingIndex);
+        document.getElementById('SubCategoryId').innerHTML = "<option value=''>Select SubCategory</option>";
+        fetch(`?handler=SubCategories&categoryId=${e.target.value}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                Array.prototype.forEach.call(data, function (item, i) {
+                    console.log('item', item)
+                    document.getElementById('SubCategoryId').innerHTML += `<option value="${item.roomNumber}"></option>`
+                });
+            });
+    });
+</script>
 
 <script>
     //Enables or disables the delete button

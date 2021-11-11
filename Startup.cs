@@ -33,6 +33,8 @@ namespace ChemStoreWebApp
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
 
+            services.AddTransient<ICategoryService, CategoryService>();
+
             services.AddControllersWithViews(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
