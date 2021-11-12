@@ -150,7 +150,7 @@
 
 <!--New Create Modal HTML-->
 
-<button data-toggle="modal" data-target="#details-modal">Add Chemical</button>
+<button data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">Add Chemical</button>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
     <div class="modal-dialog">
@@ -167,10 +167,10 @@
                     <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" />
                     <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" />
                     <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" />
-                    <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getComputer()">
+                    <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
                         <option value="" disabled selected hidden>Building</option>
                     </select>
-                    <select asp-for="SubCategoryId" onchange="printValue()">
+                    <select asp-for="RoomIndex">
                         <option value="" disabled selected hidden>Room Number</option>
                     </select>
                     <select name="Hazard" value="@Request.Query["Hazard"]">
@@ -208,20 +208,10 @@
 </div>
 
 <script>
-    function printValue() {
-        var ex = document.getElementById('SubCategoryId');
-        var str = ex.options[ex.selectedIndex].value;
-        console.log('STR: ', str);
-    }
-</script>
-
-<script>
-    function getComputer() {
-        console.log('buildingIndex', buildingIndex);
+    function getRoomsOfBuilding() {
         var ex = document.getElementById('buildingIndex');
         var str = ex.options[ex.selectedIndex].value;
-        console.log("BUILDINGSTR", str);
-        document.getElementById('SubCategoryId').innerHTML = "<option value=''>Select SubCategory</option>";
+        document.getElementById('RoomIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
         fetch(`?handler=SubCategories&buildingIndex=${str}`)
             .then((response) => {
                 return response.json();
@@ -229,7 +219,7 @@
             .then((data) => {
                 Array.prototype.forEach.call(data, function (item, i) {
                     console.log('item', item)
-                    document.getElementById('SubCategoryId').innerHTML += `<option value="${item.roomNumber}"></option>`
+                    document.getElementById('RoomIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
             });
     }

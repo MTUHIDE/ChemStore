@@ -99,10 +99,4 @@ namespace ChemStoreWebApp.Models
 
         public virtual ICollection<Container> Container { get; set; }
     }
-
-    public partial class Building
-    {
-        public int buildingIndex { get; set; }
-        public string buildingName { get; set; }
-    }
 }

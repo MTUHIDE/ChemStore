@@ -9,36 +9,15 @@ using ChemStoreWebApp.Models;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-public interface ICategoryService
-{
-    IEnumerable<Building> GetCategories();
-}
-
-public class CategoryService : ICategoryService
-{
-    public IEnumerable<Building> GetCategories()
-    {
-        var enumValues = Enum.GetValues(typeof(Buildings)).Cast<Buildings>().ToList();
-        List<Building> returnList = new List<Building>();
-        foreach (var item in enumValues)
-        {
-            returnList.Add(new Building { buildingIndex = (int)item, buildingName = item.ToString() });
-        }
-        return returnList;
-    }
-}
-
 namespace ChemStoreWebApp.Pages
 {
     public class SearchModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;
-        private ICategoryService categoryService;
 
-        public SearchModel(ChemStoreWebApp.Models.chemstoreContext context, ICategoryService categoryService)
+        public SearchModel(ChemStoreWebApp.Models.chemstoreContext context)
         {
             _context = context;
-            this.categoryService = categoryService;
         }
         public IList<DisplayContainer> DisplayContainers { get; set; }
 
@@ -61,11 +40,10 @@ namespace ChemStoreWebApp.Pages
         public string searchRetired { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<int> chemicalsToDelete { get; set; }
-        public List<SelectListItem> RoomNumbers { get; set; }
         [BindProperty(SupportsGet = true)]
         public int buildingIndex { get; set; }
         [BindProperty(SupportsGet = true)]
-        public string SubCategoryId { get; set; }
+        public string RoomIndex { get; set; }
         public SelectList Categories { get; set; }
 
         /// <summary>
@@ -147,8 +125,7 @@ namespace ChemStoreWebApp.Pages
             newCon.CasNumber = Request.Form["CAS Number"];
             newCon.Unit = 0;
             newCon.Retired = false;
-            var roomName = SubCategoryId;
-            // var buildingName = Request.Form["Building"];
+            var roomName = RoomIndex;
             var buildingInt = buildingIndex;
             var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
             newCon.RoomId = location.RoomId;
@@ -160,38 +137,22 @@ namespace ChemStoreWebApp.Pages
             return RedirectToPage();
         }
 
-        public IEnumerable<Location> GetSubCategories(int? categoryId)
+        public IEnumerable<Location> GetSubCategories(int? buildingIndex)
         {
             var subCategories = _context.Location.Select(x =>
                 new Location { BuildingName = x.BuildingName, RoomId = x.RoomId, RoomNumber = x.RoomNumber });
-            return subCategories.Where(s => s.BuildingName == categoryId);
+            return subCategories.Where(s => s.BuildingName == buildingIndex);
         }
         public JsonResult OnGetSubCategories()
         {
             return new JsonResult(GetSubCategories(buildingIndex));
         }
 
-        public async Task<IActionResult> OnPostGetRoomNumbers()
-        {
-
-            var buildingName = Request.Form["Building"];
-            var buildingInt = (int)(Buildings)Enum.Parse(typeof(Buildings), buildingName);
-            var chosenRooms = _context.Location.Select(x => x).Where(x => x.BuildingName == buildingInt);
-            RoomNumbers = chosenRooms.Select(location =>
-                                    new SelectListItem
-                                    {
-                                        Value = location.RoomNumber,
-                                        Text = location.RoomNumber
-                                    }).ToList();
-            await OnGet();
-            return Page();
-        }
-
         /// <summary>
         /// Runs on every search and returns a list of containers that fit the given search criteria
         /// </summary>
         /// <returns></returns>
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
             // stores data from database in arrays to limit amount of calls to database at once
             var containers = _context.Container.ToList();
@@ -203,9 +164,6 @@ namespace ChemStoreWebApp.Pages
                 c => new DisplayContainer(c, chemicals, locations, accounts))
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
-
-            Categories = new SelectList(categoryService.GetCategories(), nameof(Building.buildingIndex), nameof(Building.buildingName));
-
 
         }
     }
