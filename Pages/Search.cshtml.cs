@@ -45,6 +45,8 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public string RoomIndex { get; set; }
         public SelectList Categories { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool createError { get; set; } = false;
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -83,6 +85,7 @@ namespace ChemStoreWebApp.Pages
         {
             _context.Container.Add(con);
             _context.SaveChanges();
+            createError = false;
             return con.ContainerId;
         }
 
@@ -127,14 +130,25 @@ namespace ChemStoreWebApp.Pages
             newCon.Retired = false;
             var roomName = RoomIndex;
             var buildingInt = buildingIndex;
-            var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
-            newCon.RoomId = location.RoomId;
             var supervisorName = Request.Form["Supervisor"];
-            var supervisor = _context.Account.SingleOrDefault(x => x.Name == supervisorName);
-            newCon.SupervisorId = supervisor.AccountId;
-            newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
-            addToDatabase(newCon);
+            try
+            {
+                var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
+                newCon.RoomId = location.RoomId;
+                var supervisor = _context.Account.SingleOrDefault(x => x.Name == supervisorName);
+                newCon.SupervisorId = supervisor.AccountId;
+                newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
+                addToDatabase(newCon);
+            } catch
+            {
+                createError = true;
+            }
             return RedirectToPage();
+        }
+
+        public bool testFunction()
+        {
+            return true;
         }
 
         public IEnumerable<Location> GetSubCategories(int? buildingIndex)

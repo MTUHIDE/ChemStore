@@ -226,6 +226,17 @@
 </script>
 
 <script>
+    function showCreateAlert() {
+
+        var hasError = @Model.createError.ToString().ToLower();
+        if (hasError) {
+            window.alert('Error: Invalid Data');
+        }
+
+    }
+</script>
+
+<script>
     //Enables or disables the delete button
     function toggleDeleteButton() {
         var checkboxes = document.getElementsByName('chemicalsToDelete'); //All the checkboxes on the chemicals
