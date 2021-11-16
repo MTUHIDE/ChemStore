@@ -48,6 +48,7 @@ h1 {
 }
 .results{
     margin-left: 400px;
+    width: 1000px;
 }
 .default {
     text-align: center;
@@ -195,24 +196,29 @@ td {
         vertical-align: middle;
     }
 
+    tr {
+        display: grid;
+        grid-template-columns: 20% 20% 20% 10% 5%;
+    }
+
 .a:nth-child(1)::before {
-    content: "CAS Number:";
+    /*content: "CAS Number:";*/
 }
 
 
 .a:nth-child(2)::before {
-    content: "Chemical Name:";
+    /*content: "Chemical Name:";*/
 }
 
 .a:nth-child(3)::before {
-    content: "Hazard ID:";
+    /*content: "Hazard ID:";*/
 }
 
-.a:nth-child(4){
-    float: right;
+.a:nth-child(4) {
+    /*float: right;*/
 }
     .a:nth-child(4)::before {
-        content: "Size: ";
+        /*content: "Size: ";*/
     }
 
 .a:nth-child(5) {
@@ -229,5 +235,84 @@ td {
 
 .pageSelectors{
     text-align: center;
+    display: flex;
     margin: 10px;
+}
+
+
+
+.edit {
+    opacity: 0.6;
+}
+
+.edit:hover {
+    opacity: 1.0;
+}
+
+.searchPageBtns {
+    font-family: Roboto;
+    font-size: 15px;
+    line-height: 0px;
+    width: 80px;
+    height: 25px;
+    margin-left: 10px;
+    margin-top: 0px;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 24px;
+    float: right;
+}
+
+.redBtn {
+    background: #FF7171;
+}
+
+    .redBtn:hover {
+        background: #e56565;
+    }
+
+.greenBtn {
+    background: #8AEE71;
+}
+
+    .greenBtn:hover {
+        background: #7cd665;
+    }
+
+.regBtn {
+    background: #E2E2E2;
+}
+
+
+.modalcss {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 400px;
+    pointer-events: auto;
+    background-color: #E2E2E2;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 20px;
+    outline: 0;
+}
+
+.modalBtns {
+    font-family: Roboto;
+    font-size: 22px;
+    line-height: 0px;
+    width: 110px;
+    height: 40px;
+    margin: 10px;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 17px;
+}
+
+.blankImgButton {
+    width: 0%; 
+    margin-top: 0; 
+    padding: 0px;
 }
