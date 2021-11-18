@@ -263,6 +263,12 @@ td {
     float: right;
 }
 
+.searchPageBtns:disabled,
+.searchPageBtns[disabled] {
+    opacity: 0.7;
+}
+
+
 .redBtn {
     background: #FF7171;
 }
