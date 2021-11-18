@@ -5,83 +5,83 @@ using System.ComponentModel.DataAnnotations;
 public enum Buildings
 {
     [Display(Name = "Administration Building")]
-    AdminBuilding,
+    AdminBuilding = 0,
     [Display(Name = "Lakeshore Center")]
-    LakeshoreCenter,
+    LakeshoreCenter = 1,
     [Display(Name = "ROTC Building")]
-    ROTC,
+    ROTC = 2,
     [Display(Name = "Academic Office Building")]
-    AOB,
+    AOB = 3,
     [Display(Name = "Electrical Engineering Resources Center")]
-    EERC,
+    EERC = 4,
     [Display(Name = "Dow Environmental Sciences and Engineering Building")]
-    Dow,
+    Dow = 5,
     [Display(Name = "Alumni House")]
-    AlumniHouse,
+    AlumniHouse = 5,
     [Display(Name = "Rozsa Center for the Performing Arts")]
-    Rozsa,
+    Rozsa = 6,
     [Display(Name = "Walker Arts and Humanities Center")]
-    Walker,
+    Walker = 7,
     [Display(Name = "Minerals and Materials Engineering Building")]
-    MandM,
+    MandM = 8,
     [Display(Name = "Hamar House")]
-    Hamar,
+    Hamar = 9,
     [Display(Name = "Grover C Dillman Hall")]
-    Dillman,
+    Dillman = 10,
     [Display(Name = "Fisher Hall")]
-    Fisher,
+    Fisher = 11,
     [Display(Name = "Widmaier House")]
-    WidmaierHouse,
+    WidmaierHouse = 12,
     [Display(Name = "J. R. Van Pelt and John and Ruanne Opie Library")]
-    Library,
+    Library = 13,
     [Display(Name = "U. J. Noblet Forestry Building")]
-    Forestry,
+    Forestry = 14,
     [Display(Name = "Chemical Sciences and Engineering Building")]
-    ChemSci,
+    ChemSci = 15,
     [Display(Name = "R. L. Smith Building")]
-    MEEM,
+    MEEM = 16,
     [Display(Name = "Student Development Complex")]
-    SDC,
+    SDC = 17,
     [Display(Name = "Sherman Field Press Box")]
-    ShermanFieldPressBox,
+    ShermanFieldPressBox = 18,
     [Display(Name = "Ford Center")]
-    FordCenter,
+    FordCenter = 19,
     [Display(Name = "Kanwal and Ann Rekhi Hall")]
-    Rekhi,
+    Rekhi = 20,
     [Display(Name = "Little Huskies Child Development Center")]
-    LittleHuskies,
+    LittleHuskies = 21,
     [Display(Name = "Douglass Houghton Hall")]
-    DHH,
+    DHH = 22,
     [Display(Name = "Daniell Heights Apartments")]
-    DaniellHeights,
+    DaniellHeights = 23,
     [Display(Name = "Memorial Union Building")]
-    MUB,
+    MUB = 24,
     [Display(Name = "Wadsworth Hall")]
-    Wads,
+    Wads = 25,
     [Display(Name = "West McNair Hall")]
-    WestMcNair,
+    WestMcNair = 26,
     [Display(Name = "East McNair Hall")]
-    EastMcNair,
+    EastMcNair = 27,
     [Display(Name = "Central Heating Plant")]
-    CentralHeatingPlant,
+    CentralHeatingPlant = 28,
     [Display(Name = "Lakeside Labratory")]
-    LakesideLabratory,
+    LakesideLabratory = 29,
     [Display(Name = "Storage-Service")]
-    Facilities,
+    Facilities = 30,
     [Display(Name = "Hillside Place")]
-    Hillside,
+    Hillside = 31,
     [Display(Name = "Gates Tennis Center")]
-    Gates,
+    Gates = 32,
     [Display(Name = "Keweenaw Research Center")]
-    KRC,
+    KRC = 33,
     [Display(Name = "Harold Meese Center")]
-    Meese,
+    Meese = 34,
     [Display(Name = "Advanced Technology Development Complex")]
-    ATDC,
+    ATDC = 35,
     [Display(Name = "A. E. Seaman Mineral Museum")]
-    Museum,
+    Museum = 36,
     [Display(Name = "Great Lakes Research Center")]
-    GLRC
+    GLRC = 37
 }
 
 namespace ChemStoreWebApp.Models
