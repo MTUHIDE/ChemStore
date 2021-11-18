@@ -7,14 +7,9 @@ namespace ChemStoreWebApp.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
-                name: "Supervisor_ID",
-                table: "container",
-                nullable: false,
-                comment: "FK(Supervisor.ID)",
-                oldClrType: typeof(long),
-                oldType: "bigint",
-                oldComment: "FK(Supervisor.ID)");
+            migrationBuilder.DropForeignKey(
+                name: "container_ibfk_3",
+                table: "container");
 
             migrationBuilder.AlterColumn<int>(
                 name: "Account_ID",
@@ -24,18 +19,30 @@ namespace ChemStoreWebApp.Migrations
                 oldType: "bigint")
                 .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn)
                 .OldAnnotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "Supervisor_ID",
+                table: "container",
+                nullable: false,
+                comment: "FK(Supervisor.ID)",
+                oldClrType: typeof(long),
+                oldType: "bigint",
+                oldComment: "FK(Supervisor.ID)");
+
+            migrationBuilder.AddForeignKey(
+                name: "container_ibfk_3",
+                table: "container",
+                column: "Supervisor_ID",
+                principalTable: "account",
+                principalColumn: "Account_ID",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<long>(
-                name: "Supervisor_ID",
-                table: "container",
-                type: "bigint",
-                nullable: false,
-                comment: "FK(Supervisor.ID)",
-                oldClrType: typeof(int),
-                oldComment: "FK(Supervisor.ID)");
+            migrationBuilder.DropForeignKey(
+                name: "container_ibfk_3",
+                table: "container");
 
             migrationBuilder.AlterColumn<long>(
                 name: "Account_ID",
@@ -45,6 +52,23 @@ namespace ChemStoreWebApp.Migrations
                 oldClrType: typeof(int))
                 .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn)
                 .OldAnnotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn);
+
+            migrationBuilder.AlterColumn<long>(
+                name: "Supervisor_ID",
+                table: "container",
+                type: "bigint",
+                nullable: false,
+                comment: "FK(Supervisor.ID)",
+                oldClrType: typeof(int),
+                oldComment: "FK(Supervisor.ID)");
+
+            migrationBuilder.AddForeignKey(
+                name: "container_ibfk_3",
+                table: "container",
+                column: "Supervisor_ID",
+                principalTable: "account",
+                principalColumn: "Account_ID",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
