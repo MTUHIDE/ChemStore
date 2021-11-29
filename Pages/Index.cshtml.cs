@@ -40,6 +40,12 @@ namespace ChemStoreWebApp.Pages
         public string searchRetired { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<long> chemicalsToDelete { get; set; }
+        public int buildingIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string RoomIndex { get; set; }
+        public SelectList Categories { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public bool createError { get; set; } = false;
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -74,6 +80,14 @@ namespace ChemStoreWebApp.Pages
             return containerIds;
         }
 
+        public long addToDatabase(Container con)
+        {
+            _context.Container.Add(con);
+            _context.SaveChanges();
+            createError = false;
+            return con.ContainerId;
+        }
+
         /// <summary>
         /// Checks if a container should be listed with the given search criteria
         /// </summary>
@@ -105,6 +119,42 @@ namespace ChemStoreWebApp.Pages
         {
             deleteFromDatabase(chemicalsToDelete);
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostCreate()
+        {
+            Container newCon = new Container();
+            newCon.CasNumber = Request.Form["CAS Number"];
+            newCon.Unit = 0;
+            newCon.Retired = false;
+            var roomName = RoomIndex;
+            var buildingInt = buildingIndex;
+            var supervisorName = Request.Form["Supervisor"];
+            try
+            {
+                var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
+                newCon.RoomId = location.RoomId;
+                var supervisor = _context.Account.SingleOrDefault(x => x.Name == supervisorName);
+                newCon.SupervisorId = supervisor.AccountId;
+                newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
+                addToDatabase(newCon);
+            }
+            catch
+            {
+                createError = true;
+            }
+            return RedirectToPage();
+        }
+
+        public IEnumerable<Location> GetSubCategories(int? buildingIndex)
+        {
+            var subCategories = _context.Location.Select(x =>
+                new Location { BuildingName = x.BuildingName, RoomId = x.RoomId, RoomNumber = x.RoomNumber });
+            return subCategories.Where(s => s.BuildingName == buildingIndex);
+        }
+        public JsonResult OnGetSubCategories()
+        {
+            return new JsonResult(GetSubCategories(buildingIndex));
         }
 
         /// <summary>
