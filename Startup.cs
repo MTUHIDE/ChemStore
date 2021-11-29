@@ -44,6 +44,7 @@ namespace ChemStoreWebApp
             //    options.Filters.Add(new AuthorizeFilter(policy));
             //});
             //services.AddRazorPages();
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<chemstoreContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("ChemStoreDB")));
