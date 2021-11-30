@@ -1,0 +1,170 @@
+﻿@page
+@model ChemStoreWebApp.Pages.LogModel
+@using ChemStoreWebApp.Utilities
+
+@{
+    ViewData["Title"] = "Log";
+}
+
+<!-- Should eventually have its own style sheet -->
+<head>
+    <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
+</head>
+
+<h1>Search</h1>
+<div id="search">
+    <div class="search">
+        <button class="closeFilter" onclick="closeFilter()">
+            X
+        </button>
+        <form>
+            <input type="submit" value="Filter" class="filter" />
+            <div class="s">
+                User: <input type="text" asp-for="searchUser" />
+            </div>
+            <div class="s">
+                Search Details: <input type="text" asp-for="searchDetails" />
+            </div>
+            <div class="s">
+                Container ID: <input type="text" asp-for="containerID" />
+            </div>
+            <div class="s">
+                <label for="selectBuilding">Building: </label>
+                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding">
+                    <option value="">Pick one</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="openFilterContainer">
+    <button class="openFilter" id="openFilter" onclick="openFilter()">
+        >
+    </button>
+</div>
+
+<div id="results" class="results">
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Date / Time</td>
+                <td>User</td>
+                <td>Action</td>
+                <td>Container ID</td>
+                <td>Details</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pageSelectors">
+        <a href=""> > </a>
+        <a href=""> >> </a>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modalcss">
+            <div class="modal-header" style="justify-content:center;">
+                <h5 class="modal-title" style="font-size: 30px" id="modalLabel">Are You Sure?</h5>
+                <button type="button" class="close" style="position: absolute; right: 15px; width: 20%;" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <button type="button" class="btn modalBtns regBtn" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn modalBtns redBtn" id="DelButton" form="deleteForm" asp-page-handler="delete">
+                    Yes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Opens and closes the filter sections
+    function closeFilter() {
+        document.getElementById("search").style.display = "none";
+        document.getElementById("openFilter").style.display = "block";
+    }
+    function openFilter() {
+        document.getElementById("search").style.display = "block";
+        document.getElementById("openFiler").style.display = "none";
+    }
+
+</script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+<script>
+    var coll = document.getElementsByClassName("expandable");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                this.style.backgroundColor = "rgb(225,225,225)";
+            } else {
+                content.style.display = "block";
+                this.style.backgroundColor = "rgb(204,204,204)";
+            }
+        });
+    }
+</script>
+
+<script>
+    // The script to control the location filter selection
+    var dropdown = document.getElementsByClassName("location-dropdown");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+
+<script>
+    // The script to control the container filter selection
+    var dropdown = document.getElementsByClassName("container-dropdown");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
