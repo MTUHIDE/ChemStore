@@ -40,6 +40,7 @@ namespace ChemStoreWebApp.Pages
         public string searchRetired { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<long> chemicalsToDelete { get; set; }
+        [BindProperty(SupportsGet = true)]
         public int buildingIndex { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RoomIndex { get; set; }
@@ -134,7 +135,7 @@ namespace ChemStoreWebApp.Pages
             {
                 var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
                 newCon.RoomId = location.RoomId;
-                var supervisor = _context.Account.SingleOrDefault(x => x.Name == supervisorName);
+                var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
                 newCon.SupervisorId = supervisor.AccountId;
                 newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
                 addToDatabase(newCon);
