@@ -227,6 +227,7 @@
                         <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
                         <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" />
                         <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
+                        <input type="hidden" name="ContainerID" value="@editItem.con.ContainerId" />
                         <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
                             <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
                         </select>
