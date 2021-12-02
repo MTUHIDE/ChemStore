@@ -109,7 +109,7 @@
                                 @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                             <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditRoomsOfBuilding();">
+                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditRoomsOfBuilding(0);">
                                     <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                 </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
@@ -225,9 +225,9 @@
                     <form method="post" id="form1">
                         <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@editItem.chem.ChemicalName" />
                         <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
-                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.con.Supervisor" />
+                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" />
                         <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
-                        <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding()">
+                        <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
                             <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
                         </select>
                         <select asp-for="RoomEditIndex">
@@ -237,7 +237,7 @@
                             <option value="" disabled selected hidden>Hazard</option>
                         </select>
                         <button type="button" data-dismiss="modal">Cancel</button>
-                        <input type="submit" value="Add" asp-page-handler="create" />
+                        <input type="submit" value="Add" asp-page-handler="edit" />
                     </form>
                 </div>
             </div>
@@ -282,10 +282,14 @@
             });
     }
 
-    function getEditRoomsOfBuilding() {
+    function getEditRoomsOfBuilding(initGet) {
         var ex = document.getElementById('buildingEditIndex');
         var str = ex.options[ex.selectedIndex].value;
-        document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+        if (initGet == 0) {
+            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>@editItem.loc.RoomNumber</option>";
+        } else {
+            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+        }
         fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
             .then((response) => {
                 return response.json();
