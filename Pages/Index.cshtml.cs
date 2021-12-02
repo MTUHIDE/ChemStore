@@ -44,9 +44,15 @@ namespace ChemStoreWebApp.Pages
         public int buildingIndex { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RoomIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int buildingEditIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string RoomEditIndex { get; set; }
         public SelectList Categories { get; set; }
         [BindProperty(SupportsGet = true)]
         public bool createError { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public int containerListIndex { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -156,6 +162,11 @@ namespace ChemStoreWebApp.Pages
         public JsonResult OnGetSubCategories()
         {
             return new JsonResult(GetSubCategories(buildingIndex));
+        }
+
+        public JsonResult OnGetEditCategories()
+        {
+            return new JsonResult(GetSubCategories(buildingEditIndex));
         }
 
         /// <summary>

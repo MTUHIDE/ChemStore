@@ -109,7 +109,7 @@
                                 @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                             <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getRoomsOfBuilding();">
+                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditRoomsOfBuilding();">
                                     <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                 </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
@@ -227,11 +227,11 @@
                         <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
                         <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.con.Supervisor" />
                         <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
-                        <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
-                            <option value="" disabled selected hidden>Building</option>
+                        <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding()">
+                            <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
                         </select>
-                        <select asp-for="RoomIndex">
-                            <option value="" disabled selected hidden>Room Number</option>
+                        <select asp-for="RoomEditIndex">
+                            <option value="@editItem.loc.BuildingName" selected>@editItem.loc.RoomNumber</option>
                         </select>
                         <select name="Hazard" value="@editItem.chem.ChemicalHazards">
                             <option value="" disabled selected hidden>Hazard</option>
@@ -278,6 +278,22 @@
                 Array.prototype.forEach.call(data, function (item, i) {
                     console.log('item', item)
                     document.getElementById('RoomIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
+                });
+            });
+    }
+
+    function getEditRoomsOfBuilding() {
+        var ex = document.getElementById('buildingEditIndex');
+        var str = ex.options[ex.selectedIndex].value;
+        document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+        fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                Array.prototype.forEach.call(data, function (item, i) {
+                    console.log('item', item)
+                    document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
             });
     }
