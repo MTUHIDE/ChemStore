@@ -128,6 +128,24 @@ namespace ChemStoreWebApp.Pages
             return RedirectToPage();
         }
 
+        // Edits the selected chemical to have the new values as specified in the edit modal
+        public async Task<IActionResult> OnPostEdit()
+        {
+            Container con = (from c in _context.Container
+                             where c.ContainerId == Request.Form["ContainerID"]
+                             select c).Single();
+            con.CasNumber = Request.Form["Cas Number"];
+            con.SupervisorId = (from s in _context.Account
+                                where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
+                                select s.AccountId).Single();
+            con.Amount = Int32.Parse(Request.Form["Amount"]);
+            con.RoomId = (from l in _context.Location
+                          where l.BuildingName == buildingIndex && l.RoomNumber == RoomIndex
+                          select l.RoomId).Single();
+            _context.SaveChanges();
+            return RedirectToPage();
+        }
+
         public async Task<IActionResult> OnPostCreate()
         {
             Container newCon = new Container();
