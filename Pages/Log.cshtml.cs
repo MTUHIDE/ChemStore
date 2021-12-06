@@ -19,10 +19,13 @@ namespace ChemStoreWebApp.Pages
         {
             _context = context;
         }
-        //public IList<DisplayContainer> DisplayContainers { get; set; }
+       
+        public IList<Log> LogEntries { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string searchBuilding { get; set; }
+        public string searchAction { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string searchRole { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchUser { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -32,10 +35,28 @@ namespace ChemStoreWebApp.Pages
 
         public Boolean textEntered()
         {
-            return !(string.IsNullOrEmpty(searchBuilding) &&
-                string.IsNullOrEmpty(searchUser) &&
+            return !( string.IsNullOrEmpty(searchUser) &&
                 string.IsNullOrEmpty(searchDetails) &&
-                string.IsNullOrEmpty(containerID));
+                string.IsNullOrEmpty(containerID) &&
+                string.IsNullOrEmpty(searchDetails) &&
+                string.IsNullOrEmpty(searchRole));
+        }
+
+        public Boolean isValidSearchItem(Log entry, bool ignoreCase)
+        {
+            var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            if (!string.IsNullOrEmpty(searchAction) && !entry.Action.ToString().Equals(searchAction))
+                return false;
+            if (!string.IsNullOrEmpty(searchRole) && !entry.User.Role.ToString().Equals(searchRole))
+                return false;
+            if (!string.IsNullOrEmpty(containerID) && entry.ContainerID != long.Parse(containerID))
+                return false;
+            if (!string.IsNullOrEmpty(searchUser) && !entry.User.Email.Contains(searchUser, checkCase))
+                return false;
+            if (!string.IsNullOrEmpty(searchDetails) && !entry.Description.Contains(searchDetails, checkCase))
+                return false;
+
+            return true;
         }
 
         /// <summary>
@@ -44,8 +65,19 @@ namespace ChemStoreWebApp.Pages
         /// <returns></returns>
         public async Task OnGetAsync()
         {
-            // stores data from database in arrays to limit amount of calls to database at once
-            //var containers = _context.History.ToList();
+            var log = _context.Log.ToList();
+            var accounts = _context.Account.ToList();
+
+            foreach (var e in log)
+            {
+                e.User = (from a in accounts
+                          where a.AccountId == e.UserID
+                          select a).FirstOrDefault();
+            }
+
+            LogEntries = await Task.FromResult(
+                log.Where(c => isValidSearchItem(c, true))
+                .ToList());
         }
     }
 }
