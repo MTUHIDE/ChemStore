@@ -44,9 +44,15 @@ namespace ChemStoreWebApp.Pages
         public int buildingIndex { get; set; }
         [BindProperty(SupportsGet = true)]
         public string RoomIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int buildingEditIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string RoomEditIndex { get; set; }
         public SelectList Categories { get; set; }
         [BindProperty(SupportsGet = true)]
         public bool createError { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public int containerListIndex { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -122,6 +128,33 @@ namespace ChemStoreWebApp.Pages
             return RedirectToPage();
         }
 
+        // Edits the selected chemical to have the new values as specified in the edit modal
+        public async Task<IActionResult> OnPostEdit()
+        {
+            try
+            {
+                Container con = (from c in _context.Container
+                                 where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
+                                 select c).Single();
+                con.CasNumber = Request.Form["Cas Number"];
+                con.SupervisorId = (from s in _context.Account
+                                    where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
+                                    select s.AccountId).Single();
+                con.Amount = Int32.Parse(Request.Form["Amount"]);
+                con.RoomId = (from l in _context.Location
+                              where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
+                              select l.RoomId).Single();
+                _context.SaveChanges();
+            }
+            catch
+            {
+                createError = true;
+            }
+            
+            return RedirectToPage();
+        }
+
+
         public async Task<IActionResult> OnPostCreate()
         {
             Container newCon = new Container();
@@ -156,6 +189,11 @@ namespace ChemStoreWebApp.Pages
         public JsonResult OnGetSubCategories()
         {
             return new JsonResult(GetSubCategories(buildingIndex));
+        }
+
+        public JsonResult OnGetEditCategories()
+        {
+            return new JsonResult(GetSubCategories(buildingEditIndex));
         }
 
         /// <summary>

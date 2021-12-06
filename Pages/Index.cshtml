@@ -109,7 +109,7 @@
                                 @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                             <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" onclick="event.stopPropagation()">
+                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditRoomsOfBuilding(0);">
                                     <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                 </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
@@ -208,6 +208,44 @@
     </div>
 </div>
 
+<!--New Edit Modal HTML-->
+
+@{
+    var editItem = Model.DisplayContainers[0];
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Chemical</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="form1">
+                        <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@editItem.chem.ChemicalName" />
+                        <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
+                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" />
+                        <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
+                        <input type="hidden" name="ContainerID" value="@editItem.con.ContainerId" />
+                        <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
+                            <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
+                        </select>
+                        <select asp-for="RoomEditIndex">
+                            <option value="@editItem.loc.BuildingName" selected>@editItem.loc.RoomNumber</option>
+                        </select>
+                        <select name="Hazard" value="@editItem.chem.ChemicalHazards">
+                            <option value="" disabled selected hidden>Hazard</option>
+                        </select>
+                        <button type="button" data-dismiss="modal">Cancel</button>
+                        <input type="submit" value="Save" asp-page-handler="edit" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -241,6 +279,26 @@
                 Array.prototype.forEach.call(data, function (item, i) {
                     console.log('item', item)
                     document.getElementById('RoomIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
+                });
+            });
+    }
+
+    function getEditRoomsOfBuilding(initGet) {
+        var ex = document.getElementById('buildingEditIndex');
+        var str = ex.options[ex.selectedIndex].value;
+        if (initGet == 0) {
+            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>@editItem.loc.RoomNumber</option>";
+        } else {
+            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+        }
+        fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                Array.prototype.forEach.call(data, function (item, i) {
+                    console.log('item', item)
+                    document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
             });
     }
