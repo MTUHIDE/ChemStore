@@ -150,3 +150,58 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+/*------------------BEGIN HAZARD SYMBOL CLASSES--------------------------*/
+
+.hazards {
+    display: inline-flex;
+    flex-wrap: wrap;
+    width:60px;
+}
+
+.hazard {
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-size: cover;
+}
+
+.hazard-corrosion {
+    background-image:url(../assets/hazards/corrosion-pictogram.jpg);
+}
+
+.hazard-environment {
+    background-image:url(../assets/hazards/environment-pictogram.jpg);
+}
+
+.hazard-exclamation {
+    background-image:url(../assets/hazards/exclamation-mark-pictogram.jpg);
+}
+
+.hazard-bomb {
+    background-image: url(../assets/hazards/exploding-bomb-pictogram.jpg);
+}
+
+.hazard-flame-circle {
+    background-image:url(../assets/hazards/flame-over-circle-pictogram.jpg);
+}
+
+.hazard-flame {
+    background-image:url(../assets/hazards/flame-pictogram.jpg);
+}
+
+.hazard-gas {
+    background-image:url(../assets/hazards/gas-cylinder-pictogram.jpg);
+}
+
+.hazard-health {
+    background-image:url(../assets/hazards/health-hazard-pictogram.jpg);
+}
+
+.hazard-skull {
+    background-image:url(../assets/hazards/skull-pictogram.jpg);
+}
+
+
+/*--------------------END HAZARD SYMBOL CLASSES --------------------*/
