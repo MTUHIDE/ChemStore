@@ -229,7 +229,6 @@
                         <input type="text" id="editChemSize" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
                         <input type="hidden" id="ContainerID" name="ContainerID" value="@editItem.con.ContainerId" />
                         <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
-                            <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
                         </select>
                         <select asp-for="RoomEditIndex">
                             <option value="@editItem.loc.BuildingName" selected>@editItem.loc.RoomNumber</option>
