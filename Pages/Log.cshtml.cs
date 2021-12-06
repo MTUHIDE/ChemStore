@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChemStoreWebApp.Pages
 {
+    [Authorize(Policy = "Admin")]
     public class LogModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;
@@ -68,6 +70,7 @@ namespace ChemStoreWebApp.Pages
             var log = _context.Log.ToList();
             var accounts = _context.Account.ToList();
 
+            //Updates the User variable for the Log objects
             foreach (var e in log)
             {
                 e.User = (from a in accounts
@@ -75,9 +78,16 @@ namespace ChemStoreWebApp.Pages
                           select a).FirstOrDefault();
             }
 
-            LogEntries = await Task.FromResult(
+            if(textEntered() == true)
+            {
+                LogEntries = await Task.FromResult(
                 log.Where(c => isValidSearchItem(c, true))
                 .ToList());
+            }
+            else
+            {
+                LogEntries = log;
+            }
         }
     }
 }

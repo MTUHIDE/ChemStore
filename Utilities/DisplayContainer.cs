@@ -28,19 +28,4 @@ namespace ChemStoreWebApp.Utilities
             con = container;
         }
     }
-    /*
-    public class DisplayLog
-    {
-        public Log log { get; set; } // saves the container data
-        public Account supervisor { get; set; } // saves the account (supervisor) data for the container
-
-        public DisplayLog(Log logData, List<Account> accounts)
-        {
-
-            supervisor = (from s in accounts
-                          where s.AccountId == logData.UserID
-                          select s).First();
-            log = logData;
-        }
-    }*/
 }

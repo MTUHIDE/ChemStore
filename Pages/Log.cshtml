@@ -9,6 +9,7 @@
 <!-- Should eventually have its own style sheet -->
 <head>
     <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="\css\logItemLayout.css" asp-append-version="true" />
 </head>
 
 <h1>Search</h1>
@@ -80,7 +81,7 @@
                 @for (var i = start; i < end; i++)
                 {
                     var item = Model.LogEntries[i];
-                    <tr class="expandableR">
+                    <tr class="cell">
                         <td class="a">
                             @Html.DisplayFor(modelItem => item.DateTime)
                         </td>
