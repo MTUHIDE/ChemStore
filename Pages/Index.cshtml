@@ -109,7 +109,7 @@
                                 @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                             <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditRoomsOfBuilding(0);">
+                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@i);">
                                     <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                 </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
@@ -223,11 +223,11 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form1">
-                        <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@editItem.chem.ChemicalName" />
-                        <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
-                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" />
-                        <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
-                        <input type="hidden" name="ContainerID" value="@editItem.con.ContainerId" />
+                        <input type="text" id="editChemName" name="Chemical Name" placeholder="Chemical Name" value="@editItem.chem.ChemicalName" />
+                        <input type="text" id="editChemCas" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
+                        <input type="text" id="editChemSup" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" />
+                        <input type="text" id="editChemSize" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
+                        <input type="hidden" id="ContainerID" name="ContainerID" value="@editItem.con.ContainerId" />
                         <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
                             <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
                         </select>
@@ -296,10 +296,30 @@
                 return response.json();
             })
             .then((data) => {
+                console.log('data: ', data);
+                document.getElementById('RoomEditIndex').innerHTML = `<option disabled selected hidden value="${data[0].roomNumber}">${data[0].roomNumber}</option>`;
                 Array.prototype.forEach.call(data, function (item, i) {
                     console.log('item', item)
                     document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
+            });
+    }
+
+    function getEditModal(index) {
+        fetch(`?handler=ListItem&containerListIndex=${index}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log('data: ', data);
+                document.getElementById('editChemName').value = data[0];
+                document.getElementById('editChemCas').value = data[1];
+                document.getElementById('editChemSup').value = data[2];
+                document.getElementById('editChemSize').value = data[3];
+                document.getElementById('ContainerID').value = data[4];
+                document.getElementById('buildingEditIndex').value = data[5];
+                document.getElementById('RoomEditIndex').value = data[6];
+                getEditRoomsOfBuilding(0);
             });
     }
 </script>

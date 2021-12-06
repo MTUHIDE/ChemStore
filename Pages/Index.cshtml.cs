@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -194,6 +194,40 @@ namespace ChemStoreWebApp.Pages
         public JsonResult OnGetEditCategories()
         {
             return new JsonResult(GetSubCategories(buildingEditIndex));
+        }
+
+        public async Task GetDisplayContainer()
+        {
+            var containers = _context.Container.ToList();
+            var chemicals = _context.Chemical.ToList();
+            var accounts = _context.Account.ToList();
+            var locations = _context.Location.ToList();
+
+            DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
+                c => new DisplayContainer(c, chemicals, locations, accounts))
+                .Where(c => isValidSearchItem(c, true))
+                .ToList());
+        }
+
+        public DisplayContainer GetListItem(int index)
+        {
+            GetDisplayContainer();
+            return DisplayContainers[index];
+        }
+
+        public JsonResult OnGetListItem(int containerListIndex)
+        {
+            var returnVal = GetListItem(containerListIndex);
+            List<string> returnList = new List<string>();
+            returnList.Add(returnVal.chem.ChemicalName);
+            returnList.Add(returnVal.chem.CasNumber);
+            returnList.Add(returnVal.supervisor.Name);
+            returnList.Add(returnVal.con.Amount.ToString());
+            returnList.Add(returnVal.con.ContainerId.ToString());
+            returnList.Add(returnVal.loc.BuildingName.ToString());
+            returnList.Add(returnVal.loc.RoomNumber);
+            returnList.Add(returnVal.chem.ChemicalHazards.ToString());
+            return new JsonResult(returnList);
         }
 
         /// <summary>
