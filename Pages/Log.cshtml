@@ -9,6 +9,7 @@
 <!-- Should eventually have its own style sheet -->
 <head>
     <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="\css\logItemLayout.css" asp-append-version="true" />
 </head>
 
 <h1>Search</h1>
@@ -29,8 +30,14 @@
                 Container ID: <input type="text" asp-for="containerID" />
             </div>
             <div class="s">
-                <label for="selectBuilding">Building: </label>
-                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding">
+                <label for="selectAction">Action: </label>
+                <select asp-for="searchAction" asp-items="Html.GetEnumSelectList<Actions>()" id="selectAction">
+                    <option value="">Pick one</option>
+                </select>
+            </div>
+            <div class="s">
+                <label for="selectRole">Role: </label>
+                <select asp-for="searchRole" asp-items="Html.GetEnumSelectList<Roles>()" id="selectRole">
                     <option value="">Pick one</option>
                 </select>
             </div>
@@ -49,13 +56,61 @@
         <thead>
         </thead>
         <tbody>
-            <tr>
-                <td>Date / Time</td>
-                <td>User</td>
-                <td>Action</td>
-                <td>Container ID</td>
-                <td>Details</td>
-            </tr>
+            @if (Model.LogEntries.Count() > 0)
+            {
+                var count = Model.LogEntries.Count();
+                var start = 0;
+                var end = 25;
+                var numOfPages = Model.LogEntries.Count() / 25;
+
+                @if (!Model.textEntered())
+                {
+                    <p class="noFilters">No Filters Applied</p>
+                }
+
+
+                if (count < end) { end = count; }
+
+                <tr>
+                    <td>Date / Time</td>
+                    <td>User</td>
+                    <td>Action</td>
+                    <td>Container ID</td>
+                    <td>Details</td>
+                </tr>
+                @for (var i = start; i < end; i++)
+                {
+                    var item = Model.LogEntries[i];
+                    <tr class="cell">
+                        <td class="a">
+                            @Html.DisplayFor(modelItem => item.DateTime)
+                        </td>
+                        <td class="a">
+                            @Html.DisplayFor(modelItem => item.User.Email)
+                        </td>
+                        <td class="a">
+                            @EnumHelper.GetDisplayValue((Actions)item.Action)
+                        </td>
+                        <td class="a">
+                            @if (item.ContainerID == null)
+                            {
+                                @:N/A
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ContainerID)
+                            }
+                        </td>
+                        <td class="a">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <p>No results found</p>
+            }
         </tbody>
     </table>
 
@@ -64,27 +119,6 @@
         <a href=""> >> </a>
     </div>
 </div>
-
-<!-- Confirmation Modal -->
-<div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modalcss">
-            <div class="modal-header" style="justify-content:center;">
-                <h5 class="modal-title" style="font-size: 30px" id="modalLabel">Are You Sure?</h5>
-                <button type="button" class="close" style="position: absolute; right: 15px; width: 20%;" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="text-align: center">
-                <button type="button" class="btn modalBtns regBtn" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn modalBtns redBtn" id="DelButton" form="deleteForm" asp-page-handler="delete">
-                    Yes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script>
     // Opens and closes the filter sections
@@ -110,24 +144,6 @@
                 content.style.display = "none";
             } else {
                 content.style.display = "block";
-            }
-        });
-    }
-</script>
-<script>
-    var coll = document.getElementsByClassName("expandable");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "block") {
-                content.style.display = "none";
-                this.style.backgroundColor = "rgb(225,225,225)";
-            } else {
-                content.style.display = "block";
-                this.style.backgroundColor = "rgb(204,204,204)";
             }
         });
     }

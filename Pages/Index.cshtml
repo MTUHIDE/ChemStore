@@ -50,7 +50,6 @@
                 </select>
                 Retired? <input type="checkbox" asp-for="searchRetired" />
             </div>
-            <!-- Container size: <input type="text" asp-for="searchSize" />-->
         </form>
     </div>
 </div>
@@ -318,11 +317,9 @@
         var checkboxes = document.getElementsByName('chemicalsToDelete'); //All the checkboxes on the chemicals
         var sendbtn = document.getElementById('delModalBtn');
 
-        /*Determines if there is a check in one of the boxes. Can be simplified into a loop that checks the
-         status of each of the checkboxes from the checkboxes array*/
+        //Searches for checked box
         var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
 
-        //style="display: none/initial;"
         sendbtn.style.pointerEvents = checkedOne ? "initial" : "none";
         sendbtn.disabled = checkedOne ? false : true;
     }
