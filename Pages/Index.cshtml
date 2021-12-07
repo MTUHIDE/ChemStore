@@ -254,7 +254,10 @@
                         <input type="text" name="Amount" placeholder="Amount" value="@((editItem != null) ? editItem.con.Amount : 0)" /> <br />
                         <input type="hidden" name="ContainerID" value="@((editItem != null) ? editItem.con.ContainerId : 0)" /> <br />
                         <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)"> <br />
-                            <option value="@((editItem != null) ? editItem.loc.BuildingName : 0)" selected>@EnumHelper.GetDisplayValue((Buildings)((editItem != null) ? editItem.loc.BuildingName : 0))</option>
+
+                        <!--Utilizes the GetEnumSelectListName method-->
+                        <!--<select asp-for="buildingEditIndex" asp-items="@*(EnumHelper.GetEnumSelectListName(new Buildings(), (editItem != null ? editItem.loc.BuildingName : 0)))*@" onchange="getEditRoomsOfBuilding(1)">-->
+                            <br />
                         </select> <br />
                         <select asp-for="RoomEditIndex">
                             <option value="@((editItem != null) ? editItem.loc.BuildingName : 0)" selected>@((editItem != null) ? editItem.loc.RoomNumber : "N/A")</option>
