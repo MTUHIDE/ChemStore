@@ -100,7 +100,36 @@
                                 @Html.DisplayFor(modelItem => item.chem.CasNumber)
                             </td>
                             <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.ChemicalHazards)
+                                @*TODO: actually implement conditional rendering based on data*@
+                                <span class="hazards">
+                                    @if (i % 4 == 0)
+                                    {
+                                        <span class="hazard hazard-exclamation"></span>
+                                        <span class="hazard hazard-skull"></span>
+                                        <span class="hazard hazard-gas"></span>
+                                        <span class="hazard hazard-environment"></span>
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                    else if (i % 4 == 1)
+                                    {
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                    else if (i % 4 == 2)
+                                    {
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-flame"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                    else if (i % 4 == 3)
+                                    {
+                                        <span class="hazard hazard-skull"></span>
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-flame"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                </span>
                             </td>
                             <td class="a">
                                 @Html.DisplayFor(modelItem => item.con.Amount)
@@ -264,36 +293,36 @@
 
 <script>
     function getRoomsOfBuilding() {
-        var ex = document.getElementById('buildingIndex');
-        var str = ex.options[ex.selectedIndex].value;
-        document.getElementById('RoomIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
-        fetch(`?handler=SubCategories&buildingIndex=${str}`)
+                                        var ex = document.getElementById('buildingIndex');
+                                        var str = ex.options[ex.selectedIndex].value;
+                                        document.getElementById('RoomIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+                                        fetch(`?handler=SubCategories&buildingIndex=${str}`)
             .then((response) => {
-                return response.json();
-            })
+                 return response.json();
+             })
             .then((data) => {
                 Array.prototype.forEach.call(data, function (item, i) {
                     console.log('item', item)
                     document.getElementById('RoomIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
-            });
+                                    });
     }
 
     function getEditRoomsOfBuilding(initGet) {
-        var ex = document.getElementById('buildingEditIndex');
-        var str = ex.options[ex.selectedIndex].value;
-        if (initGet == 0) {
-            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>@editItem.loc.RoomNumber</option>";
-        } else {
-            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
-        }
-        fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
+                                        var ex = document.getElementById('buildingEditIndex');
+                                        var str = ex.options[ex.selectedIndex].value;
+                                        if (initGet == 0) {
+                                            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>@editItem.loc.RoomNumber</option>";
+                                        } else {
+                                            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+                                        }
+                                        fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
             .then((response) => {
-                return response.json();
-            })
+                 return response.json();
+             })
             .then((data) => {
-                Array.prototype.forEach.call(data, function (item, i) {
-                    console.log('item', item)
+            Array.prototype.forEach.call(data, function (item, i) {
+                console.log('item', item)
                     document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
             });
@@ -303,12 +332,12 @@
 <script>
     function showCreateAlert() {
 
-        var hasError = @Model.createError.ToString().ToLower();
-        if (hasError) {
-            window.alert('Error: Invalid Data');
-        }
+                                        var hasError = @Model.createError.ToString().ToLower();
+                                        if (hasError) {
+                                            window.alert('Error: Invalid Data');
+                                        }
 
-    }
+                                    }
 </script>
 
 <script>
