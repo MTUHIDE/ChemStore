@@ -104,15 +104,33 @@
                             <td class="a">
                                 @*TODO: actually implement conditional rendering based on data*@
                                 <span class="hazards">
-                                    <span class="hazard hazard-bomb"></span>
-                                    <span class="hazard hazard-flame"></span>
-                                    <span class="hazard hazard-flame-circle"></span>
-                                    <span class="hazard hazard-exclamation"></span>
-                                    <span class="hazard hazard-skull"></span>
-                                    <span class="hazard hazard-gas"></span>
-                                    <span class="hazard hazard-environment"></span>
-                                    <span class="hazard hazard-bomb"></span>
-                                    <span class="hazard hazard-corrosion"></span>
+                                    @if (i % 4 == 0)
+                                    {
+                                        <span class="hazard hazard-exclamation"></span>
+                                        <span class="hazard hazard-skull"></span>
+                                        <span class="hazard hazard-gas"></span>
+                                        <span class="hazard hazard-environment"></span>
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                    else if (i % 4 == 1)
+                                    {
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                    else if (i % 4 == 2)
+                                    {
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-flame"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
+                                    else if (i % 4 == 3)
+                                    {
+                                        <span class="hazard hazard-skull"></span>
+                                        <span class="hazard hazard-bomb"></span>
+                                        <span class="hazard hazard-flame"></span>
+                                        <span class="hazard hazard-corrosion"></span>
+                                    }
                                 </span>
                             </td>
                             <td class="a">
