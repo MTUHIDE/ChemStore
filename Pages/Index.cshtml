@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
 </head>
 
-<h1>Search</h1>
 <div id="search">
     <div class="search">
         <button class="closeFilter" onclick="closeFilter()">
@@ -79,7 +78,7 @@
 
                     @if (!Model.textEntered())
                     {
-                        <p class="noFilters">No Filters Applied</p>
+                        /*<p class="noFilters">No Filters Applied</p>*/
                     }
 
 
@@ -151,7 +150,7 @@
             <a href=""> >> </a>
             <div style="margin-left: auto">
                 <div id="regularDiv">
-                    <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn">
+                    <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
                         Add
                     </button>
                     <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
@@ -174,10 +173,8 @@
 
 <!--New Create Modal HTML-->
 
-<button data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">Add Chemical</button>
-
 <div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add New Chemical</h5>
@@ -186,21 +183,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" id="form1">
-                    <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@Request.Query["Chemical Name"]" />
-                    <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" />
-                    <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" />
-                    <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" />
+                <form method="post" id="form1" class="modalForm">
+                    <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@Request.Query["Chemical Name"]" /> <br />
+                    <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" /> <br />
+                    <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" /> <br />
+                    <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" /> <br />
                     <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
                         <option value="" disabled selected hidden>Building</option>
-                    </select>
+                    </select> <br />
                     <select asp-for="RoomIndex">
                         <option value="" disabled selected hidden>Room Number</option>
-                    </select>
+                    </select> <br />
                     <select name="Hazard" value="@Request.Query["Hazard"]">
                         <option value="" disabled selected hidden>Hazard</option>
-                    </select>
-                    <button type="button" data-dismiss="modal">Cancel</button>
+                    </select> <br />
+                    <button type="button" class="redBtn" data-dismiss="modal">Cancel</button>
                     <input type="submit" value="Add" asp-page-handler="create" />
                 </form>
             </div>
@@ -213,7 +210,7 @@
 @{
     var editItem = Model.DisplayContainers[0];
     <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Chemical</h5>
@@ -222,22 +219,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="form1">
-                        <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@editItem.chem.ChemicalName" />
-                        <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" />
-                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" />
-                        <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" />
-                        <input type="hidden" name="ContainerID" value="@editItem.con.ContainerId" />
-                        <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
+                    <form method="post" id="form1" class="modalForm">
+                        <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@editItem.chem.ChemicalName" /> <br />
+                        <input type="text" name="CAS Number" placeholder="CAS Number" value="@editItem.chem.CasNumber" /> <br />
+                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@editItem.supervisor.Name" /> <br />
+                        <input type="text" name="Amount" placeholder="Amount" value="@editItem.con.Amount" /> <br />
+                        <input type="hidden" name="ContainerID" value="@editItem.con.ContainerId" /> <br />
+                        <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)"> <br />
                             <option value="@editItem.loc.BuildingName" selected>@EnumHelper.GetDisplayValue((Buildings)editItem.loc.BuildingName)</option>
-                        </select>
+                        </select> <br />
                         <select asp-for="RoomEditIndex">
                             <option value="@editItem.loc.BuildingName" selected>@editItem.loc.RoomNumber</option>
-                        </select>
+                        </select> <br />
                         <select name="Hazard" value="@editItem.chem.ChemicalHazards">
                             <option value="" disabled selected hidden>Hazard</option>
-                        </select>
-                        <button type="button" data-dismiss="modal">Cancel</button>
+                        </select> <br />
+                        <button type="button" class="redBtn" data-dismiss="modal">Cancel</button>
                         <input type="submit" value="Save" asp-page-handler="edit" />
                     </form>
                 </div>
@@ -248,8 +245,8 @@
 
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modalcss">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
             <div class="modal-header" style="justify-content:center;">
                 <h5 class="modal-title" style="font-size: 30px" id="modalLabel">Are You Sure?</h5>
                 <button type="button" class="close" style="position: absolute; right: 15px; width: 20%;" data-dismiss="modal">
@@ -257,8 +254,8 @@
                 </button>
             </div>
             <div class="modal-body" style="text-align: center">
-                <button type="button" class="btn modalBtns regBtn" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn modalBtns redBtn" id="DelButton" form="deleteForm" asp-page-handler="delete">
+                <button type="button" class="btn modalBtns redBtn" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn modalBtns greenBtn" id="DelButton" form="deleteForm" asp-page-handler="delete">
                     Yes
                 </button>
             </div>

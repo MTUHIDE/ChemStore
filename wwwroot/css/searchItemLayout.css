@@ -35,11 +35,14 @@ h1 {
 
 .container{
     margin: 0px;
+    max-width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .search {
     left: 0;
-    width: 399px;
+    width: 20%;
     text-align: center;
     float: left;
     background-color: #ececec;
@@ -47,8 +50,8 @@ h1 {
     padding: 10px
 }
 .results{
-    margin-left: 400px;
-    width: 1000px;
+    width: 80%;
+    float: right;
 }
 .default {
     text-align: center;
@@ -62,7 +65,7 @@ h1 {
     margin-bottom: 10px;
     border-radius: 10px;
     border: solid 1px black;
-    width: 30%;
+    width: 25%;
     
 }
     .filter:hover {
@@ -145,10 +148,11 @@ table {
 }
 
 tr {
-    display: block;
     border-radius: 15px;
-    width: 80%;
+    width: 95%;
     margin: auto;
+    display: grid;
+    grid-template-columns: 50% 15% 20% 10% 5%;
 }
 
 .expandable {
@@ -196,31 +200,6 @@ td {
         vertical-align: middle;
     }
 
-    tr {
-        display: grid;
-        grid-template-columns: 20% 20% 20% 10% 5%;
-    }
-
-.a:nth-child(1)::before {
-    /*content: "CAS Number:";*/
-}
-
-
-.a:nth-child(2)::before {
-    /*content: "Chemical Name:";*/
-}
-
-.a:nth-child(3)::before {
-    /*content: "Hazard ID:";*/
-}
-
-.a:nth-child(4) {
-    /*float: right;*/
-}
-    .a:nth-child(4)::before {
-        /*content: "Size: ";*/
-    }
-
 .a:nth-child(5) {
     float: right;
 }
@@ -250,7 +229,7 @@ td {
 }
 
 .searchPageBtns {
-    font-family: Roboto;
+    font-family: Arial;
     font-size: 15px;
     line-height: 0px;
     width: 80px;
@@ -321,4 +300,43 @@ td {
     width: 0%; 
     margin-top: 0; 
     padding: 0px;
+}
+
+/* Form styling for add modal*/
+.modalForm {
+    text-align: center;
+}
+.modalForm input[type=text] {
+    display: block;
+    margin: auto;
+    width: 90%;
+    border: none;
+    padding-left: 10px;
+
+}
+.modalForm input[type=submit] {
+    background-color: #8AEE71;
+    cursor: pointer;
+    padding: 5px;
+    width: 30%;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    }
+    .modalForm input[type=submit]:hover {
+        background-color: #7cd665;
+    }
+.modalForm select {
+    margin: 10px;
+}
+
+/* Edits to bootstrap modal css*/
+.modal-dialog {
+    max-width: 35%;
+}
+.modal-content {
+    border-radius: 24px;
+    background-color: #e1e1e1;
 }
