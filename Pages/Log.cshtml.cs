@@ -41,6 +41,7 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchDetails) &&
                 string.IsNullOrEmpty(containerID) &&
                 string.IsNullOrEmpty(searchDetails) &&
+                string.IsNullOrEmpty(searchAction) &&
                 string.IsNullOrEmpty(searchRole));
         }
 
@@ -49,14 +50,46 @@ namespace ChemStoreWebApp.Pages
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
             if (!string.IsNullOrEmpty(searchAction) && !entry.Action.ToString().Equals(searchAction))
                 return false;
-            if (!string.IsNullOrEmpty(searchRole) && !entry.User.Role.ToString().Equals(searchRole))
+            if (!string.IsNullOrEmpty(searchRole) && (!entry.User?.Role?.ToString().Equals(searchRole) ?? true))
                 return false;
+            /*if (!string.IsNullOrEmpty(searchRole) && !(entry.User == null) && !entry.User?.Role.ToString().Equals(searchRole))
+                return false; */
             if (!string.IsNullOrEmpty(containerID) && entry.ContainerID != long.Parse(containerID))
                 return false;
-            if (!string.IsNullOrEmpty(searchUser) && !entry.User.Email.Contains(searchUser, checkCase))
+            if (!string.IsNullOrEmpty(searchUser) && !(entry.User == null) && !entry.User.Email.Contains(searchUser, checkCase))
                 return false;
-            if (!string.IsNullOrEmpty(searchDetails) && !entry.Description.Contains(searchDetails, checkCase))
-                return false;
+
+
+
+            if (!string.IsNullOrEmpty(searchUser))
+            {
+                if(entry.User != null)
+                {
+                    if(!entry.User.Email.Contains(searchUser, checkCase))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(searchDetails))
+            {
+                if (entry.Description != null)
+                {
+                    if (!entry.Description.Contains(searchDetails, checkCase))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
             return true;
         }
