@@ -22,7 +22,7 @@ namespace ChemStoreWebApp.Pages
             _context = context;
         }
        
-        public IList<Log> LogEntries { get; set; }
+        public List<Log> LogEntries { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string searchAction { get; set; }
@@ -40,7 +40,6 @@ namespace ChemStoreWebApp.Pages
             return !( string.IsNullOrEmpty(searchUser) &&
                 string.IsNullOrEmpty(searchDetails) &&
                 string.IsNullOrEmpty(containerID) &&
-                string.IsNullOrEmpty(searchDetails) &&
                 string.IsNullOrEmpty(searchAction) &&
                 string.IsNullOrEmpty(searchRole));
         }
@@ -48,48 +47,18 @@ namespace ChemStoreWebApp.Pages
         public Boolean isValidSearchItem(Log entry, bool ignoreCase)
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+
             if (!string.IsNullOrEmpty(searchAction) && !entry.Action.ToString().Equals(searchAction))
                 return false;
-            if (!string.IsNullOrEmpty(searchRole) && (!entry.User?.Role?.ToString().Equals(searchRole) ?? true))
+            //Some variables in the entry can be null. Uses the null conditional operator to break when null
+            if (!string.IsNullOrEmpty(searchRole) && (!entry.User?.Role.ToString().Equals(searchRole) ?? true))
                 return false;
-            /*if (!string.IsNullOrEmpty(searchRole) && !(entry.User == null) && !entry.User?.Role.ToString().Equals(searchRole))
-                return false; */
-            if (!string.IsNullOrEmpty(containerID) && entry.ContainerID != long.Parse(containerID))
+            if(!string.IsNullOrEmpty(searchUser) && (!entry.User?.Email.Contains(searchUser, checkCase) ?? true))
                 return false;
-            if (!string.IsNullOrEmpty(searchUser) && !(entry.User == null) && !entry.User.Email.Contains(searchUser, checkCase))
+            if (!string.IsNullOrEmpty(searchDetails) && (!entry.Description?.Contains(searchDetails, checkCase) ?? true))
                 return false;
-
-
-
-            if (!string.IsNullOrEmpty(searchUser))
-            {
-                if(entry.User != null)
-                {
-                    if(!entry.User.Email.Contains(searchUser, checkCase))
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(searchDetails))
-            {
-                if (entry.Description != null)
-                {
-                    if (!entry.Description.Contains(searchDetails, checkCase))
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            if (!string.IsNullOrEmpty(containerID) && (!entry.ContainerID?.ToString().Contains(containerID) ?? true))
+                return false;
 
             return true;
         }
@@ -103,7 +72,7 @@ namespace ChemStoreWebApp.Pages
             var log = _context.Log.ToList();
             var accounts = _context.Account.ToList();
 
-            //Updates the User variable for the Log objects
+            //Updates the User variable for the Log entry objects
             foreach (var e in log)
             {
                 e.User = (from a in accounts
@@ -111,6 +80,7 @@ namespace ChemStoreWebApp.Pages
                           select a).FirstOrDefault();
             }
 
+            //Filter the results if text has been entered in one of the parameters
             if(textEntered() == true)
             {
                 LogEntries = await Task.FromResult(
@@ -121,6 +91,9 @@ namespace ChemStoreWebApp.Pages
             {
                 LogEntries = log;
             }
+
+            //Sort by the DateTime variables
+            LogEntries.Sort((x, y) => DateTime.Compare(y.DateTime, x.DateTime));
         }
     }
 }
