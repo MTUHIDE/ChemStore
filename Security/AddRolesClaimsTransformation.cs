@@ -36,7 +36,7 @@ namespace ChemStoreWebApp.Security
                         where a.Email == nameId
                         select a).FirstOrDefault();
 
-            for (int i = user.Role ?? 3; i <= 3; i++)
+            for (int i = user?.Role ?? 3; i <= 3; i++)
             {
                 var role = new Claim(newIdentity.RoleClaimType, ((Roles)i).ToString());
                 newIdentity.AddClaim(role);
