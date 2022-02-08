@@ -8,6 +8,12 @@
 
 <head>
     <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
+
+    <!--Links to add Roboto font for modal buttons as per Figma (and because Roboto is a nice font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!---------------------------------------------------------------------------------------------->
 </head>
 
 <div id="search">
@@ -225,8 +231,8 @@
                     <select name="Hazard" value="@Request.Query["Hazard"]">
                         <option value="" disabled selected hidden>Hazard</option>
                     </select> <br />
-                    <button type="button" class="redBtn" data-dismiss="modal">Cancel</button>
-                    <input type="submit" value="Add" asp-page-handler="create" />
+                    <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
+                    <input type="submit" class="modalBtns greenBtn" value="Add" asp-page-handler="create" />
                 </form>
             </div>
         </div>
@@ -265,8 +271,8 @@
                         <select name="Hazard" value="@((editItem != null) ? editItem.chem.ChemicalHazards : null)">
                             <option value="" disabled selected hidden>Hazard</option>
                         </select> <br />
-                        <button type="button" class="redBtn" data-dismiss="modal">Cancel</button>
-                        <input type="submit" value="Save" asp-page-handler="edit" />
+                        <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
+                        <input type="submit" class="modalBtns greenBtn" value="Save" asp-page-handler="edit" />
                     </form>
                 </div>
             </div>
