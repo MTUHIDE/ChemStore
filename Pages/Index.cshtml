@@ -15,7 +15,7 @@
         <button class="closeFilter" onclick="closeFilter()">
             X
         </button>
-        <form>
+        <form id="filterForm">
             <input type="submit" value="Filter" class="filter" />
             <div class="s">
                 CAS number: <input type="text" asp-for="searchCAS" />
@@ -165,38 +165,43 @@
                 }
             </tbody>
         </table>
+    </form>
 
-        <div class="pageSelectors">
-            <!--<a href=""> << </a>
-            <a href=""> < </a>-->
-            @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
-            {
-                <a href=""> @i.ToString()  </a>
-            }
+    <div class="pageSelectors">
+        <!--<a href=""> << </a>
+        <a href=""> < </a>-->
+        @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
+        {
+            <a href=""> @i.ToString()  </a>
+        }
 
-            <a href=""> > </a>
-            <a href=""> >> </a>
-            <div style="margin-left: auto">
-                <div id="regularDiv">
-                    <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
-                        Add
-                    </button>
-                    <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
-                        Remove
-                    </button>
-                </div>
-                <div id="deleteDiv" style="display: none">
-                    <!-- Button trigger for modal -->
-                    <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
-                        Delete
-                    </button>
-                    <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
-                        Cancel
-                    </button>
-                </div>
+        <a href=""> > </a>
+        <a href=""> >> </a>
+        <div style="margin-left: auto">
+            <input name="revSort" form="filterForm" asp-for="revSort" type="checkbox" value="true"> revSort
+            <input name="revNums" form="filterForm" asp-for="revNums" type="checkbox" value="true"> revNums
+            <button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="2"> Cas </button>
+            <button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="0"> Name </button>
+            <button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button>
+            <div id="regularDiv">
+                <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
+                    Add
+                </button>
+                <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
+                    Remove
+                </button>
+            </div>
+            <div id="deleteDiv" style="display: none">
+                <!-- Button trigger for modal -->
+                <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
+                    Delete
+                </button>
+                <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
+                    Cancel
+                </button>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <!--New Create Modal HTML-->

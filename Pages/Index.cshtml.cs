@@ -13,17 +13,6 @@ namespace ChemStoreWebApp.Pages
 {
     public class SearchModel : PageModel
     {
-        private static readonly Dictionary<int, int> orderedUnits = new Dictionary<int, int>
-        {
-            {(int)Units.L,7},
-            {(int)Units.mL,6},
-            {(int)Units.kg,5},
-            {(int)Units.g,4},
-            {(int)Units.mg,3},
-            {(int)Units.gallon,2},
-            {(int)Units.pound,1}
-        }; 
-
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;
 
         public SearchModel(ChemStoreWebApp.Models.chemstoreContext context)
@@ -64,6 +53,17 @@ namespace ChemStoreWebApp.Pages
         public bool createError { get; set; } = false;
         [BindProperty(SupportsGet = true)]
         public int containerListIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int sortMethod { get; set; } = 0;
+        [BindProperty(SupportsGet = true)]
+        public bool reverseNumbers { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool reverseOrder { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool revSort { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool revNums { get; set; } = false;
+
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -136,7 +136,8 @@ namespace ChemStoreWebApp.Pages
         public async Task<IActionResult> OnPostDelete()
         {
             deleteFromDatabase(chemicalsToDelete);
-            return RedirectToPage();
+
+            return RedirectToPage(new {sortMethod = 99});
         }
 
         // Edits the selected chemical to have the new values as specified in the edit modal
@@ -223,35 +224,26 @@ namespace ChemStoreWebApp.Pages
                 c => new DisplayContainer(c, chemicals, locations, accounts))
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
-            sortBySize();
-        }
 
-        /*
-         public class CaseInsensitiveComparer : IComparer<string> {
-         public int Compare(string x, string y) {
-         return string.Compare(x, y, true);
-          }
-            }
-         */
+            if (revSort)
+                sortMethod++;
+           
+            //Switch case to determine what to sort by initially
+            //Has to be sorted on reload with current setup
+            IOrderedEnumerable<DisplayContainer> temp = sortMethod switch
+            {
+                1 => DisplayContainers.OrderByDescending(c => c.chem.ChemicalName),
+                2 => DisplayContainers.OrderBy(c => c.con.CasNumber),
+                3 => DisplayContainers.OrderByDescending(c => c.con.CasNumber),
+                4 => DisplayContainers.OrderBy(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
+                5 => DisplayContainers.OrderByDescending(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
 
-        public void sort()
-        {
-            IOrderedEnumerable<DisplayContainer> temp;
-            temp = DisplayContainers.OrderBy(c => c.con.CasNumber);
-            //temp.ThenBy
-            DisplayContainers = temp.ToList();
-        }
-        public void sortByCas()
-        {
-            DisplayContainers = DisplayContainers.OrderBy(c => c.con.CasNumber).ToList();
-        }
-        public void sortByChemName()
-        {
-            DisplayContainers = DisplayContainers.OrderBy(c => c.chem.ChemicalName).ToList();
-        }
-        public void sortBySize()
-        {
-            DisplayContainers = DisplayContainers.OrderBy(c => c.chem.ChemicalName).ThenByDescending(c => orderedUnits[c.con.Unit]).ThenBy(c => c.con.Amount).ToList();
+                _ => DisplayContainers.OrderBy(c => c.chem.ChemicalName),
+            };
+
+            //Always sort by size of container
+            DisplayContainers = revNums ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
+                                        : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
         }
     }
 }
