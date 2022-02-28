@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChemStoreWebApp.Pages
 {
+    [Authorize(Policy = "Admin")]
     public class LogModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;
@@ -19,10 +21,13 @@ namespace ChemStoreWebApp.Pages
         {
             _context = context;
         }
-        //public IList<DisplayContainer> DisplayContainers { get; set; }
+       
+        public List<Log> LogEntries { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string searchBuilding { get; set; }
+        public string searchAction { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string searchRole { get; set; }
         [BindProperty(SupportsGet = true)]
         public string searchUser { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -32,10 +37,30 @@ namespace ChemStoreWebApp.Pages
 
         public Boolean textEntered()
         {
-            return !(string.IsNullOrEmpty(searchBuilding) &&
-                string.IsNullOrEmpty(searchUser) &&
+            return !( string.IsNullOrEmpty(searchUser) &&
                 string.IsNullOrEmpty(searchDetails) &&
-                string.IsNullOrEmpty(containerID));
+                string.IsNullOrEmpty(containerID) &&
+                string.IsNullOrEmpty(searchAction) &&
+                string.IsNullOrEmpty(searchRole));
+        }
+
+        public Boolean isValidSearchItem(Log entry, bool ignoreCase)
+        {
+            var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+
+            if (!string.IsNullOrEmpty(searchAction) && !entry.Action.ToString().Equals(searchAction))
+                return false;
+            //Some variables in the entry can be null. Uses the null conditional operator to break when null
+            if (!string.IsNullOrEmpty(searchRole) && (!entry.User?.Role.ToString().Equals(searchRole) ?? true))
+                return false;
+            if(!string.IsNullOrEmpty(searchUser) && (!entry.User?.Email.Contains(searchUser, checkCase) ?? true))
+                return false;
+            if (!string.IsNullOrEmpty(searchDetails) && (!entry.Description?.Contains(searchDetails, checkCase) ?? true))
+                return false;
+            if (!string.IsNullOrEmpty(containerID) && (!entry.ContainerID?.ToString().Contains(containerID) ?? true))
+                return false;
+
+            return true;
         }
 
         /// <summary>
@@ -44,8 +69,31 @@ namespace ChemStoreWebApp.Pages
         /// <returns></returns>
         public async Task OnGetAsync()
         {
-            // stores data from database in arrays to limit amount of calls to database at once
-            //var containers = _context.History.ToList();
+            var log = _context.Log.ToList();
+            var accounts = _context.Account.ToList();
+
+            //Updates the User variable for the Log entry objects
+            foreach (var e in log)
+            {
+                e.User = (from a in accounts
+                          where a.AccountId == e.UserID
+                          select a).FirstOrDefault();
+            }
+
+            //Filter the results if text has been entered in one of the parameters
+            if(textEntered() == true)
+            {
+                LogEntries = await Task.FromResult(
+                log.Where(c => isValidSearchItem(c, true))
+                .ToList());
+            }
+            else
+            {
+                LogEntries = log;
+            }
+
+            //Sort by the DateTime variables
+            LogEntries.Sort((x, y) => DateTime.Compare(y.DateTime, x.DateTime));
         }
     }
 }

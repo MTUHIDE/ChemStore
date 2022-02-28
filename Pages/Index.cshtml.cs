@@ -103,7 +103,7 @@ namespace ChemStoreWebApp.Pages
         public Boolean isValidSearchItem(DisplayContainer con, bool ignoreCase)
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            if (!string.IsNullOrEmpty(searchCAS) && !con.chem.CasNumber.Contains(searchString, checkCase))
+            if (!string.IsNullOrEmpty(searchCAS) && !con.chem.CasNumber.Contains(searchCAS, checkCase))
                 return false;
             if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemicalName.Contains(searchString, checkCase))
                 return false;

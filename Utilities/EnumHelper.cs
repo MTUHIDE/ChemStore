@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,24 @@ namespace ChemStoreWebApp.Utilities
             var values = from Enum item in Enum.GetValues(tEnum.GetType())
                            select new { ID = item, Name = GetDisplayValue(item) };
             return new SelectList(values, "ID", "Name");
+        }
+
+        /// <summary>
+        /// Create a select list for an enum, using the display name option, to be used in a dropdown menu
+        /// And select the default item
+        /// </summary>
+        /// <param name="tEnum">enum value to create select list from</param>
+        /// <param name="id">Default value to be selected</param>
+        /// <returns>A select list with the display name</returns>
+        public static SelectList GetEnumSelectListName(Enum tEnum, int id)
+        {
+            int i = 1;
+            var values = from Enum item in Enum.GetValues(tEnum.GetType())
+                         select new { ID = i++, Name = GetDisplayValue(item) };
+            SelectList list = new SelectList(values, "ID", "Name");
+            var selected = list.Where(j => j.Value == id.ToString()).First();
+            selected.Selected = true;
+            return list;
         }
     }
 }
