@@ -139,7 +139,7 @@ namespace ChemStoreWebApp.Pages
                 con.CasNumber = Request.Form["Cas Number"];
                 con.SupervisorId = (from s in _context.Account
                                     where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
-                                    select s.AccountId).Single();
+                                    select s.AccountId).FirstOrDefault();
                 con.Amount = Int32.Parse(Request.Form["Amount"]);
                 con.RoomId = (from l in _context.Location
                               where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
