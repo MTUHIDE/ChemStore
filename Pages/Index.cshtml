@@ -83,12 +83,23 @@
 
                     if (count < end) { end = count; }
 
-                    <tr>
-                        <td>Chemical Name</td>
-                        <td>CAS Number</td>
-                        <td>Hazard</td>
-                        <td>Size</td>
-                    </tr>
+                <tr>
+                    <td>
+                        <!--
+                        <input name="revNums" form="filterForm" asp-for="revNums" type="checkbox" hidden value="true">-->
+                        <button type="submit" form="filterForm" name="sortMethod" class="btn" value="0"> Chemical Name </button>
+                        <input name="revSort" form="filterForm" asp-for="revSort" type="number" value="@Model.revSort" hidden>
+                        <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
+                    </td>
+                    <td>
+                        <button type="submit" form="filterForm" name="sortMethod" class="btn" value="2"> CAS Number </button>
+                    </td>
+                    <td>Hazard</td>
+                    <td>
+                        <button type="submit" form="filterForm" name="revNums" class="btn" value="true"> Size </button>
+                        <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden>
+                    </td>
+                </tr>
                     @for (var i = start; i < end; i++)
                     {
                         var item = Model.DisplayContainers[i];
@@ -178,11 +189,6 @@
         <a href=""> > </a>
         <a href=""> >> </a>
         <div style="margin-left: auto">
-            <input name="revSort" form="filterForm" asp-for="revSort" type="checkbox" value="true"> revSort
-            <input name="revNums" form="filterForm" asp-for="revNums" type="checkbox" value="true"> revNums
-            <button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="2"> Cas </button>
-            <button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="0"> Name </button>
-            <button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button>
             <div id="regularDiv">
                 <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
                     Add

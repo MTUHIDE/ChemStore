@@ -60,9 +60,11 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public bool reverseOrder { get; set; } = false;
         [BindProperty(SupportsGet = true)]
-        public bool revSort { get; set; } = false;
+        public int revSort { get; set; } = -1;
         [BindProperty(SupportsGet = true)]
         public bool revNums { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool revNumsPrev { get; set; } = false;
 
 
         /// <summary>
@@ -137,7 +139,7 @@ namespace ChemStoreWebApp.Pages
         {
             deleteFromDatabase(chemicalsToDelete);
 
-            return RedirectToPage(new {sortMethod = 99});
+            return RedirectToPage();
         }
 
         // Edits the selected chemical to have the new values as specified in the edit modal
@@ -225,9 +227,23 @@ namespace ChemStoreWebApp.Pages
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
 
-            if (revSort)
-                sortMethod++;
-           
+            bool rev;
+            //if the revNums button was pressed
+            if(revNums)
+            {
+                revNumsPrev = !revNumsPrev;
+                sortMethod = revSort;
+            }
+            else
+            {
+                if (revSort == sortMethod)
+                {
+                    sortMethod++;
+                }
+                revSort = sortMethod;
+            }
+            rev = revNumsPrev;
+
             //Switch case to determine what to sort by initially
             //Has to be sorted on reload with current setup
             IOrderedEnumerable<DisplayContainer> temp = sortMethod switch
@@ -242,7 +258,7 @@ namespace ChemStoreWebApp.Pages
             };
 
             //Always sort by size of container
-            DisplayContainers = revNums ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
+            DisplayContainers = rev     ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
                                         : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
         }
     }
