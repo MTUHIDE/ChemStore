@@ -241,8 +241,6 @@
 
 <!--New Edit Modal HTML-->
 
-@{
-    var editItem = Model.DisplayContainers.Count > 0 ? Model.DisplayContainers[0] : null;
     <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -254,11 +252,11 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form1" class="modalForm">
-                        <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@((editItem != null) ? editItem.chem.ChemicalName : "N/A")" /> <br />
-                        <input type="text" name="CAS Number" placeholder="CAS Number" value="@((editItem != null) ? editItem.chem.CasNumber : "N/A")" /> <br />
-                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@((editItem != null) ? editItem.supervisor.Name : "N/A")" /> <br />
-                        <input type="text" name="Amount" placeholder="Amount" value="@((editItem != null) ? editItem.con.Amount : 0)" /> <br />
-                        <input type="hidden" name="ContainerID" value="@((editItem != null) ? editItem.con.ContainerId : 0)" /> <br />
+                        <input type="text" name="Chemical Name" id="editChemName" placeholder="Chemical Name" value="" /> <br />
+                        <input type="text" name="CAS Number" id="editChemCas" placeholder="CAS Number" value="" /> <br />
+                        <input type="text" name="Supervisor" id="editChemSup" placeholder="Supervisor" value="" /> <br />
+                        <input type="text" name="Amount" id="editChemSize" placeholder="Amount" value="" /> <br />
+                        <input type="hidden" name="ContainerID" id="ContainerID" value="" /> <br />
                         <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)"> <br />
 
                         <!--Utilizes the GetEnumSelectListName method-->
@@ -266,9 +264,9 @@
                             <br />
                         </select> <br />
                         <select asp-for="RoomEditIndex">
-                            <option value="@((editItem != null) ? editItem.loc.BuildingName : 0)" selected>@((editItem != null) ? editItem.loc.RoomNumber : "N/A")</option>
+                            <option value="" selected></option>
                         </select> <br />
-                        <select name="Hazard" value="@((editItem != null) ? editItem.chem.ChemicalHazards : null)">
+                        <select name="Hazard" value="">
                             <option value="" disabled selected hidden>Hazard</option>
                         </select> <br />
                         <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
@@ -356,12 +354,12 @@
 <script>
     function showCreateAlert() {
 
-                                        var hasError = @Model.createError.ToString().ToLower();
-                                        if (hasError) {
-                                            window.alert('Error: Invalid Data');
-                                        }
+        var hasError = @Model.createError.ToString().ToLower();
+        if (hasError) {
+            window.alert('Error: Invalid Data');
+        }
 
-                                    }
+    }
 </script>
 
 <script>
