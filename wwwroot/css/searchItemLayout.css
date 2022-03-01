@@ -177,6 +177,12 @@ tr {
     width: 75%;
 }
 
+.tableButton {
+    margin: 0px;
+    width: fit-content;
+    background: #dcdcdc45;
+}
+
 .table td{
     border-top: none;
 }

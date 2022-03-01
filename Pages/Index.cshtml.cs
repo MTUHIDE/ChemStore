@@ -60,7 +60,7 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public bool reverseOrder { get; set; } = false;
         [BindProperty(SupportsGet = true)]
-        public int revSort { get; set; } = -1;
+        public int prevSort { get; set; } = -1;
         [BindProperty(SupportsGet = true)]
         public bool revNums { get; set; } = false;
         [BindProperty(SupportsGet = true)]
@@ -227,22 +227,24 @@ namespace ChemStoreWebApp.Pages
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
 
-            bool rev;
             //if the revNums button was pressed
             if(revNums)
             {
+                //Inverse the state of the number search
                 revNumsPrev = !revNumsPrev;
-                sortMethod = revSort;
+                //Keep the sort method the same
+                sortMethod = prevSort;
             }
             else
             {
-                if (revSort == sortMethod)
+                //Check if the same button was pushed again
+                if (prevSort == sortMethod)
                 {
+                    //Reverses the sort method
                     sortMethod++;
                 }
-                revSort = sortMethod;
+                prevSort = sortMethod;
             }
-            rev = revNumsPrev;
 
             //Switch case to determine what to sort by initially
             //Has to be sorted on reload with current setup
@@ -258,8 +260,8 @@ namespace ChemStoreWebApp.Pages
             };
 
             //Always sort by size of container
-            DisplayContainers = rev     ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
-                                        : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
+            DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
+                                            : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
         }
     }
 }
