@@ -142,7 +142,7 @@
                                 @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                             <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditRoomsOfBuilding(0);">
+                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@i);">
                                     <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                 </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
@@ -241,8 +241,6 @@
 
 <!--New Edit Modal HTML-->
 
-@{
-    var editItem = Model.DisplayContainers.Count > 0 ? Model.DisplayContainers[0] : null;
     <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -254,11 +252,11 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form1" class="modalForm">
-                        <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@((editItem != null) ? editItem.chem.ChemicalName : "N/A")" /> <br />
-                        <input type="text" name="CAS Number" placeholder="CAS Number" value="@((editItem != null) ? editItem.chem.CasNumber : "N/A")" /> <br />
-                        <input type="text" name="Supervisor" placeholder="Supervisor" value="@((editItem != null) ? editItem.supervisor.Name : "N/A")" /> <br />
-                        <input type="text" name="Amount" placeholder="Amount" value="@((editItem != null) ? editItem.con.Amount : 0)" /> <br />
-                        <input type="hidden" name="ContainerID" value="@((editItem != null) ? editItem.con.ContainerId : 0)" /> <br />
+                        <input type="text" name="Chemical Name" id="editChemName" placeholder="Chemical Name" value="" /> <br />
+                        <input type="text" name="CAS Number" id="editChemCas" placeholder="CAS Number" value="" /> <br />
+                        <input type="text" name="Supervisor" id="editChemSup" placeholder="Supervisor" value="" /> <br />
+                        <input type="text" name="Amount" id="editChemSize" placeholder="Amount" value="" /> <br />
+                        <input type="hidden" name="ContainerID" id="ContainerID" value="" /> <br />
                         <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)"> <br />
 
                         <!--Utilizes the GetEnumSelectListName method-->
@@ -266,9 +264,9 @@
                             <br />
                         </select> <br />
                         <select asp-for="RoomEditIndex">
-                            <option value="@((editItem != null) ? editItem.loc.BuildingName : 0)" selected>@((editItem != null) ? editItem.loc.RoomNumber : "N/A")</option>
+                            <option value="" selected></option>
                         </select> <br />
-                        <select name="Hazard" value="@((editItem != null) ? editItem.chem.ChemicalHazards : null)">
+                        <select name="Hazard" value="">
                             <option value="" disabled selected hidden>Hazard</option>
                         </select> <br />
                         <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
@@ -278,7 +276,6 @@
             </div>
         </div>
     </div>
-}
 
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
@@ -311,7 +308,6 @@
             })
             .then((data) => {
                 Array.prototype.forEach.call(data, function (item, i) {
-                    console.log('item', item)
                     document.getElementById('RoomIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
             });
@@ -320,35 +316,50 @@
     function getEditRoomsOfBuilding(initGet) {
         var ex = document.getElementById('buildingEditIndex');
         var str = ex.options[ex.selectedIndex].value;
-        if (initGet == 0) {
-            /**/
-            document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>@((editItem != null) ? editItem.loc.RoomNumber : "N/A")</option>";
-    /**/
-} else {
-    document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
-}
-fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
-    .then((response) => {
-        return response.json();
-    })
-    .then((data) => {
-        Array.prototype.forEach.call(data, function (item, i) {
-            console.log('item', item)
-            document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
-        });
-    });
-}
+        var currRoomNumber = document.getElementById('RoomEditIndex').value;
+        fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                if (initGet == 0) {
+                    document.getElementById('RoomEditIndex').innerHTML = `<option selected hidden value="${currRoomNumber}">${currRoomNumber}</option>`;
+                } else {
+                    document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+                }
+                Array.prototype.forEach.call(data, function (item, i) {
+                    document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
+                });
+            });
+    }
+
+    function getEditModal(index) {
+        fetch(`?handler=ListItem&containerListIndex=${index}`)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                document.getElementById('editChemName').value = data[0];
+                document.getElementById('editChemCas').value = data[1];
+                document.getElementById('editChemSup').value = data[2];
+                document.getElementById('editChemSize').value = data[3];
+                document.getElementById('ContainerID').value = data[4];
+                document.getElementById('buildingEditIndex').value = data[5];
+                document.getElementById('RoomEditIndex').innerHTML = `<option value="${data[6]}">${data[6]}</option>`
+                getEditRoomsOfBuilding(0);
+            });
+    }
 </script>
 
 <script>
     function showCreateAlert() {
 
-                                        var hasError = @Model.createError.ToString().ToLower();
-                                        if (hasError) {
-                                            window.alert('Error: Invalid Data');
-                                        }
+        var hasError = @Model.createError.ToString().ToLower();
+        if (hasError) {
+            window.alert('Error: Invalid Data');
+        }
 
-                                    }
+    }
 </script>
 
 <script>
