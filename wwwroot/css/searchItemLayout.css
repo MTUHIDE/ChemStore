@@ -234,6 +234,15 @@ td {
     opacity: 1.0;
 }
 
+.tableSort {
+    opacity: 0.8;
+    width: 30px;
+}
+
+.tableSort:hover {
+    opacity: 1.0;
+}
+
 .searchPageBtns {
     font-family: Arial;
     font-size: 15px;

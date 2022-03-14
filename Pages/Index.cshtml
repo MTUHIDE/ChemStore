@@ -85,16 +85,26 @@
 
                 <tr>
                     <td>
-                        <button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button>
+                        Chemical Name
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
+                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" : (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                        <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
                         <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
                         <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
                     </td>
                     <td>
-                        <button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="2"> CAS Number </button>
+                        CAS Number
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
+                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" : (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
                     </td>
                     <td>Hazard</td>
                     <td>
-                        <button type="submit" form="filterForm" name="revNums" class="btn tableButton" value="true"> Size </button>
+                        Size
+                        <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
+                            <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
                         <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden>
                     </td>
                 </tr>
