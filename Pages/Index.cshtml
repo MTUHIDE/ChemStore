@@ -87,7 +87,8 @@
                     <td>
                         Chemical Name
                         <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
-                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" : (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" : 
+                                        (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                         </button>
                         <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
                         <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
@@ -96,7 +97,8 @@
                     <td>
                         CAS Number
                         <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
-                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" : (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" : 
+                                        (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                         </button>
                     </td>
                     <td>Hazard</td>
