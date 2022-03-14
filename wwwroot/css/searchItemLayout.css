@@ -177,6 +177,12 @@ tr {
     width: 75%;
 }
 
+.tableButton {
+    margin: 0px;
+    width: fit-content;
+    background: #dcdcdc45;
+}
+
 .table td{
     border-top: none;
 }
@@ -225,6 +231,15 @@ td {
 }
 
 .edit:hover {
+    opacity: 1.0;
+}
+
+.tableSort {
+    opacity: 0.8;
+    width: 30px;
+}
+
+.tableSort:hover {
     opacity: 1.0;
 }
 

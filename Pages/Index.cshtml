@@ -21,7 +21,7 @@
         <button class="closeFilter" onclick="closeFilter()">
             X
         </button>
-        <form>
+        <form id="filterForm">
             <input type="submit" value="Filter" class="filter" />
             <div class="s">
                 CAS number: <input type="text" asp-for="searchCAS" />
@@ -89,12 +89,33 @@
 
                     if (count < end) { end = count; }
 
-                    <tr>
-                        <td>Chemical Name</td>
-                        <td>CAS Number</td>
-                        <td>Hazard</td>
-                        <td>Size</td>
-                    </tr>
+                <tr>
+                    <td>
+                        Chemical Name
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
+                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" : 
+                                        (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                        <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
+                        <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
+                        <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
+                    </td>
+                    <td>
+                        CAS Number
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
+                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" : 
+                                        (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                    </td>
+                    <td>Hazard</td>
+                    <td>
+                        Size
+                        <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
+                            <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                        <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden>
+                    </td>
+                </tr>
                     @for (var i = start; i < end; i++)
                     {
                         var item = Model.DisplayContainers[i];
@@ -171,38 +192,38 @@
                 }
             </tbody>
         </table>
+    </form>
 
-        <div class="pageSelectors">
-            <!--<a href=""> << </a>
-            <a href=""> < </a>-->
-            @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
-            {
-                <a href=""> @i.ToString()  </a>
-            }
+    <div class="pageSelectors">
+        <!--<a href=""> << </a>
+        <a href=""> < </a>-->
+        @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
+        {
+            <a href=""> @i.ToString()  </a>
+        }
 
-            <a href=""> > </a>
-            <a href=""> >> </a>
-            <div style="margin-left: auto">
-                <div id="regularDiv">
-                    <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
-                        Add
-                    </button>
-                    <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
-                        Remove
-                    </button>
-                </div>
-                <div id="deleteDiv" style="display: none">
-                    <!-- Button trigger for modal -->
-                    <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
-                        Delete
-                    </button>
-                    <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
-                        Cancel
-                    </button>
-                </div>
+        <a href=""> > </a>
+        <a href=""> >> </a>
+        <div style="margin-left: auto">
+            <div id="regularDiv">
+                <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
+                    Add
+                </button>
+                <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
+                    Remove
+                </button>
+            </div>
+            <div id="deleteDiv" style="display: none">
+                <!-- Button trigger for modal -->
+                <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
+                    Delete
+                </button>
+                <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
+                    Cancel
+                </button>
             </div>
         </div>
-    </form>
+    </div>
 </div>
 
 <!--New Create Modal HTML-->
