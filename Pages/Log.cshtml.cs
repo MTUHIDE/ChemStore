@@ -34,6 +34,10 @@ namespace ChemStoreWebApp.Pages
         public string searchDetails { get; set; }
         [BindProperty(SupportsGet = true)]
         public string containerID { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int sortMethod { get; set; } = 0;
+        [BindProperty(SupportsGet = true)]
+        public int prevSort { get; set; } = -1;
 
         public Boolean textEntered()
         {
@@ -92,8 +96,25 @@ namespace ChemStoreWebApp.Pages
                 LogEntries = log;
             }
 
-            //Sort by the DateTime variables
-            LogEntries.Sort((x, y) => DateTime.Compare(y.DateTime, x.DateTime));
+            if (prevSort == sortMethod)
+            {
+                //Reverses the sort method
+                sortMethod++;
+            }
+            prevSort = sortMethod;
+
+            IOrderedEnumerable<Log> temp = sortMethod switch
+            {
+                1 => LogEntries.OrderBy(c => c.DateTime),
+                2 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenBy(c => c.User?.Email).ThenBy(c => c.DateTime),
+                3 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenByDescending(c => c.User?.Email).ThenBy(c => c.DateTime),
+                4 => LogEntries.OrderBy(c => c.Action.HasValue).ThenBy(c => c.Action).ThenBy(c => c.DateTime),
+                5 => LogEntries.OrderBy(c => c.Action.HasValue).ThenByDescending(c => c.Action).ThenBy(c => c.DateTime),
+
+                _ => LogEntries.OrderByDescending(c => c.DateTime),
+            };
+
+            LogEntries = temp.ToList();
         }
     }
 }
