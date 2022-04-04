@@ -95,7 +95,13 @@
                         </button>
                     </td>
                     <td>Container ID</td>
-                    <td>Details</td>
+                    <td>
+                        Details
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="6">
+                            <img src="@((Model.prevSort == 6) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 7) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                    </td>
                 </tr>
                 @for (var i = start; i < end; i++)
                 {

@@ -106,13 +106,22 @@ namespace ChemStoreWebApp.Pages
             IOrderedEnumerable<Log> temp = sortMethod switch
             {
                 1 => LogEntries.OrderBy(c => c.DateTime),
-                2 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenBy(c => c.User?.Email).ThenBy(c => c.DateTime),
-                3 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenByDescending(c => c.User?.Email).ThenBy(c => c.DateTime),
-                4 => LogEntries.OrderBy(c => c.Action.HasValue).ThenBy(c => c.Action).ThenBy(c => c.DateTime),
-                5 => LogEntries.OrderBy(c => c.Action.HasValue).ThenByDescending(c => c.Action).ThenBy(c => c.DateTime),
+                //Checks if the entry is null or not and puts the null values at the end
+                2 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenBy(c => c.User?.Email),
+                3 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenByDescending(c => c.User?.Email),
+                4 => LogEntries.OrderBy(c => c.Action.HasValue).ThenBy(c => c.Action),
+                5 => LogEntries.OrderBy(c => c.Action.HasValue).ThenByDescending(c => c.Action),
+                6 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenBy(c => c.Description),
+                7 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenByDescending(c => c.Description),
 
                 _ => LogEntries.OrderByDescending(c => c.DateTime),
             };
+            
+            //Order by time if thats not already the sorted by category
+            if(sortMethod != 1 && sortMethod != 0)
+            {
+                temp = temp.ThenByDescending(c => c.DateTime);
+            }
 
             LogEntries = temp.ToList();
         }
