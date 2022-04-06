@@ -22,40 +22,36 @@
             X
         </button>
         <form>
-            <input type="submit" value="Filter" class="filter" />
             <div class="s">
-                CAS number: <input type="text" asp-for="searchCAS" />
-            </div>
-            <div class="s">
-                Name: <input type="text" asp-for="searchString" />
+                <input type="text" class="inputPlaceholder" placeholder=Chemical Name" />
             </div>
             <div class="s">
-                Email: <input type="text" asp-for="searchEmail" />
+                <input type="text" class="inputPlaceholder" placeholder="CAS Number" asp-for="searchCAS" />
             </div>
-            <div class="s location-dropdown"> Location     &#x25BC </div>
-            <div class="location-container">
-                <div class="s">
-                    <label for="selectBuilding">Building: </label>
-                    <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding">
-                        <option value="">Pick one</option>
-                    </select>
-                </div>
-                <div class="s">
-                    <label for="selectDepartment">Department: </label>
-                    <select asp-for="searchDepartment" asp-items="Html.GetEnumSelectList<Departments>()" id="selectDepartment" class="selectDepartment">
-                        <option value="">Pick one</option>
-                    </select>
-                </div>
-
+            <div class="s">
+                <input type="email" class="inputPlaceholder" placeholder="PI email" asp-for="searchEmail"/>
             </div>
-            <div class="s container-dropdown"> Container    &#x25BC </div>
-            <div class="container-container">
-                <p>Container Size: </p> <input type="text" asp-for="searchSize" />
-                <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
-                    <option value="">Pick one</option>
+            <div class="s">
+                <input type="text" class="inputPlaceholder" placeholder="Hazard" />
+            </div>
+            <div class="s">
+                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="selectDepartment rounded-dropdown inputPlaceholder">
+                    <option value="" selected disabled>Building</option>
                 </select>
-                Retired? <input type="checkbox" asp-for="searchRetired" />
             </div>
+            <div class="s">
+                <input type="number" class="inputPlaceholder" placeholder="Room Number" />
+            </div>
+            <div class="s">
+                <input type="number" asp-for="searchSize" class="inputPlaceholder" placeholder="Container Size" />
+            </div>
+            <div class="s">
+                <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                    <option value="" selected disabled>Units</option>
+                </select>
+            </div>
+            <input type="reset" value="Clear" class="filter" /> &nbsp;
+            <input type="submit" value="Filter" class="filter" />
         </form>
     </div>
 </div>
