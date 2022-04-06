@@ -18,7 +18,7 @@
         <button class="closeFilter" onclick="closeFilter()">
             X
         </button>
-        <form>
+        <form id="filterForm">
             <input type="submit" value="Filter" class="filter" />
             <div class="s">
                 User: <input type="text" asp-for="searchUser" />
@@ -72,11 +72,36 @@
                 if (count < end) { end = count; }
 
                 <tr>
-                    <td>Date / Time</td>
-                    <td>User</td>
-                    <td>Action</td>
+                    <td>
+                        Date / Time
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
+                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                        <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
+                    </td>
+                    <td>
+                        User
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
+                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                    </td>
+                    <td>
+                        Action
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="4">
+                            <img src="@((Model.prevSort == 4) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 5) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                    </td>
                     <td>Container ID</td>
-                    <td>Details</td>
+                    <td>
+                        Details
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="6">
+                            <img src="@((Model.prevSort == 6) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 7) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                    </td>
                 </tr>
                 @for (var i = start; i < end; i++)
                 {

@@ -34,6 +34,10 @@ namespace ChemStoreWebApp.Pages
         public string searchDetails { get; set; }
         [BindProperty(SupportsGet = true)]
         public string containerID { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int sortMethod { get; set; } = 0;
+        [BindProperty(SupportsGet = true)]
+        public int prevSort { get; set; } = -1;
 
         public Boolean textEntered()
         {
@@ -92,8 +96,34 @@ namespace ChemStoreWebApp.Pages
                 LogEntries = log;
             }
 
-            //Sort by the DateTime variables
-            LogEntries.Sort((x, y) => DateTime.Compare(y.DateTime, x.DateTime));
+            if (prevSort == sortMethod)
+            {
+                //Reverses the sort method
+                sortMethod++;
+            }
+            prevSort = sortMethod;
+
+            IOrderedEnumerable<Log> temp = sortMethod switch
+            {
+                1 => LogEntries.OrderBy(c => c.DateTime),
+                //Checks if the entry is null or not and puts the null values at the end
+                2 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenBy(c => c.User?.Email),
+                3 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenByDescending(c => c.User?.Email),
+                4 => LogEntries.OrderBy(c => c.Action.HasValue).ThenBy(c => c.Action),
+                5 => LogEntries.OrderBy(c => c.Action.HasValue).ThenByDescending(c => c.Action),
+                6 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenBy(c => c.Description),
+                7 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenByDescending(c => c.Description),
+
+                _ => LogEntries.OrderByDescending(c => c.DateTime),
+            };
+            
+            //Order by time if thats not already the sorted by category
+            if(sortMethod != 1 && sortMethod != 0)
+            {
+                temp = temp.ThenByDescending(c => c.DateTime);
+            }
+
+            LogEntries = temp.ToList();
         }
     }
 }
