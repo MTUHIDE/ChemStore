@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,6 +53,19 @@ namespace ChemStoreWebApp.Pages
         public bool createError { get; set; } = false;
         [BindProperty(SupportsGet = true)]
         public int containerListIndex { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int sortMethod { get; set; } = 0;
+        [BindProperty(SupportsGet = true)]
+        public bool reverseNumbers { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool reverseOrder { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public int prevSort { get; set; } = -1;
+        [BindProperty(SupportsGet = true)]
+        public bool revNums { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public bool revNumsPrev { get; set; } = false;
+
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -125,6 +138,7 @@ namespace ChemStoreWebApp.Pages
         public async Task<IActionResult> OnPostDelete()
         {
             deleteFromDatabase(chemicalsToDelete);
+
             return RedirectToPage();
         }
 
@@ -139,7 +153,7 @@ namespace ChemStoreWebApp.Pages
                 con.CasNumber = Request.Form["Cas Number"];
                 con.SupervisorId = (from s in _context.Account
                                     where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
-                                    select s.AccountId).Single();
+                                    select s.AccountId).FirstOrDefault();
                 con.Amount = Int32.Parse(Request.Form["Amount"]);
                 con.RoomId = (from l in _context.Location
                               where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
@@ -196,6 +210,40 @@ namespace ChemStoreWebApp.Pages
             return new JsonResult(GetSubCategories(buildingEditIndex));
         }
 
+        public async Task GetDisplayContainer()
+        {
+            var containers = _context.Container.ToList();
+            var chemicals = _context.Chemical.ToList();
+            var accounts = _context.Account.ToList();
+            var locations = _context.Location.ToList();
+
+            DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
+                c => new DisplayContainer(c, chemicals, locations, accounts))
+                .Where(c => isValidSearchItem(c, true))
+                .ToList());
+        }
+
+        public DisplayContainer GetListItem(int index)
+        {
+            GetDisplayContainer();
+            return DisplayContainers[index];
+        }
+
+        public JsonResult OnGetListItem(int containerListIndex)
+        {
+            var returnVal = GetListItem(containerListIndex);
+            List<string> returnList = new List<string>();
+            returnList.Add(returnVal.chem.ChemicalName);
+            returnList.Add(returnVal.chem.CasNumber);
+            returnList.Add(returnVal.supervisor.Name);
+            returnList.Add(returnVal.con.Amount.ToString());
+            returnList.Add(returnVal.con.ContainerId.ToString());
+            returnList.Add(returnVal.loc.BuildingName.ToString());
+            returnList.Add(returnVal.loc.RoomNumber);
+            returnList.Add(returnVal.chem.ChemicalHazards.ToString());
+            return new JsonResult(returnList);
+        }
+
         /// <summary>
         /// Runs on every search and returns a list of containers that fit the given search criteria
         /// </summary>
@@ -212,6 +260,42 @@ namespace ChemStoreWebApp.Pages
                 c => new DisplayContainer(c, chemicals, locations, accounts))
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
+
+            //if the revNums button was pressed
+            if(revNums)
+            {
+                //Inverse the state of the number search
+                revNumsPrev = !revNumsPrev;
+                //Keep the sort method the same
+                sortMethod = prevSort;
+            }
+            else
+            {
+                //Check if the same button was pushed again
+                if (prevSort == sortMethod)
+                {
+                    //Reverses the sort method
+                    sortMethod++;
+                }
+                prevSort = sortMethod;
+            }
+
+            //Switch case to determine what to sort by initially
+            //Has to be sorted on reload with current setup
+            IOrderedEnumerable<DisplayContainer> temp = sortMethod switch
+            {
+                1 => DisplayContainers.OrderByDescending(c => c.chem.ChemicalName),
+                2 => DisplayContainers.OrderBy(c => c.con.CasNumber),
+                3 => DisplayContainers.OrderByDescending(c => c.con.CasNumber),
+                4 => DisplayContainers.OrderBy(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
+                5 => DisplayContainers.OrderByDescending(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
+
+                _ => DisplayContainers.OrderBy(c => c.chem.ChemicalName),
+            };
+
+            //Always sort by size of container
+            DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
+                                            : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
         }
     }
 }
