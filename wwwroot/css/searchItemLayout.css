@@ -101,13 +101,18 @@ input{
     outline-style: none;
 }
 
+.inputPlaceholder {
+    text-indent: 10px;
+}
+
 .location-dropdown {
     cursor: pointer;
 }
 
 .selectDepartment{
     display: block;
-    width: 90%
+    width: 85%;
+    margin: 0 auto;
 }
 
 .container-dropdown {
@@ -339,4 +344,11 @@ td {
 .modal-content {
     border-radius: 24px;
     background-color: #e1e1e1;
+}
+
+.rounded-dropdown {
+    border-radius: 20px;
+    border-width: 1px;
+    padding: 3px;
+    outline-style: none;
 }
