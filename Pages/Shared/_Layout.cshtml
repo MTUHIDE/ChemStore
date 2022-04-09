@@ -39,11 +39,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse user-nav-bar">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <p class="nav-link text-danger">{Current User} - {Role}</p>
+                            @{
+                                //This is just some logic to get the role for below, since there isn't an easy way to get the highest Role
+                                string role = "Member";
+                                for (int i = 2; i >= 0; i--)
+                                {
+                                    if (User.IsInRole(((Roles)i).ToString()))
+                                        role = ((Roles)i).ToString();
+                                }
+                            }
+                            <p>@User.Identity.Name - @role</p>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/LoginPage">Login</a>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>

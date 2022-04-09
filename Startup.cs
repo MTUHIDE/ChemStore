@@ -17,6 +17,7 @@ using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Web.UI;
 using ChemStoreWebApp.Security;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ChemStoreWebApp
 {
@@ -34,7 +35,7 @@ namespace ChemStoreWebApp
         {
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
-
+            services.AddScoped<IClaimsTransformation, AddRolesClaimsTransformation>();
 
             //services.AddControllersWithViews(options =>
             //{
