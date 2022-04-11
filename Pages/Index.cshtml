@@ -21,7 +21,7 @@
         <button class="closeFilter" onclick="closeFilter()">
             X
         </button>
-        <form>
+        <form id="filterForm">
             <div class="s">
                 <input type="text" class="inputPlaceholder" placeholder=Chemical Name" />
             </div>
@@ -85,12 +85,33 @@
 
                     if (count < end) { end = count; }
 
-                    <tr>
-                        <td>Chemical Name</td>
-                        <td>CAS Number</td>
-                        <td>Hazard</td>
-                        <td>Size</td>
-                    </tr>
+                <tr>
+                    <td>
+                        Chemical Name
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
+                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                        <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
+                        <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
+                        <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
+                    </td>
+                    <td>
+                        CAS Number
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
+                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                    </td>
+                    <td>Hazard</td>
+                    <td>
+                        Size
+                        <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
+                            <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                        <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden>
+                    </td>
+                </tr>
                     @for (var i = start; i < end; i++)
                     {
                         var item = Model.DisplayContainers[i];
@@ -167,106 +188,107 @@
                 }
             </tbody>
         </table>
-
-        <div class="pageSelectors">
-            <!--<a href=""> << </a>
-            <a href=""> < </a>-->
-            @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
-            {
-                <a href=""> @i.ToString()  </a>
-            }
-
-            <a href=""> > </a>
-            <a href=""> >> </a>
-            <div style="margin-left: auto">
-                <div id="regularDiv">
-                    <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
-                        Add
-                    </button>
-                    <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
-                        Remove
-                    </button>
-                </div>
-                <div id="deleteDiv" style="display: none">
-                    <!-- Button trigger for modal -->
-                    <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
-                        Delete
-                    </button>
-                    <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
     </form>
-</div>
 
-<!--New Create Modal HTML-->
+    <div class="pageSelectors">
+        <!--<a href=""> << </a>
+    <a href=""> < </a>-->
+        @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
+        {
+            <a href=""> @i.ToString()  </a>
+        }
 
-<div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add New Chemical</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+        <a href=""> > </a>
+        <a href=""> >> </a>
+        <div style="margin-left: auto">
+            <div id="regularDiv">
+                <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
+                    Add
+                </button>
+                <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
+                    Remove
                 </button>
             </div>
-            <div class="modal-body">
-                <form method="post" id="form1" class="modalForm">
-                    <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@Request.Query["Chemical Name"]" /> <br />
-                    <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" /> <br />
-                    <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" /> <br />
-                    <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" /> <br />
-                    <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
-                        <option value="" disabled selected hidden>Building</option>
-                    </select> <br />
-                    <select asp-for="RoomIndex">
-                        <option value="" disabled selected hidden>Room Number</option>
-                    </select> <br />
-                    <select name="Hazard" value="@Request.Query["Hazard"]">
-                        <option value="" disabled selected hidden>Hazard</option>
-                    </select> <br />
-                    <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="modalBtns greenBtn" value="Add" asp-page-handler="create" />
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--New Edit Modal HTML-->
-
-<div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Chemical</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+            <div id="deleteDiv" style="display: none">
+                <!-- Button trigger for modal -->
+                <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
+                    Delete
+                </button>
+                <button type="button" class="searchPageBtns regBtn" onclick="deleteModeOff()" id="cancelDelBtn">
+                    Cancel
                 </button>
             </div>
-            <div class="modal-body">
-                <form method="post" id="form1" class="modalForm">
-                    <input type="text" id="editChemName" name="Chemical Name" placeholder="Chemical Name" value="" /> <br />
-                    <input type="text" id="editChemCas" name="CAS Number" placeholder="CAS Number" value="" /> <br />
-                    <input type="text" id="editChemSup" name="Supervisor" placeholder="Supervisor" value="" /> <br />
-                    <input type="text" id="editChemSize" name="Amount" placeholder="Amount" value="" /> <br />
-                    <input type="hidden" id="ContainerID" name="ContainerID" value="" /> <br />
-                    <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)"> <br />
-                    </select>
-                    <select asp-for="RoomEditIndex">
-                    </select> <br />
-                    <select name="Hazard" value="">
-                        <option value="" disabled selected hidden>Hazard</option>
-                    </select> <br />
-                    <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
-                    <input type="submit" class="modalBtns greenBtn" value="Save" asp-page-handler="edit" />
-                </form>
-            </div>
         </div>
-    </div>
-    </div>
+     </div>
+</div>
+
+            <!--New Create Modal HTML-->
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add New Chemical</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="form1" class="modalForm">
+                                <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@Request.Query["Chemical Name"]" /> <br />
+                                <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" /> <br />
+                                <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" /> <br />
+                                <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" /> <br />
+                                <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
+                                    <option value="" disabled selected hidden>Building</option>
+                                </select> <br />
+                                <select asp-for="RoomIndex">
+                                    <option value="" disabled selected hidden>Room Number</option>
+                                </select> <br />
+                                <select name="Hazard" value="@Request.Query["Hazard"]">
+                                    <option value="" disabled selected hidden>Hazard</option>
+                                </select> <br />
+                                <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="modalBtns greenBtn" value="Add" asp-page-handler="create" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--New Edit Modal HTML-->
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Chemical</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" id="form1" class="modalForm">
+                                <input type="text" id="editChemName" name="Chemical Name" placeholder="Chemical Name" value="" /> <br />
+                                <input type="text" id="editChemCas" name="CAS Number" placeholder="CAS Number" value="" /> <br />
+                                <input type="text" id="editChemSup" name="Supervisor" placeholder="Supervisor" value="" /> <br />
+                                <input type="text" id="editChemSize" name="Amount" placeholder="Amount" value="" /> <br />
+                                <input type="hidden" id="ContainerID" name="ContainerID" value="" /> <br />
+                                <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
+                                    <br />
+                                </select>
+                                <select asp-for="RoomEditIndex">
+                                </select> <br />
+                                <select name="Hazard" value="">
+                                    <option value="" disabled selected hidden>Hazard</option>
+                                </select> <br />
+                                <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="modalBtns greenBtn" value="Save" asp-page-handler="edit" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
@@ -305,7 +327,7 @@
             });
     }
 
-        function getEditRoomsOfBuilding(initGet) {
+    function getEditRoomsOfBuilding(initGet) {
         var ex = document.getElementById('buildingEditIndex');
         var str = ex.options[ex.selectedIndex].value;
         var currRoomNumber = document.getElementById('RoomEditIndex').value;
@@ -351,7 +373,7 @@
                                         }
 
                                     }
-</script>
+            </script>
 
 <script>
     //Enables or disables the delete button
