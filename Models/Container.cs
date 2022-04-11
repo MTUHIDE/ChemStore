@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public enum Units
 {
-    pound,
-    gallon,
-    mg,
-    g,
-    kg,
-    mL,
-    L    
+    pound, //0
+    gallon,//1
+    mg,    //2
+    g,     //3
+    kg,    //4
+    mL,    //5
+    L      //6
 }
 
 namespace ChemStoreWebApp.Models

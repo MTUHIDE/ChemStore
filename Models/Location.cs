@@ -4,83 +4,83 @@ using System.ComponentModel.DataAnnotations;
 
 public enum Buildings
 {
-    [Display(Name = "A. E. Seaman Mineral Museum")]
+    [Display(Name = "A. E. Seaman Mineral Museum")] // 0
     Museum,
-    [Display(Name = "Academic Office Building")]
+    [Display(Name = "Academic Office Building")] // 1
     AOB,
-    [Display(Name = "Administration Building")]
-    AdminBuilding,
-    [Display(Name = "Advanced Technology Development Complex")]
+    [Display(Name = "Administration Building")] // 2
+    AdminBuilding, 
+    [Display(Name = "Advanced Technology Development Complex")] // 3
     ATDC,
-    [Display(Name = "Alumni House")]
+    [Display(Name = "Alumni House")] // 4
     AlumniHouse,
-    [Display(Name = "Central Heating Plant")]
+    [Display(Name = "Central Heating Plant")] // 5
     CentralHeatingPlant,
-    [Display(Name = "Chemical Sciences and Engineering Building")]
+    [Display(Name = "Chemical Sciences and Engineering Building")] // 6
     ChemSci,
-    [Display(Name = "Daniell Heights Apartments")]
+    [Display(Name = "Daniell Heights Apartments")] // 7
     DaniellHeights,
-    [Display(Name = "Douglass Houghton Hall")]
+    [Display(Name = "Douglass Houghton Hall")] // 8
     DHH,
-    [Display(Name = "Dow Environmental Sciences and Engineering Building")]
+    [Display(Name = "Dow Environmental Sciences and Engineering Building")] // 9
     Dow,
-    [Display(Name = "East McNair Hall")]
+    [Display(Name = "East McNair Hall")] // 10
     EastMcNair,
-    [Display(Name = "Electrical Engineering Resources Center")]
+    [Display(Name = "Electrical Engineering Resources Center")] // 11
     EERC,
-    [Display(Name = "Fisher Hall")]
+    [Display(Name = "Fisher Hall")] // 12
     Fisher,
-    [Display(Name = "Ford Center")]
+    [Display(Name = "Ford Center")] // 13
     FordCenter,
-    [Display(Name = "Gates Tennis Center")]
+    [Display(Name = "Gates Tennis Center")] // 14
     Gates,
-    [Display(Name = "Great Lakes Research Center")]
+    [Display(Name = "Great Lakes Research Center")] // 15
     GLRC,
-    [Display(Name = "Grover C Dillman Hall")]
+    [Display(Name = "Grover C Dillman Hall")] // 16
     Dillman,
-    [Display(Name = "Hamar House")]
+    [Display(Name = "Hamar House")] // 17
     Hamar,
-    [Display(Name = "Harold Meese Center")]
+    [Display(Name = "Harold Meese Center")] // 18
     Meese,
-    [Display(Name = "Hillside Place")]
+    [Display(Name = "Hillside Place")] // 19
     Hillside,
-    [Display(Name = "J. R. Van Pelt and John and Ruanne Opie Library")]
+    [Display(Name = "J. R. Van Pelt and John and Ruanne Opie Library")] // 20
     Library,
-    [Display(Name = "Kanwal and Ann Rekhi Hall")]
+    [Display(Name = "Kanwal and Ann Rekhi Hall")] // 21
     Rekhi,
-    [Display(Name = "Keweenaw Research Center")]
+    [Display(Name = "Keweenaw Research Center")] // 22
     KRC,
-    [Display(Name = "Lakeshore Center")]
+    [Display(Name = "Lakeshore Center")] // 23
     LakeshoreCenter,
-    [Display(Name = "Lakeside Labratory")]
+    [Display(Name = "Lakeside Labratory")] // 24
     LakesideLabratory,
-    [Display(Name = "Little Huskies Child Development Center")]
+    [Display(Name = "Little Huskies Child Development Center")] // 25
     LittleHuskies,
-    [Display(Name = "Memorial Union Building")]
+    [Display(Name = "Memorial Union Building")] // 26
     MUB,
-    [Display(Name = "Minerals and Materials Engineering Building")]
+    [Display(Name = "Minerals and Materials Engineering Building")] // 27
     MandM,
-    [Display(Name = "R. L. Smith Building")]
+    [Display(Name = "R. L. Smith Building")] // 28
     MEEM,
-    [Display(Name = "ROTC Building")]
+    [Display(Name = "ROTC Building")] // 29
     ROTC,
-    [Display(Name = "Rozsa Center for the Performing Arts")]
+    [Display(Name = "Rozsa Center for the Performing Arts")] // 30
     Rozsa,
-    [Display(Name = "Sherman Field Press Box")]
+    [Display(Name = "Sherman Field Press Box")] // 31
     ShermanFieldPressBox,
-    [Display(Name = "Storage-Service")]
+    [Display(Name = "Storage-Service")] // 32
     Facilities,
-    [Display(Name = "Student Development Complex")]
+    [Display(Name = "Student Development Complex")] // 33
     SDC,
-    [Display(Name = "U. J. Noblet Forestry Building")]
+    [Display(Name = "U. J. Noblet Forestry Building")] // 34
     Forestry,
-    [Display(Name = "Wadsworth Hall")]
+    [Display(Name = "Wadsworth Hall")] // 35
     Wads,
-    [Display(Name = "Walker Arts and Humanities Center")]
+    [Display(Name = "Walker Arts and Humanities Center")] // 36
     Walker,
-    [Display(Name = "West McNair Hall")]
+    [Display(Name = "West McNair Hall")] // 37
     WestMcNair,
-    [Display(Name = "Widmaier House")]
+    [Display(Name = "Widmaier House")] // 38
     WidmaierHouse   
 }
 
