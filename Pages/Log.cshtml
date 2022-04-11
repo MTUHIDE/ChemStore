@@ -94,8 +94,13 @@
                                         (Model.prevSort == 5) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                         </button>
                     </td>
-                    <td>Container ID</td>
                     <td>
+                        Container ID
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="8">
+                            <img src="@((Model.prevSort == 8) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 9) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+<td>
                         Details
                         <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="6">
                             <img src="@((Model.prevSort == 6) ? "assets/upTableSort.png" :
@@ -153,7 +158,7 @@
     }
     function openFilter() {
         document.getElementById("search").style.display = "block";
-        document.getElementById("openFiler").style.display = "none";
+        document.getElementById("openFilter").style.display = "none";
     }
 
 </script>

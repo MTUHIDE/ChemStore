@@ -113,6 +113,8 @@ namespace ChemStoreWebApp.Pages
                 5 => LogEntries.OrderBy(c => c.Action.HasValue).ThenByDescending(c => c.Action),
                 6 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenBy(c => c.Description),
                 7 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenByDescending(c => c.Description),
+                8 => LogEntries.OrderBy(c => c.ContainerID).ThenBy(c => c.ContainerID),
+                9 => LogEntries.OrderByDescending(c => c.ContainerID).ThenBy(c => c.ContainerID),
 
                 _ => LogEntries.OrderByDescending(c => c.DateTime),
             };

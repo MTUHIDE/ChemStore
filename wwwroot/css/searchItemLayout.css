@@ -103,6 +103,7 @@ input{
 
 .inputPlaceholder {
     text-indent: 10px;
+    width: 430px; /*TEMPORARY TEMPORARY FOR DEMO DO NOT LEAVE IN*/
 }
 
 .location-dropdown {
