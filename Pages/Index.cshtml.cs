@@ -13,6 +13,18 @@ namespace ChemStoreWebApp.Pages
 {
     public class SearchModel : PageModel
     {
+
+        private static readonly Dictionary<int, int> orderedUnits = new Dictionary<int, int>
+        {
+            {(int)Units.L,7},
+            {(int)Units.mL,6},
+            {(int)Units.kg,5},
+            {(int)Units.g,4},
+            {(int)Units.mg,3},
+            {(int)Units.gallon,2},
+            {(int)Units.pound,1}
+        }; // Dictionary to sort by units
+
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;
 
         public SearchModel(ChemStoreWebApp.Models.chemstoreContext context)
@@ -260,6 +272,7 @@ namespace ChemStoreWebApp.Pages
                 c => new DisplayContainer(c, chemicals, locations, accounts))
                 .Where(c => isValidSearchItem(c, true))
                 .ToList());
+
 
             //if the revNums button was pressed
             if(revNums)
