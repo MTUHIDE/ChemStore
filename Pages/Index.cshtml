@@ -18,9 +18,7 @@
 
 <div id="search">
     <div class="search">
-        <button class="closeFilter" onclick="closeFilter()">
-            X
-        </button>
+        
         <form id="filterForm">
             <div class="s">
                 <input type="text" class="inputPlaceholder" placeholder=Chemical Name" />
@@ -35,7 +33,7 @@
                 <input type="text" class="inputPlaceholder" placeholder="Hazard" />
             </div>
             <div class="s">
-                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="selectDepartment rounded-dropdown inputPlaceholder">
+                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="rounded-dropdown inputPlaceholder">
                     <option value="" selected disabled>Building</option>
                 </select>
             </div>
@@ -57,9 +55,9 @@
 </div>
 
 
-<div id="openFilterContainer">
-    <button class="openFilter" id="openFilter" onclick="openFilter()">
-        >
+<div id="toggleFilterContainer">
+    <button class="openFilter" id="toggleFilter" onclick="toggleFilter()">
+        <
     </button>
 </div>
 
@@ -248,8 +246,8 @@
                                 <select name="Hazard" value="@Request.Query["Hazard"]">
                                     <option value="" disabled selected hidden>Hazard</option>
                                 </select> <br />
-                                <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="modalBtns greenBtn" value="Add" asp-page-handler="create" />
+                                <button type="button" class="redBtn" data-dismiss="modal">Cancel</button>
+                                <input type="submit" value="Add" asp-page-handler="create" />
                             </form>
                         </div>
                     </div>
@@ -311,6 +309,10 @@
 </div>
 
 <script>
+    function clearForm($form) {
+        $form.find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio').val('');
+        $form.find(':checkbox, :radio').prop('checked', false);
+    }
     function getRoomsOfBuilding() {
         var ex = document.getElementById('buildingIndex');
         var str = ex.options[ex.selectedIndex].value;
@@ -435,12 +437,25 @@
     function closeFilter() {
         document.getElementById("search").style.display = "none";
         document.getElementById("openFilter").style.display = "block";
+        document.getElementById("closeFilter").style.display = "none";
     }
     function openFilter() {
         document.getElementById("search").style.display = "block";
-        document.getElementById("openFiler").style.display = "none";
+        document.getElementById("openFilter").style.display = "none";
+        document.getElementById("closeFilter").style.display = "block";
     }
 
+    function toggleFilter() {
+        if (document.getElementById("search").style.display === "none") {
+            // open filter
+            document.getElementById("search").style.display = "block";
+            document.getElementById("toggleFilter").innerHTML = "<";
+        } else {
+            // close filter
+            document.getElementById("search").style.display = "none";
+            document.getElementById("toggleFilter").innerHTML = ">";
+        }
+    }
 </script>
 <script>
     var coll = document.getElementsByClassName("collapsible");
