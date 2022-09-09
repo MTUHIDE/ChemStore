@@ -3,39 +3,31 @@ Chem Store is a chemical tracking website that allows easy navigation and organi
 
 # Setup for new developers:
 ## IDE Setup
-1. Download visual studio 2019 community https://visualstudio.microsoft.com/downloads/
+1. Download Visual Studio 2022 Community Edition https://visualstudio.microsoft.com/downloads/
 	1. At the first menu, choose the workloads
   ASP.NET and web development
 
 2. Clone this repository, https://github.com/MTUHIDE/ChemStore through visual studio
-	1. Open Solution Explorer, and double click “Solution ‘ChemStoreWebApp’” to be able to edit the project.
-	2. Since appsettings.json is in gitignore, manually create an “appsettings.json” file and copy/paste from the github
-	3. Run “IIS Express” at the top of the screen
-		1. Project should be working except the database (can’t filter)
+	1. Open Visual Studio, and hit "Clone a repository"
+	2. Use the URL above, or click Github
 
 
 ## Local Database Setup
-3. Install MySql from https://dev.mysql.com/downloads/installer/
-	1. Make sure to include MySQL Server
-	2. Choose the ‘Developer Default’ setup type to include MySql for Visual Studio
-	3. Python is required, if you get an error just install it then press “check”
-	4. For root password, request it from team.
+3. Install SQL Server Express from https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 
-4. In MySQL Workbench, create a new connection
-	1. Name: chemstore
-	2. All else default
-	3. In the connection, in the query window, run “CREATE DATABASE chemstore;”, press Ctrl+Enter to execute
 
-5. In Visual Studio, go to View -> Server Explorer -> Connect to Database and choose MySQL Database
-	1. Server name: 127.0.0.1
-	2. User name: root
-	3. Password: <request from team>
-	4. Database name: chemstore
+4. Install SQL Server Management Studio (SSMS) (there is a button at the bottom of the window after you install SQL Server Express)
+
+5. In SSMS, connect to your local SQL Express server
+	1. Right click on the Databases folder and click "New Database..."
+	2. In the window that pops up, type "chemstore" in the database name field and click "OK"
 
 6. In the solution explorer, (list of files and folders on side of screen) double click ChemstoreWebApp.sln to build the project
 	1. Tools -> NuGet Package Manager -> Package Manager Console
-	2. Run `Update-Database` to create all tables locally
-7. Return to MySQL workbench, refreshing the list of schemas should show **chemstore**, and expanding that should show the tables.
+	2. Ensure you have an up to date appsettings.json file (get this from the team lead for now)
+	3. Run `Update-Database` to create all tables locally (If this fails, try running `EntityFrameworkCore\Update-Database`)
+
+7. Return to SSMS, right click on the chemstore database and click Refresh. There should now be tables in the Table folder that match the classes in the Models folder of the project.
 	1. In order for the website to work, there must be an entry in the account table with your MTU email, and a role of 0.
 	2. The list of items in container is what will show on the home page, as long as its chemical and location are in their respective tables.
 
@@ -50,9 +42,4 @@ Chem Store is a chemical tracking website that allows easy navigation and organi
 
 * appsettings.json doesn’t show up in the solution explorer, but Visual Studio says it already exists
 	* Right click on ChemStoreWebApp and Open folder in file explorer, open the file from there
-
-* Python not installed, which is a requirement for MySql Connector
-	* Install Python 3.9.4 https://www.python.org/downloads/
-
-* If you are getting connection issues, sometimes using "localhost" instead of "127.0.0.1" fixes the issue
 

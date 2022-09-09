@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 public enum Units
 {
@@ -16,6 +17,7 @@ namespace ChemStoreWebApp.Models
 {
     public partial class Container
     {
+        [Key]
         public long ContainerId { get; set; }
         public int Unit { get; set; }
         public int Amount { get; set; }
