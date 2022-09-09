@@ -93,6 +93,7 @@ namespace ChemStoreWebApp.Models
             Container = new HashSet<Container>();
         }
 
+        [Key]
         public string RoomId { get; set; }
         public string RoomNumber { get; set; }
         public int BuildingName { get; set; }

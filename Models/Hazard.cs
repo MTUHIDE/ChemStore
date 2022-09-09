@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ChemStoreWebApp.Models
 {
@@ -10,6 +11,7 @@ namespace ChemStoreWebApp.Models
             ChemicalHazards = new HashSet<ChemicalHazards>();
         }
 
+        [Key]
         public string HazardId { get; set; }
         public string Description { get; set; }
 

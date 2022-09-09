@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ChemStoreWebApp.Models
 {
@@ -11,6 +12,7 @@ namespace ChemStoreWebApp.Models
             Container = new HashSet<Container>();
         }
 
+        [Key]
         public string CasNumber { get; set; }
         public string ChemicalName { get; set; }
         public int Quantity { get; set; }

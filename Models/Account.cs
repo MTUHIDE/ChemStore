@@ -72,6 +72,7 @@ namespace ChemStoreWebApp.Models
             Container = new HashSet<Container>();
         }
 
+        [Key]
         public int AccountId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

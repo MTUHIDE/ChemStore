@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ChemStoreWebApp.Models;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -9,12 +5,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.EntityFrameworkCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Web.UI;
 using ChemStoreWebApp.Security;
 using Microsoft.AspNetCore.Authentication;
@@ -33,25 +27,18 @@ namespace ChemStoreWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
-            services.AddScoped<IClaimsTransformation, AddRolesClaimsTransformation>();
-
-            //services.AddControllersWithViews(options =>
-            //{
-            //    var policy = new AuthorizationPolicyBuilder()
-            //        .RequireAuthenticatedUser()
-            //        .Build();
-            //    options.Filters.Add(new AuthorizeFilter(policy));
-            //});
-            //services.AddRazorPages();
-            services.AddHttpContextAccessor();
 
             services.AddDbContext<chemstoreContext>(options =>
-                options.UseMySQL(Configuration.GetConnectionString("ChemStoreDB")));
+                options.UseSqlServer(Configuration.GetConnectionString("ChemStoreDB"), providerOptions => providerOptions.EnableRetryOnFailure()));
 
-            services.AddSingleton<IAuthorizationHandler, RoleRequirementHandler>();
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
 
+
+            services.AddHttpContextAccessor();
+
+
+            services.AddScoped<IClaimsTransformation, AddRolesClaimsTransformation>();
             services.AddRazorPages().AddMvcOptions(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -59,18 +46,6 @@ namespace ChemStoreWebApp
                                  .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddMicrosoftIdentityUI().AddRazorRuntimeCompilation();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admin", policy =>
-                    policy.Requirements.Add(new AdminRequirement()));
-
-                options.AddPolicy("Employee", policy =>
-                    policy.Requirements.Add(new EmployeeRequirement()));
-
-                options.AddPolicy("Associate", policy =>
-                    policy.Requirements.Add(new AssociateRequirement()));
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
