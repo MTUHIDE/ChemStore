@@ -35,7 +35,7 @@ namespace ChemStoreWebApp.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb; Database=chemstore;Integrated Security=SSPI;");
+                optionsBuilder.UseSqlServer("Data Source=localhost\\sqlexpress; Initial Catalog=chemstore;Integrated Security=SSPI;");
             }
         }
 
