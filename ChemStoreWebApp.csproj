@@ -34,5 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Pages\Admin\Chemical\" />
   </ItemGroup>
 </Project>
