@@ -1,14 +1,13 @@
 ﻿@page
-@model ChemStoreWebApp.Pages.Admin.Chemical.DeleteModel
+@model ChemStoreWebApp.Pages.Admin.Chemicals.DetailsModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>Details</h1>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Chemical</h4>
     <hr />
@@ -38,10 +37,8 @@
             @Html.DisplayFor(model => model.Chemical.CatalogNumber)
         </dd>
     </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="Chemical.CasNumber" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Chemical.CasNumber">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
 </div>

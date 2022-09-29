@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ChemStoreWebApp.Models;
 
-namespace ChemStoreWebApp.Pages.Admin.Chemical
+namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
     public class CreateModel : PageModel
     {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 
-namespace ChemStoreWebApp.Pages.Admin.Chemical
+namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
     public class EditModel : PageModel
     {

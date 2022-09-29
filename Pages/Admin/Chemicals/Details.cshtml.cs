@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 
-namespace ChemStoreWebApp.Pages.Admin.Chemical
+namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
     public class DetailsModel : PageModel
     {
