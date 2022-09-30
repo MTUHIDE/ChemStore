@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ChemStoreWebApp.Pages
 {
-    [Authorize(Policy = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class LoginPageModel : PageModel
     {
         public void OnGet()
