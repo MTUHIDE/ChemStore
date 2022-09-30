@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 public enum Buildings
@@ -97,6 +98,7 @@ namespace ChemStoreWebApp.Models
         public string RoomId { get; set; }
         [Required]
         public string RoomNumber { get; set; }
+        [DisplayName("Building Name")]
         public int BuildingName { get; set; }
 
         public virtual ICollection<Container> Container { get; set; }

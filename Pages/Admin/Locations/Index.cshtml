@@ -23,9 +23,9 @@
             <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Location[0].RoomNumber)
-            </th>
+            </th> 
             <th>
-                    @Html.DisplayNameFor(model => @EnumHelper.GetDisplayValue((Buildings)model.Location[0].BuildingName))
+                @Html.DisplayNameFor(model => model.Location[0].BuildingName)
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.RoomNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BuildingName)
+                @EnumHelper.GetDisplayValue((Buildings)item.BuildingName)
             </td>
             <td>
                 <a asp-page="./Delete" asp-route-id="@item.RoomId">Delete</a>
