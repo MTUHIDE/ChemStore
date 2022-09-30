@@ -1,8 +1,9 @@
 ﻿@page
 @model ChemStoreWebApp.Pages.Admin.LocationCRUD.IndexModel
+@using ChemStoreWebApp.Utilities
 
 @{
-    Layout = null;
+    Layout = "../../Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -19,11 +20,12 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Location[0].RoomNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Location[0].BuildingName)
+                    @Html.DisplayNameFor(model => @EnumHelper.GetDisplayValue((Buildings)model.Location[0].BuildingName))
             </th>
             <th></th>
         </tr>
@@ -32,14 +34,15 @@
 @foreach (var item in Model.Location) {
         <tr>
             <td>
+                <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RoomNumber)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BuildingName)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.RoomId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.RoomId">Delete</a>
             </td>
         </tr>
