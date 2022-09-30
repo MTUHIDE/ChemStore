@@ -2,7 +2,7 @@
 @model ChemStoreWebApp.Pages.Admin.LocationCRUD.CreateModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Create Location";
 }
 
 <!DOCTYPE html>
@@ -14,29 +14,27 @@
 </head>
 <body>
 
-<h4>Location</h4>
+<h2>Create Location</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Location.RoomId" class="control-label"></label>
-                <input asp-for="Location.RoomId" class="form-control" />
-                <span asp-validation-for="Location.RoomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="Location.RoomNumber" class="control-label"></label>
-                <input asp-for="Location.RoomNumber" class="form-control" />
+                <input asp-for="Location.RoomNumber" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
                 <span asp-validation-for="Location.RoomNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <label asp-for="Location.BuildingName" class="control-label"></label>
-                <input asp-for="Location.BuildingName" class="form-control" />
+                <br />
+                <select asp-for="Location.BuildingName" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
+                    <option value="" selected disabled>Building</option>    
+                </select>
                 <span asp-validation-for="Location.BuildingName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div>
+                <button type="submit" class="btn table-button" style="background-color:gold;">Create</button>
             </div>
         </form>
     </div>
