@@ -6,7 +6,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Chemicals</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,6 +14,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Chemical[0].ChemicalName)
             </th>
@@ -33,6 +34,9 @@
 @foreach (var item in Model.Chemical) {
         <tr>
             <td>
+                <a asp-page="./Delete" asp-route-id="@item.CasNumber">Delete</a>
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ChemicalName)
             </td>
             <td>
@@ -45,9 +49,7 @@
                 @Html.DisplayFor(modelItem => item.CatalogNumber)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.CasNumber">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.CasNumber">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.CasNumber">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.CasNumber">Edit</a>
             </td>
         </tr>
 }
