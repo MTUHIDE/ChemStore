@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
+using System.Drawing.Printing;
 
 namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
@@ -18,11 +19,29 @@ namespace ChemStoreWebApp.Pages.Admin.Chemicals
             _context = context;
         }
 
-        public IList<Chemical> Chemical { get;set; }
+        public IList<Chemical> Chemical { get; set; }
 
         public async Task OnGetAsync()
         {
             Chemical = await _context.Chemical.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostDelete(string selectedChemical)
+        {
+            if (selectedChemical == null)
+            {
+                return NotFound();
+            }
+
+            Chemical chem  = await _context.Chemical.FindAsync(selectedChemical);
+
+            if (chem != null)
+            {
+                _context.Chemical.Remove(chem);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
         }
     }
 }

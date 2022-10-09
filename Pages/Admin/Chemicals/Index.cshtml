@@ -6,7 +6,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Chemicals</h1>
+<h1>All Chemicals</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -34,7 +34,7 @@
 @foreach (var item in Model.Chemical) {
         <tr>
             <td>
-                <a asp-page="./Delete" asp-route-id="@item.CasNumber">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.CasNumber">Edit</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ChemicalName)
@@ -49,9 +49,43 @@
                 @Html.DisplayFor(modelItem => item.CatalogNumber)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.CasNumber">Edit</a>
+                <button type="button" class="searchPageBtns redBtn" id="delModalBtn" onclick="updateForm(@item.CasNumber)" data-toggle="modal" data-target="#confirmatioinModal">
+                    Delete
+                </button>
+                <!--<a asp-page="./Delete" asp-route-id="@item.CasNumber">Delete</a>-->
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmatioinModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="justify-content:center;">
+                <h5 class="modal-title" style="font-size: 30px" id="modalLabel">Are You Sure?</h5>
+                <button type="button" class="close" style="position: absolute; right: 15px; width: 20%;" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <button type="button" class="btn modalBtns redBtn" data-dismiss="modal">Close</button>
+                <form method="post">
+                    <input type="hidden" name="selectedChemical" id="selectedChemical" value="-1" />
+                    <button type="submit" class="btn modalBtns greenBtn" id="DelButton" asp-page-handler="delete">
+                        Yes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updateForm(casNumber)
+{
+    document.getElementById("selectedChemical").value = casNumber;
+    console.log(document.getElementById("selectedChemical").value);
+}
+</script>
