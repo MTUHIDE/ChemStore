@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 
-namespace ChemStoreWebApp.Pages.Admin.LocationCRUD
+namespace ChemStoreWebApp.Pages.Admin.Location
 {
     public class EditModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace ChemStoreWebApp.Pages.Admin.LocationCRUD
         }
 
         [BindProperty]
-        public Location Location { get; set; }
+        public Models.Location Location { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {

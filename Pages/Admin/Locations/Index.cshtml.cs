@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
+using System.Drawing.Printing;
 
-namespace ChemStoreWebApp.Pages.Admin.LocationCRUD
+namespace ChemStoreWebApp.Pages.Admin.Location
 {
     public class IndexModel : PageModel
     {
@@ -18,11 +19,29 @@ namespace ChemStoreWebApp.Pages.Admin.LocationCRUD
             _context = context;
         }
 
-        public IList<Location> Location { get;set; }
+        public IList<Models.Location> Location { get;set; }
 
         public async Task OnGetAsync()
         {
             Location = await _context.Location.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostDelete(string selectedLocation)
+        {
+            if (selectedLocation == null)
+            {
+                return NotFound();
+            }
+
+            Models.Location location = await _context.Location.FindAsync(selectedLocation);
+
+            if (location != null)
+            {
+                _context.Location.Remove(location);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage();
         }
     }
 }

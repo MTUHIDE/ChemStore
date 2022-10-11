@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Framework.Profiler;
 
-namespace ChemStoreWebApp.Pages.Admin.LocationCRUD
+namespace ChemStoreWebApp.Pages.Admin.Location
 {
     //[Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
@@ -32,7 +32,7 @@ namespace ChemStoreWebApp.Pages.Admin.LocationCRUD
         }
 
         [BindProperty]
-        public Location Location { get; set; }
+        public Models.Location Location { get; set; }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
