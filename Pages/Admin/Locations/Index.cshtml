@@ -16,13 +16,11 @@
 <body>
     <script>
         function updateForm(roomId) {
-            console.log("here'");
             document.getElementById("selectedLocation").value = roomId;
-            console.log(document.getElementById("selectedLocation").value);
         }
     </script>
 <p>
-    <a asp-page="Create">Create New</a>
+        <a asp-authorize asp-roles="Admin" asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -41,7 +39,7 @@
 @foreach (var item in Model.Location) {
         <tr>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.RoomId">Edit</a>
+                        <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.RoomId">Edit</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoomNumber)

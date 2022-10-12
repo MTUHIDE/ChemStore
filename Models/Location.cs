@@ -97,6 +97,7 @@ namespace ChemStoreWebApp.Models
         [Key]
         public string RoomId { get; set; }
         [Required]
+        [DisplayName("Room Number")]
         public string RoomNumber { get; set; }
         [DisplayName("Building Name")]
         public int BuildingName { get; set; }

@@ -9,19 +9,18 @@ using ChemStoreWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.CodeAnalysis;
-using Location = ChemStoreWebApp.Models.Location;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Framework.Profiler;
 
 namespace ChemStoreWebApp.Pages.Admin.Location
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly chemstoreContext _context;
 
-        public CreateModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public CreateModel(chemstoreContext context)
         {
             _context = context;
         }
