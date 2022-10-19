@@ -1,0 +1,51 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.Chemicals.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Chemical</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Chemical.CasNumber" />
+            <div class="form-group">
+                <label asp-for="Chemical.ChemicalName" class="control-label"></label>
+                <input asp-for="Chemical.ChemicalName" class="form-control" />
+                <span asp-validation-for="Chemical.ChemicalName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chemical.Quantity" class="control-label"></label>
+                <input asp-for="Chemical.Quantity" class="form-control" />
+                <span asp-validation-for="Chemical.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chemical.Manufacturer" class="control-label"></label>
+                <input asp-for="Chemical.Manufacturer" class="form-control" />
+                <span asp-validation-for="Chemical.Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chemical.CatalogNumber" class="control-label"></label>
+                <input asp-for="Chemical.CatalogNumber" class="form-control" />
+                <span asp-validation-for="Chemical.CatalogNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
