@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ChemStoreWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly chemstoreContext _context;
 
-        public CreateModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public CreateModel(chemstoreContext context)
         {
             _context = context;
         }

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 using System.Drawing.Printing;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;

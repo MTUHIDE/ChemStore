@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace ChemStoreWebApp.Pages.Admin.Chemicals
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.chemstoreContext _context;
