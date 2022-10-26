@@ -15,7 +15,6 @@ namespace ChemStoreWebApp.Models
         [Key]
         public string CasNumber { get; set; }
         public string ChemicalName { get; set; }
-        public int Quantity { get; set; }
         public string Manufacturer { get; set; }
         public string CatalogNumber { get; set; }
 
