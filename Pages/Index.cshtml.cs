@@ -224,10 +224,10 @@ namespace ChemStoreWebApp.Pages
 
         public async Task GetDisplayContainer()
         {
-            var containers = _context.Container.ToList();
-            var chemicals = _context.Chemical.ToList();
-            var accounts = _context.Account.ToList();
-            var locations = _context.Location.ToList();
+            var containers = from a in _context.Container select a;
+            var chemicals = from b in _context.Chemical select b;
+            var accounts = from e in _context.Account select e;
+            var locations = from f in _context.Location select f;
 
             DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
                 c => new DisplayContainer(c, chemicals, locations, accounts))
@@ -263,10 +263,10 @@ namespace ChemStoreWebApp.Pages
         public async Task OnGetAsync()
         {
             // stores data from database in arrays to limit amount of calls to database at once
-            var containers = _context.Container.ToList();
-            var chemicals = _context.Chemical.ToList();
-            var accounts = _context.Account.ToList();
-            var locations = _context.Location.ToList();
+            var containers = from a in _context.Container select a;
+            var chemicals = from b in _context.Chemical select b;
+            var accounts = from e in _context.Account select e;
+            var locations = from f in _context.Location select f;
 
             DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
                 c => new DisplayContainer(c, chemicals, locations, accounts))
