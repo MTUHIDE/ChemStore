@@ -125,25 +125,19 @@ namespace ChemStoreWebApp.Pages
         /// </summary>
         /// <param name="con">Container object</param>
         /// <returns>True if container should be listed</returns>
-        public Boolean isValidSearchItem(DisplayContainer con, bool ignoreCase)
-        {
+        public List<Container> validSearchItems(IQueryable<Container> con, IQueryable<Chemical> chem, IQueryable<Location> loc, IQueryable<Account> acc, bool ignoreCase)
+        { 
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            if (!string.IsNullOrEmpty(searchCAS) && !con.chem.CasNumber.Contains(searchCAS, checkCase))
-                return false;
-            if (!string.IsNullOrEmpty(searchString) && !con.chem.ChemicalName.Contains(searchString, checkCase))
-                return false;
-            if (!string.IsNullOrEmpty(searchBuilding) && !con.loc.BuildingName.ToString().Equals(searchBuilding))
-                return false;
-            if (!string.IsNullOrEmpty(searchSize) && con.con.Amount != Int32.Parse(searchSize))
-                return false;
-            if (!string.IsNullOrEmpty(searchEmail) && !con.supervisor.Email.Contains(searchEmail, checkCase))
-                return false;
-            if (!string.IsNullOrEmpty(searchUnits) && !con.con.Unit.Equals((Units)Int32.Parse(searchUnits)))
-                return false;
-            if (!string.IsNullOrEmpty(searchDepartment) && !con.supervisor.Department.ToString().Equals(searchDepartment))
-                return false;
+            return con.Where(c =>
+                !(!string.IsNullOrEmpty(searchCAS) && !c.CasNumber.Contains(searchCAS, checkCase)) &&
+                !(!string.IsNullOrEmpty(searchString) && !(chem.Where(c => c.CasNumber.Equals(c.CasNumber)).First().ChemicalName.Contains(searchString, checkCase))) &&
+                !(!string.IsNullOrEmpty(searchBuilding) && !(loc.Where(l => l.RoomId.Equals(c.RoomId)).First().BuildingName.ToString().Equals(searchBuilding))) &&
+                !(!string.IsNullOrEmpty(searchSize) && c.Amount != Int32.Parse(searchSize)) &&
+                !(!string.IsNullOrEmpty(searchEmail) && !acc.Where(a => a.AccountId.Equals(c.SupervisorId)).First().Email.Contains(searchEmail, checkCase)) &&
+                !(!string.IsNullOrEmpty(searchUnits) && !c.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
+                !(!string.IsNullOrEmpty(searchDepartment) && !acc.Where(a => a.AccountId.Equals(c.SupervisorId)).First().Department.ToString().Equals(searchDepartment))
+                ).ToList();
 
-            return true;
         }
 
         //Deletes selected chemicals on delete button form submission
@@ -229,10 +223,16 @@ namespace ChemStoreWebApp.Pages
             var accounts = from e in _context.Account select e;
             var locations = from f in _context.Location select f;
 
-            DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
-                c => new DisplayContainer(c, chemicals, locations, accounts))
-                .Where(c => isValidSearchItem(c, true))
-                .ToList());
+            var result = validSearchItems(containers, chemicals, locations, accounts, false);
+
+            List<DisplayContainer> dispConstruct = new List<DisplayContainer>();
+
+            foreach (var container in result)
+            {
+                dispConstruct.Add(new DisplayContainer(container, chemicals, locations, accounts));
+            }
+
+            DisplayContainers = await Task.FromResult(dispConstruct);
         }
 
         public DisplayContainer GetListItem(int index)
@@ -268,10 +268,16 @@ namespace ChemStoreWebApp.Pages
             var accounts = from e in _context.Account select e;
             var locations = from f in _context.Location select f;
 
-            DisplayContainers = await Task.FromResult(containers.Select( // creates a DisplayContainer object with all info needed to display it
-                c => new DisplayContainer(c, chemicals, locations, accounts))
-                .Where(c => isValidSearchItem(c, true))
-                .ToList());
+            var result = validSearchItems(containers, chemicals, locations, accounts, false);
+
+            List<DisplayContainer> dispConstruct = new List<DisplayContainer>();
+
+            foreach (var container in result)
+            {
+                dispConstruct.Add(new DisplayContainer(container, chemicals, locations, accounts));
+            }
+
+            DisplayContainers = await Task.FromResult(dispConstruct);
 
 
             //if the revNums button was pressed
