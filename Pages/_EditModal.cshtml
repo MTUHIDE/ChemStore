@@ -1,0 +1,19 @@
+﻿@model ChemStoreWebApp.ViewModels.ContainerViewModel
+
+<form method="post" id="form1" class="modalForm">
+    <input type="text" id="editChemName" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
+    <input type="text" id="editChemCas" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
+    <input type="text" id="editChemSup" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
+    <input type="text" id="editChemSize" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
+    <input type="hidden" id="ContainerID" name="ContainerID" value=@Model.ContainerId /> <br />
+    <select asp-for="BuildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
+        <br />
+    </select>
+    <select asp-for="RoomEditIndex">
+    </select> <br />
+    <select name="Hazard" value="">
+        <option value="" disabled selected hidden>Hazard</option>
+    </select> <br />
+    <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
+    <input type="submit" class="modalBtns greenBtn" value="Save" asp-page-handler="edit" />
+</form>

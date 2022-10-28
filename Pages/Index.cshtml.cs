@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ChemStoreWebApp.Models;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel;
 
 namespace ChemStoreWebApp.Pages
 {
@@ -112,7 +113,7 @@ namespace ChemStoreWebApp.Pages
             return containerIds;
         }
 
-        public long addToDatabase(Container con)
+        public long addToDatabase(Models.Container con)
         {
             _context.Container.Add(con);
             _context.SaveChanges();
@@ -159,7 +160,7 @@ namespace ChemStoreWebApp.Pages
         {
             try
             {
-                Container con = (from c in _context.Container
+                Models.Container con = (from c in _context.Container
                                  where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
                                  select c).Single();
                 con.CasNumber = Request.Form["Cas Number"];
@@ -183,7 +184,7 @@ namespace ChemStoreWebApp.Pages
 
         public async Task<IActionResult> OnPostCreate()
         {
-            Container newCon = new Container();
+            Models.Container newCon = new Models.Container();
             newCon.CasNumber = Request.Form["CAS Number"];
             newCon.Unit = 0;
             newCon.Retired = false;
@@ -309,6 +310,25 @@ namespace ChemStoreWebApp.Pages
             //Always sort by size of container
             DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
                                             : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
+        }
+
+        public PartialViewResult OnGetEditModal(long conid)
+        {
+            var container = (from con in _context.Container
+                             join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
+                             where con.ContainerId == conid
+                             select new ViewModels.ContainerViewModel
+                             {
+                                 ChemicalName = chem.ChemicalName,
+                                 ContainerId = con.ContainerId,
+                                 Unit = con.Unit,
+                                 Amount = con.Amount,
+                                 Retired = con.Retired,
+                                 CasNumber = con.CasNumber,
+                                 RoomId = con.RoomId,
+                                 SupervisorId = con.SupervisorId
+                             }).FirstOrDefault();
+            return Partial("_EditModal", container);
         }
     }
 }

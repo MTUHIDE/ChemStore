@@ -157,7 +157,7 @@
                                 @EnumHelper.GetDisplayValue((Units)item.con.Unit)
                             </td>
                             <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@i);">
+                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerId)">
                                     <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                 </button>
                                 <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
@@ -265,25 +265,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form method="post" id="form1" class="modalForm">
-                                <input type="text" id="editChemName" name="Chemical Name" placeholder="Chemical Name" value="" /> <br />
-                                <input type="text" id="editChemCas" name="CAS Number" placeholder="CAS Number" value="" /> <br />
-                                <input type="text" id="editChemSup" name="Supervisor" placeholder="Supervisor" value="" /> <br />
-                                <input type="text" id="editChemSize" name="Amount" placeholder="Amount" value="" /> <br />
-                                <input type="hidden" id="ContainerID" name="ContainerID" value="" /> <br />
-                                <select asp-for="buildingEditIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getEditRoomsOfBuilding(1)">
-                                    <br />
-                                </select>
-                                <select asp-for="RoomEditIndex">
-                                </select> <br />
-                                <select name="Hazard" value="">
-                                    <option value="" disabled selected hidden>Hazard</option>
-                                </select> <br />
-                                <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="modalBtns greenBtn" value="Save" asp-page-handler="edit" />
-                            </form>
-                        </div>
+                        <div class="modal-body" id="edit-modal-body"></div>
                     </div>
                 </div>
             </div>
@@ -348,21 +330,15 @@
                 });
             });
     }
-    function getEditModal(index) {
-        fetch(`?handler=ListItem&containerListIndex=${index}`)
+    function getEditModal(id) {
+        fetch(`?handler=EditModal&conid=${id}`)
             .then((response) => {
-                return response.json();
+                return response.text();
             })
-            .then((data) => {
-                document.getElementById('editChemName').value = data[0];
-                document.getElementById('editChemCas').value = data[1];
-                document.getElementById('editChemSup').value = data[2];
-                document.getElementById('editChemSize').value = data[3];
-                document.getElementById('ContainerID').value = data[4];
-                document.getElementById('buildingEditIndex').value = data[5];
-                document.getElementById('RoomEditIndex').innerHTML = `<option value="${data[6]}">${data[6]}</option>`
-                getEditRoomsOfBuilding(0);
+            .then((result) => {
+                $('#edit-modal-body').html(result)
             });
+        getEditRoomsOfBuilding(0);
     }
 </script>
 
