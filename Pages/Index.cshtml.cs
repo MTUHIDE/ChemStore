@@ -121,21 +121,28 @@ namespace ChemStoreWebApp.Pages
         }
 
         /// <summary>
-        /// Checks if a container should be listed with the given search criteria
+        /// Gets a list of valid display containers
         /// </summary>
-        /// <param name="con">Container object</param>
+        /// <param name="ignoreCase">Whether our search filters are case sensitive</param>
         /// <returns>True if container should be listed</returns>
-        public List<Container> validSearchItems(IQueryable<Container> con, IQueryable<Chemical> chem, IQueryable<Location> loc, IQueryable<Account> acc, bool ignoreCase)
-        { 
+        public List<DisplayContainer> validSearchItems(bool ignoreCase)
+        {
+            // stores data from database in arrays to limit amount of calls to database at once
+            var containers = from con in _context.Container
+                             join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
+                             join acc in _context.Account on con.SupervisorId equals acc.AccountId
+                             join loc in _context.Location on con.RoomId equals loc.RoomId
+                             select new DisplayContainer(con, chem, loc, acc);
+
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            return con.Where(c =>
-                !(!string.IsNullOrEmpty(searchCAS) && !c.CasNumber.Contains(searchCAS, checkCase)) &&
-                !(!string.IsNullOrEmpty(searchString) && !(chem.Where(c => c.CasNumber.Equals(c.CasNumber)).First().ChemicalName.Contains(searchString, checkCase))) &&
-                !(!string.IsNullOrEmpty(searchBuilding) && !(loc.Where(l => l.RoomId.Equals(c.RoomId)).First().BuildingName.ToString().Equals(searchBuilding))) &&
-                !(!string.IsNullOrEmpty(searchSize) && c.Amount != Int32.Parse(searchSize)) &&
-                !(!string.IsNullOrEmpty(searchEmail) && !acc.Where(a => a.AccountId.Equals(c.SupervisorId)).First().Email.Contains(searchEmail, checkCase)) &&
-                !(!string.IsNullOrEmpty(searchUnits) && !c.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
-                !(!string.IsNullOrEmpty(searchDepartment) && !acc.Where(a => a.AccountId.Equals(c.SupervisorId)).First().Department.ToString().Equals(searchDepartment))
+            return containers.Where(c =>
+                !(!string.IsNullOrEmpty(searchCAS) && !c.chem.CasNumber.Contains(searchCAS, checkCase)) &&
+                !(!string.IsNullOrEmpty(searchString) && !c.chem.ChemicalName.Contains(searchString, checkCase)) &&
+                !(!string.IsNullOrEmpty(searchBuilding) && !c.loc.BuildingName.ToString().Equals(searchBuilding)) &&
+                !(!string.IsNullOrEmpty(searchSize) && c.con.Amount != Int32.Parse(searchSize)) &&
+                !(!string.IsNullOrEmpty(searchEmail) && !c.supervisor.Email.Contains(searchEmail, checkCase)) &&
+                !(!string.IsNullOrEmpty(searchUnits) && !c.con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
+                !(!string.IsNullOrEmpty(searchDepartment) && !c.supervisor.Department.ToString().Equals(searchDepartment))
                 ).ToList();
 
         }
@@ -218,21 +225,9 @@ namespace ChemStoreWebApp.Pages
 
         public async Task GetDisplayContainer()
         {
-            var containers = from a in _context.Container select a;
-            var chemicals = from b in _context.Chemical select b;
-            var accounts = from e in _context.Account select e;
-            var locations = from f in _context.Location select f;
+            var result = validSearchItems(false);
 
-            var result = validSearchItems(containers, chemicals, locations, accounts, false);
-
-            List<DisplayContainer> dispConstruct = new List<DisplayContainer>();
-
-            foreach (var container in result)
-            {
-                dispConstruct.Add(new DisplayContainer(container, chemicals, locations, accounts));
-            }
-
-            DisplayContainers = await Task.FromResult(dispConstruct);
+            DisplayContainers = await Task.FromResult(result);
         }
 
         public DisplayContainer GetListItem(int index)
@@ -262,22 +257,9 @@ namespace ChemStoreWebApp.Pages
         /// <returns></returns>
         public async Task OnGetAsync()
         {
-            // stores data from database in arrays to limit amount of calls to database at once
-            var containers = from a in _context.Container select a;
-            var chemicals = from b in _context.Chemical select b;
-            var accounts = from e in _context.Account select e;
-            var locations = from f in _context.Location select f;
+            var result = validSearchItems(false);
 
-            var result = validSearchItems(containers, chemicals, locations, accounts, false);
-
-            List<DisplayContainer> dispConstruct = new List<DisplayContainer>();
-
-            foreach (var container in result)
-            {
-                dispConstruct.Add(new DisplayContainer(container, chemicals, locations, accounts));
-            }
-
-            DisplayContainers = await Task.FromResult(dispConstruct);
+            DisplayContainers = await Task.FromResult(result);
 
 
             //if the revNums button was pressed
