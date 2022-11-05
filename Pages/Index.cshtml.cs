@@ -121,10 +121,10 @@ namespace ChemStoreWebApp.Pages
         }
 
         /// <summary>
-        /// Gets a list of valid display containers
+        /// Gets a queryable of valid display containers
         /// </summary>
         /// <param name="ignoreCase">Whether our search filters are case sensitive</param>
-        /// <returns>True if container should be listed</returns>
+        /// <returns>A Queryable containing every valid container matching search criteria</returns>
         public IQueryable<DisplayContainer> validSearchItems(bool ignoreCase)
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
