@@ -125,26 +125,25 @@ namespace ChemStoreWebApp.Pages
         /// </summary>
         /// <param name="ignoreCase">Whether our search filters are case sensitive</param>
         /// <returns>True if container should be listed</returns>
-        public List<DisplayContainer> validSearchItems(bool ignoreCase)
+        public IQueryable<DisplayContainer> validSearchItems(bool ignoreCase)
         {
+            var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+
             // stores data from database in arrays to limit amount of calls to database at once
             var containers = from con in _context.Container
                              join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
                              join acc in _context.Account on con.SupervisorId equals acc.AccountId
                              join loc in _context.Location on con.RoomId equals loc.RoomId
+                             where (string.IsNullOrEmpty(searchCAS)        || chem.CasNumber.Contains(searchCAS, checkCase)) &&
+                                   (string.IsNullOrEmpty(searchString)     || chem.ChemicalName.Contains(searchString, checkCase)) &&
+                                   (string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
+                                   (string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) &&
+                                   (string.IsNullOrEmpty(searchEmail)      || acc.Email.Contains(searchEmail, checkCase)) &&
+                                   (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
+                                   (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment))
                              select new DisplayContainer(con, chem, loc, acc);
 
-            var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-            return containers.Where(c =>
-                !(!string.IsNullOrEmpty(searchCAS) && !c.chem.CasNumber.Contains(searchCAS, checkCase)) &&
-                !(!string.IsNullOrEmpty(searchString) && !c.chem.ChemicalName.Contains(searchString, checkCase)) &&
-                !(!string.IsNullOrEmpty(searchBuilding) && !c.loc.BuildingName.ToString().Equals(searchBuilding)) &&
-                !(!string.IsNullOrEmpty(searchSize) && c.con.Amount != Int32.Parse(searchSize)) &&
-                !(!string.IsNullOrEmpty(searchEmail) && !c.supervisor.Email.Contains(searchEmail, checkCase)) &&
-                !(!string.IsNullOrEmpty(searchUnits) && !c.con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
-                !(!string.IsNullOrEmpty(searchDepartment) && !c.supervisor.Department.ToString().Equals(searchDepartment))
-                ).ToList();
-
+            return containers;
         }
 
         //Deletes selected chemicals on delete button form submission
@@ -177,7 +176,7 @@ namespace ChemStoreWebApp.Pages
             {
                 createError = true;
             }
-            
+
             return RedirectToPage();
         }
 
@@ -225,14 +224,11 @@ namespace ChemStoreWebApp.Pages
 
         public async Task GetDisplayContainer()
         {
-            var result = validSearchItems(false);
-
-            DisplayContainers = await Task.FromResult(result);
+            DisplayContainers = await validSearchItems(false).ToListAsync();
         }
 
         public DisplayContainer GetListItem(int index)
-        {
-            GetDisplayContainer();
+        { 
             return DisplayContainers[index];
         }
 
@@ -257,13 +253,10 @@ namespace ChemStoreWebApp.Pages
         /// <returns></returns>
         public async Task OnGetAsync()
         {
-            var result = validSearchItems(false);
-
-            DisplayContainers = await Task.FromResult(result);
-
+            DisplayContainers = await validSearchItems(false).ToListAsync();
 
             //if the revNums button was pressed
-            if(revNums)
+            if (revNums)
             {
                 //Inverse the state of the number search
                 revNumsPrev = !revNumsPrev;
@@ -295,7 +288,7 @@ namespace ChemStoreWebApp.Pages
             };
 
             //Always sort by size of container
-            DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList() 
+            DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList()
                                             : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
         }
     }
