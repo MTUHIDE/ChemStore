@@ -13,18 +13,12 @@ namespace ChemStoreWebApp.Utilities
         public Location loc { get; set; } // saves the location data for the container
         public Account supervisor { get; set; } // saves the account (supervisor) data for the container
 
-        public DisplayContainer(Container container, List<Chemical> chemicals, List<Location> locations,
-            List<Account> accounts)
+        public DisplayContainer(Container container, Chemical chemical, Location location,
+            Account accounts)
         {
-            chem = (from c in chemicals
-                    where c.CasNumber == container.CasNumber
-                    select c).First();
-            loc = (from l in locations
-                   where l.RoomId == container.RoomId
-                   select l).First();
-            supervisor = (from s in accounts
-                   where s.AccountId == container.SupervisorId
-                   select s).First();
+            chem = chemical;
+            loc = location;
+            supervisor = accounts;
             con = container;
         }
     }
