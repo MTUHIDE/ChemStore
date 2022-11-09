@@ -9,6 +9,7 @@ using ChemStoreWebApp.Models;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
+using ChemStoreWebApp.ViewModels;
 
 namespace ChemStoreWebApp.Pages
 {
@@ -310,6 +311,11 @@ namespace ChemStoreWebApp.Pages
                                  SupervisorId = con.SupervisorId
                              }).FirstOrDefault();
             return Partial("_EditModal", container);
+        }
+
+        public PartialViewResult OnGetAddModal()
+        {
+            return Partial("_AddModal", new ContainerViewModel());
         }
     }
 }

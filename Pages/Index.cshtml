@@ -200,7 +200,7 @@
         <a href=""> >> </a>
         <div style="margin-left: auto">
             <div id="regularDiv">
-                <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#details-modal" onclick="getRoomsOfBuilding()">
+                <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#add-modal" onclick="getAddModal()">
                     Add
                 </button>
                 <button type="button" class="searchPageBtns redBtn" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
@@ -222,34 +222,16 @@
 
             <!--New Create Modal HTML-->
 
-            <div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
+            <div class="modal fade" tabindex="-1" role="dialog" id="add-modal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Add New Chemical</h5>
+                            <h5 class="modal-title">Add New Container</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <form method="post" id="form1" class="modalForm">
-                                <input type="text" name="Chemical Name" placeholder="Chemical Name" value="@Request.Query["Chemical Name"]" /> <br />
-                                <input type="text" name="CAS Number" placeholder="CAS Number" value="@Request.Query["CAS Number"]" /> <br />
-                                <input type="text" name="Supervisor" placeholder="Supervisor" value="@Request.Query["Supervisor"]" /> <br />
-                                <input type="text" name="Amount" placeholder="Amount" value="@Request.Query["Amount"]" /> <br />
-                                <select asp-for="buildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
-                                    <option value="" disabled selected hidden>Building</option>
-                                </select> <br />
-                                <select asp-for="RoomIndex">
-                                    <option value="" disabled selected hidden>Room Number</option>
-                                </select> <br />
-                                <select name="Hazard" value="@Request.Query["Hazard"]">
-                                    <option value="" disabled selected hidden>Hazard</option>
-                                </select> <br />
-                                <button type="button" class="redBtn" data-dismiss="modal">Cancel</button>
-                                <input type="submit" value="Add" asp-page-handler="create" />
-                            </form>
-                        </div>
+                        <div class="modal-body" id="add-modal-body"></div>
                     </div>
                 </div>
             </div>
@@ -260,7 +242,7 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Edit Chemical</h5>
+                            <h5 class="modal-title">Edit Container</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -296,7 +278,7 @@
         $form.find(':checkbox, :radio').prop('checked', false);
     }
     function getRoomsOfBuilding() {
-        var ex = document.getElementById('buildingIndex');
+        var ex = document.getElementById('BuildingIndex');
         var str = ex.options[ex.selectedIndex].value;
         document.getElementById('RoomIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
         fetch(`?handler=SubCategories&buildingIndex=${str}`)
@@ -312,21 +294,21 @@
     }
 
     function getEditRoomsOfBuilding(initGet) {
-        var ex = document.getElementById('buildingEditIndex');
+        var ex = document.getElementById('BuildingIndex');
         var str = ex.options[ex.selectedIndex].value;
-        var currRoomNumber = document.getElementById('RoomEditIndex').value;
+        var currRoomNumber = document.getElementById('RoomIndex').value;
         fetch(`?handler=EditCategories&buildingEditIndex=${str}`)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
                 if (initGet == 0) {
-                    document.getElementById('RoomEditIndex').innerHTML = `<option selected hidden value="${currRoomNumber}">${currRoomNumber}</option>`;
+                    document.getElementById('RoomIndex').innerHTML = `<option selected hidden value="${currRoomNumber}">${currRoomNumber}</option>`;
                 } else {
-                    document.getElementById('RoomEditIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
+                    document.getElementById('RoomIndex').innerHTML = "<option disabled selected hidden value=''>Room Number</option>";
                 }
                 Array.prototype.forEach.call(data, function (item, i) {
-                    document.getElementById('RoomEditIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
+                    document.getElementById('RoomIndex').innerHTML += `<option value="${item.roomNumber}">${item.roomNumber}</option>`
                 });
             });
     }
@@ -337,21 +319,31 @@
             })
             .then((result) => {
                 $('#edit-modal-body').html(result)
+                getEditRoomsOfBuilding(0);
             });
-        getEditRoomsOfBuilding(0);
+    }
+
+    function getAddModal() {
+        fetch(`?handler=AddModal`)
+            .then((response) => {
+                return response.text();
+            })
+            .then((result) => {
+                $('#add-modal-body').html(result)
+                getRoomsOfBuilding();
+            });
     }
 </script>
 
 <script>
     function showCreateAlert() {
+        var hasError = @Model.createError.ToString().ToLower();
+        if (hasError) {
+            window.alert('Error: Invalid Data');
+        }
 
-                                        var hasError = @Model.createError.ToString().ToLower();
-                                        if (hasError) {
-                                            window.alert('Error: Invalid Data');
-                                        }
-
-                                    }
-            </script>
+    }
+</script>
 
 <script>
     //Enables or disables the delete button
