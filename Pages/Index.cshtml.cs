@@ -79,6 +79,12 @@ namespace ChemStoreWebApp.Pages
         public bool revNums { get; set; } = false;
         [BindProperty(SupportsGet = true)]
         public bool revNumsPrev { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public int resultNumber { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int uniqueChemicals { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int chemicalAmount { get; set; }
 
 
         /// <summary>
@@ -120,6 +126,14 @@ namespace ChemStoreWebApp.Pages
             _context.SaveChanges();
             createError = false;
             return con.ContainerId;
+        }
+
+        private void updateQuickReference()
+        {
+
+            chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
+            uniqueChemicals = DisplayContainers.Select(con => con.chem).Distinct().Count();
+            resultNumber = DisplayContainers.Count();
         }
 
         /// <summary>
@@ -256,6 +270,8 @@ namespace ChemStoreWebApp.Pages
         public async Task OnGetAsync()
         {
             DisplayContainers = await validSearchItems(false).ToListAsync();
+
+            updateQuickReference();
 
             //if the revNums button was pressed
             if (revNums)
