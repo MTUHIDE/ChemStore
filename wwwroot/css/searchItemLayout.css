@@ -41,14 +41,23 @@ h1 {
 }
 
 .search {
-    left: 0;
+    /*left: 0;
     width: 20%;
-    text-align: center;
     float: left;
+    */
+    text-align: center;
     background-color: #ececec;
     border-radius: 20px;
     padding: 10px
 }
+
+.leftBar {
+    left: 0;
+    width: 20%;
+    float: left;
+    display: block;
+}
+
 .results{
     width: 80%;
     float: right;
