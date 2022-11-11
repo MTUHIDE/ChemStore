@@ -82,7 +82,7 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public int numContainers { get; set; }
         [BindProperty(SupportsGet = true)]
-        public int uniqueLocations { get; set; }
+        public int uniqueBuildings { get; set; }
         [BindProperty(SupportsGet = true)]
         public int chemicalAmount { get; set; }
 
@@ -132,7 +132,7 @@ namespace ChemStoreWebApp.Pages
         {
 
             chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
-            uniqueLocations = DisplayContainers.Select(con => con.chem).Distinct().Count();
+            uniqueBuildings = DisplayContainers.Select(con => con.loc.BuildingName).Distinct().Count();
             numContainers = DisplayContainers.Count();
         }
 
