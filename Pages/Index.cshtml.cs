@@ -159,24 +159,31 @@ namespace ChemStoreWebApp.Pages
         // Edits the selected chemical to have the new values as specified in the edit modal
         public async Task<IActionResult> OnPostEdit()
         {
-            try
+            if (!_context.Account.Any(a => a.Supervisor && a.Name == Request.Form["Supervisor"]))
             {
-                Models.Container con = (from c in _context.Container
-                                 where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
-                                 select c).Single();
-                con.CasNumber = Request.Form["Cas Number"];
-                con.SupervisorId = (from s in _context.Account
-                                    where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
-                                    select s.AccountId).FirstOrDefault();
-                con.Amount = Int32.Parse(Request.Form["Amount"]);
-                con.RoomId = (from l in _context.Location
-                              where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
-                              select l.RoomId).Single();
-                _context.SaveChanges();
+                ModelState.AddModelError("Supervisor", "Invalid supervisor");
             }
-            catch
+            if (ModelState.IsValid)
             {
-                createError = true;
+                try
+                {
+                    Models.Container con = (from c in _context.Container
+                                            where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
+                                            select c).Single();
+                    con.CasNumber = Request.Form["Cas Number"];
+                    con.SupervisorId = (from s in _context.Account
+                                        where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
+                                        select s.AccountId).FirstOrDefault();
+                    con.Amount = Int32.Parse(Request.Form["Amount"]);
+                    con.RoomId = (from l in _context.Location
+                                  where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
+                                  select l.RoomId).Single();
+                    _context.SaveChanges();
+                }
+                catch
+                {
+                    createError = true;
+                } 
             }
 
             return RedirectToPage();
@@ -191,19 +198,26 @@ namespace ChemStoreWebApp.Pages
             newCon.Retired = false;
             var roomName = RoomIndex;
             var buildingInt = buildingIndex;
-            var supervisorName = Request.Form["Supervisor"];
-            try
+            var supervisorName = Request.Form["Supervisor"].ToString();
+            if(!_context.Account.Any(a => a.Supervisor && a.Name == supervisorName))
             {
-                var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
-                newCon.RoomId = location.RoomId;
-                var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
-                newCon.SupervisorId = supervisor.AccountId;
-                newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
-                addToDatabase(newCon);
+                ModelState.AddModelError("Supervisor", "Invalid supervisor");
             }
-            catch
+            if (ModelState.IsValid)
             {
-                createError = true;
+                try
+                {
+                    var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
+                    newCon.RoomId = location.RoomId;
+                    var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
+                    newCon.SupervisorId = supervisor.AccountId;
+                    newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
+                    addToDatabase(newCon);
+                }
+                catch
+                {
+                    createError = true;
+                } 
             }
             return RedirectToPage();
         }

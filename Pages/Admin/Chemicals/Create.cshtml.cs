@@ -36,6 +36,8 @@ namespace ChemStoreWebApp.Pages.Admin.Chemicals
                 return Page();
             }
 
+    
+
             _context.Chemical.Add(Chemical);
             await _context.SaveChangesAsync();
 
