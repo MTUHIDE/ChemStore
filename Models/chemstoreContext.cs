@@ -42,6 +42,17 @@ namespace ChemStoreWebApp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             OnModelCreatingPartial(modelBuilder);
+
+            modelBuilder.Entity<Hazard>().HasData(
+                   new Hazard { HazardId = "Corrosion", Description = "Corrosive" },
+                   new Hazard { HazardId = "Enviornmental", Description = "Enviornmental Hazard" },
+                   new Hazard { HazardId = "ExclamationMark", Description = "Exclamation Mark" },
+                   new Hazard { HazardId = "ExplodingBomb", Description = "Exploding Bomb" },
+                   new Hazard { HazardId = "FlameOverCircle", Description = "Flame Over Circle" },
+                   new Hazard { HazardId = "Flame", Description = "Flame" },
+                   new Hazard { HazardId = "GasCylinder", Description = "Gas Cylinder" },
+                   new Hazard { HazardId = "HealthHazard", Description = "HealthHazard" },
+                   new Hazard { HazardId = "Skull", Description = "Skull" });
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
