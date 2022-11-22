@@ -12,29 +12,24 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 justify-content-center">
             <div class="container">
-                <img title="" alt="MTULogo" src="~/assets/mtulogo_wide.png"/>
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ChemStore</a>
+                
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img title="" alt="MTULogo" src="~/assets/FullName_Horizontal_TwoColor.png" height="60" />
+                    ChemStore
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Log">Log</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ContactUs">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
-                        </li>
-                    </ul>
+                    <div class="navbar-nav flex-grow-1">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Log">Log</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/ContactUs">Contact</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                    </div>
                 </div>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse user-nav-bar">
                     <ul class="navbar-nav flex-grow-1">
