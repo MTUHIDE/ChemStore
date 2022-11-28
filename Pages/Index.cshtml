@@ -16,41 +16,60 @@
     <!---------------------------------------------------------------------------------------------->
 </head>
 
-<div id="search">
-    <div class="search">
+<div class = "leftBar">
+    <div id="search">
+        <div class="search">
         
-        <form id="filterForm">
-            <div class="s">
-                <input type="text" class="inputPlaceholder" placeholder=Chemical Name" />
-            </div>
-            <div class="s">
-                <input type="text" class="inputPlaceholder" placeholder="CAS Number" asp-for="searchCAS" />
-            </div>
-            <div class="s">
-                <input type="email" class="inputPlaceholder" placeholder="PI email" asp-for="searchEmail"/>
-            </div>
-            <div class="s">
-                <input type="text" class="inputPlaceholder" placeholder="Hazard" />
-            </div>
-            <div class="s">
-                <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="rounded-dropdown inputPlaceholder">
-                    <option value="" selected disabled>Building</option>
-                </select>
-            </div>
-            <div class="s">
-                <input type="number" class="inputPlaceholder" placeholder="Room Number" />
-            </div>
-            <div class="s">
-                <input type="number" asp-for="searchSize" class="inputPlaceholder" placeholder="Container Size" />
-            </div>
-            <div class="s">
-                <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
-                    <option value="" selected disabled>Units</option>
-                </select>
-            </div>
-            <input type="reset" value="Clear" class="filter" /> &nbsp;
-            <input type="submit" value="Filter" class="filter" />
-        </form>
+            <form id="filterForm">
+                <div class="s">
+                    <input type="text" class="inputPlaceholder" placeholder=Chemical Name" />
+                </div>
+                <div class="s">
+                    <input type="text" class="inputPlaceholder" placeholder="CAS Number" asp-for="searchCAS" />
+                </div>
+                <div class="s">
+                    <input type="email" class="inputPlaceholder" placeholder="PI email" asp-for="searchEmail"/>
+                </div>
+                <div class="s">
+                    <input type="text" class="inputPlaceholder" placeholder="Hazard" />
+                </div>
+                <div class="s">
+                    <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="rounded-dropdown inputPlaceholder">
+                        <option value="" selected disabled>Building</option>
+                    </select>
+                </div>
+                <div class="s">
+                    <input type="number" class="inputPlaceholder" placeholder="Room Number" />
+                </div>
+                <div class="s">
+                    <input type="number" asp-for="searchSize" class="inputPlaceholder" placeholder="Container Size" />
+                </div>
+                <div class="s">
+                    <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                        <option value="" selected disabled>Units</option>
+                    </select>
+                </div>
+                <input type="reset" value="Clear" class="filter" /> &nbsp;
+                <input type="submit" value="Filter" class="filter" />
+            </form>
+        </div>
+    </div>
+
+    <div id="quickReference">
+        <table>
+            <tr>
+                <td>Number of Containers</td>
+                <td>@Model.numContainers</td>
+            </tr>
+            <tr>
+                <td>Total Amount</td>
+                <td>@Model.chemicalAmount</td>
+            </tr>
+            <tr>
+                <td>Number of Buildings</td>
+                <td>@Model.uniqueBuildings</td>
+            </tr>
+        </table>
     </div>
 </div>
 
