@@ -54,7 +54,7 @@
             </form>
         </div>
     </div>
-
+    
     <div id="quickReference">
         <table>
             <tr>
@@ -513,4 +513,13 @@
             }
         });
     }
+</script>
+<link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+<script src="~/lib/jqueryui/jquery-ui.js"></script>
+<script>
+    $(function (){
+        $("#test").autocomplete({
+            source: '@Url.Page("index", "AutoComplete")'
+        });
+    });
 </script>

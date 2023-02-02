@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jqueryui@1.13.2",
+      "destination": "wwwroot/lib/jqueryui/",
+      "files": [
+        "jquery-ui.min.js",
+        "themes/base/jquery-ui.css",
+        "themes/base/jquery-ui.min.css",
+        "themes/base/theme.css",
+        "themes/base/theme.min.css",
+        "themes/base/images/ui-icons_444444_256x240.png",
+        "themes/base/images/ui-icons_555555_256x240.png",
+        "themes/base/images/ui-icons_777620_256x240.png",
+        "themes/base/images/ui-icons_777777_256x240.png",
+        "themes/base/images/ui-icons_cc0000_256x240.png",
+        "themes/base/images/ui-icons_ffffff_256x240.png",
+        "jquery-ui.js"
+      ]
+    },
+    {
+      "library": "jquery@3.6.3",
+      "destination": "wwwroot/lib/jquery/"
+    }
+  ]
+}
