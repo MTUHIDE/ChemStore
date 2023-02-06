@@ -30,6 +30,14 @@
                 Container ID: <input type="text" asp-for="containerID" />
             </div>
             <div class="s">
+                <label for="startTime">Start Time: </label>
+                <input type="datetime-local" asp-for="startTime" min="2022-01-01T00:00" max="2025-01-01T00:00"/>
+            </div>
+            <div class="s">
+                <label for="endTime">End Time: </label>
+                <input type="datetime-local" asp-for="endTime" min="2022-01-01T00:00" max="2025-01-01T00:00"/>
+            </div>
+            <div class="s">
                 <label for="selectAction">Action: </label>
                 <select asp-for="searchAction" asp-items="Html.GetEnumSelectList<Actions>()" id="selectAction">
                     <option value="">Pick one</option>
