@@ -28,11 +28,11 @@ a.navbar-brand {
 }
 
 input {
-    border-radius: 20px;
+    /*border-radius: 20px;
     border-width: 1px;
     padding: 5px;
     padding-left: 10px;
-    outline-style: none;
+    outline-style: none;*/
 }
 
 .searchMain {
