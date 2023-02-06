@@ -26,7 +26,6 @@
     display: flex;
     align-items: center;
     width: fit-content;
-    display: flex;
     justify-content: center;
 }
 
@@ -34,7 +33,6 @@
     .topperCol {
         font-size: 1vw;
         text-align: center;
-    
     }
 }
 /*End Results Topper*/
@@ -124,7 +122,6 @@
     background-color: var(--med-grey);
     height: 100vh;
     width: 4vw;
-    /*display: flex;*/
     display: none;
     justify-content: center;
     align-items: baseline;
@@ -214,7 +211,6 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    /*background-color: lawngreen;*/
     height: 6%;
 }
 
@@ -352,9 +348,9 @@ tr {
     margin-top: 5px;
 }
 
-    .expandable:hover {
-        background-color: #cccccc;
-    }
+.expandable:hover {
+    background-color: #cccccc;
+}
 
 .moreInformation {
     display: none;
