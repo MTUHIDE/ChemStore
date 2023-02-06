@@ -16,200 +16,234 @@
     <!---------------------------------------------------------------------------------------------->
 </head>
 
-<div class = "leftBar">
-    <div id="search">
-        <div class="search">
+<div class="container-fluid homeContainer">
+    <div class="row searchContainer">
+        <div class="col-sm-4 col-lg-3 filterLeft" id="search">
+            <div class="row filterSection">
+                <div class="col-12 filterHeader">
+                    <div class="filterHeaderLeft">
+                        <h2>Filter Results</h2>
+                    </div>
+                     <div>
+                         <button class="hideFilter" title="Hide Filter" onclick="toggleFilter()">
+                                <i class="fa-solid fa-xmark"></i>
+                         </button>
+                     </div>
+                 </div>
+
+                <div class="col-12 search">
+                    <form id="filterForm">
+                        <div class="row filterRow">
+                            <input type="text" class="filterInput" placeholder="Chemical Name"/>
+                        </div>
+                        <div class="row filterRow">
+                            <input type="text" class="filterInput" placeholder="CAS Number" asp-for="searchCAS"/>
+                        </div>
+                        <div class="row filterRow">
+                            <input type="email" class="filterInput" placeholder="PI Email" asp-for="searchEmail"/>
+                        </div>
+                        <div class="row filterRow">
+                            <input type="text" class="filterInput" placeholder="Hazard"/>
+                        </div>
+                        <div class="row filterRow">
+                            <select class="filterInput" asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" >
+                                <option value="" selected disabled>Building</option>
+                            </select>
+                        </div>
+                        <div class="row filterRow">
+                            <input type="number" class="filterInput" placeholder="Room Number" />
+                        </div>
+                        <div class="row filterRow">
+                            <input type="number" class="filterInput" placeholder="Container Size" asp-for="searchSize"/>
+                        </div>
+                        <div class="row filterRow">
+                            <select class="filterInput" asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                                <option value="" selected disabled>Units</option>
+                            </select>
+                        </div>
+                        <div class="row filterRow">
+                            <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
+                            <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row mngChemSection">
+                <div class="col-12 chemHeader"><h2>Add/Remove Chemicals</h2></div>
+                <div class="col-12 addRmvBtns">
+                    <button type="button" class="searchPageBtns contBtnSecon" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
+                        Remove
+                    </button>
+                </div>
+                <div class="col-12 addRmvBtns">
+                    <button type="button" class="searchPageBtns contBtn" id="addChemicalBtn" data-toggle="modal" data-target="#add-modal" onclick="getAddModal()">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="toggleFilterBar" id="hiddenFilter">
+            <button class ="miniToggle" title="Show Filter" onclick="toggleFilter()">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
         
-            <form id="filterForm">
-                <div class="s">
-                    <input type="text" class="inputPlaceholder" placeholder=Chemical Name" />
+        <div class="col resultsContainer">
+            <div class="row resultsTopper">
+                <div class="col topperCol">Showing</div>
+                <div class="col topperCol"> @Model.numContainers Containers</div>
+                <div class="col topperCol"> @Model.chemicalAmount Chemicals</div>
+                <div class="col topperCol"> @Model.uniqueBuildings Buildings</div>
+            </div>
+
+            <div class="row results" id="results">
+                <form method="post" id="deleteForm">
+                    <table class="table">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            @if (Model.DisplayContainers.Count() > 0)
+                            {
+                                var count = Model.DisplayContainers.Count();
+                                var start = 0;
+                                var end = 25;
+                                var numOfPages = Model.DisplayContainers.Count() / 25;
+
+                                @if (!Model.textEntered())
+                                {
+                                    /*<p class="noFilters">No Filters Applied</p>*/
+                                }
+
+
+                                if (count < end) { end = count; }
+
+                                <tr>
+                                    <td>
+                                        Chemical Name
+                                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
+                                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                                        </button>
+                                        <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
+                                        <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
+                                        <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
+                                    </td>
+                                    <td>
+                                        CAS Number
+                                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
+                                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                                        </button>
+                                    </td>
+                                    <td>Hazard</td>
+                                    <td>
+                                        Size
+                                        <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
+                                            <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
+                                        </button>
+                                        <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden>
+                                    </td>
+                                </tr>
+                                @for (var i = start; i < end; i++)
+                                {
+                                    var item = Model.DisplayContainers[i];
+                                    <tr class="expandable">
+                                        <td class="a">
+                                            @Html.DisplayFor(modelItem => item.chem.ChemicalName)
+                                        </td>
+                                        <td class="a">
+                                            @Html.DisplayFor(modelItem => item.chem.CasNumber)
+                                        </td>
+                                        <td class="a">
+                                            @*TODO: actually implement conditional rendering based on data*@
+                                            <span class="hazards">
+                                                @if (i % 4 == 0)
+                                                {
+                                                    <span class="hazard hazard-exclamation"></span>
+                                                    <span class="hazard hazard-skull"></span>
+                                                    <span class="hazard hazard-gas"></span>
+                                                    <span class="hazard hazard-environment"></span>
+                                                    <span class="hazard hazard-bomb"></span>
+                                                    <span class="hazard hazard-corrosion"></span>
+                                                }
+                                                else if (i % 4 == 1)
+                                                {
+                                                    <span class="hazard hazard-bomb"></span>
+                                                    <span class="hazard hazard-corrosion"></span>
+                                                }
+                                                else if (i % 4 == 2)
+                                                {
+                                                    <span class="hazard hazard-bomb"></span>
+                                                    <span class="hazard hazard-flame"></span>
+                                                    <span class="hazard hazard-corrosion"></span>
+                                                }
+                                                else if (i % 4 == 3)
+                                                {
+                                                    <span class="hazard hazard-skull"></span>
+                                                    <span class="hazard hazard-bomb"></span>
+                                                    <span class="hazard hazard-flame"></span>
+                                                    <span class="hazard hazard-corrosion"></span>
+                                                }
+                                            </span>
+                                        </td>
+                                        <td class="a">
+                                            @Html.DisplayFor(modelItem => item.con.Amount)
+                                            @EnumHelper.GetDisplayValue((Units)item.con.Unit)
+                                        </td>
+                                        <td class="a">
+                                            <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerId)">
+                                                <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
+                                            </button>
+                                            <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
+                                        </td>
+                                    </tr>
+                                    <tr class="moreInformation">
+                                        <td class="building">
+                                            @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
+                                            @Html.DisplayFor(modelItem => item.loc.RoomNumber)
+                                        </td>
+                                        <td class="dpt">
+                                            @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
+                                        </td>
+                                        <td class="b">
+                                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
+                                        </td>
+                                        <td class="b">
+                                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.ChemicalHazards">Safety Data Sheet</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <div class="noResults">No Results Found</div>
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="row pageSelectorCont">
+                <div class="col-12">
+                    @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
+                    {
+                        <a href=""> @i.ToString()  </a>
+                    }
+
+                    <a href=""> > </a>
+                    <a href=""> >> </a>
                 </div>
-                <div class="s">
-                    <input type="text" class="inputPlaceholder" placeholder="CAS Number" asp-for="searchCAS" />
-                </div>
-                <div class="s">
-                    <input type="email" class="inputPlaceholder" placeholder="PI email" asp-for="searchEmail"/>
-                </div>
-                <div class="s">
-                    <input type="text" class="inputPlaceholder" placeholder="Hazard" />
-                </div>
-                <div class="s">
-                    <select asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" class="rounded-dropdown inputPlaceholder">
-                        <option value="" selected disabled>Building</option>
-                    </select>
-                </div>
-                <div class="s">
-                    <input type="number" class="inputPlaceholder" placeholder="Room Number" />
-                </div>
-                <div class="s">
-                    <input type="number" asp-for="searchSize" class="inputPlaceholder" placeholder="Container Size" />
-                </div>
-                <div class="s">
-                    <select asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
-                        <option value="" selected disabled>Units</option>
-                    </select>
-                </div>
-                <input type="reset" value="Clear" class="filter" /> &nbsp;
-                <input type="submit" value="Filter" class="filter" />
-            </form>
+            </div>
         </div>
     </div>
-
-    <div id="quickReference">
-        <table>
-            <tr>
-                <td>Number of Containers</td>
-                <td>@Model.numContainers</td>
-            </tr>
-            <tr>
-                <td>Total Amount</td>
-                <td>@Model.chemicalAmount</td>
-            </tr>
-            <tr>
-                <td>Number of Buildings</td>
-                <td>@Model.uniqueBuildings</td>
-            </tr>
-        </table>
-    </div>
 </div>
 
-
-<div id="toggleFilterContainer">
-    <button class="openFilter" id="toggleFilter" onclick="toggleFilter()">
-        <
-    </button>
-</div>
-
-
-<div id="results" class="results">
-    <form method="post" id="deleteForm">
-        <table class="table">
-            <thead>
-            </thead>
-            <tbody>
-                @if (Model.DisplayContainers.Count() > 0)
-                {
-                    var count = Model.DisplayContainers.Count();
-                    var start = 0;
-                    var end = 25;
-                    var numOfPages = Model.DisplayContainers.Count() / 25;
-
-                    @if (!Model.textEntered())
-                    {
-                        /*<p class="noFilters">No Filters Applied</p>*/
-                    }
-
-
-                    if (count < end) { end = count; }
-
-                <tr>
-                    <td>
-                        Chemical Name
-                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="0">
-                            <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
-                                        (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
-                        </button>
-                        <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
-                        <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
-                        <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
-                    </td>
-                    <td>
-                        CAS Number
-                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="2">
-                            <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
-                                        (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
-                        </button>
-                    </td>
-                    <td>Hazard</td>
-                    <td>
-                        Size
-                        <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
-                            <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
-                        </button>
-                        <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden>
-                    </td>
-                </tr>
-                    @for (var i = start; i < end; i++)
-                    {
-                        var item = Model.DisplayContainers[i];
-                        <tr class="expandable">
-                            <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.ChemicalName)
-                            </td>
-                            <td class="a">
-                                @Html.DisplayFor(modelItem => item.chem.CasNumber)
-                            </td>
-                            <td class="a">
-                                @*TODO: actually implement conditional rendering based on data*@
-                                <span class="hazards">
-                                    @if (i % 4 == 0)
-                                    {
-                                        <span class="hazard hazard-exclamation"></span>
-                                        <span class="hazard hazard-skull"></span>
-                                        <span class="hazard hazard-gas"></span>
-                                        <span class="hazard hazard-environment"></span>
-                                        <span class="hazard hazard-bomb"></span>
-                                        <span class="hazard hazard-corrosion"></span>
-                                    }
-                                    else if (i % 4 == 1)
-                                    {
-                                        <span class="hazard hazard-bomb"></span>
-                                        <span class="hazard hazard-corrosion"></span>
-                                    }
-                                    else if (i % 4 == 2)
-                                    {
-                                        <span class="hazard hazard-bomb"></span>
-                                        <span class="hazard hazard-flame"></span>
-                                        <span class="hazard hazard-corrosion"></span>
-                                    }
-                                    else if (i % 4 == 3)
-                                    {
-                                        <span class="hazard hazard-skull"></span>
-                                        <span class="hazard hazard-bomb"></span>
-                                        <span class="hazard hazard-flame"></span>
-                                        <span class="hazard hazard-corrosion"></span>
-                                    }
-                                </span>
-                            </td>
-                            <td class="a">
-                                @Html.DisplayFor(modelItem => item.con.Amount)
-                                @EnumHelper.GetDisplayValue((Units)item.con.Unit)
-                            </td>
-                            <td class="a">
-                                <button type="button" class="blankImgButton" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerId)">
-                                    <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
-                                </button>
-                                <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerId" style="display: none">
-                            </td>
-                        </tr>
-                        <tr class="moreInformation">
-                            <td class="building">
-                                @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
-                                @Html.DisplayFor(modelItem => item.loc.RoomNumber)
-                            </td>
-                            <td class="dpt">
-                                @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
-                            </td>
-                            <td class="b">
-                                <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
-                            </td>
-                            <td class="b">
-                                <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.ChemicalHazards">Safety Data Sheet</a>
-                            </td>
-                        </tr>
-                    }
-                }
-                else
-                {
-                    <p>No results found</p>
-                }
-            </tbody>
-        </table>
-    </form>
-
+@*<div id="results" class="results">
+   
     <div class="pageSelectors">
-        <!--<a href=""> << </a>
-    <a href=""> < </a>-->
+        <a href=""> << </a>
+        <a href=""> < </a>
         @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
         {
             <a href=""> @i.ToString()  </a>
@@ -217,6 +251,7 @@
 
         <a href=""> > </a>
         <a href=""> >> </a>
+
         <div style="margin-left: auto">
             <div id="regularDiv">
                 <button type="button" class="searchPageBtns greenBtn" id="addChemicalBtn" data-toggle="modal" data-target="#add-modal" onclick="getAddModal()">
@@ -226,6 +261,7 @@
                     Remove
                 </button>
             </div>
+
             <div id="deleteDiv" style="display: none">
                 <!-- Button trigger for modal -->
                 <button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
@@ -235,9 +271,10 @@
                     Cancel
                 </button>
             </div>
+
         </div>
      </div>
-</div>
+</div>*@
 
             <!--New Create Modal HTML-->
 
@@ -436,11 +473,15 @@
         if (document.getElementById("search").style.display === "none") {
             // open filter
             document.getElementById("search").style.display = "block";
-            document.getElementById("toggleFilter").innerHTML = "<";
+
+            // hide mini filter bar
+            document.getElementById("hiddenFilter").style.display = "none";
         } else {
             // close filter
             document.getElementById("search").style.display = "none";
-            document.getElementById("toggleFilter").innerHTML = ">";
+
+            // show mini filter bar
+            document.getElementById("hiddenFilter").style.display = "flex";
         }
     }
 </script>
