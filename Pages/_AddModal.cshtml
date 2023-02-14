@@ -17,3 +17,11 @@
     <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
     <input type="submit" value="Add" class="modalBtns greenBtn" asp-page-handler="create" />
 </form>
+
+<script>
+    $(function () {
+            $("#addSupervisor").autocomplete({
+                source: '@Url.Page("index", "AutoComplete")'
+            });
+        });
+</script>
