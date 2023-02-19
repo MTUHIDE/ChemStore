@@ -23,7 +23,9 @@
         <a asp-authorize asp-roles="Admin" asp-page="/Admin/Locations/Index">Edit locations</a>
     </p>
     <p>
-        <a asp-page="PeopleInCharge/Index">Edit people in charge</a>
+        <!--<a asp-page="PeopleInCharge/Index">Edit people in charge</a>-->
+        <a asp-authorize asp-roles="Admin" asp-page="/Admin/Accounts/Index">Edit people in charge</a>
+
     </p>
     <p>
         <a asp-page="ChemInContainers/Index">Edit chemical-container relations</a>

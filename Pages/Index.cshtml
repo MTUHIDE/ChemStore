@@ -169,7 +169,6 @@
                                 @Html.DisplayFor(modelItem => item.loc.RoomNumber)
                             </td>
                             <td class="dpt">
-                                @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) <!--Displayed department for testing, you can remove if not needed-->
                             </td>
                             <td class="b">
                                 <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>

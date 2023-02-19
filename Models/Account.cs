@@ -75,6 +75,8 @@ namespace ChemStoreWebApp.Models
         [Key]
         public int AccountId { get; set; }
         public string Name { get; set; }
+        [RegularExpression(@"(.*?)(?i)@mtu\.edu", ErrorMessage = "Email must be from Michigan Tech")]
+        [Required(ErrorMessage = "Please Enter an Email")]
         public string Email { get; set; }
         public int? Role { get; set; }
         public bool Supervisor { get; set; }
