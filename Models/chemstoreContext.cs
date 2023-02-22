@@ -45,7 +45,7 @@ namespace ChemStoreWebApp.Models
 
             modelBuilder.Entity<Hazard>().HasData(
                    new Hazard { HazardId = "Corrosion", Description = "Corrosive" },
-                   new Hazard { HazardId = "Enviornmental", Description = "Enviornmental Hazard" },
+                   new Hazard { HazardId = "Environment", Description = "Enviornmental Hazard" },
                    new Hazard { HazardId = "ExclamationMark", Description = "Exclamation Mark" },
                    new Hazard { HazardId = "ExplodingBomb", Description = "Exploding Bomb" },
                    new Hazard { HazardId = "FlameOverCircle", Description = "Flame Over Circle" },

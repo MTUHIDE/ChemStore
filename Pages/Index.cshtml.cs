@@ -145,16 +145,16 @@ namespace ChemStoreWebApp.Pages
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
-            // stores data from database in arrays to limit amount of calls to database at once
+            //  EF.Functions.Like( is necesary to get this server side (can't use .contains()
             var containers = from con in _context.Container
                              join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
                              join acc in _context.Account on con.SupervisorId equals acc.AccountId
                              join loc in _context.Location on con.RoomId equals loc.RoomId
-                             where (string.IsNullOrEmpty(searchCAS)        || chem.CasNumber.Contains(searchCAS, checkCase)) &&
-                                   (string.IsNullOrEmpty(searchString)     || chem.ChemicalName.Contains(searchString, checkCase)) &&
+                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(chem.CasNumber, "%" + searchCAS + "%")) &&
+                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(chem.ChemicalName, "%" + searchString + "%")) &&
                                    (string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
                                    (string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) &&
-                                   (string.IsNullOrEmpty(searchEmail)      || acc.Email.Contains(searchEmail, checkCase)) &&
+                                   (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) &&
                                    (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
                                    (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment))
                              select new DisplayContainer(con, chem, loc, acc);

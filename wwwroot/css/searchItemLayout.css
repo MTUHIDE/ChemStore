@@ -1,4 +1,219 @@
 ﻿
+:root {
+    --husky-yellow: #fcce01;
+    --med-grey: #ececec;
+    --drk-grey: #262626;
+    --accnt-grey: #d0d0d0;
+    --shadow: 0 0 12px 0 rgb(0 0 0 / 10%);
+    --section-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 5%);
+    --section-border: 1px solid var(--med-grey);
+}
+
+.homeContainer {
+    /*width: 100vw;*/
+    height: 90vh;
+    overflow-y: hidden;
+}
+
+/*Results Topper*/
+.resultsTopper {
+    min-height: 8%;
+    box-shadow: var(--section-shadow);
+    border-bottom: var(--section-border);
+}
+
+.topperCol {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    justify-content: center;
+}
+
+@media screen and (min-width: 992px) {
+    .topperCol {
+        font-size: 1vw;
+        text-align: center;
+    }
+}
+/*End Results Topper*/
+
+.search-container {
+    /*background-color: purple;*/
+}
+
+/*Filter Bar*/
+.filterLeft {
+    background-color: var(--med-grey);
+    padding: 1vh 2vw;
+    height: 90vh;
+}
+
+.filterSection {
+    margin-bottom: 1vh;
+    padding-bottom: 2vh;
+    border-bottom: 2px solid var(--accnt-grey);
+}
+
+.filterHeader, .chemHeader {
+    padding: 0;
+}
+
+.filterHeader {
+    display: flex;
+}
+
+.filterHeaderLeft {
+    width: 95%;
+}
+
+.filterHeader h2, .chemHeader h2 {
+    font-size: 1.375vw;
+    margin-bottom: 2vh;
+    color: var(--drk-grey);
+}
+
+.filterInput {
+    width: 100%;
+    margin-bottom: 1.5vh;
+    padding: 0.4vw 0.7vw;
+    border: none;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.filterBtn, .contBtn {
+    /*margin-top: 2vh;*/
+    border: 2px solid var(--husky-yellow);
+    background-color: var(--husky-yellow);
+    color: var(--drk-grey);
+}
+
+.filterBtn, .contBtn, .filterBtnSecon, .contBtnSecon {
+    min-width: 100%;
+    padding: 0.5vw;
+    border-radius: 8px;
+    font-size: 0.85vw;
+    font-weight: 600;
+}
+
+.filterBtn:hover, .contBtn:hover {
+    background-color: var(--drk-grey);
+    border: 2px solid var(--drk-grey);
+    color: white;
+    transition: all 0.1s linear;
+}
+
+.filterBtnSecon, .contBtnSecon {
+    border: 2px solid var(--drk-grey);
+}
+
+.filterBtnSecon:hover, .contBtnSecon:hover {
+    background-color: var(--drk-grey);
+    color: white;
+    transition: all 0.1s linear;
+}
+
+.addRmvBtns, .filterBtnRow {
+    padding: 0;
+    margin-bottom: 2vh;
+}
+
+.toggleFilterBar {
+    background-color: var(--med-grey);
+    height: 100vh;
+    width: 4vw;
+    display: none;
+    justify-content: center;
+    align-items: baseline;
+    padding-top: 2vh;
+}
+
+.miniToggle {
+    color: var(--drk-grey);
+    font-size: 1.5vw;
+    border: none;
+}
+
+.miniToggle:hover {
+    background-color: var(--med-grey);
+}
+
+.hideFilter {
+    border: none;
+    background: none;
+    font-size: 1vw;
+}
+
+.hideFilter:hover {
+    background-color: var(--med-grey);
+}
+
+@media screen and (max-width: 992px) {
+    .filterLeft {
+        padding: 1vh 3.25vw;
+    }
+
+    .filterBtn, .contBtn, .filterBtnSecon, .contBtnSecon {
+        padding: 1vw 1.5vw;
+        font-size: 1.55vw;
+    }
+
+    .filterHeader h2, .chemHeader h2 {
+        font-size: 2vw;
+    }
+
+    .hideFilter {
+        font-size: 1.5vw;
+    }
+
+    .toggleFilterBar{
+        width: 7vw;
+    }
+
+    .miniToggle {
+        font-size: 2.5vw;
+    }
+}
+/*End Filter Bar*/
+
+/*Results Section*/
+.resultsContainer {
+    /*background-color: blue;*/
+}
+
+.results {
+    display: flex;
+    justify-content: center;
+    border-bottom: var(--section-border);
+    height: 86%;
+}
+
+.noResults {
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    font-size: 1.75vw;
+    font-weight: 600;
+    color: var(--accnt-grey);
+    text-decoration: underline var(--accnt-grey);
+    text-underline-offset: 8px;
+}
+
+@media screen and (max-width: 992px) {
+    .noResults {
+        font-size: 2.5vw;
+    }
+}
+/*End Results Section*/
+
+.pageSelectorCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 6%;
+}
+
 h1 {
     text-align: center;
     width: 100%;
@@ -28,10 +243,11 @@ h1 {
     font-size: 24px;
     color: gray;
 }
-    .closeFilter:hover{
-        background-color: transparent;
-        color: black;
-    }
+
+.closeFilter:hover{
+    background-color: transparent;
+    color: black;
+}
 
 .container{
     margin: 0px;
@@ -40,28 +256,6 @@ h1 {
     padding-right: 0px;
 }
 
-.search {
-    /*left: 0;
-    width: 20%;
-    float: left;
-    */
-    text-align: center;
-    background-color: #ececec;
-    border-radius: 20px;
-    padding: 10px
-}
-
-.leftBar {
-    left: 0;
-    width: 20%;
-    float: left;
-    display: block;
-}
-
-.results{
-    width: 80%;
-    float: right;
-}
 .default {
     text-align: center;
     display: inline;
@@ -69,28 +263,8 @@ h1 {
     margin: auto;
 }
 
-.filter {
-    background-color: #ffd500;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    border: solid 1px black;
-    width: 25%;
-    
-}
-    .filter:hover {
-        background-color: #fc0;
-    }
-
-button {
-    background-color: #e1e1e1;
-    cursor: pointer;
-    padding: 5px;
-    width: 30%;
-    text-align: center;
-    outline: none;
-    border: none;
-    border-radius: 10px;
-    margin-top: 10px;
+.filter:hover {
+    background-color: #fc0;
 }
 
     button:hover {
@@ -103,16 +277,14 @@ button {
     margin: 5px;
 }
 
-input{
-    border-radius: 20px;
-    border-width: 1px;
-    padding: 3px;
-    outline-style: none;
-}
-
 .inputPlaceholder {
     text-indent: 10px;
     width: 100%;
+    
+}
+
+.inputPlaceholder input {
+    border-radius: 5px !important;
 }
 
 .location-dropdown {
@@ -176,9 +348,9 @@ tr {
     margin-top: 5px;
 }
 
-    .expandable:hover {
-        background-color: #cccccc;
-    }
+.expandable:hover {
+    background-color: #cccccc;
+}
 
 .moreInformation {
     display: none;
@@ -256,20 +428,6 @@ td {
 
 .tableSort:hover {
     opacity: 1.0;
-}
-
-.searchPageBtns {
-    font-family: Arial;
-    font-size: 15px;
-    line-height: 0px;
-    width: 80px;
-    height: 25px;
-    margin-left: 10px;
-    margin-top: 0px;
-    color: #000000;
-    border: 1px solid #000000;
-    border-radius: 24px;
-    float: right;
 }
 
 .searchPageBtns:disabled,
@@ -354,11 +512,4 @@ td {
 .modal-content {
     border-radius: 24px;
     background-color: #e1e1e1;
-}
-
-.rounded-dropdown {
-    border-radius: 20px;
-    border-width: 1px;
-    padding: 3px;
-    outline-style: none;
 }

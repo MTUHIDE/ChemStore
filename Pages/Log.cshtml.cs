@@ -37,6 +37,10 @@ namespace ChemStoreWebApp.Pages
         [BindProperty(SupportsGet = true)]
         public int sortMethod { get; set; } = 0;
         [BindProperty(SupportsGet = true)]
+        public DateTime? startTime { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public DateTime? endTime { get; set; }
+        [BindProperty(SupportsGet = true)]
         public int prevSort { get; set; } = -1;
 
         public Boolean textEntered()
@@ -45,26 +49,33 @@ namespace ChemStoreWebApp.Pages
                 string.IsNullOrEmpty(searchDetails) &&
                 string.IsNullOrEmpty(containerID) &&
                 string.IsNullOrEmpty(searchAction) &&
-                string.IsNullOrEmpty(searchRole));
+                string.IsNullOrEmpty(searchRole) &&
+                dateNullOrEmpty(startTime) &&
+                dateNullOrEmpty(endTime));
         }
 
-        public Boolean isValidSearchItem(Log entry, bool ignoreCase)
+        public Boolean dateNullOrEmpty(DateTime? date)
+        {
+            return date?.Equals(DateTime.MinValue) ?? true;
+        }
+
+        public IQueryable<Log> validSearchItems(IQueryable<Log> log, bool ignoreCase)
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
-            if (!string.IsNullOrEmpty(searchAction) && !entry.Action.ToString().Equals(searchAction))
-                return false;
-            //Some variables in the entry can be null. Uses the null conditional operator to break when null
-            if (!string.IsNullOrEmpty(searchRole) && (!entry.User?.Role.ToString().Equals(searchRole) ?? true))
-                return false;
-            if(!string.IsNullOrEmpty(searchUser) && (!entry.User?.Email.Contains(searchUser, checkCase) ?? true))
-                return false;
-            if (!string.IsNullOrEmpty(searchDetails) && (!entry.Description?.Contains(searchDetails, checkCase) ?? true))
-                return false;
-            if (!string.IsNullOrEmpty(containerID) && (!entry.ContainerID?.ToString().Contains(containerID) ?? true))
-                return false;
+            // I have to use ternary here because null-propogating ops (i.e. entry.User?. etc.) are not supported for this type of call
+            // indexOf is also a hack because contains was causing issues
+            var logs = from entry in log
+                       where (string.IsNullOrEmpty(searchAction)  || entry.Action.ToString().Equals(searchAction)) &&
+                             (string.IsNullOrEmpty(searchRole)    || (entry.User == null ? true : entry.User.Role.ToString().Equals(searchRole))) &&
+                             (string.IsNullOrEmpty(searchUser)    || (entry.User == null ? true : EF.Functions.Like(entry.User.Email, "%" + searchUser + "%"))) &&
+                             (string.IsNullOrEmpty(searchDetails) || (entry.Description == null ? true : EF.Functions.Like(entry.Description, "%" + searchDetails + "%"))) &&
+                             (string.IsNullOrEmpty(containerID)   || (entry.ContainerID == null ? true : EF.Functions.Like(entry.ContainerID.ToString(), "%" + containerID + "%"))) &&
+                             (dateNullOrEmpty(startTime) || entry.DateTime >= startTime) &&
+                             (dateNullOrEmpty(endTime) || entry.DateTime <= endTime)
+                       select entry;
 
-            return true;
+            return logs;
         }
 
         /// <summary>
@@ -73,27 +84,23 @@ namespace ChemStoreWebApp.Pages
         /// <returns></returns>
         public async Task OnGetAsync()
         {
-            var log = _context.Log.ToList();
-            var accounts = _context.Account.ToList();
+            var log = _context.Log.AsQueryable();
 
-            //Updates the User variable for the Log entry objects
-            foreach (var e in log)
+            await log.ForEachAsync((item) =>
             {
-                e.User = (from a in accounts
-                          where a.AccountId == e.UserID
-                          select a).FirstOrDefault();
-            }
+                item.User = (from a in _context.Account
+                             where a.AccountId == item.UserID
+                             select a).FirstOrDefault();
+            });
 
             //Filter the results if text has been entered in one of the parameters
-            if(textEntered() == true)
+            if(textEntered())
             {
-                LogEntries = await Task.FromResult(
-                log.Where(c => isValidSearchItem(c, true))
-                .ToList());
+                LogEntries = await validSearchItems(log, true).ToListAsync(); 
             }
             else
             {
-                LogEntries = log;
+                LogEntries = await log.ToListAsync();
             }
 
             if (prevSort == sortMethod)
