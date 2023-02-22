@@ -216,6 +216,12 @@ body {
 
 /*--------------------END HAZARD SYMBOL CLASSES --------------------*/
 
+ul.ui-autocomplete{
+    position: absolute;
+    cursor: pointer;
+    z-index: 1100;
+}
+
 .form-inline > .form-group-vertical {
     padding: 10px;
 }

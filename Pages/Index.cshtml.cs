@@ -333,5 +333,10 @@ namespace ChemStoreWebApp.Pages
         {
             return Partial("_AddModal", new ContainerViewModel());
         }
+        public IActionResult OnGetAutoComplete(string term)
+        {
+            var names = _context.Account.Where(a => a.Name.Contains(term)).Select(a => a.Name).Take(3).ToList();
+            return new JsonResult(names);
+        }
     }
 }
