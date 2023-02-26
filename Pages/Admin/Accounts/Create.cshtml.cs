@@ -35,7 +35,7 @@ namespace ChemStoreWebApp.Pages.Admin.Account
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && Account.Department != null && Account.Role != null)
             {
                 _context.Account.Add(Account);
                 await _context.SaveChangesAsync();
