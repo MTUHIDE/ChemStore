@@ -1,0 +1,72 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.Account.CreateModel
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+</head>
+<body>
+
+<h2>Create User</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Account.Name" class="control-label"></label>
+                <input asp-for="Account.Name" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
+                <span asp-validation-for="Account.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Account.Email" class="control-label"></label>
+                <input asp-for="Account.Email" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
+                <span asp-validation-for="Account.Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Account.Role" class="control-label"></label>
+                <br />
+                <select asp-for="Account.Role" asp-items="Html.GetEnumSelectList<Roles>()" id="selectRole" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
+                </select>
+                <span asp-validation-for="Account.Role" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Account.Supervisor" class="control-label"></label>
+                <input asp-for="Account.Supervisor" class="form-control" /> <!--style="width:150px; border-radius:5px; height:25px;" />-->
+                <span asp-validation-for="Account.Supervisor" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Account.Department" class="control-label"></label>
+                <br />
+                <select asp-for="Account.Department" asp-items="Html.GetEnumSelectList<Departments>()" id="selectDepartment" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
+                </select>
+                <span asp-validation-for="Account.Department" class="text-danger"></span>
+            </div>
+
+            <div>
+                <button type="submit" class="btn table-button" style="background-color:gold;">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>
