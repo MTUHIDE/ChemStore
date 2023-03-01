@@ -11,56 +11,64 @@
     <link rel="stylesheet" href="\css\searchItemLayout.css" asp-append-version="true" />
     <link rel="stylesheet" href="\css\logItemLayout.css" asp-append-version="true" />
 </head>
-
-<h1>Search</h1>
-<div id="search">
-    <div class="search">
-        <button class="closeFilter" onclick="closeFilter()">
-            X
-        </button>
-        <form id="filterForm">
-            <input type="submit" value="Filter" class="filter" />
-            <div class="s">
-                User: <input type="text" asp-for="searchUser" />
+<div class="container-fluid homeContainer">
+    <div class="row searchContainer">
+        <div class="col-sm-4 col-lg-3 filterLeft" id="search">
+            <div class="row logFilterSection">
+                <div class="col-12 filterHeader">
+                    <div class="filterHeaderLeft">
+                        <h2>Filter Results</h2>
+                    </div>
+                    <div>
+                        <button class="hideFilter" title="Hide Filter" onclick="toggleFilter()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+                   
+                <div class="col-12 search">
+                    <form id="filterForm">
+                        <div class="row filterRow">
+                            <input type="text" placeholder="User" class="filterInput" asp-for="searchUser" />
+                        </div>
+                        <div class="row filterRow">
+                            <input type="text" placeholder="Search Details" class="filterInput" asp-for="searchDetails" />
+                        </div>
+                        <div class="row filterRow">
+                           <input type="text" placeholder="Container ID" class="filterInput" asp-for="containerID" />
+                        </div>
+                        <div class="row filterRow">
+                            <select asp-for="searchAction" class="filterInput" asp-items="Html.GetEnumSelectList<Actions>()" id="selectAction">
+                                <option value="">Action</option>
+                            </select>
+                        </div>
+                        <div class="row filterRow">
+                            <select asp-for="searchRole" class="filterInput" asp-items="Html.GetEnumSelectList<Roles>()" id="selectRole">
+                                <option value="">Role</option>
+                            </select>
+                        </div>
+                        <div class="row filterRow">
+                            <div class="col-12 filterBtnRow">
+                                <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
+                                <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+                
             </div>
-            <div class="s">
-                Search Details: <input type="text" asp-for="searchDetails" />
-            </div>
-            <div class="s">
-                Container ID: <input type="text" asp-for="containerID" />
-            </div>
-            <div class="s">
-                <label for="startTime">Start Time: </label>
-                <input type="datetime-local" asp-for="startTime" min="2022-01-01T00:00" max="2025-01-01T00:00"/>
-            </div>
-            <div class="s">
-                <label for="endTime">End Time: </label>
-                <input type="datetime-local" asp-for="endTime" min="2022-01-01T00:00" max="2025-01-01T00:00"/>
-            </div>
-            <div class="s">
-                <label for="selectAction">Action: </label>
-                <select asp-for="searchAction" asp-items="Html.GetEnumSelectList<Actions>()" id="selectAction">
-                    <option value="">Pick one</option>
-                </select>
-            </div>
-            <div class="s">
-                <label for="selectRole">Role: </label>
-                <select asp-for="searchRole" asp-items="Html.GetEnumSelectList<Roles>()" id="selectRole">
-                    <option value="">Pick one</option>
-                </select>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div id="openFilterContainer">
-    <button class="openFilter" id="openFilter" onclick="openFilter()">
-        >
-    </button>
-</div>
-
-<div id="results" class="results">
-    <table class="table">
+        </div>
+        
+        <div class="toggleFilterBar" id="hiddenFilter">
+            <button class="miniToggle" title="Show Filter" onclick="toggleFilter()">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+        
+        <div class="col resultsContainer">
+            <div class="row logResults" id="results">
+                <table class="table">
         <thead>
         </thead>
         <tbody>
@@ -147,14 +155,17 @@
             }
             else
             {
-                <p>No results found</p>
+                        <div class="noResults">No Results Found</div>
             }
         </tbody>
     </table>
+            </div>
 
-    <div class="pageSelectors">
-        <a href=""> > </a>
-        <a href=""> >> </a>
+            <div class="row pageSelectorCont">
+                <a href=""> > </a>
+                <a href=""> >> </a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -167,6 +178,22 @@
     function openFilter() {
         document.getElementById("search").style.display = "block";
         document.getElementById("openFilter").style.display = "none";
+    }
+
+    function toggleFilter() {
+        if (document.getElementById("search").style.display === "none") {
+            // open filter
+            document.getElementById("search").style.display = "block";
+
+            // hide mini filter bar
+            document.getElementById("hiddenFilter").style.display = "none";
+        } else {
+            // close filter
+            document.getElementById("search").style.display = "none";
+
+            // show mini filter bar
+            document.getElementById("hiddenFilter").style.display = "flex";
+        }
     }
 
 </script>

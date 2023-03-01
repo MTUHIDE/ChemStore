@@ -2,3 +2,15 @@
     background-color: #e1e1e1;
     margin-top: 5px;
 }
+
+.logResults {
+    display: flex;
+    justify-content: center;
+    border-bottom: var(--section-border);
+    height: 94%;
+}
+
+.logFilterSection {
+    margin-bottom: 1vh;
+    padding-bottom: 2vh;
+}
