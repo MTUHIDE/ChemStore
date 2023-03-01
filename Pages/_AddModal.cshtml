@@ -3,7 +3,7 @@
 <form method="post" id="form1" class="modalForm">
     <input type="text" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
     <input type="text" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
-    <input type="text" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
+    <input type="text" id="addSupervisor" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
     <input type="text" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
     <select asp-for="BuildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
         <option value="" disabled selected hidden>Building</option>
@@ -17,3 +17,11 @@
     <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
     <input type="submit" value="Add" class="modalBtns greenBtn" asp-page-handler="create" />
 </form>
+
+<script>
+    $(function () {
+            $("#addSupervisor").autocomplete({
+                source: '@Url.Page("index", "AutoComplete")'
+            });
+        });
+</script>
