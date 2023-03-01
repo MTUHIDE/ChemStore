@@ -28,11 +28,11 @@ a.navbar-brand {
 }
 
 input {
-    border-radius: 20px;
+    /*border-radius: 20px;
     border-width: 1px;
     padding: 5px;
     padding-left: 10px;
-    outline-style: none;
+    outline-style: none;*/
 }
 
 .searchMain {
@@ -167,6 +167,13 @@ body {
     background-size: cover;
 }
 
+.hazard-edit {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    background-size: cover;
+}
+
 .hazard-corrosion {
     background-image:url(../assets/hazards/corrosion-pictogram.jpg);
 }
@@ -203,5 +210,18 @@ body {
     background-image:url(../assets/hazards/skull-pictogram.jpg);
 }
 
+.hazard-check {
+    width: 100% !important;
+}
 
 /*--------------------END HAZARD SYMBOL CLASSES --------------------*/
+
+ul.ui-autocomplete{
+    position: absolute;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.form-inline > .form-group-vertical {
+    padding: 10px;
+}

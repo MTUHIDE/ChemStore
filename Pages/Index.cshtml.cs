@@ -79,6 +79,12 @@ namespace ChemStoreWebApp.Pages
         public bool revNums { get; set; } = false;
         [BindProperty(SupportsGet = true)]
         public bool revNumsPrev { get; set; } = false;
+        [BindProperty(SupportsGet = true)]
+        public int numContainers { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int uniqueBuildings { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int chemicalAmount { get; set; }
 
 
         /// <summary>
@@ -122,6 +128,14 @@ namespace ChemStoreWebApp.Pages
             return con.ContainerId;
         }
 
+        private void updateQuickReference()
+        {
+
+            chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
+            uniqueBuildings = DisplayContainers.Select(con => con.loc.BuildingName).Distinct().Count();
+            numContainers = DisplayContainers.Count();
+        }
+
         /// <summary>
         /// Gets a queryable of valid display containers
         /// </summary>
@@ -131,16 +145,16 @@ namespace ChemStoreWebApp.Pages
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
-            // stores data from database in arrays to limit amount of calls to database at once
+            //  EF.Functions.Like( is necesary to get this server side (can't use .contains()
             var containers = from con in _context.Container
                              join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
                              join acc in _context.Account on con.SupervisorId equals acc.AccountId
                              join loc in _context.Location on con.RoomId equals loc.RoomId
-                             where (string.IsNullOrEmpty(searchCAS)        || chem.CasNumber.Contains(searchCAS, checkCase)) &&
-                                   (string.IsNullOrEmpty(searchString)     || chem.ChemicalName.Contains(searchString, checkCase)) &&
+                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(chem.CasNumber, "%" + searchCAS + "%")) &&
+                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(chem.ChemicalName, "%" + searchString + "%")) &&
                                    (string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
                                    (string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) &&
-                                   (string.IsNullOrEmpty(searchEmail)      || acc.Email.Contains(searchEmail, checkCase)) &&
+                                   (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) &&
                                    (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
                                    (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment))
                              select new DisplayContainer(con, chem, loc, acc);
@@ -257,6 +271,8 @@ namespace ChemStoreWebApp.Pages
         {
             DisplayContainers = await validSearchItems(false).ToListAsync();
 
+            updateQuickReference();
+
             //if the revNums button was pressed
             if (revNums)
             {
@@ -316,6 +332,11 @@ namespace ChemStoreWebApp.Pages
         public PartialViewResult OnGetAddModal()
         {
             return Partial("_AddModal", new ContainerViewModel());
+        }
+        public IActionResult OnGetAutoComplete(string term)
+        {
+            var names = _context.Account.Where(a => a.Name.Contains(term)).Select(a => a.Name).Take(3).ToList();
+            return new JsonResult(names);
         }
     }
 }

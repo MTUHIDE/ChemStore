@@ -155,7 +155,7 @@ namespace ChemStoreWebApp.Migrations
                         },
                         new
                         {
-                            HazardId = "Enviornmental",
+                            HazardId = "Environment",
                             Description = "Enviornmental Hazard"
                         },
                         new

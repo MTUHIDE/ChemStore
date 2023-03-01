@@ -11,9 +11,9 @@
 <h4>Chemical</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-md-4">  
             <input type="hidden" asp-for="Chemical.CasNumber" />
             <div class="form-group">
                 <label asp-for="Chemical.ChemicalName" class="control-label"></label>
@@ -30,9 +30,48 @@
                 <input asp-for="Chemical.CatalogNumber" class="form-control" />
                 <span asp-validation-for="Chemical.CatalogNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        <div class="form-inline">
+            <div class="form-group-vertical">
+                <label asp-for="Corrosion" class="control-label"><span class="hazard-edit hazard-corrosion"></span></label>
+                <input asp-for="Corrosion" class="hazard-check form-control" />
             </div>
+            <div class="form-group-vertical">
+                <label asp-for="Environment" class="control-label"><span class="hazard-edit hazard-environment"></span></label>
+                <input asp-for="Environment" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="ExclamationMark" class="control-label"><span class="hazard-edit hazard-exclamation"></span></label>
+                <input asp-for="ExclamationMark" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="ExplodingBomb" class="control-label"><span class="hazard-edit hazard-bomb"></span></label>
+                <input asp-for="ExplodingBomb" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="FlameOverCircle" class="control-label"><span class="hazard-edit hazard-flame-circle"></span></label>
+                <input asp-for="FlameOverCircle" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="Flame" class="control-label"><span class="hazard-edit hazard-flame"></span></label>
+                <input asp-for="Flame" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="GasCylinder" class="control-label"><span class="hazard-edit hazard-gas"></span></label>
+                <input asp-for="GasCylinder" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="HealthHazard" class="control-label"><span class="hazard-edit hazard-health"></span></label>
+                <input asp-for="HealthHazard" class="hazard-check form-control" />
+            </div>
+            <div class="form-group-vertical">
+                <label asp-for="Skull" class="control-label"><span class="hazard-edit hazard-skull"></span></label>
+                <input asp-for="Skull" class="hazard-check form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
         </form>
     </div>
 </div>
