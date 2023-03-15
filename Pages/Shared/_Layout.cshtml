@@ -15,11 +15,11 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow justify-content-center">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow justify-content-between">
             <div class="container">
                 
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
-                    <img title="" alt="MTULogo" src="~/assets/FullName_Horizontal_TwoColor.png" height="60" />
+                    <img title="" alt="MTULogo" src="~/assets/FullName_Horizontal_TwoColor.png" style="height:5vh;" />
                     ChemStore
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,31 +28,25 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <div class="navbar-nav flex-grow-1">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Log">Log</a>
-                        <a class="nav-link text-dark" asp-area="" asp-page="/ContactUs">Contact</a>
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Log">Log</a>
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-page="/ContactUs">Contact</a>
+                        <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
                     </div>
                 </div>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse user-nav-bar">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            @{
-                                //This is just some logic to get the role for below, since there isn't an easy way to get the highest Role
-                                string role = "Member";
-                                for (int i = 2; i >= 0; i--)
-                                {
-                                    if (User.IsInRole(((Roles)i).ToString()))
-                                        role = ((Roles)i).ToString();
-                                }
-                            }
-                            <p>@User.Identity.Name - @role</p>
-                        </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/LoginPage">Login</a>
-                        </li>*@
-                    </ul>
-                </div>
+                @{
+                    //This is just some logic to get the role for below, since there isn't an easy way to get the highest Role
+                    string role = "Member";
+                    for (int i = 2; i >= 0; i--)
+                    {
+                        if (User.IsInRole(((Roles)i).ToString()))
+                            role = ((Roles)i).ToString();
+                    }
+                }
+                <span class="navbar-text">@User.Identity.Name - @role</span>
+                @*<li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/LoginPage">Login</a>
+                </li>*@
             </div>
         </nav>
     </header>
