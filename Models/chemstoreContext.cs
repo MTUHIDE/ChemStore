@@ -61,7 +61,7 @@ namespace ChemStoreWebApp.Models
         {
             var changeList = from e in ChangeTracker.Entries()
                              where e.State != EntityState.Detached && e.State != EntityState.Unchanged
-                             && (e.Entity is Container || e.Entity is Account)
+                             && (e.Entity is Container || e.Entity is Account || e.Entity is Chemical)
                              select e;
 
             List<Log> logList = new List<Log>();
@@ -81,7 +81,8 @@ namespace ChemStoreWebApp.Models
                 //Container changes
                 if (entity.Entity is Container container)
                 {
-                    newLog.ContainerID = container.ContainerId;
+                    newLog.table = "container";
+                    newLog.key = container.ContainerId.ToString();
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
@@ -103,7 +104,8 @@ namespace ChemStoreWebApp.Models
                                     logList.Add(new Log
                                     {
                                         DateTime = DateTime.Now,
-                                        ContainerID = container.ContainerId,
+                                        key = container.ContainerId.ToString(),
+                                        table = "container",
                                         Action = ((int)Actions.ContainerEdited)
                                     });
                                 }
@@ -115,9 +117,31 @@ namespace ChemStoreWebApp.Models
                             break;
                     }
                 }
-                else
-                //Account changes
+                else if (entity.Entity is Chemical chemical)
                 {
+                    //newLog.ChemicalCAS = chemical.CasNumber;
+                    newLog.key = chemical.CasNumber; // TODO: REMOVE
+                    newLog.key = "chemical";
+                    switch (entity.State)
+                    {
+                        case EntityState.Deleted:
+                            newLog.Action = ((int)Actions.ChemicalRemoved);
+                            break;
+
+                        case EntityState.Added:
+                            newLog.Action = ((int)Actions.ChemicalAdded);
+                            break;
+
+                        case EntityState.Modified:
+                            newLog.Action = ((int)Actions.ChemicalEdited);
+                            break;
+                    }
+                }
+                else if (entity.Entity is Account account)
+                //Account changes. This will need to be modified if we modify the logic
+                {
+                    newLog.key = account.AccountId.ToString();
+                    newLog.table = "account";
                     //if they are added and they aren't just a member, or their new role is less their old role, they have been promoted
                     if ((entity.State == EntityState.Added && ((int)entity.CurrentValues["Role"]) != ((int)Roles.Member)) ||
                         (entity.State == EntityState.Modified && (((int)entity.CurrentValues["Role"]) < ((int)entity.OriginalValues["Role"]))))

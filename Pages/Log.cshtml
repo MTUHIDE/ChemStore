@@ -111,11 +111,20 @@
                         </button>
                     </td>
                     <td>
-                        Container ID
+                        Table
                         <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="8">
                             <img src="@((Model.prevSort == 8) ? "assets/upTableSort.png" :
                                         (Model.prevSort == 9) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                         </button>
+                                </td>
+                                <td>
+                        Key
+                        <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="10">
+                            <img src="@((Model.prevSort == 10) ? "assets/upTableSort.png" :
+                                        (Model.prevSort == 11) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                        </button>
+                                </td>
+                                <td>
 <td>
                         Details
                         <button type="submit" class="blankImgButton" form="filterForm" name="sortMethod" class="btn tableButton" value="6">
@@ -138,14 +147,10 @@
                             @EnumHelper.GetDisplayValue((Actions)item.Action)
                         </td>
                         <td class="a">
-                            @if (item.ContainerID == null)
-                            {
-                                @:N/A
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.ContainerID)
-                            }
+                            @Html.DisplayFor(modelItem => item.table)
+                        </td>
+                        <td class="a">
+                            @Html.DisplayFor(modelItem => item.key)
                         </td>
                         <td class="a">
                             @Html.DisplayFor(modelItem => item.Description)
