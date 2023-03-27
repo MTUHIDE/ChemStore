@@ -46,6 +46,7 @@
     background-color: var(--med-grey);
     padding: 1vh 2vw;
     height: 90vh;
+    transition: flex 0.2s ease-in-out;
 }
 
 .filterSection {
@@ -130,8 +131,10 @@
 
 .miniToggle {
     color: var(--drk-grey);
+    background-color: var(--med-grey);
     font-size: 1.5vw;
     border: none;
+    display: none;
 }
 
 .miniToggle:hover {
@@ -164,10 +167,6 @@
 
     .hideFilter {
         font-size: 1.5vw;
-    }
-
-    .toggleFilterBar{
-        width: 7vw;
     }
 
     .miniToggle {

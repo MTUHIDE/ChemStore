@@ -19,7 +19,10 @@
 <div class="container-fluid homeContainer">
     <div class="row searchContainer">
         <div class="col-sm-4 col-lg-3 filterLeft" id="search">
-            <div class="row filterSection">
+            <button class ="miniToggle" title="Show Filter" onclick="toggleFilter()">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+            <div class="row filterSection filterInputs">
                 <div class="col-12 filterHeader">
                     <div class="filterHeaderLeft">
                         <h2>Filter Results</h2>
@@ -69,7 +72,7 @@
                 </div>
             </div>
 
-            <div class="row mngChemSection">
+            <div class="row mngChemSection filterInputs">
                 <div class="col-12 chemHeader"><h2>Add/Remove Chemicals</h2></div>
                 <div class="col-12 addRmvBtns">
                     <button type="button" class="searchPageBtns contBtnSecon" style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )" id="initiateDelBtn" onclick="deleteModeOn()" disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)">
@@ -82,12 +85,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-
-        <div class="toggleFilterBar" id="hiddenFilter">
-            <button class ="miniToggle" title="Show Filter" onclick="toggleFilter()">
-                <i class="fa-solid fa-sliders"></i>
-            </button>
         </div>
         
         <div class="col resultsContainer">
@@ -469,19 +466,32 @@
         document.getElementById("closeFilter").style.display = "block";
     }
 
-    function toggleFilter() {
-        if (document.getElementById("search").style.display === "none") {
-            // open filter
-            document.getElementById("search").style.display = "block";
+    let filterOpen = true;
 
-            // hide mini filter bar
-            document.getElementById("hiddenFilter").style.display = "none";
+    function toggleFilter() {
+        if (!filterOpen) {
+            // open filter
+            $('.miniToggle').css('display', 'none');
+            $('#search.col-sm-4.col-lg-3.filterLeft').attr('style', 'flex: 0 0 25%');
+
+            // show inputs with delay for smoother animation
+            setTimeout(function(){
+                $('.filterInputs').css('display', 'block');
+            }, 100)
+
+            filterOpen = true;
         } else {
             // close filter
-            document.getElementById("search").style.display = "none";
+
+            // hide inputs
+            $('.filterInputs').css('display', 'none');
+                        
+            $('#search.col-sm-4.col-lg-3.filterLeft').attr('style', 'flex: 0 0 3.5vw');
+            $('#search.col-sm-4.col-lg-3.filterLeft').css('padding', '1vw');
 
             // show mini filter bar
-            document.getElementById("hiddenFilter").style.display = "flex";
+            $('.miniToggle').css('display', 'block');
+            filterOpen = false;
         }
     }
 </script>

@@ -14,13 +14,16 @@
 <div class="container-fluid homeContainer">
     <div class="row searchContainer">
         <div class="col-sm-4 col-lg-3 filterLeft" id="search">
-            <div class="row logFilterSection">
+            <button class="miniToggle" title="Show Filter" onclick="toggleFilter()">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+            <div class="row logFilterSection filterInputs">
                 <div class="col-12 filterHeader">
                     <div class="filterHeaderLeft">
                         <h2>Filter Results</h2>
                     </div>
                     <div>
-                        <button class="hideFilter" title="Hide Filter" onclick="toggleFilter()">
+                        <button class="hideFilter filterInputs" title="Hide Filter" onclick="toggleFilter()">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
@@ -58,12 +61,6 @@
                 </div>
                 
             </div>
-        </div>
-        
-        <div class="toggleFilterBar" id="hiddenFilter">
-            <button class="miniToggle" title="Show Filter" onclick="toggleFilter()">
-                <i class="fa-solid fa-sliders"></i>
-            </button>
         </div>
         
         <div class="col resultsContainer">
@@ -170,29 +167,35 @@
 </div>
 
 <script>
-    // Opens and closes the filter sections
-    function closeFilter() {
-        document.getElementById("search").style.display = "none";
-        document.getElementById("openFilter").style.display = "block";
-    }
-    function openFilter() {
-        document.getElementById("search").style.display = "block";
-        document.getElementById("openFilter").style.display = "none";
-    }
+    let filterOpen = true;
 
     function toggleFilter() {
-        if (document.getElementById("search").style.display === "none") {
+        if (!filterOpen) {
             // open filter
-            document.getElementById("search").style.display = "block";
+            $('.miniToggle').css('display', 'none');
+            $('#search.col-sm-4.col-lg-3.filterLeft').attr('style', 'flex: 0 0 25%');
 
-            // hide mini filter bar
-            document.getElementById("hiddenFilter").style.display = "none";
+            // show inputs with delay for smoother animation
+            setTimeout(function () {
+                $('.filterInputs').css('display', 'block');
+            }, 100)
+
+            filterOpen = true;
+            console.log(filterOpen);
+
         } else {
             // close filter
-            document.getElementById("search").style.display = "none";
+
+            // hide inputs
+            $('.filterInputs').css('display', 'none');
+
+            $('#search.col-sm-4.col-lg-3.filterLeft').attr('style', 'flex: 0 0 3.5vw');
+            $('#search.col-sm-4.col-lg-3.filterLeft').css('padding', '1vw');
 
             // show mini filter bar
-            document.getElementById("hiddenFilter").style.display = "flex";
+            $('.miniToggle').css('display', 'block');
+            filterOpen = false;
+            console.log(filterOpen);
         }
     }
 
