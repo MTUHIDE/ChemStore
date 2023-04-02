@@ -21,7 +21,15 @@ public enum Actions
     [Display(Name = "Container Requested")]
     ContainerRequested,
     [Display(Name = "Request Accepted")]
-    RequestAccepted
+    RequestAccepted,
+    [Display(Name = "Chemical Added")]
+    ChemicalAdded,
+    [Display(Name = "Chemical Removed")]
+    ChemicalRemoved,
+    [Display(Name = "Chemical Transferred")]
+    ChemicalTransferred,
+    [Display(Name = "Chemical Edited")]
+    ChemicalEdited
 }
 
 namespace ChemStoreWebApp.Models
@@ -38,6 +46,10 @@ namespace ChemStoreWebApp.Models
         public DateTime DateTime { get; set; }
         public int? Action { get; set; }
         public int? UserID { get; set; }
+
+        public string table { get; set; }
+
+        public string key { get; set; }
         //This is very intentionally not a foreign key, since that would cause FK conflicts on delete
         public long? ContainerID { get; set; }
         public string Description { get; set; }
