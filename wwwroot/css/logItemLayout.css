@@ -1,16 +1,63 @@
-﻿.cell {
-    background-color: #e1e1e1;
-    margin-top: 5px;
+﻿.logFilterSection {
+    margin-bottom: 1vh;
+    padding-bottom: 2vh;
+}
+
+.orderRow {
+    padding: 0 calc(0.3vw + 15px);
+    border-bottom: var(--section-border);
+    background-color: white;
+}
+
+.orderBtnCol {
+    padding: 0;
+    
+}
+
+.orderRow > .orderBtnCol:nth-child(-n + 5) {
+    border-right: 1px solid var(--med-grey);
+}
+
+.tableBtn {
+    min-width: 100%;
+    padding: .5vw;
+    border: none;
+    background-color: white;
+}
+
+.tableBtn:hover {
+    background: white;
+}
+
+.logResults::-webkit-scrollbar {
+    display: none;
 }
 
 .logResults {
     display: flex;
     justify-content: center;
+    height: 84vh;
+    max-height: 84vh;
     border-bottom: var(--section-border);
-    height: 94%;
+    background-color: var(--lght-grey);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.logFilterSection {
-    margin-bottom: 1vh;
-    padding-bottom: 2vh;
+.logResult {
+    display: flex;
+    align-items: center;
+    min-height: 8vh;
+    margin: 0 0.3vw;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    padding: 1vw 0.25vw;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.logCol {
+    text-align: center;
 }
