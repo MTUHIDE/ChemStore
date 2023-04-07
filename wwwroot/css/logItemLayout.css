@@ -48,6 +48,7 @@
     height: 77.75vh;
     border-bottom: var(--section-border);
     background-color: var(--med-grey);
+    background-color: var(--lght-grey);
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;

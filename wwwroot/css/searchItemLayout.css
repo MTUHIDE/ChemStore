@@ -50,7 +50,7 @@
 
 /*Filter Bar*/
 .filterLeft {
-    background-color: var(--lght-grey);
+    background-color: var(--med-grey);
     padding: 1vh 2vw;
     height: 90vh;
     transition: flex 0.2s ease-in-out;
@@ -195,7 +195,7 @@
     display: flex;
     justify-content: center;
     border-bottom: var(--section-border);
-    background-color: var(--med-grey);
+    background-color: var(--lght-grey);
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
