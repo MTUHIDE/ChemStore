@@ -5,13 +5,22 @@
 
 .orderRow {
     padding: 0 calc(0.3vw + 15px);
-    border-bottom: var(--section-border);
+    border-bottom: 1px solid var(--husky-yellow);
     background-color: white;
+    overflow-y: hidden;
+    z-index: 1;
 }
 
 .orderBtnCol {
     padding: 0;
-    
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.orderRow, .orderBtnCol {
+    height: 6.25vh;
+    max-height: 6.25vh;
 }
 
 .orderRow > .orderBtnCol:nth-child(-n + 5) {
@@ -36,10 +45,9 @@
 .logResults {
     display: flex;
     justify-content: center;
-    height: 84vh;
-    max-height: 84vh;
+    height: 77.75vh;
     border-bottom: var(--section-border);
-    background-color: var(--lght-grey);
+    background-color: var(--med-grey);
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -55,6 +63,7 @@
     padding: 1vw 0.25vw;
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--accnt-grey);
     border-radius: 8px;
 }
 
