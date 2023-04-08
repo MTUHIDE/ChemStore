@@ -79,13 +79,23 @@ namespace ChemStoreWebApp.Pages
         public bool revNums { get; set; } = false;
         [BindProperty(SupportsGet = true)]
         public bool revNumsPrev { get; set; } = false;
+        
         [BindProperty(SupportsGet = true)]
         public int numContainers { get; set; }
         [BindProperty(SupportsGet = true)]
         public int uniqueBuildings { get; set; }
         [BindProperty(SupportsGet = true)]
-        public int chemicalAmount { get; set; }
-
+        public int liquidAmount { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public Units liquidUnit { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int solidAmount { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public Units solidUnit { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int pounds { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int gallons { get; set; }
 
         /// <summary>
         /// Checks if there is text entered in any of the search fields
@@ -128,10 +138,66 @@ namespace ChemStoreWebApp.Pages
             return con.ContainerId;
         }
 
+        private int getAmount(Units unit)
+        {
+            return (from con in DisplayContainers where con.con.Unit == (int)unit select con.con.Amount).Sum();
+        }
+
+        //Condenses Units into a smaller unit if necessary
+        private (int, Units) unitCondenser(int amount, Units unit)
+        {
+            switch (unit)
+            {
+                case (Units.L):
+                    amount *= 1000;
+                    unit = Units.mL;
+                    break;
+                case (Units.kg):
+                    amount *= 1000000;
+                    unit = Units.mg;
+                    break;
+                case (Units.g):
+                    amount *= 1000;
+                    unit = Units.mg;
+                    break;
+            }
+
+            if(unit == Units.mL)
+            {
+                if (amount > 10000)
+                {
+                    return (amount / 1000, Units.L);
+                }
+                return (amount, Units.mL);
+            }
+            else if(unit == Units.mg)
+            {
+                if(amount > 10000000)
+                {
+                    return (amount / 1000000, Units.kg);
+                }
+                else if(amount > 10000)
+                {
+                    return (amount / 1000, Units.g);
+                }
+                return (amount, Units.mg);
+            }
+            return (0, Units.mL);
+        }
+
         private void updateQuickReference()
         {
+            liquidAmount = getAmount(Units.L) * 1000 + getAmount(Units.mL);
+            (liquidAmount, liquidUnit) = unitCondenser(liquidAmount, Units.mL);
+            solidAmount = getAmount(Units.kg) * 1000000 + getAmount(Units.g) * 1000 + getAmount(Units.mg); 
+            (solidAmount, solidUnit) = unitCondenser(solidAmount, Units.mg);
+            pounds = getAmount(Units.pound);
+            gallons = getAmount(Units.gallon);
 
-            chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
+
+            //Units defaultUnit = 
+
+            //chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
             uniqueBuildings = DisplayContainers.Select(con => con.loc.BuildingName).Distinct().Count();
             numContainers = DisplayContainers.Count();
         }
