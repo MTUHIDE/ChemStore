@@ -1,6 +1,7 @@
 ﻿
 :root {
     --husky-yellow: #fcce01;
+    --lght-grey: #f8f8f8;
     --med-grey: #ececec;
     --drk-grey: #262626;
     --accnt-grey: #d0d0d0;
@@ -12,14 +13,20 @@
 .homeContainer {
     /*width: 100vw;*/
     height: 90vh;
+    max-height: 90vh;
     overflow-y: hidden;
+}
+
+.search-container {
+    max-height: 90vh;
 }
 
 /*Results Topper*/
 .resultsTopper {
-    min-height: 8%;
+    min-height: 7vh;
     box-shadow: var(--section-shadow);
-    border-bottom: var(--section-border);
+    border-bottom: 1px solid var(--husky-yellow);
+    background-color: white;
 }
 
 .topperCol {
@@ -47,6 +54,7 @@
     padding: 1vh 2vw;
     height: 90vh;
     transition: flex 0.2s ease-in-out;
+    border-right: 1px solid var(--accnt-grey);
 }
 
 .filterSection {
@@ -77,13 +85,12 @@
     width: 100%;
     margin-bottom: 1.5vh;
     padding: 0.4vw 0.7vw;
-    border: none;
+    border: 1px solid var(--accnt-grey);
     border-radius: 8px;
     box-shadow: var(--shadow);
 }
 
 .filterBtn, .contBtn {
-    /*margin-top: 2vh;*/
     border: 2px solid var(--husky-yellow);
     background-color: var(--husky-yellow);
     color: var(--drk-grey);
@@ -131,7 +138,7 @@
 
 .miniToggle {
     color: var(--drk-grey);
-    background-color: var(--med-grey);
+    background: none;
     font-size: 1.5vw;
     border: none;
     display: none;
@@ -177,14 +184,22 @@
 
 /*Results Section*/
 .resultsContainer {
-    /*background-color: blue;*/
+    background-color: white;
+}
+
+.results::-webkit-scrollbar {
+    display: none;
 }
 
 .results {
     display: flex;
     justify-content: center;
     border-bottom: var(--section-border);
-    height: 86%;
+    background-color: var(--lght-grey);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: 77vh;
 }
 
 .noResults {
@@ -193,9 +208,10 @@
     align-items: center;
     font-size: 1.75vw;
     font-weight: 600;
-    color: var(--accnt-grey);
-    text-decoration: underline var(--accnt-grey);
+    color: var(--drk-grey);
+    text-decoration: underline var(--drk-grey);
     text-underline-offset: 8px;
+    opacity: 0.5;
 }
 
 @media screen and (max-width: 992px) {
@@ -210,7 +226,9 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 6%;
+    background-color: white;
+    border-top: 1px solid var(--accnt-grey);
+    height: 6vh;
 }
 
 h1 {
@@ -279,7 +297,6 @@ h1 {
 .inputPlaceholder {
     text-indent: 10px;
     width: 100%;
-    
 }
 
 .inputPlaceholder input {
