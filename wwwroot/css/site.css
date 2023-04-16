@@ -1,12 +1,6 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  /*white-space: normal;
-  text-align: center;
-  word-break: break-all; */
-}
-
 .sideFilters {
     height: 100%; /* Full-height: remove this if you want "auto" height */
     width: 160px; /* Set the width of the sidebar */
@@ -23,14 +17,6 @@ a.navbar-brand {
 .moreFilters {
     display: none;
     margin-top: 10px;
-}
-
-input {
-    /*border-radius: 20px;
-    border-width: 1px;
-    padding: 5px;
-    padding-left: 10px;
-    outline-style: none;*/
 }
 
 .searchMain {
