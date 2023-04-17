@@ -1,21 +1,23 @@
 ﻿@model ChemStoreWebApp.ViewModels.ContainerViewModel
 
+<link rel="stylesheet" href="/css/addEditModal.css" asp-append-version="true" />
+
 <form method="post" id="form1" class="modalForm">
-    <input type="text" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
-    <input type="text" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
-    <input type="text" id="addSupervisor" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
-    <input type="text" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
-    <select asp-for="BuildingIndex" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
+    <input type="text" class="filterInput" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
+    <input type="text" class="filterInput" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
+    <input type="text" class="filterInput" id="addSupervisor" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
+    <input type="text" class="filterInput" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
+    <select asp-for="BuildingIndex" class="filterInput buildingSelector" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
         <option value="" disabled selected hidden>Building</option>
-    </select> <br />
-    <select asp-for="RoomIndex">
+    </select>
+    <select asp-for="RoomIndex" class="filterInput roomSelector">
         <option value="" disabled selected hidden>Room Number</option>
     </select> <br />
-    <select name="Hazard" value="">
+    <select name="Hazard" class="filterInput hazardSelector" value="">
         <option value="" disabled selected hidden>Hazard</option>
     </select> <br />
-    <button type="button" class="modalBtns redBtn" data-dismiss="modal">Cancel</button>
-    <input type="submit" value="Add" class="modalBtns greenBtn" asp-page-handler="create" />
+    <button type="button" class="modalBtns cancelBtn" data-dismiss="modal">Cancel</button>
+    <input type="submit" value="Add" class="modalBtns confirmBtn" asp-page-handler="create" />
 </form>
 
 <script>
