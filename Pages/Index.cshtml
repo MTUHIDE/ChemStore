@@ -91,8 +91,38 @@
             <div class="row resultsTopper">
                 <div class="col topperCol">Showing</div>
                 <div class="col topperCol"> @Model.numContainers Containers</div>
-                <div class="col topperCol"> @Model.chemicalAmount Chemicals</div>
                 <div class="col topperCol"> @Model.uniqueBuildings Buildings</div>
+            </div>
+            <div class="row resultsTopper">
+
+                @if (Model.liquidAmount != 0)
+                {
+                    <div class="col topperCol">
+                        @Model.liquidAmount 
+                        @EnumHelper.GetDisplayValue((Units)Model.liquidUnit)
+                    </div>
+
+                }
+                @if (Model.solidAmount != 0)
+                {
+                    <div class="col topperCol">
+                        @Model.solidAmount
+                        @EnumHelper.GetDisplayValue((Units)Model.solidUnit)
+                    </div>
+
+                }
+                @if (Model.pounds != 0)
+                {
+                    <div class="col topperCol">
+                        @Model.pounds lbs
+                    </div>
+                }
+                @if (Model.gallons != 0)
+                {
+                    <div class="col topperCol">
+                        @Model.gallons gallons
+                    </div>
+                }
             </div>
 
             <div class="row results" id="results">
