@@ -27,6 +27,8 @@ namespace ChemStoreWebApp.Pages.Admin.Location
 
         public IActionResult OnGet()
         {
+            PUG.REST.GetCIDListAsync("uRaNiUm");
+            PUG.View.GetChemical(23989);
             return Page();
         }
 
