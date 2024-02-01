@@ -23,6 +23,14 @@ namespace ChemStoreWebApp.Models
             httpContext = httpContextAccessor;
         }
 
+        //NEW ADDITIONS:
+        public virtual DbSet<BuildingNEW> BuildingNEW { get; set; }
+
+        public virtual DbSet<LocationNEW> LocationNEW { get; set; }
+
+
+
+
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Chemical> Chemical { get; set; }
         public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }

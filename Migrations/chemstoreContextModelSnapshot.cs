@@ -52,6 +52,28 @@ namespace ChemStoreWebApp.Migrations
                     b.ToTable("Account");
                 });
 
+            modelBuilder.Entity("ChemStoreWebApp.Models.Building", b =>
+                {
+                    b.Property<int>("BuildingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BuildingId"), 1L, 1);
+
+                    b.Property<string>("Abbr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Coords")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BuildingId");
+
+                    b.ToTable("Building");
+                });
+
             modelBuilder.Entity("ChemStoreWebApp.Models.Chemical", b =>
                 {
                     b.Property<string>("CasNumber")

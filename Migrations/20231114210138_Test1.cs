@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ChemStoreWebApp.Migrations
 {
-    public partial class SQLServerInitial : Migration
+    public partial class Test1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace ChemStoreWebApp.Migrations
                 {
                     AccountId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: true),
                     Supervisor = table.Column<bool>(type: "bit", nullable: false),
                     Department = table.Column<int>(type: "int", nullable: true)
@@ -27,12 +27,26 @@ namespace ChemStoreWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Building",
+                columns: table => new
+                {
+                    BuildingId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Abbr = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Coords = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Building", x => x.BuildingId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Chemical",
                 columns: table => new
                 {
                     CasNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ChemicalName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Manufacturer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CatalogNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -58,7 +72,7 @@ namespace ChemStoreWebApp.Migrations
                 columns: table => new
                 {
                     RoomId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BuildingName = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -75,6 +89,8 @@ namespace ChemStoreWebApp.Migrations
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Action = table.Column<int>(type: "int", nullable: true),
                     UserID = table.Column<int>(type: "int", nullable: true),
+                    table = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    key = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContainerID = table.Column<long>(type: "bigint", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -148,6 +164,22 @@ namespace ChemStoreWebApp.Migrations
                         principalColumn: "RoomId");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Hazard",
+                columns: new[] { "HazardId", "Description" },
+                values: new object[,]
+                {
+                    { "Corrosion", "Corrosive" },
+                    { "Environment", "Enviornmental Hazard" },
+                    { "ExclamationMark", "Exclamation Mark" },
+                    { "ExplodingBomb", "Exploding Bomb" },
+                    { "Flame", "Flame" },
+                    { "FlameOverCircle", "Flame Over Circle" },
+                    { "GasCylinder", "Gas Cylinder" },
+                    { "HealthHazard", "HealthHazard" },
+                    { "Skull", "Skull" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ChemicalHazards_CasNumberNavigationCasNumber",
                 table: "ChemicalHazards",
@@ -181,6 +213,9 @@ namespace ChemStoreWebApp.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Building");
+
             migrationBuilder.DropTable(
                 name: "ChemicalHazards");
 

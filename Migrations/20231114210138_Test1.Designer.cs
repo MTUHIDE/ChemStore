@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    [Migration("20230322183508_init")]
-    partial class init
+    [Migration("20231114210138_Test1")]
+    partial class Test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,6 +52,28 @@ namespace ChemStoreWebApp.Migrations
                     b.HasKey("AccountId");
 
                     b.ToTable("Account");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.Building", b =>
+                {
+                    b.Property<int>("BuildingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BuildingId"), 1L, 1);
+
+                    b.Property<string>("Abbr")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Coords")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BuildingId");
+
+                    b.ToTable("Building");
                 });
 
             modelBuilder.Entity("ChemStoreWebApp.Models.Chemical", b =>
