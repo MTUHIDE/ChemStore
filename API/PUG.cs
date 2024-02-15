@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -113,6 +114,11 @@ namespace ChemStoreWebApp.PUG
             return obj["Record"]["RecordNumber"].Deserialize<int>();
         }
 
+        private static string getRecordTitle (JsonNode obj)
+        {
+            return obj["Record"]["RecordTitle"].Deserialize<string>();
+        }
+
         private static int getSectionID(JsonNode obj, string TOCHeading)
         {
             // Declerations
@@ -194,6 +200,36 @@ namespace ChemStoreWebApp.PUG
 
             return combo;
         }
-    }
+    
+        private static string getPubChemStorageCondition(JsonNode obj)
+        {
+            int chemPropertiesSectionID = getSectionID(obj, "Safety and Hazards");  // Get the "Safety and Hazards" sectionId (should be 10)
 
-}
+            return obj["Record"]["Section"][chemPropertiesSectionID]["Section"][5]["Section"][0]["Information"][0]["Value"]["StringWithMarkup"][0]["String"].ToString();
+        }
+
+        private static string[] getHCodes(JsonNode obj)
+        {
+            int chemPropertiesSectionID = getSectionID(obj, "Safety and Hazards");  // Get the "Safety and Hazards" sectionId (should be 10)
+
+            var hCodesDest = obj["Record"]["Section"][chemPropertiesSectionID]["Section"][0]["Section"][0]["Information"][2]["Value"]["StringWithMarkup"]; //declare destination to iterate through
+            
+            int size = hCodesDest.AsArray().Count; //get size so we can iterate through
+            string[] hCodes = new string[size]; //declare string array of size
+
+            for (int i = 0; i < size; i++)
+            {
+                hCodes[i] = hCodesDest[i]["String"].ToString(); //save each hCode from our json
+            }
+
+            return hCodes;
+        }
+
+        private static string getPCodes(JsonNode obj)
+        {
+            int chemPropertiesSectionID = getSectionID(obj, "Safety and Hazards");  // Get the "Safety and Hazards" sectionId (should be 10)
+
+            return obj["Record"]["Section"][chemPropertiesSectionID]["Section"][0]["Section"][0]["Information"][3]["Value"]["StringWithMarkup"][0]["String"].ToString();
+        }
+    }
+}   
