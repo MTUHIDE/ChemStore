@@ -1,12 +1,9 @@
-﻿using System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChemStoreWebApp.PUG
@@ -55,29 +52,44 @@ namespace ChemStoreWebApp.PUG
     {
         private static readonly HttpClient client = new() { BaseAddress = new Uri("https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/") };
 
-       /* public record class Chemical(
-            [property: JsonPropertyName("RecordNumber")]int CID,
-            [property: ]List<string> aliases);*/
-
         public static async Task<List<int>> GetChemical(int CID)
         {
             string src = $"data/compound/{CID}/JSON";
 
             string response = await client.GetStringAsync(src);
-            // Console.WriteLine(response);
-
             JsonNode node = JsonNode.Parse(response);
-            //Console.WriteLine($"Name: {node["Record"]["RecordTitle"]}\n");
-            //GetSection(node["Record"]["Section"], "Names and Identifiers");
-            //await using Stream stream = await client.GetStreamAsync(src);
-            //var response = await JsonSerializer.DeserializeAsync<Dictionary<string, Dictionary<string, List<int>>>>(stream);
-            // Console.WriteLine(response["IdentifierList"]["CID"].Count);
-            //return response["IdentifierList"]["CID"];
 
             // Parse Method Tests
 
             // CID
             Console.WriteLine("CID: " + GetCID(node));
+
+            // Hazard Icon URLs
+            string[] hazardURLs = GetHazardIconURLs(node);
+            if (hazardURLs != null)
+            {
+                Console.WriteLine("Hazard Icon URLs:");
+                foreach (var url in hazardURLs)
+                    Console.WriteLine("- " + url);
+            }
+
+            // Molecular Formulas
+            string[] molecularFormulas = GetMolecularFormulas(node);
+            if (molecularFormulas != null)
+            {
+                Console.WriteLine("Molecular Formulas:");
+                foreach (var formula in molecularFormulas)
+                    Console.WriteLine("- " + formula);
+            }
+
+            // CAS Numbers
+            string[] casNumbers = GetCASNumbers(node);
+            if (casNumbers != null)
+            {
+                Console.WriteLine("CAS Numbers:");
+                foreach (var casNumber in casNumbers)
+                    Console.WriteLine("- " + casNumber);
+            }
 
             // Top 5 Symonoms
             string[] symonoms = getSymonoms(node);
@@ -100,11 +112,7 @@ namespace ChemStoreWebApp.PUG
         {
             JsonArray arr = node.AsArray();
             for (int i = 0; i < arr.Count; i++)
-            {
-                Console.WriteLine($"{i}: {arr[i]["TOCHeading"]}");
-                //Console.WriteLine($"{arr[i]["TOCHeading"]}");
                 if (arr[i]["TOCHeading"].Deserialize<string>() == sectionHeading) return arr[i];
-            }
 
             return null;
         }
@@ -112,6 +120,81 @@ namespace ChemStoreWebApp.PUG
         private static int GetCID(JsonNode obj)
         {
             return obj["Record"]["RecordNumber"].Deserialize<int>();
+        }
+
+        private static string[] GetHazardIconURLs(JsonNode obj)
+        {
+            // Try/Catch is needed in case the chemical doesn't have any hazard icons
+            try
+            {
+                // Navigate to array of URLs
+                JsonNode chemicalSafetyNode = GetSection(obj["Record"]["Section"], "Chemical Safety");
+                JsonNode allURLsNode = chemicalSafetyNode["Information"][0]["Value"]["StringWithMarkup"][0]["Markup"];
+
+                // Copy URLs from original array to new ArrayList
+                ArrayList urls = new();
+                foreach (JsonNode node in allURLsNode.AsArray())
+                    urls.Add(node["URL"].ToString());
+
+                // Return the new ArrayList of URLs as a string array
+                return (string[])urls.ToArray(typeof(string));
+            } catch (NullReferenceException)
+            {
+                return null;
+            }
+        }
+
+        private static string[] GetMolecularFormulas(JsonNode obj)
+        {
+            // Try/Catch is needed in case the compound doesn't have any molecular formulas
+            try
+            {
+                // Navigate to array of formulas
+                JsonNode namesNode = GetSection(obj["Record"]["Section"], "Names and Identifiers");
+                JsonNode allFormulasNode = GetSection(namesNode["Section"], "Molecular Formula")["Information"];
+
+                // Copy formulas from original array to new HashSet
+                HashSet<string> formulas = new(); // Store in a set to remove duplicates
+                foreach (JsonNode node in allFormulasNode.AsArray())
+                    formulas.Add(node["Value"]["StringWithMarkup"][0]["String"].ToString());
+
+                // Return the new HashSet of formulas as a string array
+                string[] formulasArray = new string[formulas.Count];
+                formulas.CopyTo(formulasArray);
+                return formulasArray;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+        }
+
+        private static string[] GetCASNumbers(JsonNode obj)
+        {
+            // Try/Catch is needed in case the compound doesn't have any CAS numbers (is this even possible?)
+            try
+            {
+                // Navigate to array of formulas
+                JsonNode namesNode = GetSection(obj["Record"]["Section"], "Names and Identifiers");
+                JsonNode otherIdentifiersNode = GetSection(namesNode["Section"], "Other Identifiers");
+                JsonNode allCASNumbersNode = GetSection(otherIdentifiersNode["Section"], "CAS")["Information"];
+
+                // TODO: count references, only return cas number with most references
+
+                // Copy CAS numbers from original array to new HashSet
+                HashSet<string> casNumbers = new(); // Store in a set to remove duplicates
+                foreach (JsonNode node in allCASNumbersNode.AsArray())
+                    casNumbers.Add(node["Value"]["StringWithMarkup"][0]["String"].ToString());
+
+                // Return the new HashSet of CAS numbers as a string array
+                string[] casArray = new string[casNumbers.Count];
+                casNumbers.CopyTo(casArray);
+                return casArray;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         private static string getRecordTitle (JsonNode obj)
