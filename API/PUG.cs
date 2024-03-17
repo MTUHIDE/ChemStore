@@ -1,9 +1,14 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
+using System.Security.Permissions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChemStoreWebApp.PUG
@@ -52,67 +57,69 @@ namespace ChemStoreWebApp.PUG
     {
         private static readonly HttpClient client = new() { BaseAddress = new Uri("https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/") };
 
-        public static async Task<List<int>> GetChemical(int CID)
+        public struct chemicalData
         {
+            public int CID;
+
+            public string[] HazardIconURLs;
+
+            public string[] MolecularFormulas;
+
+            public string[] CASNumbers;
+
+            public string RecordTitle;
+
+            public string[] Symonoms;
+
+            public string MolecularWeightValue;
+
+            public string MolecularWeightUnit;
+
+            public string MolecularWeightCombo;
+
+            public string PubChemStorageCondition;
+
+            public string[] HCodes;
+
+            public string PCodes;
+        }
+
+        public static async Task<chemicalData> GetChemical(int CID)
+        {
+            chemicalData chemicalData = new chemicalData();
+
             string src = $"data/compound/{CID}/JSON";
 
             string response = await client.GetStringAsync(src);
+
             JsonNode node = JsonNode.Parse(response);
+            
+            //fill our struct
+            chemicalData.CID = GetCID(node);
+            chemicalData.HazardIconURLs = GetHazardIconURLs(node);
+            chemicalData.MolecularFormulas = GetMolecularFormulas(node);
+            chemicalData.CASNumbers = GetCASNumbers(node);
+            chemicalData.RecordTitle = getRecordTitle(node);
+            chemicalData.Symonoms = getSymonoms(node);
+            chemicalData.MolecularWeightValue = getMolecularWeightValue(node).ToString("0.##"); // This will round to 2 decimal places
+            chemicalData.MolecularWeightUnit = getMolecularWeightUnit(node);
+            chemicalData.MolecularWeightCombo = getMolecularWeight(node);
+            chemicalData.PubChemStorageCondition = getPubChemStorageCondition(node);
+            chemicalData.HCodes = getHCodes(node);
+            chemicalData.PCodes = getPCodes(node);
 
-            // Parse Method Tests
-
-            // CID
-            Console.WriteLine("CID: " + GetCID(node));
-
-            // Hazard Icon URLs
-            string[] hazardURLs = GetHazardIconURLs(node);
-            if (hazardURLs != null)
-            {
-                Console.WriteLine("Hazard Icon URLs:");
-                foreach (var url in hazardURLs)
-                    Console.WriteLine("- " + url);
-            }
-
-            // Molecular Formulas
-            string[] molecularFormulas = GetMolecularFormulas(node);
-            if (molecularFormulas != null)
-            {
-                Console.WriteLine("Molecular Formulas:");
-                foreach (var formula in molecularFormulas)
-                    Console.WriteLine("- " + formula);
-            }
-
-            // CAS Numbers
-            string[] casNumbers = GetCASNumbers(node);
-            if (casNumbers != null)
-            {
-                Console.WriteLine("CAS Numbers:");
-                foreach (var casNumber in casNumbers)
-                    Console.WriteLine("- " + casNumber);
-            }
-
-            // Top 5 Symonoms
-            string[] symonoms = getSymonoms(node);
-            for (int i = 0;i < symonoms.Length; i++)
-                Console.WriteLine("Symonom " + (i+1) + ": " + symonoms[i]);
-
-            // Molecular Weight Value
-            Console.WriteLine("Molecular Weight Value: " + getMolecularWeightValue(node).ToString("0.##")); // This will round to 2 decimal places
-
-            // Molecular Weight Unit
-            Console.WriteLine("Molecular Weight Unit: " + getMolecularWeightUnit(node));
-
-            // Molecular Weight Combo
-            Console.WriteLine("Molecular Weight: " + getMolecularWeight(node));
-
-            return null;
+            return chemicalData;
         }
 
         private static JsonNode GetSection(JsonNode node, string sectionHeading)
         {
             JsonArray arr = node.AsArray();
             for (int i = 0; i < arr.Count; i++)
+            {
+                Console.WriteLine($"{i}: {arr[i]["TOCHeading"]}");
+                //Console.WriteLine($"{arr[i]["TOCHeading"]}");
                 if (arr[i]["TOCHeading"].Deserialize<string>() == sectionHeading) return arr[i];
+            }
 
             return null;
         }
