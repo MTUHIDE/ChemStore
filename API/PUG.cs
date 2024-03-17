@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Permissions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ChemStoreWebApp.PUG
@@ -20,7 +16,7 @@ namespace ChemStoreWebApp.PUG
         public static async Task<int[]> GetCIDListAsync(string searchParam)
         {
             string src = $"compound/name/{searchParam}/cids/txt";
-            string response = "";
+            string response;
 
             try
             {
@@ -57,7 +53,7 @@ namespace ChemStoreWebApp.PUG
     {
         private static readonly HttpClient client = new() { BaseAddress = new Uri("https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/") };
 
-        public struct chemicalData
+        public struct Chemical
         {
             public int CID;
 
@@ -65,11 +61,11 @@ namespace ChemStoreWebApp.PUG
 
             public string[] MolecularFormulas;
 
-            public string[] CASNumbers;
+            public string CASNumber;
 
             public string RecordTitle;
 
-            public string[] Symonoms;
+            public string[] Synonyms;
 
             public string MolecularWeightValue;
 
@@ -84,29 +80,30 @@ namespace ChemStoreWebApp.PUG
             public string PCodes;
         }
 
-        public static async Task<chemicalData> GetChemical(int CID)
+        public static async Task<Chemical> GetChemical(int CID)
         {
-            chemicalData chemicalData = new chemicalData();
-
             string src = $"data/compound/{CID}/JSON";
 
             string response = await client.GetStringAsync(src);
 
             JsonNode node = JsonNode.Parse(response);
-            
+
             //fill our struct
-            chemicalData.CID = GetCID(node);
-            chemicalData.HazardIconURLs = GetHazardIconURLs(node);
-            chemicalData.MolecularFormulas = GetMolecularFormulas(node);
-            chemicalData.CASNumbers = GetCASNumbers(node);
-            chemicalData.RecordTitle = getRecordTitle(node);
-            chemicalData.Symonoms = getSymonoms(node);
-            chemicalData.MolecularWeightValue = getMolecularWeightValue(node).ToString("0.##"); // This will round to 2 decimal places
-            chemicalData.MolecularWeightUnit = getMolecularWeightUnit(node);
-            chemicalData.MolecularWeightCombo = getMolecularWeight(node);
-            chemicalData.PubChemStorageCondition = getPubChemStorageCondition(node);
-            chemicalData.HCodes = getHCodes(node);
-            chemicalData.PCodes = getPCodes(node);
+            Chemical chemicalData = new()
+            {
+                CID = GetCID(node),
+                HazardIconURLs = GetHazardIconURLs(node),
+                MolecularFormulas = GetMolecularFormulas(node),
+                CASNumber = GetCASNumber(node),
+                RecordTitle = GetRecordTitle(node),
+                Synonyms = GetSymonoms(node),
+                MolecularWeightValue = GetMolecularWeightValue(node).ToString("0.##"), // This will round to 2 decimal places
+                MolecularWeightUnit = GetMolecularWeightUnit(node),
+                MolecularWeightCombo = GetMolecularWeight(node),
+                PubChemStorageCondition = GetPubChemStorageCondition(node),
+                HCodes = GetHCodes(node),
+                PCodes = GetPCodes(node)
+            };
 
             return chemicalData;
         }
@@ -115,11 +112,7 @@ namespace ChemStoreWebApp.PUG
         {
             JsonArray arr = node.AsArray();
             for (int i = 0; i < arr.Count; i++)
-            {
-                Console.WriteLine($"{i}: {arr[i]["TOCHeading"]}");
-                //Console.WriteLine($"{arr[i]["TOCHeading"]}");
                 if (arr[i]["TOCHeading"].Deserialize<string>() == sectionHeading) return arr[i];
-            }
 
             return null;
         }
@@ -131,10 +124,10 @@ namespace ChemStoreWebApp.PUG
 
         private static string[] GetHazardIconURLs(JsonNode obj)
         {
-            // Try/Catch is needed in case the chemical doesn't have any hazard icons
+            // Try/Catch in case the chemical doesn't have this property
             try
             {
-                // Navigate to array of URLs
+                // Navigate to Hazard Icon URLs node
                 JsonNode chemicalSafetyNode = GetSection(obj["Record"]["Section"], "Chemical Safety");
                 JsonNode allURLsNode = chemicalSafetyNode["Information"][0]["Value"]["StringWithMarkup"][0]["Markup"];
 
@@ -145,18 +138,19 @@ namespace ChemStoreWebApp.PUG
 
                 // Return the new ArrayList of URLs as a string array
                 return (string[])urls.ToArray(typeof(string));
-            } catch (NullReferenceException)
+            }
+            catch (NullReferenceException)
             {
-                return null;
+                return Array.Empty<string>();
             }
         }
 
         private static string[] GetMolecularFormulas(JsonNode obj)
         {
-            // Try/Catch is needed in case the compound doesn't have any molecular formulas
+            // Try/Catch in case the chemical doesn't have this property
             try
             {
-                // Navigate to array of formulas
+                // Navigate to Molecular Formulas node
                 JsonNode namesNode = GetSection(obj["Record"]["Section"], "Names and Identifiers");
                 JsonNode allFormulasNode = GetSection(namesNode["Section"], "Molecular Formula")["Information"];
 
@@ -172,31 +166,31 @@ namespace ChemStoreWebApp.PUG
             }
             catch (NullReferenceException)
             {
-                return null;
+                return Array.Empty<string>();
             }
         }
 
-        private static string[] GetCASNumbers(JsonNode obj)
+        private static string GetCASNumber(JsonNode obj)
         {
-            // Try/Catch is needed in case the compound doesn't have any CAS numbers (is this even possible?)
+            // Try/Catch in case the chemical doesn't have any CAS numbers (is this even possible?)
             try
             {
-                // Navigate to array of formulas
+                // Navigate to CAS Numbers node
                 JsonNode namesNode = GetSection(obj["Record"]["Section"], "Names and Identifiers");
                 JsonNode otherIdentifiersNode = GetSection(namesNode["Section"], "Other Identifiers");
                 JsonNode allCASNumbersNode = GetSection(otherIdentifiersNode["Section"], "CAS")["Information"];
 
-                // TODO: count references, only return cas number with most references
-
-                // Copy CAS numbers from original array to new HashSet
-                HashSet<string> casNumbers = new(); // Store in a set to remove duplicates
+                // Use a Dictionary<CAS, count> to count how many references each distinct CAS number has 
+                Dictionary<string, int> casCountDict = new();
                 foreach (JsonNode node in allCASNumbersNode.AsArray())
-                    casNumbers.Add(node["Value"]["StringWithMarkup"][0]["String"].ToString());
+                {
+                    string cas = node["Value"]["StringWithMarkup"][0]["String"].ToString();
+                    casCountDict.TryGetValue(cas, out int count); // Default value for int is 0
+                    casCountDict[cas] = count++;
+                }
 
-                // Return the new HashSet of CAS numbers as a string array
-                string[] casArray = new string[casNumbers.Count];
-                casNumbers.CopyTo(casArray);
-                return casArray;
+                // Return the CAS number with the most references
+                return casCountDict.MaxBy(kvp => kvp.Value).Key;
             }
             catch (NullReferenceException)
             {
@@ -204,12 +198,12 @@ namespace ChemStoreWebApp.PUG
             }
         }
 
-        private static string getRecordTitle (JsonNode obj)
+        private static string GetRecordTitle(JsonNode obj)
         {
             return obj["Record"]["RecordTitle"].Deserialize<string>();
         }
 
-        private static int getSectionID(JsonNode obj, string TOCHeading)
+        private static int GetSectionID(JsonNode obj, string TOCHeading)
         {
             // Declerations
             int i, recordSectionID = -1;
@@ -232,11 +226,11 @@ namespace ChemStoreWebApp.PUG
             return recordSectionID;
         }
 
-        private static string[] getSymonoms(JsonNode obj) 
+        private static string[] GetSymonoms(JsonNode obj)
         {
             // Declerations
             int i, size;
-            int nameSectionID = getSectionID(obj, "Names and Identifiers"); // Get the "Names and Identifiers" section ID
+            int nameSectionID = GetSectionID(obj, "Names and Identifiers"); // Get the "Names and Identifiers" section ID
             string[] topFiveSymonoms = new string[5];
 
             // Calculates the size of symonom's array
@@ -264,62 +258,92 @@ namespace ChemStoreWebApp.PUG
             return topFiveSymonoms;
         }
 
-        private static double getMolecularWeightValue(JsonNode obj)
+        private static double GetMolecularWeightValue(JsonNode obj)
         {
-            int chemPropertiesSectionID = getSectionID(obj, "Chemical and Physical Properties");  // Get the "Chemical and Physical Properties" sectionId
+            int chemPropertiesSectionID = GetSectionID(obj, "Chemical and Physical Properties");  // Get the "Chemical and Physical Properties" sectionId
 
             //Console.WriteLine(chemPropertiesSectionID);
 
             return double.Parse(obj["Record"]["Section"][chemPropertiesSectionID]["Section"][0]["Section"][0]["Information"][0]["Value"]["StringWithMarkup"][0]["String"].ToString());
         }
 
-        private static string getMolecularWeightUnit(JsonNode obj)
+        private static string GetMolecularWeightUnit(JsonNode obj)
         {
-            int chemPropertiesSectionID = getSectionID(obj, "Chemical and Physical Properties");  // Get the "Chemical and Physical Properties" sectionId
+            int chemPropertiesSectionID = GetSectionID(obj, "Chemical and Physical Properties");  // Get the "Chemical and Physical Properties" sectionId
 
             return obj["Record"]["Section"][chemPropertiesSectionID]["Section"][0]["Section"][0]["Information"][0]["Value"]["Unit"].ToString();
         }
 
-        private static string getMolecularWeight(JsonNode obj)
+        private static string GetMolecularWeight(JsonNode obj)
         {
             // Declerations & Initializations
-            double value = getMolecularWeightValue(obj);
-            string unit = getMolecularWeightUnit(obj);
+            double value = GetMolecularWeightValue(obj);
+            string unit = GetMolecularWeightUnit(obj);
 
             string combo = "" + value + " " + unit;
 
             return combo;
         }
     
-        private static string getPubChemStorageCondition(JsonNode obj)
+        private static string GetPubChemStorageCondition(JsonNode obj)
         {
-            int chemPropertiesSectionID = getSectionID(obj, "Safety and Hazards");  // Get the "Safety and Hazards" sectionId (should be 10)
-
-            return obj["Record"]["Section"][chemPropertiesSectionID]["Section"][5]["Section"][0]["Information"][0]["Value"]["StringWithMarkup"][0]["String"].ToString();
-        }
-
-        private static string[] getHCodes(JsonNode obj)
-        {
-            int chemPropertiesSectionID = getSectionID(obj, "Safety and Hazards");  // Get the "Safety and Hazards" sectionId (should be 10)
-
-            var hCodesDest = obj["Record"]["Section"][chemPropertiesSectionID]["Section"][0]["Section"][0]["Information"][2]["Value"]["StringWithMarkup"]; //declare destination to iterate through
-            
-            int size = hCodesDest.AsArray().Count; //get size so we can iterate through
-            string[] hCodes = new string[size]; //declare string array of size
-
-            for (int i = 0; i < size; i++)
+            // Try/Catch in case the chemical doesn't have this property
+            try
             {
-                hCodes[i] = hCodesDest[i]["String"].ToString(); //save each hCode from our json
-            }
+                // Navigate to Storage Conditions node
+                JsonNode safetyAndHazardsNode = GetSection(obj["Record"]["Section"], "Safety and Hazards");
+                JsonNode handlingAndStorageNode = GetSection(safetyAndHazardsNode["Section"], "Handling and Storage");
+                JsonNode storageConditionsNode = GetSection(handlingAndStorageNode["Section"], "Storage Conditions");
 
-            return hCodes;
+                return storageConditionsNode["Information"][0]["Value"]["StringWithMarkup"][0]["String"].ToString();
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
-        private static string getPCodes(JsonNode obj)
+        private static string[] GetHCodes(JsonNode obj)
         {
-            int chemPropertiesSectionID = getSectionID(obj, "Safety and Hazards");  // Get the "Safety and Hazards" sectionId (should be 10)
+            // Try/Catch in case the chemical doesn't have this property
+            try
+            {
+                // Navigate to H Codes array node
+                JsonNode safetyAndHazardsNode = GetSection(obj["Record"]["Section"], "Safety and Hazards");
+                JsonNode ghsClassificationNode = GetSection(safetyAndHazardsNode["Section"], "Safety and Hazards");
+                JsonNode ghsHazardsNode = GetSection(ghsClassificationNode["Section"], "GHS Hazard Statements");
+                JsonNode hCodesArrayNode = ghsHazardsNode["Information"][2]["Value"]["StringWithMarkup"];
 
-            return obj["Record"]["Section"][chemPropertiesSectionID]["Section"][0]["Section"][0]["Information"][3]["Value"]["StringWithMarkup"][0]["String"].ToString();
+                int size = hCodesArrayNode.AsArray().Count; //get size so we can iterate through
+                string[] hCodes = new string[size]; //declare string array of size
+
+                for (int i = 0; i < size; i++)
+                    hCodes[i] = hCodesArrayNode[i]["String"].ToString(); //save each hCode from our json
+
+                return hCodes;
+            }
+            catch (NullReferenceException)
+            {
+                return Array.Empty<string>();
+            }
+        }
+
+        private static string GetPCodes(JsonNode obj)
+        {
+            // Try/Catch in case the chemical doesn't have this property
+            try
+            {
+                // Navigate to GHS Hazards node
+                JsonNode safetyAndHazardsNode = GetSection(obj["Record"]["Section"], "Safety and Hazards");
+                JsonNode ghsClassificationNode = GetSection(safetyAndHazardsNode["Section"], "Safety and Hazards");
+                JsonNode ghsHazardsNode = GetSection(ghsClassificationNode["Section"], "GHS Hazard Statements");
+
+                return ghsHazardsNode["Information"][3]["Value"]["StringWithMarkup"][0]["String"].ToString();
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
     }
 }   
