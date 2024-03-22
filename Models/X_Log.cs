@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Numerics;
 
 namespace ChemStoreWebApp.Models
 {
-    public partial class LogNEW
+    public partial class X_Log
     {
 
         [Key]
-        public int IDLog { get; set; }
+        public Int64 LogID { get; set; }
         public DateTime Timestamp { get; set; }
-        public int UserID { get; set; }
         public string Table { get; set; }
         public string Key1 { get; set; }
-        public string Key2 { get; set; }
-        public string OldValue { get; set; }
+        public string? Key2 { get; set; }
+        public string? OldValue { get; set; }
         public string NewValue { get; set; }
         public int Action { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public int UserID { get; set; }
+        public User User { get; init; }
     }
 
     public enum Action

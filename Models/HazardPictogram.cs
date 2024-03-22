@@ -10,6 +10,6 @@ namespace ChemStoreWebApp.Models
         [Key]
         public char GHCode { get; set; }
         public string Description { get; set; }
-        public Blob Pictogram { get; set; }
+        public string Pictogram { get; set; } //varchar for image address (switched from Blob [unsupported type])
     }
 }

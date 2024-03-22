@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
 
 namespace ChemStoreWebApp.Models
 {
     public partial class ContainerChemicals
     {
-        [Key]
-        public BigInteger ChemicalID { get; set; }
+        //Primary Key (in chemstoreContext)
+        public Int64 ChemicalID { get; set; }
+        //Primary Key (in chemstoreContext)
         public int ContainerID { get; set; }
         public double Quantity { get; set; }
-        public string Manufacturer { get; set; }
-        public string CatalogNumber { get; set; }
+        public string? Manufacturer { get; set; }
+        public string? CatalogNumber { get; set; }
         public int PreferredUnit { get; set; }
-        public int StateOfMatter { get; set; }
+        public int? StateOfMatter { get; set; }
+
+        [ForeignKey("ContainerID")]
+        public X_Container X_Container { get; init; }
     }
 
     public enum PreferredUnit

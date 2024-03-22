@@ -24,9 +24,23 @@ namespace ChemStoreWebApp.Models
         }
 
         //NEW ADDITIONS:
-        public virtual DbSet<BuildingNEW> BuildingNEW { get; set; }
+        public virtual DbSet<X_Chemical> X_Chemical { get; set; }
+        public virtual DbSet<X_Container> X_Container { get; set; }
+        public virtual DbSet<ContainerChemicals> ContainerChemicals { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<HazardPictogram> HazardPictogram { get; set; }
+        public virtual DbSet<HazardPrecaution> HazardPrecaution { get; set; }
+        public virtual DbSet<HazardStatement> HazardStatement { get; set; }
+        public virtual DbSet<X_Location> X_Location { get; set; }
+        public virtual DbSet<LocationAttribute> LocationAttribute { get; set; }
+        public virtual DbSet<X_Log> X_Log { get; set; }
+        public virtual DbSet<PrecautionaryStatement> PrecautionaryStatement { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<RolePermissions> RolePermissions { get; set; }
+        public virtual DbSet<StatementPictogram> StatementPictogram { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<OverridePermissions> OverridePermissions { get; set; }
 
-        public virtual DbSet<LocationNEW> LocationNEW { get; set; }
 
 
 
@@ -49,6 +63,33 @@ namespace ChemStoreWebApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //ContainerChemicals (composite keys)
+            modelBuilder.Entity<ContainerChemicals>()
+                .HasKey(a => new { a.ChemicalID, a.ContainerID });
+
+            //HazardPrecaution (composite keys)
+            modelBuilder.Entity<HazardPrecaution>()
+                .HasKey(a => new { a.HCode, a.PCode });
+
+            //LocationAttribute (composite keys)
+            modelBuilder.Entity<LocationAttribute>()
+                .HasKey(a => new { a.LocationID, a.Key });
+
+            //RolePermissions (composite keys)
+            modelBuilder.Entity<RolePermissions>()
+                .HasKey(a => new { a.RoleID, a.LocationID, a.Permission });
+
+            //StatementPictogram (composite keys)
+            modelBuilder.Entity<StatementPictogram>()
+                .HasKey(a => new { a.GHCode, a.HCode });
+
+            //OverridePermissions (composite keys)
+            modelBuilder.Entity<OverridePermissions>()
+                .HasKey(a => new { a.UserID, a.LocationID, a.Permission });
+
+
+
             OnModelCreatingPartial(modelBuilder);
 
             modelBuilder.Entity<Hazard>().HasData(
