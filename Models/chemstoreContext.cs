@@ -24,7 +24,7 @@ namespace ChemStoreWebApp.Models
         }
 
         //NEW ADDITIONS:
-        public virtual DbSet<X_Chemical> X_Chemical { get; set; }
+        public virtual DbSet<ContainerHazards> ContainerHazards { get; set; }
         public virtual DbSet<X_Container> X_Container { get; set; }
         public virtual DbSet<ContainerChemicals> ContainerChemicals { get; set; }
         public virtual DbSet<Department> Department { get; set; }
@@ -66,7 +66,7 @@ namespace ChemStoreWebApp.Models
 
             //ContainerChemicals (composite keys)
             modelBuilder.Entity<ContainerChemicals>()
-                .HasKey(a => new { a.ChemicalID, a.ContainerID });
+                .HasKey(a => new { a.ContainerID, a.ChemicalCAS });
 
             //HazardPrecaution (composite keys)
             modelBuilder.Entity<HazardPrecaution>()

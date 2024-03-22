@@ -18,6 +18,7 @@ namespace ChemStoreWebApp.Models
         public string? OldValue { get; set; }
         public string NewValue { get; set; }
         public int Action { get; set; }
+        public string? Notes { get; set; }
 
         [ForeignKey(nameof(User))]
         public int UserID { get; set; }

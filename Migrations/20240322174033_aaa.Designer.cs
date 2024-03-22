@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChemStoreWebApp.Migrations
 {
     [DbContext(typeof(chemstoreContext))]
-    [Migration("20240322171523_aadaw")]
-    partial class aadaw
+    [Migration("20240322174033_aaa")]
+    partial class aaa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,11 +141,11 @@ namespace ChemStoreWebApp.Migrations
 
             modelBuilder.Entity("ChemStoreWebApp.Models.ContainerChemicals", b =>
                 {
-                    b.Property<long>("ChemicalID")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("ContainerID")
                         .HasColumnType("int");
+
+                    b.Property<long>("ChemicalCAS")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CatalogNumber")
                         .HasColumnType("nvarchar(max)");
@@ -156,17 +156,34 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<int>("PreferredUnit")
                         .HasColumnType("int");
 
+                    b.Property<int>("PubchemCID")
+                        .HasColumnType("int");
+
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
                     b.Property<int?>("StateOfMatter")
                         .HasColumnType("int");
 
-                    b.HasKey("ChemicalID", "ContainerID");
-
-                    b.HasIndex("ContainerID");
+                    b.HasKey("ContainerID", "ChemicalCAS");
 
                     b.ToTable("ContainerChemicals");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.ContainerHazards", b =>
+                {
+                    b.Property<int>("ContainerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.HasKey("ContainerID");
+
+                    b.HasIndex("HCode");
+
+                    b.ToTable("ContainerHazards");
                 });
 
             modelBuilder.Entity("ChemStoreWebApp.Models.Department", b =>
@@ -486,28 +503,6 @@ namespace ChemStoreWebApp.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.X_Chemical", b =>
-                {
-                    b.Property<long>("ChemicalID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ChemicalID"), 1L, 1);
-
-                    b.Property<int>("Cas_Num")
-                        .HasColumnType("int");
-
-                    b.Property<string>("H_Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("ChemicalID");
-
-                    b.HasIndex("H_Code");
-
-                    b.ToTable("X_Chemical");
-                });
-
             modelBuilder.Entity("ChemStoreWebApp.Models.X_Container", b =>
                 {
                     b.Property<int>("ContainerID")
@@ -587,6 +582,9 @@ namespace ChemStoreWebApp.Migrations
                     b.Property<string>("NewValue")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("OldValue")
                         .HasColumnType("nvarchar(max)");
 
@@ -651,6 +649,25 @@ namespace ChemStoreWebApp.Migrations
                         .HasForeignKey("ContainerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("X_Container");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.ContainerHazards", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.X_Container", "X_Container")
+                        .WithMany()
+                        .HasForeignKey("ContainerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChemStoreWebApp.Models.HazardStatement", "HazardStatement")
+                        .WithMany()
+                        .HasForeignKey("HCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HazardStatement");
 
                     b.Navigation("X_Container");
                 });
@@ -758,17 +775,6 @@ namespace ChemStoreWebApp.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.X_Chemical", b =>
-                {
-                    b.HasOne("ChemStoreWebApp.Models.HazardStatement", "HazardStatement")
-                        .WithMany()
-                        .HasForeignKey("H_Code")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HazardStatement");
                 });
 
             modelBuilder.Entity("ChemStoreWebApp.Models.X_Container", b =>

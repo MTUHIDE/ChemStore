@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ChemStoreWebApp.Migrations
 {
-    public partial class aadaw : Migration
+    public partial class aaa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -252,26 +252,6 @@ namespace ChemStoreWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "X_Chemical",
-                columns: table => new
-                {
-                    ChemicalID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cas_Num = table.Column<int>(type: "int", nullable: false),
-                    H_Code = table.Column<string>(type: "nvarchar(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_X_Chemical", x => x.ChemicalID);
-                    table.ForeignKey(
-                        name: "FK_X_Chemical_HazardStatement_H_Code",
-                        column: x => x.H_Code,
-                        principalTable: "HazardStatement",
-                        principalColumn: "HCode",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Container",
                 columns: table => new
                 {
@@ -440,6 +420,7 @@ namespace ChemStoreWebApp.Migrations
                     OldValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NewValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Action = table.Column<int>(type: "int", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -457,8 +438,9 @@ namespace ChemStoreWebApp.Migrations
                 name: "ContainerChemicals",
                 columns: table => new
                 {
-                    ChemicalID = table.Column<long>(type: "bigint", nullable: false),
                     ContainerID = table.Column<int>(type: "int", nullable: false),
+                    ChemicalCAS = table.Column<long>(type: "bigint", nullable: false),
+                    PubchemCID = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<double>(type: "float", nullable: false),
                     Manufacturer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CatalogNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -467,9 +449,33 @@ namespace ChemStoreWebApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContainerChemicals", x => new { x.ChemicalID, x.ContainerID });
+                    table.PrimaryKey("PK_ContainerChemicals", x => new { x.ContainerID, x.ChemicalCAS });
                     table.ForeignKey(
                         name: "FK_ContainerChemicals_X_Container_ContainerID",
+                        column: x => x.ContainerID,
+                        principalTable: "X_Container",
+                        principalColumn: "ContainerID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContainerHazards",
+                columns: table => new
+                {
+                    ContainerID = table.Column<int>(type: "int", nullable: false),
+                    HCode = table.Column<string>(type: "nvarchar(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContainerHazards", x => x.ContainerID);
+                    table.ForeignKey(
+                        name: "FK_ContainerHazards_HazardStatement_HCode",
+                        column: x => x.HCode,
+                        principalTable: "HazardStatement",
+                        principalColumn: "HCode",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ContainerHazards_X_Container_ContainerID",
                         column: x => x.ContainerID,
                         principalTable: "X_Container",
                         principalColumn: "ContainerID",
@@ -518,9 +524,9 @@ namespace ChemStoreWebApp.Migrations
                 column: "SupervisorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContainerChemicals_ContainerID",
-                table: "ContainerChemicals",
-                column: "ContainerID");
+                name: "IX_ContainerHazards_HCode",
+                table: "ContainerHazards",
+                column: "HCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Log_UserID",
@@ -551,11 +557,6 @@ namespace ChemStoreWebApp.Migrations
                 name: "IX_User_RoleID",
                 table: "User",
                 column: "RoleID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_X_Chemical_H_Code",
-                table: "X_Chemical",
-                column: "H_Code");
 
             migrationBuilder.CreateIndex(
                 name: "IX_X_Container_LocationID",
@@ -590,6 +591,9 @@ namespace ChemStoreWebApp.Migrations
                 name: "ContainerChemicals");
 
             migrationBuilder.DropTable(
+                name: "ContainerHazards");
+
+            migrationBuilder.DropTable(
                 name: "HazardPrecaution");
 
             migrationBuilder.DropTable(
@@ -609,9 +613,6 @@ namespace ChemStoreWebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "StatementPictogram");
-
-            migrationBuilder.DropTable(
-                name: "X_Chemical");
 
             migrationBuilder.DropTable(
                 name: "X_Log");

@@ -7,16 +7,16 @@ using System.Reflection.Metadata;
 
 namespace ChemStoreWebApp.Models
 {
-    public partial class X_Chemical
+    public partial class ContainerHazards
     {
-        [Key]   //Primary Key
-        public Int64 ChemicalID { get; set; }
-        public int Cas_Num { get; set; }
+        [Key]
+        public int ContainerID { get; set; }
 
-        [ForeignKey(nameof(HazardStatement))]   //Foreign Key
-        public char H_Code { get; set; }
+        [ForeignKey(nameof(HazardStatement))]
+        public char HCode { get; set; }
         public HazardStatement HazardStatement { get; init; }
 
-        //What is this? It's just "..." in ER diagram.
+        [ForeignKey("ContainerID")]
+        public X_Container X_Container { get; init; }
     }
 }
