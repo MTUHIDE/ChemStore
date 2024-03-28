@@ -69,7 +69,7 @@ namespace ChemStoreWebApp.PUG
             public string[] HazardIconURLs;
         }
 
-        public static async Task<Chemical> GetChemical(int CID)
+        public static async Task<Chemical> GetChemicalAsync(int CID)
         {
             string src = $"data/compound/{CID}/JSON";
 

@@ -35,7 +35,7 @@ namespace ChemStoreWebApp.Pages.Admin.Location
                 return Page();
             }
 
-            PUG.View.GetChemical(cids[0]);
+            PUG.View.GetChemicalAsync(cids[0]);
 
             return Page();
         }
