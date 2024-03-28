@@ -50,3 +50,33 @@
     color: white;
     transition: all 0.1s linear;
 }
+
+/* Added stylings for create contatiner attempt */
+
+.row
+{
+  display: fles;
+}
+
+
+.column
+{
+  flex: 50%;
+}
+
+.hazardFlexBox
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hazardFlexBox > div 
+{
+    background-color: DodgerBlue;
+    color: white;
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+}

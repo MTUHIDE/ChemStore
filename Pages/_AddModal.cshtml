@@ -3,19 +3,84 @@
 <link rel="stylesheet" href="/css/addEditModal.css" asp-append-version="true" />
 
 <form method="post" id="form1" class="modalForm">
-    <input type="text" class="filterInput" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
-    <input type="text" class="filterInput" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
-    <input type="text" class="filterInput" id="addSupervisor" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
-    <input type="text" class="filterInput" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
-    <select asp-for="BuildingIndex" class="filterInput buildingSelector" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
-        <option value="" disabled selected hidden>Building</option>
-    </select>
-    <select asp-for="RoomIndex" class="filterInput roomSelector">
-        <option value="" disabled selected hidden>Room Number</option>
-    </select> <br />
-    <select name="Hazard" class="filterInput hazardSelector" value="">
-        <option value="" disabled selected hidden>Hazard</option>
-    </select> <br />
+    <div class="row">
+        <div class="col">
+            <h2><u>Container Information</u></h2> <br />
+            <div class="row">
+                <div class="col">
+                    <label for="productName">Product Name</label> <br />
+                    <input type="text" id="productName" name="Product Name" /> <br /> <!-- Do we need to add something like "value=@Model. ProductName? How about the class="filterInput"? -->
+                </div>
+                <div class="col">
+                    <label for="containerSize">Size</label> <br />
+                    <input type="text" id="containerSize" name="Size"/> <br /> <!-- Similar to the above commment (^^^ from henceforth) -->
+                </div>
+            </div> 
+            <label typeof="containerLocation">Location</label> <br />
+            <input type="text" id="containerLocation" name="Location" /> <br /> <!-- ^^^. Also Location's box isn't the width of this inner row class. How to fix? -->
+
+            <label typeof="hazardBox">Hazards</label> <br />
+            <!-- Probaly a flex box holding all the hazards -->
+            <div class="hazardFlexBox" id="hazardBox">
+                <div>Among</div>
+                <div>Us</div>
+                <div>Sus</div>
+                <div>Sus</div>
+            </div>
+
+            <label typeof="containerNotes">Notes</label> <br />
+            <textarea id="containerNotes" name="containerNotes" rows="10" cols="30"></textarea>
+
+        </div>
+        <div class="col">
+            <h2><u>Chemicals</u></h2> <br />
+            <!-- Probally going to need some sort of class struct for the actual chemical fields box -->
+            <label for="chemSearch">Search</label> <br />
+            <input type="text" id="chemSearch" name="Search" /> <!-- Do we want some sort of value=@Model thing here, or just a call to a function? Also do we want a <br />? -->
+            <div class="row">
+                <div class="col">
+                    <!-- Filled field based on search response -->
+                    <label for="CAS#">CAS #</label> <br />
+                    <input type="text" id="CAS#" name="CAS#" readonly /> <!-- Will need a value@Model thing returned from the above searches function call -->
+
+                    <label for="chemQuantity">Quantity</label> <br />
+                    <input type="text" id="chemQuantity" name="Quantity" /> 
+                    
+                    <label for="chemManufactuer">Manufactuer</label> <br />
+                    <input type="text" id="chemManufactuer" name="Manufactuer" />
+                </div>
+                <div class="col">
+                    <!-- Filled field based on search response -->
+                    <label for="chemName">Name</label> <br />
+                    <input type="text" id="chemName" name="chemName" readonly /> <!-- Will need a value@Model thing returned from the above searches function call -->
+
+                    <label for="preferedUnit">Prefered Unit</label> <br />
+                    <input type="text" id="preferedUnit" name="preferedUnit" /> 
+
+                    <label for="catalogNumber">Catalog Number</label> <br />
+                    <input type="text" id="catalogNumber" name="catalogNumber" />
+                </div>
+            </div>
+            <!-- End of probable chem struct box thing -->
+        </div>
+    </div> <br /> <br />
+    <!--
+        <input type="text" class="filterInput" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
+        <input type="text" class="filterInput" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
+        <input type="text" class="filterInput" id="addSupervisor" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
+        <input type="text" class="filterInput" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
+    
+        <select asp-for="BuildingIndex" class="filterInput buildingSelector" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
+            <option value="" disabled selected hidden>Building</option>
+        </select>
+        <select asp-for="RoomIndex" class="filterInput roomSelector">
+            <option value="" disabled selected hidden>Room Number</option>
+        </select> <br />
+        <select name="Hazard" class="filterInput hazardSelector" value="">
+            <option value="" disabled selected hidden>Hazard</option>
+        </select> <br />
+    -->
+
     <button type="button" class="modalBtns cancelBtn" data-dismiss="modal">Cancel</button>
     <input type="submit" value="Add" class="modalBtns confirmBtn" asp-page-handler="create" />
 </form>
