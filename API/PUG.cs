@@ -56,28 +56,17 @@ namespace ChemStoreWebApp.PUG
         public struct Chemical
         {
             public int CID;
-
-            public string[] HazardIconURLs;
-
-            public string[] MolecularFormulas;
-
             public string CASNumber;
-
-            public string RecordTitle;
-
+            public string CommonName;
             public string[] Synonyms;
-
+            public string[] MolecularFormulas;
             public string MolecularWeightValue;
-
             public string MolecularWeightUnit;
-
             public string MolecularWeightCombo;
-
             public string PubChemStorageCondition;
-
             public string[] HCodes;
-
             public string PCodes;
+            public string[] HazardIconURLs;
         }
 
         public static async Task<Chemical> GetChemical(int CID)
@@ -92,17 +81,17 @@ namespace ChemStoreWebApp.PUG
             Chemical chemicalData = new()
             {
                 CID = GetCID(node),
-                HazardIconURLs = GetHazardIconURLs(node),
-                MolecularFormulas = GetMolecularFormulas(node),
                 CASNumber = GetCASNumber(node),
-                RecordTitle = GetRecordTitle(node),
+                CommonName = GetCommonName(node),
                 Synonyms = GetSymonoms(node),
+                MolecularFormulas = GetMolecularFormulas(node),
                 MolecularWeightValue = GetMolecularWeightValue(node).ToString("0.##"), // This will round to 2 decimal places
                 MolecularWeightUnit = GetMolecularWeightUnit(node),
                 MolecularWeightCombo = GetMolecularWeight(node),
                 PubChemStorageCondition = GetPubChemStorageCondition(node),
                 HCodes = GetHCodes(node),
-                PCodes = GetPCodes(node)
+                PCodes = GetPCodes(node),
+                HazardIconURLs = GetHazardIconURLs(node),
             };
 
             return chemicalData;
@@ -198,7 +187,7 @@ namespace ChemStoreWebApp.PUG
             }
         }
 
-        private static string GetRecordTitle(JsonNode obj)
+        private static string GetCommonName(JsonNode obj)
         {
             return obj["Record"]["RecordTitle"].Deserialize<string>();
         }
