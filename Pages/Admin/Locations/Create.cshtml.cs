@@ -27,16 +27,6 @@ namespace ChemStoreWebApp.Pages.Admin.Location
 
         public IActionResult OnGet()
         {
-            int[] cids = PUG.REST.GetCIDListAsync("gold").Result; // I believe this causes the system to wait for the result from GetCIDListAsync, change the search term to try other compounds rn
-
-            // Check if the search term existed
-            if (cids[0] == -1) // Returned error from PUG.REST.GetCIDListAsync. What to do on error?
-            {
-                return Page();
-            }
-
-            PUG.View.GetChemicalAsync(cids[0]);
-
             return Page();
         }
 
