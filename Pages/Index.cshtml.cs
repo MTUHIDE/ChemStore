@@ -314,20 +314,24 @@ namespace ChemStoreWebApp.Pages
             return DisplayContainers[index];
         }
 
+        /* Removed because it was stupid and it doesn't seem like it was used for anything anyway - Yasmin
         public JsonResult OnGetListItem(int containerListIndex)
         {
             var returnVal = GetListItem(containerListIndex);
-            List<string> returnList = new List<string>();
-            returnList.Add(returnVal.chem.ChemicalName);
-            returnList.Add(returnVal.chem.CasNumber);
-            returnList.Add(returnVal.supervisor.Name);
-            returnList.Add(returnVal.con.Amount.ToString());
-            returnList.Add(returnVal.con.ContainerId.ToString());
-            returnList.Add(returnVal.loc.BuildingName.ToString());
-            returnList.Add(returnVal.loc.RoomNumber);
-            returnList.Add(returnVal.chem.ChemicalHazards.ToString());
+            List<string> returnList = new()
+            {
+                returnVal.chem.ChemicalName,
+                returnVal.chem.CasNumber,
+                returnVal.supervisor.Name,
+                returnVal.con.Amount.ToString(),
+                returnVal.con.ContainerId.ToString(),
+                returnVal.loc.BuildingName.ToString(),
+                returnVal.loc.RoomNumber,
+                returnVal.chem.ChemicalHazards.ToString()
+            };
             return new JsonResult(returnList);
         }
+        */
 
         /// <summary>
         /// Runs on every search and returns a list of containers that fit the given search criteria

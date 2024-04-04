@@ -8,8 +8,8 @@ namespace ChemStoreWebApp.Models
     {
         public Chemical()
         {
-            ChemicalHazards = new HashSet<ChemicalHazards>();
             Container = new HashSet<Container>();
+            // ChemicalHazards = new HashSet<ChemicalHazards>();
         }
 
         [Key]
@@ -18,7 +18,7 @@ namespace ChemStoreWebApp.Models
         public string Manufacturer { get; set; }
         public string CatalogNumber { get; set; }
 
-        public virtual ICollection<ChemicalHazards> ChemicalHazards { get; set; }
         public virtual ICollection<Container> Container { get; set; }
+        // public virtual ICollection<ChemicalHazards> ChemicalHazards { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace ChemStoreWebApp.Models
 
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Chemical> Chemical { get; set; }
-        public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
+        // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
         public virtual DbSet<Container> Container { get; set; }
         // public virtual DbSet<Hazard> Hazard { get; set; }
         public virtual DbSet<Location> Location { get; set; }
