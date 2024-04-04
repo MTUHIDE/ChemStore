@@ -49,7 +49,7 @@ namespace ChemStoreWebApp.Models
         public virtual DbSet<Chemical> Chemical { get; set; }
         public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
         public virtual DbSet<Container> Container { get; set; }
-        public virtual DbSet<Hazard> Hazard { get; set; }
+        // public virtual DbSet<Hazard> Hazard { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Log> Log { get; set; }
 
@@ -92,6 +92,7 @@ namespace ChemStoreWebApp.Models
 
             OnModelCreatingPartial(modelBuilder);
 
+            /*
             modelBuilder.Entity<Hazard>().HasData(
                    new Hazard { HazardId = "Corrosion", Description = "Corrosive" },
                    new Hazard { HazardId = "Environment", Description = "Enviornmental Hazard" },
@@ -102,6 +103,7 @@ namespace ChemStoreWebApp.Models
                    new Hazard { HazardId = "GasCylinder", Description = "Gas Cylinder" },
                    new Hazard { HazardId = "HealthHazard", Description = "HealthHazard" },
                    new Hazard { HazardId = "Skull", Description = "Skull" });
+            */
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

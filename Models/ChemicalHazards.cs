@@ -12,6 +12,5 @@ namespace ChemStoreWebApp.Models
         public string HazardId { get; set; }
 
         public virtual Chemical CasNumberNavigation { get; set; }
-        public virtual Hazard Hazard { get; set; }
     }
 }
