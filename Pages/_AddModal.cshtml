@@ -6,64 +6,86 @@
     <div class="row">
         <div class="col">
             <h2><u>Container Information</u></h2> <br />
-            <div class="row">
+            <div class="inputDiv">
+                <input type="text" class="containerInput" placeholder="Product Name" required/> <!-- Do we need to add something like "value=@Model. ProductName? How about the class="filterInput"? -->
+            </div>
+            <div class="row" style="width:100%; margin-bottom: 10px">
                 <div class="col">
-                    <label for="productName">Product Name</label> <br />
-                    <input type="text" id="productName" name="Product Name" /> <br /> <!-- Do we need to add something like "value=@Model. ProductName? How about the class="filterInput"? -->
+                    <input type="number" class="containerInputRow" placeholder="Size" required /> <!-- Similar to the above commment (^^^ from henceforth) -->
                 </div>
                 <div class="col">
-                    <label for="containerSize">Size</label> <br />
-                    <input type="text" id="containerSize" name="Size"/> <br /> <!-- Similar to the above commment (^^^ from henceforth) -->
+                    <select class="containerInputRow">
+                        <option value="mL">mL</option>
+                        <option value="L">L</option>
+                        <option value="kL">kL</option>
+                        <option value="fl oz">fl oz</option>
+                        <option value="C">Cup(s)</option>
+                        <option value="P">Pint(s)</option>
+                        <option value="Q">Quart(s)</option>
+                        <option value="G">Gallon(s)</option>
+                    </select>
                 </div>
-            </div> 
-            <label typeof="containerLocation">Location</label> <br />
-            <input type="text" id="containerLocation" name="Location" /> <br /> <!-- ^^^. Also Location's box isn't the width of this inner row class. How to fix? -->
+            </div>
+            <div class="inputDiv">
+                <select class="containerInput" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding">
+                    <option value="" selected disabled>Building</option>
+                </select>
+            </div>
+            <div class="inputDiv">
+                <input type="number" class="containerInput" placeholder="Room" required />
+            </div>
 
             <label typeof="hazardBox">Hazards</label> <br />
             <!-- Probaly a flex box holding all the hazards -->
             <div class="hazardFlexBox" id="hazardBox">
-                <div>Among</div>
-                <div>Us</div>
-                <div>Sus</div>
-                <div>Sus</div>
+                <span class="hazardx hazard-exclamation"></span>
+                <span class="hazardx hazard-skull"></span>
+                <span class="hazardx hazard-gas"></span>
+                <span class="hazardx hazard-environment"></span>
+                <span class="hazardx hazard-bomb"></span>
+                <span class="hazardx hazard-corrosion"></span>
+                <span class="hazardx hazard-flame-circle"></span>
+                <span class="hazardx hazard-flame"></span>
+                <span class="hazardx hazard-health"></span>
             </div>
-
-            <label typeof="containerNotes">Notes</label> <br />
-            <textarea id="containerNotes" name="containerNotes" rows="10" cols="30"></textarea>
+            <textarea class="containerInput" id="containerNotes" name="containerNotes" rows="10" cols="30" placeholder="Notes" style="margin-bottom: 15px;"></textarea>
 
         </div>
         <div class="col">
-            <h2><u>Chemicals</u></h2> <br />
+            <h2><u>Chemicals</u></h2> 
             <!-- Probally going to need some sort of class struct for the actual chemical fields box -->
-            <label for="chemSearch">Search</label> <br />
-            <input type="text" id="chemSearch" name="Search" /> <!-- Do we want some sort of value=@Model thing here, or just a call to a function? Also do we want a <br />? -->
+            <div class="inputDiv">
+                <input type="text" id="chemSearch" name="Search" placeholder="Search" class="containerInput"/> <!-- Do we want some sort of value=@Model thing here, or just a call to a function? Also do we want a <br />? -->
+            </div>
             <div class="row">
                 <div class="col">
                     <!-- Filled field based on search response -->
-                    <label for="CAS#">CAS #</label> <br />
-                    <input type="text" id="CAS#" name="CAS#" readonly /> <!-- Will need a value@Model thing returned from the above searches function call -->
-
-                    <label for="chemQuantity">Quantity</label> <br />
-                    <input type="text" id="chemQuantity" name="Quantity" /> 
-                    
-                    <label for="chemManufactuer">Manufactuer</label> <br />
-                    <input type="text" id="chemManufactuer" name="Manufactuer" />
+                    <div class="inputDiv">
+                        <input type="text" id="CAS#" name="CAS#" readonly placeholder="CAS #" class="containerInput" /> <!-- Will need a value@Model thing returned from the above searches function call -->
+                    </div>
+                    <div class="inputDiv">
+                        <input type="text" id="chemQuantity" name="Quantity" placeholder="Quantity" class="containerInput" />
+                    </div>
+                    <div class="inputDiv">
+                        <input type="text" id="chemManufactuer" name="Manufactuer" placeholder="Manufactuer" class="containerInput" />
+                    </div>
                 </div>
                 <div class="col">
                     <!-- Filled field based on search response -->
-                    <label for="chemName">Name</label> <br />
-                    <input type="text" id="chemName" name="chemName" readonly /> <!-- Will need a value@Model thing returned from the above searches function call -->
-
-                    <label for="preferedUnit">Prefered Unit</label> <br />
-                    <input type="text" id="preferedUnit" name="preferedUnit" /> 
-
-                    <label for="catalogNumber">Catalog Number</label> <br />
-                    <input type="text" id="catalogNumber" name="catalogNumber" />
+                    <div class="inputDiv">
+                        <input type="text" id="chemName" name="chemName" readonly placeholder="Name" class="containerInput" /> <!-- Will need a value@Model thing returned from the above searches function call -->
+                    </div>
+                    <div class="inputDiv">
+                        <input type="text" id="preferedUnit" name="preferedUnit" placeholder="Prefered Unit" class="containerInput" />
+                    </div>
+                    <div class="inputDiv">
+                        <input type="text" id="catalogNumber" name="catalogNumber" placeholder="Catalog #" class="containerInput" />
+                    </div>
                 </div>
             </div>
             <!-- End of probable chem struct box thing -->
         </div>
-    </div> <br /> <br />
+    </div> <br/>
     <!--
         <input type="text" class="filterInput" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
         <input type="text" class="filterInput" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />

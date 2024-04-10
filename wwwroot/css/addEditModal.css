@@ -55,7 +55,10 @@
 
 .row
 {
-  display: fles;
+  display: flex;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -77,6 +80,39 @@
     width: 100px;
     margin: 10px;
     text-align: center;
-    line-height: 75px;
-    font-size: 30px;
+    line-height: 5px;
+    font-size: 10px;
+}
+
+.containerInput {
+    width: 286.91px;
+    margin-bottom: 1px;
+    padding: 0.4vw 0.7vw;
+    border: 1px solid var(--accnt-grey);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.containerInputRow {
+    width: 100%;
+    margin-bottom: 1px;
+    padding: 0.4vw 0.7vw;
+    border: 1px solid var(--accnt-grey);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.inputDiv {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.hazardx {
+    width: 80px;
+    height: 80px;
+    display: block;
+    background-size: cover;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
