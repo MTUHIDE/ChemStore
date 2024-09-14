@@ -238,7 +238,7 @@
                                             <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                                         </td>
                                         <td class="b">
-                                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.ChemicalHazards">Safety Data Sheet</a>
+                                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">Safety Data Sheet</a> <!-- TODO: item.chem.ChemicalHazards -->
                                         </td>
                                     </tr>
                                 }
@@ -503,6 +503,7 @@
             // open filter
             $('.miniToggle').css('display', 'none');
             $('#search.col-sm-4.col-lg-3.filterLeft').attr('style', 'flex: 0 0 25%');
+            $('#search.col-sm-4.col-lg-3.filterLeft').css('overflow-y', 'scroll');
 
             // show inputs with delay for smoother animation
             setTimeout(function(){
@@ -518,6 +519,7 @@
                         
             $('#search.col-sm-4.col-lg-3.filterLeft').attr('style', 'flex: 0 0 3.5vw');
             $('#search.col-sm-4.col-lg-3.filterLeft').css('padding', '1vw');
+            $('#search.col-sm-4.col-lg-3.filterLeft').css('overflow-y', 'clip');
 
             // show mini filter bar
             $('.miniToggle').css('display', 'block');
