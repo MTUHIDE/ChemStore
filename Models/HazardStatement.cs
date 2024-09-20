@@ -9,8 +9,8 @@ namespace ChemStoreWebApp.Models
         [Key]
         public char HCode { get; set; }
         public string Statements { get; set; }
-        public string Category { get; set; }
         public int Class { get; set; }
+        public string Category { get; set; }       
         public int SignalWord { get; set; }
     }
 

@@ -48,7 +48,7 @@ namespace ChemStoreWebApp.Models
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Chemical> Chemical { get; set; }
         // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
-        public virtual DbSet<Container> Container { get; set; }
+        //public virtual DbSet<Container> Container { get; set; }
         // public virtual DbSet<Hazard> Hazard { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<Log> Log { get; set; }
@@ -112,7 +112,7 @@ namespace ChemStoreWebApp.Models
         {
             var changeList = from e in ChangeTracker.Entries()
                              where e.State != EntityState.Detached && e.State != EntityState.Unchanged
-                             && (e.Entity is Container || e.Entity is Account || e.Entity is Chemical)
+                             && (e.Entity is X_Container || e.Entity is Account || e.Entity is Chemical)
                              select e;
 
             List<Log> logList = new List<Log>();
@@ -130,10 +130,10 @@ namespace ChemStoreWebApp.Models
                     UserID = userId
                 };
                 //Container changes
-                if (entity.Entity is Container container)
+                if (entity.Entity is X_Container container)
                 {
                     newLog.table = "container";
-                    newLog.key = container.ContainerId.ToString();
+                    newLog.key = container.ContainerID.ToString();
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
@@ -155,7 +155,7 @@ namespace ChemStoreWebApp.Models
                                     logList.Add(new Log
                                     {
                                         DateTime = DateTime.Now,
-                                        key = container.ContainerId.ToString(),
+                                        key = container.ContainerID.ToString(),
                                         table = "container",
                                         Action = ((int)Actions.ContainerEdited)
                                     });
