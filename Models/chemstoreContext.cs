@@ -48,7 +48,7 @@ namespace ChemStoreWebApp.Models
         public virtual DbSet<Account> Account { get; set; }
         // public virtual DbSet<Chemical> Chemical { get; set; }
         // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
-        public virtual DbSet<Container> Container { get; set; }
+        //public virtual DbSet<Container> Container { get; set; }
         // public virtual DbSet<Hazard> Hazard { get; set; }
         public virtual DbSet<Location> Location { get; set; }
         public virtual DbSet<X_Log> Log { get; set; }
@@ -133,11 +133,10 @@ namespace ChemStoreWebApp.Models
                     UserID = userId
                 };
                 //Container changes
-                if (entity.Entity is Container container)
+                if (entity.Entity is X_Container container)
                 {
-                    newLog.Table = "container";
-                    //Assumed Key1 to reference container TODO: review and see if log needs container information
-                    newLog.Key1 = container.ContainerId.ToString();
+                    newLog.table = "container";
+                    newLog.key = container.ContainerID.ToString();
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
