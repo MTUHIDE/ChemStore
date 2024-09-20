@@ -159,7 +159,7 @@ namespace ChemStoreWebApp.Models
                                     logList.Add(new X_Log
                                     {
                                         Timestamp = DateTime.Now,
-                                        Key1 = container.ContainerId.ToString(),
+                                        Key1 = container.ContainerID.ToString(),
                                         Table = "container",
                                         Action = ((int)Actions.ContainerEdited)
                                     });
