@@ -40,9 +40,6 @@
                             <input type="text" class="filterInput" placeholder="Chemical Name"/>
                         </div>
                         <div class="row filterRow">
-                            <input type="text" class="filterInput" placeholder="CAS Number" asp-for="searchCAS"/>
-                        </div>
-                        <div class="row filterRow">
                             <input type="email" class="filterInput" placeholder="PI Email" asp-for="searchEmail"/>
                         </div>
                         <div class="row filterRow">
@@ -131,6 +128,7 @@
                         <thead>
                         </thead>
                         <tbody>
+                            @*
                             @if (Model.DisplayContainers.Count() > 0)
                             {
                                 var count = Model.DisplayContainers.Count();
@@ -184,7 +182,7 @@
                                             @Html.DisplayFor(modelItem => item.chem.CasNumber)
                                         </td>
                                         <td class="a">
-                                            @*TODO: actually implement conditional rendering based on data*@
+                                            // TODO: actually implement conditional rendering based on data
                                             <span class="hazards">
                                                 @if (i % 4 == 0)
                                                 {
@@ -247,6 +245,8 @@
                             {
                                 <div class="noResults">No Results Found</div>
                             }
+                            *@
+                            <div class="noResults">No Results Found</div>
                         </tbody>
                     </table>
                 </form>

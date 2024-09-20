@@ -212,17 +212,17 @@ namespace ChemStoreWebApp.Pages
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
             //  EF.Functions.Like( is necesary to get this server side (can't use .contains()
-            var containers = from con in _context.Container
-                             join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
-                             join acc in _context.Account on con.SupervisorId equals acc.AccountId
+            var containers = from con in _context.X_Container
+                             join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
+                             // join acc in _context.Account on con.SupervisorId equals acc.AccountId
                              join loc in _context.Location on con.RoomId equals loc.RoomId
-                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(chem.CasNumber, "%" + searchCAS + "%")) &&
-                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(chem.ChemicalName, "%" + searchString + "%")) &&
+                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(conChem.ChemicalCAS, "%" + searchCAS + "%")) &&
+                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(con.Product_Name, "%" + searchString + "%")) &&
                                    (string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
                                    (string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) &&
-                                   (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) &&
-                                   (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
-                                   (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment))
+                                   // (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) && // 
+                                   // (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) && // do we even need to keep this? 
+                                   // (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment)) // should use location
                              select new DisplayContainer(con, chem, loc, acc);
 
             return containers;
@@ -366,13 +366,13 @@ namespace ChemStoreWebApp.Pages
             //Has to be sorted on reload with current setup
             IOrderedEnumerable<DisplayContainer> temp = sortMethod switch
             {
-                1 => DisplayContainers.OrderByDescending(c => c.chem.ChemicalName),
+                1 => DisplayContainers.OrderByDescending(c => c.con.Product_Name),
                 2 => DisplayContainers.OrderBy(c => c.con.CasNumber),
                 3 => DisplayContainers.OrderByDescending(c => c.con.CasNumber),
-                4 => DisplayContainers.OrderBy(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
-                5 => DisplayContainers.OrderByDescending(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
+                4 => DisplayContainers.OrderBy(c => c.loc.BuildingName).ThenBy(c => c.con.Product_Name),
+                5 => DisplayContainers.OrderByDescending(c => c.loc.BuildingName).ThenBy(c => c.con.Product_Name),
 
-                _ => DisplayContainers.OrderBy(c => c.chem.ChemicalName),
+                _ => DisplayContainers.OrderBy(c => c.con.Product_Name)
             };
 
             //Always sort by size of container
@@ -383,11 +383,11 @@ namespace ChemStoreWebApp.Pages
         public PartialViewResult OnGetEditModal(long conid)
         {
             var container = (from con in _context.Container
-                             join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
+                             join conChem in _context.ContainerChemicals on con.id equals conChem.ContainerID
                              where con.ContainerId == conid
                              select new ViewModels.ContainerViewModel
                              {
-                                 ChemicalName = chem.ChemicalName,
+                                 ContainerName = con.ProductName,
                                  ContainerId = con.ContainerId,
                                  Unit = con.Unit,
                                  Amount = con.Amount,
