@@ -46,7 +46,7 @@ namespace ChemStoreWebApp.Models
 
 
         public virtual DbSet<Account> Account { get; set; }
-        public virtual DbSet<Chemical> Chemical { get; set; }
+        // public virtual DbSet<Chemical> Chemical { get; set; }
         // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
         public virtual DbSet<Container> Container { get; set; }
         // public virtual DbSet<Hazard> Hazard { get; set; }
@@ -112,7 +112,8 @@ namespace ChemStoreWebApp.Models
         {
             var changeList = from e in ChangeTracker.Entries()
                              where e.State != EntityState.Detached && e.State != EntityState.Unchanged
-                             && (e.Entity is Container || e.Entity is Account || e.Entity is Chemical)
+                             // TODO: Put ContainerChemicals here instead of Chemical??
+                             && (e.Entity is Container || e.Entity is Account || /*e.Entity is Chemical*/)
                              select e;
 
             List<Log> logList = new List<Log>();
@@ -168,10 +169,12 @@ namespace ChemStoreWebApp.Models
                             break;
                     }
                 }
+                // TODO: Make this log ContainerChemicals changes? I guess?
+                /*
                 else if (entity.Entity is Chemical chemical)
                 {
                     //newLog.ChemicalCAS = chemical.CasNumber;
-                    newLog.key = chemical.CasNumber; // TODO: REMOVE
+                    // newLog.key = chemical.CasNumber; // TODO: REMOVE
                     newLog.key = "chemical";
                     switch (entity.State)
                     {
@@ -188,6 +191,7 @@ namespace ChemStoreWebApp.Models
                             break;
                     }
                 }
+                */
                 else if (entity.Entity is Account account)
                 //Account changes. This will need to be modified if we modify the logic
                 {
