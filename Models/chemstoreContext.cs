@@ -51,7 +51,7 @@ namespace ChemStoreWebApp.Models
         public virtual DbSet<Container> Container { get; set; }
         // public virtual DbSet<Hazard> Hazard { get; set; }
         public virtual DbSet<Location> Location { get; set; }
-        public virtual DbSet<Log> Log { get; set; }
+        public virtual DbSet<X_Log> Log { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -115,7 +115,7 @@ namespace ChemStoreWebApp.Models
                              && (e.Entity is Container || e.Entity is Account || e.Entity is Chemical)
                              select e;
 
-            List<Log> logList = new List<Log>();
+            List<X_Log> logList = new List<X_Log>();
 
             string uname = httpContext.HttpContext.User.Identity.Name;
             int userId = (from a in Account
@@ -124,16 +124,19 @@ namespace ChemStoreWebApp.Models
 
             foreach (var entity in changeList)
             {
-                Log newLog = new Log
+                //old log converted to X_Log
+                X_Log newLog = new X_Log
                 {
-                    DateTime = DateTime.Now,
+                    //Datetime converted to Timestamp
+                    Timestamp = DateTime.Now,
                     UserID = userId
                 };
                 //Container changes
                 if (entity.Entity is Container container)
                 {
-                    newLog.table = "container";
-                    newLog.key = container.ContainerId.ToString();
+                    newLog.Table = "container";
+                    //Assumed Key1 to reference container TODO: review and see if log needs container information
+                    newLog.Key1 = container.ContainerId.ToString();
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
@@ -152,11 +155,11 @@ namespace ChemStoreWebApp.Models
                                 //other edits besides Location made
                                 if (modifiedFields.Any(a => a.Metadata.Name != "RoomId"))
                                 {
-                                    logList.Add(new Log
+                                    logList.Add(new X_Log
                                     {
-                                        DateTime = DateTime.Now,
-                                        key = container.ContainerId.ToString(),
-                                        table = "container",
+                                        Timestamp = DateTime.Now,
+                                        Key1 = container.ContainerId.ToString(),
+                                        Table = "container",
                                         Action = ((int)Actions.ContainerEdited)
                                     });
                                 }
@@ -171,8 +174,6 @@ namespace ChemStoreWebApp.Models
                 else if (entity.Entity is Chemical chemical)
                 {
                     //newLog.ChemicalCAS = chemical.CasNumber;
-                    newLog.key = chemical.CasNumber; // TODO: REMOVE
-                    newLog.key = "chemical";
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
@@ -191,20 +192,20 @@ namespace ChemStoreWebApp.Models
                 else if (entity.Entity is Account account)
                 //Account changes. This will need to be modified if we modify the logic
                 {
-                    newLog.key = account.AccountId.ToString();
-                    newLog.table = "account";
+                    newLog.Key1 = account.AccountId.ToString();
+                    newLog.Table = "account";
                     //if they are added and they aren't just a member, or their new role is less their old role, they have been promoted
                     if ((entity.State == EntityState.Added && ((int)entity.CurrentValues["Role"]) != ((int)Roles.Member)) ||
                         (entity.State == EntityState.Modified && (((int)entity.CurrentValues["Role"]) < ((int)entity.OriginalValues["Role"]))))
                     {
                         newLog.Action = ((int)Actions.UserPromoted);
-                        newLog.Description = $"Promoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"])}";
+                        newLog.Notes = $"Promoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"])}";
                     }
                     else if (entity.State == EntityState.Deleted ||
                       (entity.State == EntityState.Modified && (((int)entity.CurrentValues["Role"]) > ((int)entity.OriginalValues["Role"]))))
                     {
                         newLog.Action = ((int)Actions.UserDemoted);
-                        newLog.Description = $"Demoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {(entity.State == EntityState.Deleted ? "Member" : EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"]))}";
+                        newLog.Notes = $"Demoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {(entity.State == EntityState.Deleted ? "Member" : EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"]))}";
                     }
                 }
 

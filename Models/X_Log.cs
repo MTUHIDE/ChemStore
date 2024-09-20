@@ -6,6 +6,8 @@ using System.Numerics;
 
 namespace ChemStoreWebApp.Models
 {
+    //9-18-2024 change list
+    //chemstoreContext: Remapped functionality that was identical to old log
     public partial class X_Log
     {
 
