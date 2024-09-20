@@ -26,8 +26,8 @@
 //        public string RoomId { get; set; }
 //        public int SupervisorId { get; set; }
 
-//        public virtual Chemical CasNumberNavigation { get; set; }
-//        public virtual Location Room { get; set; }
-//        public virtual Account Supervisor { get; set; }
-//    }
-//}
+        // public virtual Chemical CasNumberNavigation { get; set; }
+        public virtual Location Room { get; set; }
+        public virtual Account Supervisor { get; set; }
+    }
+}
