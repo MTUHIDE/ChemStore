@@ -54,7 +54,7 @@ namespace ChemStoreWebApp.Models
         public long? ContainerID { get; set; }
         public string Description { get; set; }
 
-        public virtual Account User { get; set; }
+        //public virtual Account User { get; set; }
 
 
     }

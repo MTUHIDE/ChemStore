@@ -23,18 +23,23 @@ namespace ChemStoreWebApp.Pages.Admin.Account
         }
 
         [BindProperty]
-        public Models.Account Account { get; set; }
+        //public Models.User User { get; set; } This was the orginal line (with Account in place of User ofc) but it said something about hiding base model. Is this safe to delete?
+        public new Models.User User { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
+            /*
+            // New User model can't have null Id's. Is this safe to delete?
             if (id == null)
             {
                 return NotFound();
             }
+            */
 
-            Account = await _context.Account.FirstOrDefaultAsync(m => m.AccountId == id);
+            User = await _context.User.FirstOrDefaultAsync(m => m.UserID == id);
 
-            if (Account == null)
+            if (User == null)
             {
                 return NotFound();
             }
@@ -50,7 +55,7 @@ namespace ChemStoreWebApp.Pages.Admin.Account
                 return Page();
             }
 
-            _context.Attach(Account).State = EntityState.Modified;
+            _context.Attach(User).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +64,7 @@ namespace ChemStoreWebApp.Pages.Admin.Account
             catch (DbUpdateConcurrencyException)
             {
                 /*
-                if (!LocationExists(Account.AccountId))
+                if (!LocationExists(User.UserId))
                 {
                     return NotFound();
                 }

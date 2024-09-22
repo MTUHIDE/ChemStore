@@ -245,9 +245,12 @@ namespace ChemStoreWebApp.Pages
                                  where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
                                  select c).Single();
                 con.CasNumber = Request.Form["Cas Number"];
-                con.SupervisorId = (from s in _context.Account
+                /*
+                // Orginal, but supervisorID is now taken from Location
+                con.SupervisorId = (from s in _context.User
                                     where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
                                     select s.AccountId).FirstOrDefault();
+                */
                 con.Amount = Int32.Parse(Request.Form["Amount"]);
                 con.RoomId = (from l in _context.Location
                               where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
@@ -276,8 +279,14 @@ namespace ChemStoreWebApp.Pages
             {
                 var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
                 newCon.RoomId = location.RoomId;
+                /*
+                // Orginal. but supversiorName would have to be found by connecting the supervisorID from location connecting back to User.Name
                 var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
-                newCon.SupervisorId = supervisor.AccountId;
+                */
+                /*
+                // Orginal. But supervisorID is grabbed from location now
+                //newCon.SupervisorId = supervisor.AccountId;
+                */
                 newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
                 addToDatabase(newCon);
             }
@@ -405,7 +414,7 @@ namespace ChemStoreWebApp.Pages
         }
         public IActionResult OnGetAutoComplete(string term)
         {
-            var names = _context.Account.Where(a => a.Name.Contains(term)).Select(a => a.Name).Take(3).ToList();
+            var names = _context.User.Where(a => a.Name.Contains(term)).Select(a => a.Name).Take(3).ToList();
             return new JsonResult(names);
         }
     }

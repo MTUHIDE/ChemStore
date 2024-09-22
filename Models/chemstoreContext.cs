@@ -45,7 +45,7 @@ namespace ChemStoreWebApp.Models
 
 
 
-        public virtual DbSet<Account> Account { get; set; }
+        //public virtual DbSet<Account> Account { get; set; }
         // public virtual DbSet<Chemical> Chemical { get; set; }
         // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
         //public virtual DbSet<Container> Container { get; set; }
@@ -113,15 +113,15 @@ namespace ChemStoreWebApp.Models
             var changeList = from e in ChangeTracker.Entries()
                              where e.State != EntityState.Detached && e.State != EntityState.Unchanged
                              // TODO: Put ContainerChemicals here instead of Chemical??
-                             && (e.Entity is Container || e.Entity is Account || /*e.Entity is Chemical*/)
+                             && (e.Entity is X_Container || e.Entity is User || /*e.Entity is Chemical*/)
                              select e;
 
             List<X_Log> logList = new List<X_Log>();
 
             string uname = httpContext.HttpContext.User.Identity.Name;
-            int userId = (from a in Account
-                          where a.Email == uname
-                          select a.AccountId).FirstOrDefault();
+            int userId = (from a in User
+                          where a.Username == uname
+                          select a.UserID).FirstOrDefault();
 
             foreach (var entity in changeList)
             {
@@ -135,8 +135,8 @@ namespace ChemStoreWebApp.Models
                 //Container changes
                 if (entity.Entity is X_Container container)
                 {
-                    newLog.table = "container";
-                    newLog.key = container.ContainerID.ToString();
+                    newLog.Table = "container";
+                    newLog.Key1 = container.ContainerID.ToString();
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
@@ -194,10 +194,10 @@ namespace ChemStoreWebApp.Models
                     }
                 }
                 */
-                else if (entity.Entity is Account account)
+                else if (entity.Entity is User account)
                 //Account changes. This will need to be modified if we modify the logic
                 {
-                    newLog.Key1 = account.AccountId.ToString();
+                    newLog.Key1 = account.UserID.ToString();
                     newLog.Table = "account";
                     //if they are added and they aren't just a member, or their new role is less their old role, they have been promoted
                     if ((entity.State == EntityState.Added && ((int)entity.CurrentValues["Role"]) != ((int)Roles.Member)) ||
