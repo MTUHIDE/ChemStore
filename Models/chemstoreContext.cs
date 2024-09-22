@@ -66,7 +66,7 @@ namespace ChemStoreWebApp.Models
 
             //ContainerChemicals (composite keys)
             modelBuilder.Entity<ContainerChemicals>()
-                .HasKey(a => new { a.ContainerID, a.ChemicalCAS });
+                .HasKey(a => new { a.ContainerID, a.PubchemCID });
 
             //HazardPrecaution (composite keys)
             modelBuilder.Entity<HazardPrecaution>()
