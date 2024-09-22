@@ -7,11 +7,11 @@ namespace ChemStoreWebApp.Models
 {
     public partial class RolePermissions
     {
-        [Key]
+        // Composite primary key, handled in chemstoreContext
         public int RoleID { get; set; }
-        [Key]
+        // Composite primary key, handled in chemstoreContext
         public int LocationID { get; set; }
-        [Key]
+        // Composite primary key, handled in chemstoreContext
         public int Permission { get; set; }
         public bool HasPermission { get; set; }
 

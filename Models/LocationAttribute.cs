@@ -7,9 +7,9 @@ namespace ChemStoreWebApp.Models
 {
     public partial class LocationAttribute
     {
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public int LocationID { get; set; }
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public string Key { get; set; }
         public string Value { get; set; }
 

@@ -8,9 +8,9 @@ namespace ChemStoreWebApp.Models
 {
     public partial class ContainerChemicals
     {
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public int ContainerID { get; set; }
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public Int64 ChemicalCAS { get; set; }
         public int PubchemCID { get; set; }
         public double Quantity { get; set; }

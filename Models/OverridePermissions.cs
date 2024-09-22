@@ -8,11 +8,11 @@ namespace ChemStoreWebApp.Models
 {
     public partial class OverridePermissions
     {
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public int UserID { get; set; }
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public int LocationID { get; set; }
-        //Primary Key (in chemstoreContext)
+        // Composite primary key, handled in chemstoreContext
         public int Permission { get; set; }
         public bool HasPermission { get; set; }
 
