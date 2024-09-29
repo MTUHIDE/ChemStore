@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -85,6 +86,7 @@ public enum Buildings
     WidmaierHouse   
 }
 
+
 namespace ChemStoreWebApp.Models
 {
     public partial class Location
@@ -105,3 +107,4 @@ namespace ChemStoreWebApp.Models
         public virtual ICollection<Container> Container { get; set; }
     }
 }
+*/

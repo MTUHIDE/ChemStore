@@ -22,11 +22,12 @@ namespace ChemStoreWebApp.Pages.Admin.Account
             _context = context;
         }
 
-        public IList<Models.Account> Account { get;set; }
+        // public IList<Models.User> User { get;set; } // This is orginal line. Hides an inherited model. Is this safe to delete?
+        public new IList<Models.User> User { get; set; }
 
         public async Task OnGetAsync()
         {
-            Account = await _context.Account.ToListAsync();
+            User = await _context.User.ToListAsync();
         }
     }
 }

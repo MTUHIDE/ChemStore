@@ -2,10 +2,20 @@
 
 <link rel="stylesheet" href="/css/addEditModal.css" asp-append-version="true" />
 
-<form method="post" id="form1" class="modalForm">
+<form method="post" id="form1" class="modalForm" x-data="{joe:null}">
     <input type="text" class="filterInput" name="Chemical Name" placeholder="Chemical Name" value=@Model.ChemicalName /> <br />
     <input type="text" class="filterInput" name="CAS Number" placeholder="CAS Number" value=@Model.CasNumber /> <br />
     <input type="text" class="filterInput" id="addSupervisor" name="Supervisor" placeholder="Supervisor" value=@Model.Supervisor /> <br />
+
+
+
+    <select asp-for="Unit" class="filterInput unitSelector" asp-items="Html.GetEnumSelectList<Units>()">
+        <option value="" disabled selected>Units</option>
+    </select> <br />
+
+    
+
+
     <input type="text" class="filterInput" name="Amount" placeholder="Amount" value=@Model.Amount /> <br />
     <select asp-for="BuildingIndex" class="filterInput buildingSelector" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
         <option value="" disabled selected hidden>Building</option>

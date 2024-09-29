@@ -22,7 +22,7 @@ namespace ChemStoreWebApp.Pages
             _context = context;
         }
        
-        public List<Log> LogEntries { get; set; }
+        public List<X_Log> LogEntries { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string searchAction { get; set; }
@@ -59,7 +59,7 @@ namespace ChemStoreWebApp.Pages
             return date?.Equals(DateTime.MinValue) ?? true;
         }
 
-        public IQueryable<Log> validSearchItems(IQueryable<Log> log, bool ignoreCase)
+        public IQueryable<X_Log> validSearchItems(IQueryable<X_Log> log, bool ignoreCase)
         {
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
@@ -68,11 +68,11 @@ namespace ChemStoreWebApp.Pages
             var logs = from entry in log
                        where (string.IsNullOrEmpty(searchAction)  || entry.Action.ToString().Equals(searchAction)) &&
                              (string.IsNullOrEmpty(searchRole)    || (entry.User == null ? true : entry.User.Role.ToString().Equals(searchRole))) &&
-                             (string.IsNullOrEmpty(searchUser)    || (entry.User == null ? true : EF.Functions.Like(entry.User.Email, "%" + searchUser + "%"))) &&
-                             (string.IsNullOrEmpty(searchDetails) || (entry.Description == null ? true : EF.Functions.Like(entry.Description, "%" + searchDetails + "%"))) &&
-                             (string.IsNullOrEmpty(containerID)   || (entry.ContainerID == null ? true : EF.Functions.Like(entry.ContainerID.ToString(), "%" + containerID + "%"))) &&
-                             (dateNullOrEmpty(startTime) || entry.DateTime >= startTime) &&
-                             (dateNullOrEmpty(endTime) || entry.DateTime <= endTime)
+                             //(string.IsNullOrEmpty(searchUser)    || (entry.User == null ? true : EF.Functions.Like(entry.User.Email, "%" + searchUser + "%"))) &&
+                             (string.IsNullOrEmpty(searchDetails) || (entry.Notes == null ? true : EF.Functions.Like(entry.Notes, "%" + searchDetails + "%"))) &&
+                             //(string.IsNullOrEmpty(containerID)   || (entry.ContainerID == null ? true : EF.Functions.Like(entry.ContainerID.ToString(), "%" + containerID + "%"))) &&
+                             (dateNullOrEmpty(startTime) || entry.Timestamp >= startTime) &&
+                             (dateNullOrEmpty(endTime) || entry.Timestamp <= endTime)
                        select entry;
 
             return logs;
@@ -84,13 +84,15 @@ namespace ChemStoreWebApp.Pages
         /// <returns></returns>
         public async Task OnGetAsync()
         {
-            var log = _context.Log.AsQueryable();
+            var log = _context.X_Log.AsQueryable();
 
             await log.ForEachAsync((item) =>
             {
+                /* Error below from log to X_Log conversion
                 item.User = (from a in _context.Account
                              where a.AccountId == item.UserID
                              select a).FirstOrDefault();
+                */
             });
 
             //Filter the results if text has been entered in one of the parameters
@@ -110,23 +112,22 @@ namespace ChemStoreWebApp.Pages
             }
             prevSort = sortMethod;
 
+            /* Issues occured when switching from log to X_Log
             IOrderedEnumerable<Log> temp = sortMethod switch
             {
-                1 => LogEntries.OrderBy(c => c.DateTime),
+                1 => LogEntries.OrderBy(c => c.Timestamp),
                 //Checks if the entry is null or not and puts the null values at the end
-                2 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenBy(c => c.User?.Email),
-                3 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Email)).ThenByDescending(c => c.User?.Email),
+                //username was email before log to X_log Switch
+                2 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Username)).ThenBy(c => c.User?.Username),
+                3 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.User?.Username)).ThenByDescending(c => c.User?.Username),
                 4 => LogEntries.OrderBy(c => c.Action.HasValue).ThenBy(c => c.Action),
                 5 => LogEntries.OrderBy(c => c.Action.HasValue).ThenByDescending(c => c.Action),
-                6 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenBy(c => c.Description),
-                7 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Description)).ThenByDescending(c => c.Description),
-                8 => LogEntries.OrderBy(c => c.table).ThenBy(c => c.table),
-                9 => LogEntries.OrderByDescending(c => c.table).ThenBy(c => c.table),
-                10 => LogEntries.OrderBy(c => c.key).ThenBy(c => c.key),
-                11 => LogEntries.OrderByDescending(c => c.key).ThenBy(c => c.key),
+                6 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Notes)).ThenBy(c => c.Notes),
+                7 => LogEntries.OrderBy(c => String.IsNullOrEmpty(c.Notes)).ThenByDescending(c => c.Notes
 
-                _ => LogEntries.OrderByDescending(c => c.DateTime),
+                _ => LogEntries.OrderByDescending(c => c.Timestamp),
             };
+            
             
             //Order by time if thats not already the sorted by category
             if(sortMethod != 1 && sortMethod != 0)
@@ -135,6 +136,7 @@ namespace ChemStoreWebApp.Pages
             }
 
             LogEntries = temp.ToList();
+            */
         }
     }
 }

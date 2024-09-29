@@ -31,13 +31,14 @@ namespace ChemStoreWebApp.Pages.Admin.Account
         }
 
         [BindProperty]
-        public Models.Account Account { get; set; }
+        // public Models.User User { get; set; } // This was the orginal Line but it hides an inherited model. Is this safe to delete?
+        public new Models.User User { get; set; }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid && Account.Department != null && Account.Role != null)
+            if (ModelState.IsValid && User.DepartmentID != null) // (... && Account.RoleID != null) was orginally on here since the old Account model roleID was nullable, but User's is not. Is this safe to delete?
             {
-                _context.Account.Add(Account);
+                _context.User.Add(User);
                 await _context.SaveChangesAsync();
 
                 return RedirectToPage("./Index");
