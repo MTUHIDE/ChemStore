@@ -14,13 +14,17 @@ namespace ChemStoreWebApp.Utilities
         public X_Location loc { get; set; } // saves the location data for the container
         public User supervisor { get; set; } // saves the user (supervisor) data for the container. This will probaly need to first be found through location's supervisorID
 
-        public DisplayContainer(X_Container container, /*Chemical chemical,*/ X_Location location /*,
+        public ContainerChemicals conChem { get; set; }
+
+        public DisplayContainer(X_Container container, /*Chemical chemical,*/ X_Location location, ContainerChemicals conChemicals /*,
             User user*/)
         {
             //chem = chemical;
             loc = location;
             //supervisor = user;
             con = container;
+
+            conChem = conChemicals;
         }
     }
 }

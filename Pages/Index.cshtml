@@ -1,5 +1,6 @@
 ﻿@page
 @model ChemStoreWebApp.Pages.SearchModel
+@using ChemStoreWebApp.Models.Enums
 @using ChemStoreWebApp.Utilities
 
 @{
@@ -46,9 +47,9 @@
                             <input type="text" class="filterInput" placeholder="Hazard"/>
                         </div>
                         <div class="row filterRow">
-                            <select class="filterInput" asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" >
+                            @* <select class="filterInput" asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" >
                                 <option value="" selected disabled>Building</option>
-                            </select>
+                            </select> *@
                         </div>
                         <div class="row filterRow">
                             <input type="number" class="filterInput" placeholder="Room Number" />
@@ -57,9 +58,9 @@
                             <input type="number" class="filterInput" placeholder="Container Size" asp-for="searchSize"/>
                         </div>
                         <div class="row filterRow">
-                            <select class="filterInput" asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                            @* <select class="filterInput" asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
                                 <option value="" selected disabled>Units</option>
-                            </select>
+                            </select> *@
                         </div>
                         <div class="row filterRow">
                             <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>

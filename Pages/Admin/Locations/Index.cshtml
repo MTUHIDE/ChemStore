@@ -25,20 +25,20 @@
 <table class="table">
     <thead>
         <tr>
-            <th></th>
+            @* <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Location[0].RoomNumber)
             </th> 
             <th>
                 @Html.DisplayNameFor(model => model.Location[0].BuildingName)
             </th>
-            <th></th>
+            <th></th> *@
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Location) {
         <tr>
-            <td>
+            @* <td>
                         <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.RoomId">Edit</a>
             </td>
             <td>
@@ -51,7 +51,7 @@
                   <button type="button" class="searchPageBtns redBtn" id="delModalBtn" onclick="updateForm('@item.RoomId')" data-toggle="modal" data-target="#confirmationModal">
                         Delete
                   </button>
-            </td>
+            </td> *@
         </tr>
 }
     </tbody>

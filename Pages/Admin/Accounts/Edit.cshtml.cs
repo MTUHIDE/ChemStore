@@ -77,9 +77,9 @@ namespace ChemStoreWebApp.Pages.Admin.Account
             return RedirectToPage("./Index");
         }
 
-        private bool LocationExists(string id)
+        private bool LocationExists(int id)
         {
-            return _context.Location.Any(e => e.RoomId == id);
+            return _context.Location.Any(e => e.LocationID == id);
         }
     }
 }

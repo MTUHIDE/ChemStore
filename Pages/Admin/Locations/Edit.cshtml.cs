@@ -23,16 +23,16 @@ namespace ChemStoreWebApp.Pages.Admin.Location
         }
 
         [BindProperty]
-        public Models.Location Location { get; set; }
+        public Models.X_Location Location { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Location = await _context.Location.FirstOrDefaultAsync(m => m.RoomId == id);
+            Location = await _context.Location.FirstOrDefaultAsync(m => m.LocationID == id);
 
             if (Location == null)
             {
@@ -58,7 +58,7 @@ namespace ChemStoreWebApp.Pages.Admin.Location
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LocationExists(Location.RoomId))
+                if (!LocationExists(Location.LocationID))
                 {
                     return NotFound();
                 }
@@ -71,9 +71,9 @@ namespace ChemStoreWebApp.Pages.Admin.Location
             return RedirectToPage("./Index");
         }
 
-        private bool LocationExists(string id)
+        private bool LocationExists(int id)
         {
-            return _context.Location.Any(e => e.RoomId == id);
+            return _context.Location.Any(e => e.LocationID == id);
         }
     }
 }

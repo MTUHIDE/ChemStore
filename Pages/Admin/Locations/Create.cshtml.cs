@@ -31,15 +31,15 @@ namespace ChemStoreWebApp.Pages.Admin.Location
         }
 
         [BindProperty]
-        public Models.Location Location { get; set; }
+        public Models.X_Location Location { get; set; }
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
 
-                String id = Guid.NewGuid().ToString();
-                Location.RoomId = id;
+                int id = Convert.ToInt32(Guid.NewGuid());
+                Location.LocationID = id;
                 _context.Location.Add(Location);
                 await _context.SaveChangesAsync();
 

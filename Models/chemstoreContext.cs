@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChemStoreWebApp.Models.Enums;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +51,7 @@ namespace ChemStoreWebApp.Models
         // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
         //public virtual DbSet<Container> Container { get; set; }
         // public virtual DbSet<Hazard> Hazard { get; set; }
-        public virtual DbSet<Location> Location { get; set; }
+        public virtual DbSet<X_Location> Location { get; set; }
         public virtual DbSet<X_Log> Log { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
