@@ -10,7 +10,7 @@ namespace ChemStoreWebApp.Models
     {
         [Key]
         public int ContainerID { get; set; }
-        public string Product_Name { get; set; }
+        public string ProductName { get; set; }
         public double Size { get; set; }
         public string Notes { get; set; } //What is "text" on ER diagram?
 

@@ -12,7 +12,7 @@ namespace ChemStoreWebApp.Models
         public int ContainerID { get; set; }
         // Composite primary key, handled in chemstoreContext
         public int PubchemCID { get; set; }
-        public Int64 ChemicalCAS { get; set; }
+        public string? ChemicalCAS { get; set; }
         public double Quantity { get; set; }
         public string? Manufacturer { get; set; }
         public string? CatalogNumber { get; set; }

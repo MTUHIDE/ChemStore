@@ -10,6 +10,7 @@ using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using ChemStoreWebApp.ViewModels;
+using ChemStoreWebApp.Models.Enums;
 
 namespace ChemStoreWebApp.Pages
 {
@@ -119,23 +120,23 @@ namespace ChemStoreWebApp.Pages
             foreach (long id in containerIds)
             {
                 //Finds the container associated with the given id and deletes it
-                ChemStoreWebApp.Models.Container container = _context.Container.Find(id);
+                ChemStoreWebApp.Models.X_Container container = _context.X_Container.Find(id);
 
                 if (container != null)
                 {
-                    _context.Container.Remove(container);
+                    _context.X_Container.Remove(container);
                     _context.SaveChanges();
                 }
             }
             return containerIds;
         }
 
-        public long addToDatabase(Models.Container con)
+        public long addToDatabase(Models.X_Container con)
         {
-            _context.Container.Add(con);
+            _context.X_Container.Add(con);
             _context.SaveChanges();
             createError = false;
-            return con.ContainerId;
+            return con.ContainerID;
         }
 
         private int getAmount(Units unit)
@@ -198,7 +199,7 @@ namespace ChemStoreWebApp.Pages
             //Units defaultUnit = 
 
             //chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
-            uniqueBuildings = DisplayContainers.Select(con => con.loc.BuildingName).Distinct().Count();
+            uniqueBuildings = DisplayContainers.Select(con => con.loc.LocationID).Distinct().Count();
             numContainers = DisplayContainers.Count();
         }
 
@@ -215,15 +216,15 @@ namespace ChemStoreWebApp.Pages
             var containers = from con in _context.X_Container
                              join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
                              // join acc in _context.Account on con.SupervisorId equals acc.AccountId
-                             join loc in _context.Location on con.RoomId equals loc.RoomId
+                             join loc in _context.X_Location on con.LocationID equals loc.LocationID
                              where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(conChem.ChemicalCAS, "%" + searchCAS + "%")) &&
-                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(con.Product_Name, "%" + searchString + "%")) &&
-                                   (string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
-                                   (string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) &&
+                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(con.ProductName, "%" + searchString + "%")) //&&
+                                   //(string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
+                                   //(string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) //&&
                                    // (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) && // 
                                    // (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) && // do we even need to keep this? 
                                    // (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment)) // should use location
-                             select new DisplayContainer(con, chem, loc, acc);
+                             select new DisplayContainer(con, /*chem,*/ loc /*, acc*/);
 
             return containers;
         }
@@ -241,20 +242,20 @@ namespace ChemStoreWebApp.Pages
         {
             try
             {
-                Models.Container con = (from c in _context.Container
-                                 where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
+                Models.X_Container con = (from c in _context.X_Container
+                                 where c.ContainerID == Int32.Parse(Request.Form["ContainerID"])
                                  select c).Single();
-                con.CasNumber = Request.Form["Cas Number"];
+                //con.CasNumber = Request.Form["Cas Number"];
                 /*
                 // Orginal, but supervisorID is now taken from Location
                 con.SupervisorId = (from s in _context.User
                                     where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
                                     select s.AccountId).FirstOrDefault();
                 */
-                con.Amount = Int32.Parse(Request.Form["Amount"]);
-                con.RoomId = (from l in _context.Location
-                              where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
-                              select l.RoomId).Single();
+                //con.Amount = Int32.Parse(Request.Form["Amount"]);
+                con.LocationID = (from l in _context.X_Location
+                              //where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
+                              select l.LocationID).Single();
                 _context.SaveChanges();
             }
             catch
@@ -268,17 +269,17 @@ namespace ChemStoreWebApp.Pages
 
         public async Task<IActionResult> OnPostCreate()
         {
-            Models.Container newCon = new Models.Container();
-            newCon.CasNumber = Request.Form["CAS Number"];
-            newCon.Unit = 0;
-            newCon.Retired = false;
+            Models.X_Container newCon = new Models.X_Container();
+            //newCon.CasNumber = Request.Form["CAS Number"];
+            //newCon.Unit = 0;
+            //newCon.Retired = false;
             var roomName = RoomIndex;
             var buildingInt = buildingIndex;
             var supervisorName = Request.Form["Supervisor"];
             try
             {
-                var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
-                newCon.RoomId = location.RoomId;
+                var location = _context.X_Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
+                newCon.LocationID = location.LocationID;
                 /*
                 // Orginal. but supversiorName would have to be found by connecting the supervisorID from location connecting back to User.Name
                 var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
@@ -375,13 +376,13 @@ namespace ChemStoreWebApp.Pages
             //Has to be sorted on reload with current setup
             IOrderedEnumerable<DisplayContainer> temp = sortMethod switch
             {
-                1 => DisplayContainers.OrderByDescending(c => c.con.Product_Name),
+                1 => DisplayContainers.OrderByDescending(c => c.con.ProductName),
                 2 => DisplayContainers.OrderBy(c => c.con.CasNumber),
                 3 => DisplayContainers.OrderByDescending(c => c.con.CasNumber),
-                4 => DisplayContainers.OrderBy(c => c.loc.BuildingName).ThenBy(c => c.con.Product_Name),
-                5 => DisplayContainers.OrderByDescending(c => c.loc.BuildingName).ThenBy(c => c.con.Product_Name),
+                4 => DisplayContainers.OrderBy(c => c.loc.LocationID).ThenBy(c => c.con.ProductName),
+                5 => DisplayContainers.OrderByDescending(c => c.loc.LocationID).ThenBy(c => c.con.ProductName),
 
-                _ => DisplayContainers.OrderBy(c => c.con.Product_Name)
+                _ => DisplayContainers.OrderBy(c => c.con.ProductName)
             };
 
             //Always sort by size of container
@@ -391,19 +392,20 @@ namespace ChemStoreWebApp.Pages
 
         public PartialViewResult OnGetEditModal(long conid)
         {
-            var container = (from con in _context.Container
-                             join conChem in _context.ContainerChemicals on con.id equals conChem.ContainerID
-                             where con.ContainerId == conid
-                             select new ViewModels.ContainerViewModel
+            var container = (from con in _context.X_Container
+                             join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
+                             join loc in _context.X_Location on con.LocationID equals loc.LocationID
+                             where con.ContainerID == conid
+                             select new //ViewModels.ContainerViewModel
                              {
                                  ContainerName = con.ProductName,
-                                 ContainerId = con.ContainerId,
+                                 ContainerID = con.ContainerID,
                                  Unit = con.Unit,
                                  Amount = con.Amount,
-                                 Retired = con.Retired,
-                                 CasNumber = con.CasNumber,
-                                 RoomId = con.RoomId,
-                                 SupervisorId = con.SupervisorId
+                                 //Retired = con.Retired,
+                                 CasNumber = conChem.ChemicalCAS,
+                                 LocationID = con.LocationID,
+                                 SupervisorId = loc.SupervisorID
                              }).FirstOrDefault();
             return Partial("_EditModal", container);
         }

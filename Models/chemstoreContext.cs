@@ -113,7 +113,7 @@ namespace ChemStoreWebApp.Models
             var changeList = from e in ChangeTracker.Entries()
                              where e.State != EntityState.Detached && e.State != EntityState.Unchanged
                              // TODO: Put ContainerChemicals here instead of Chemical??
-                             && (e.Entity is X_Container || e.Entity is User || /*e.Entity is Chemical*/)
+                             && (e.Entity is X_Container || e.Entity is User /*|| e.Entity is Chemical*/)
                              select e;
 
             List<X_Log> logList = new List<X_Log>();
