@@ -31,8 +31,8 @@ namespace ChemStoreWebApp.Migrations
             migrationBuilder.DropTable(
                 name: "Location");
 
-            //migrationBuilder.DropTable(
-            //    name: "Account");
+            migrationBuilder.DropTable(
+                name: "Account");
 
             migrationBuilder.DropIndex(
                 name: "IX_X_Location_ParentID",
@@ -161,22 +161,22 @@ namespace ChemStoreWebApp.Migrations
                 table: "ContainerChemicals",
                 columns: new[] { "ContainerID", "ChemicalCAS" });
 
-            //migrationBuilder.CreateTable(
-            //    name: "Account",
-            //    columns: table => new
-            //    {
-            //        AccountId = table.Column<int>(type: "int", nullable: false)
-            //            .Annotation("SqlServer:Identity", "1, 1"),
-            //        Department = table.Column<int>(type: "int", nullable: true),
-            //        Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-            //        Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-            //        Role = table.Column<int>(type: "int", nullable: true),
-            //        Supervisor = table.Column<bool>(type: "bit", nullable: false)
-            //    },
-            //    constraints: table =>
-            //    {
-            //        table.PrimaryKey("PK_Account", x => x.AccountId);
-            //    });
+            migrationBuilder.CreateTable(
+                name: "Account",
+                columns: table => new
+                {
+                    AccountId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Department = table.Column<int>(type: "int", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: true),
+                    Supervisor = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Account", x => x.AccountId);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Chemical",
