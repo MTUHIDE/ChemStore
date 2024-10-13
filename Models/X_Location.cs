@@ -24,5 +24,6 @@ namespace ChemStoreWebApp.Models
 
         public bool IsHidden { get; set; }
 
+        public ICollection<RolePermissions> RolePermissions { get; } = new List<RolePermissions>();
     }
 }

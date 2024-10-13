@@ -10,5 +10,7 @@ namespace ChemStoreWebApp.Models
         [Key] //primary key
         public int RoleID { get; set; }
         public string Name { get; set; }
+
+        public ICollection<RolePermissions> RolePermissions { get; } = new List<RolePermissions>();
     }
 }

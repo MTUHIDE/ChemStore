@@ -84,7 +84,18 @@ namespace ChemStoreWebApp.Models
             modelBuilder.Entity<StatementPictogram>()
                 .HasKey(a => new { a.GHCode, a.HCode });
 
+            // Disable "Cascade on Delete" for various things
+            // NOTE: "Cascade on Delete" is enabled by default for everything.
+            //       If there is weird deleting behavior, come back here.
+            modelBuilder.Entity<RolePermissions>()
+                .HasOne(e => e.X_Location)
+                .WithMany(e => e.RolePermissions)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<RolePermissions>()
+                .HasOne(e => e.Role)
+                .WithMany(e => e.RolePermissions)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             OnModelCreatingPartial(modelBuilder);
