@@ -40,7 +40,6 @@ namespace ChemStoreWebApp.Models
         public virtual DbSet<RolePermissions> RolePermissions { get; set; }
         public virtual DbSet<StatementPictogram> StatementPictogram { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<OverridePermissions> OverridePermissions { get; set; }
 
 
 
@@ -85,9 +84,6 @@ namespace ChemStoreWebApp.Models
             modelBuilder.Entity<StatementPictogram>()
                 .HasKey(a => new { a.GHCode, a.HCode });
 
-            //OverridePermissions (composite keys)
-            modelBuilder.Entity<OverridePermissions>()
-                .HasKey(a => new { a.UserID, a.LocationID, a.Permission });
 
 
 
