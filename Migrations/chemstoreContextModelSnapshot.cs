@@ -154,27 +154,6 @@ namespace ChemStoreWebApp.Migrations
                     b.ToTable("LocationAttribute");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.OverridePermissions", b =>
-                {
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LocationID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Permission")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("HasPermission")
-                        .HasColumnType("bit");
-
-                    b.HasKey("UserID", "LocationID", "Permission");
-
-                    b.HasIndex("LocationID");
-
-                    b.ToTable("OverridePermissions");
-                });
-
             modelBuilder.Entity("ChemStoreWebApp.Models.PrecautionaryStatement", b =>
                 {
                     b.Property<string>("PCode")
@@ -426,37 +405,18 @@ namespace ChemStoreWebApp.Migrations
                     b.Navigation("X_Location");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.OverridePermissions", b =>
-                {
-                    b.HasOne("ChemStoreWebApp.Models.X_Location", "X_Location")
-                        .WithMany()
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChemStoreWebApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("X_Location");
-                });
-
             modelBuilder.Entity("ChemStoreWebApp.Models.RolePermissions", b =>
                 {
                     b.HasOne("ChemStoreWebApp.Models.X_Location", "X_Location")
-                        .WithMany()
+                        .WithMany("RolePermissions")
                         .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ChemStoreWebApp.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("RolePermissions")
                         .HasForeignKey("RoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -539,6 +499,16 @@ namespace ChemStoreWebApp.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Location", b =>
+                {
+                    b.Navigation("RolePermissions");
                 });
 #pragma warning restore 612, 618
         }
