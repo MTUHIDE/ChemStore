@@ -10,7 +10,7 @@ using System.Drawing.Printing;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 
-namespace ChemStoreWebApp.Pages.Admin.Account
+namespace ChemStoreWebApp.Pages.Admin.DEBUG
 {
     [Authorize(Roles = "Admin, Developer")]
     public class IndexModel : PageModel

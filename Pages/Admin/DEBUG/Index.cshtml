@@ -1,0 +1,92 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.DEBUG.IndexModel
+@using ChemStoreWebApp.Utilities
+@using System.Collections.Generic
+@using System.Reflection
+
+@{
+    Layout = "../../Shared/_Layout.cshtml";
+    var pageModelsCollection = new List<string> {"Log", "User", "Role", "RolePermissions", "Department", "X_Location", "LocationAttribute", "ContainerChemicals", "X_Container", "ContainerHazards", "HazardStatement", "StatementPictogram", "HazardPictogram", "HazardPrecaution", "PrecautionaryStatement"};
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+@foreach (var modelName in pageModelsCollection)
+{
+        <h2>@modelName</h2>
+        // Print the actual modelname as a header
+
+        var dbModel = Model.GetType().GetProperty(modelName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase); // This should grap the model page with the name of *model*
+
+        if (dbModel != null) // We will have empty tables to begin
+        {
+            var value = dbModel.GetValue(Model) as IEnumerable<object>;
+            <table class="table">
+            <thread>
+                <tr>
+                    @* Uhh generate a header for each property in the table *@
+                    @{
+                        var firstItem = value.FirstOrDefault();
+                        if (firstItem != null)
+                        {
+                            foreach (var property in firstItem.GetType().GetProperties()) // Let it be known... I have no clue why this doesn't use an @foreach???
+                            {
+                                <th>@property.Name</th>
+                            }
+                        }
+                    }
+                </tr>
+            </thread>
+            <tbody>
+                @* Get every row in the table *@
+                @foreach (var row in value)
+                {
+                    <tr>
+                        @foreach (var property in row.GetType().GetProperties())
+                        {
+                            <td> @property.GetValue(row)?.ToString() </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p> Table - @modelName - is empty. </p>
+    }
+}
+
+    @* Ain't got no clue what this was for...
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="justify-content:center;">
+                    <h5 class="modal-title" style="font-size: 30px" id="modalLabel">Are You Sure?</h5>
+                    <button type="button" class="close" style="position: absolute; right: 15px; width: 20%;" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align: center">
+                    <button type="button" class="btn modalBtns redBtn" data-dismiss="modal">Close</button>
+                    <form method="post">
+                        <input type="hidden" name="selectedLocation" id="selectedLocation" value="-1" />
+                        <button type="submit" class="btn modalBtns greenBtn" id="DelButton" asp-page-handler="delete">
+                            Yes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+    *@
+</body>
+</html>
