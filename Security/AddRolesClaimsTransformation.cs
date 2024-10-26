@@ -32,29 +32,10 @@ namespace ChemStoreWebApp.Security
                 return principal;
             }
 
-            /*
-            // Orginal
-            var user = (from a in db.Account
-                    where a.Email == nameId
-                    select a).FirstOrDefault();
-            */
+            var user = (from u in db.User.Include(u => u.Role)
+                        where u.Username == nameId
+                        select u).FirstOrDefault();
 
-            var user = (from a in db.User
-                        where a.Username == nameId
-                        select a).FirstOrDefault();
-
-            /*
-            // Orginal?
-            // for (int i = user?.Role ?? 3; i <= 3; i++) // Orginal
-            {
-                // var role = new Claim(newIdentity.RoleClaimType, ((Roles)i).ToString()); // Orginal
-                var role = new Claim(newIdentity.RoleClaimType, (i).ToString());
-
-                newIdentity.AddClaim(role);
-            }
-            */
-
-            // Does this work? I don't know if the loop needed to continue or not now that everyone must have a role, when the old had role as nullable. Can we have multiple roles in the new schema?
             var role = new Claim(newIdentity.RoleClaimType, user.Role.Name);
             newIdentity.AddClaim(role);
 
