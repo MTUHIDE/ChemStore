@@ -7,9 +7,9 @@ namespace ChemStoreWebApp.Models
 {
     public partial class StatementPictogram
     {
-        // Composite primary key, handled in chemstoreContext
+        // Composite primary key, handled in ChemstoreContext
         public char GHCode { get; set; }
-        // Composite primary key, handled in chemstoreContext
+        // Composite primary key, handled in ChemstoreContext
         public char HCode { get; set; }
 
         [ForeignKey("GHCode")]

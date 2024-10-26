@@ -15,9 +15,9 @@ namespace ChemStoreWebApp.Pages.Admin.Location
     [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public EditModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public EditModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }

@@ -15,9 +15,9 @@ namespace ChemStoreWebApp.Pages
     [Authorize(Roles = "Admin")]
     public class LogModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public LogModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public LogModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }

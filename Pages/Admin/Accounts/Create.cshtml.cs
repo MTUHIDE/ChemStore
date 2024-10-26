@@ -18,9 +18,9 @@ namespace ChemStoreWebApp.Pages.Admin.Account
     [Authorize(Roles = "Admin")]
     public class CreateModel : PageModel
     {
-        private readonly chemstoreContext _context;
+        private readonly ChemstoreContext _context;
 
-        public CreateModel(chemstoreContext context)
+        public CreateModel(ChemstoreContext context)
         {
             _context = context;
         }

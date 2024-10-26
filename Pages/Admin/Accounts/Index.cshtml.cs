@@ -15,9 +15,9 @@ namespace ChemStoreWebApp.Pages.Admin.Account
     [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public IndexModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public IndexModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }

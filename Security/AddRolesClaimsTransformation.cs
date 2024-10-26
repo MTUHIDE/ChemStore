@@ -11,12 +11,12 @@ namespace ChemStoreWebApp.Security
 {
     public class AddRolesClaimsTransformation : IClaimsTransformation
     {
-        chemstoreContext db;
+        ChemstoreContext db;
 
 
         public AddRolesClaimsTransformation()
         {
-            db = new chemstoreContext();
+            db = new ChemstoreContext();
         }
 
 

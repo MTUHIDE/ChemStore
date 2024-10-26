@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChemStoreWebApp.Migrations
 {
-    [DbContext(typeof(chemstoreContext))]
+    [DbContext(typeof(ChemstoreContext))]
     [Migration("20241013200555_DatabaseOverhaul")]
     partial class DatabaseOverhaul
     {

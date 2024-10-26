@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChemStoreWebApp.Migrations
 {
-    [DbContext(typeof(chemstoreContext))]
+    [DbContext(typeof(ChemstoreContext))]
     partial class chemstoreContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -7,9 +7,9 @@ namespace ChemStoreWebApp.Models
 {
     public partial class HazardPrecaution
     {
-        // Composite primary key, handled in chemstoreContext
+        // Composite primary key, handled in ChemstoreContext
         public char HCode { get; set; }
-        // Composite primary key, handled in chemstoreContext
+        // Composite primary key, handled in ChemstoreContext
         public char PCode { get; set; }
 
         [ForeignKey("HCode")]

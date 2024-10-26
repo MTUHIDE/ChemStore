@@ -28,9 +28,9 @@ namespace ChemStoreWebApp.Pages
             {(int)Units.pound,1}
         }; // Dictionary to sort by units
 
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public SearchModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public SearchModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }

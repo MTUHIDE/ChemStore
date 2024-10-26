@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ChemStoreWebApp.Models
 {
-    public partial class chemstoreContext : DbContext
+    public partial class ChemstoreContext : DbContext
     {
         IHttpContextAccessor httpContext;
-        public chemstoreContext()
+        public ChemstoreContext()
         {
         }
 
-        public chemstoreContext(DbContextOptions<chemstoreContext> options, IHttpContextAccessor httpContextAccessor)
+        public ChemstoreContext(DbContextOptions<ChemstoreContext> options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
             httpContext = httpContextAccessor;
