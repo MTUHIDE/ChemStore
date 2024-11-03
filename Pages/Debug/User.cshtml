@@ -1,0 +1,56 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.UserModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>User</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                UserID
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                RoleID
+            </th>
+            <th>
+                DepartmentID
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.User) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentID)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
