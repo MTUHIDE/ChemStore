@@ -22,12 +22,15 @@ Chem Store is a chemical tracking website that allows easy navigation and organi
 	1. Right click on the Databases folder and click "New Database..."
 	2. In the window that pops up, type "chemstore" in the database name field and click "OK"
 
-6. In the solution explorer, (list of files and folders on side of screen) double click ChemstoreWebApp.sln to build the project
+6. Install Runtime Installer
+   	1. Install the Runtime Installer for your operating system from https://versionsof.net/core/6.0/6.0.33/
+
+8. In the solution explorer, (list of files and folders on side of screen) double click ChemstoreWebApp.sln to build the project
 	1. Tools -> NuGet Package Manager -> Package Manager Console
 	2. Ensure you have an up to date appsettings.json file (get this from the team lead for now)
 	3. Run `Update-Database` to create all tables locally (If this fails, try running `EntityFrameworkCore\Update-Database`)
 
-7. Return to SSMS, right click on the chemstore database and click Refresh. There should now be tables in the Table folder that match the classes in the Models folder of the project.
+9. Return to SSMS, right click on the chemstore database and click Refresh. There should now be tables in the Table folder that match the classes in the Models folder of the project.
 	1. In order for the website to work, there must be an entry in the account table with your MTU email, and a role of 0.
 	2. The list of items in container is what will show on the home page, as long as its chemical and location are in their respective tables.
 
