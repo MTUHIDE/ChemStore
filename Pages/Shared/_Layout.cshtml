@@ -32,7 +32,14 @@
                         <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Log">Log</a>
                         <a class="nav-item nav-link text-dark" asp-area="" asp-page="/ContactUs">Contact</a>
-                        <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Developer"))
+                        {
+                            <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                        }
+                        @if (User.IsInRole("Developer"))
+                        {
+                            <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Debug/Index">Debug</a>
+                        }
                     </div>
                 </div>
                 @{
