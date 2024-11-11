@@ -39,11 +39,11 @@
                 </p>
             </td>
             *@
-            <td>
+            @* <td>
                 <p>
                     <button type="button"><a asp-authorize asp-roles="Admin" asp-page="Containers/Index">Containers</a></button>
                 </p>
-            </td>
+            </td> *@
         </tr>
         <tr>
             @*
@@ -58,6 +58,11 @@
                     <button type="button"><a asp-authorize asp-roles="Admin" asp-page="/Admin/Locations/Index">Locations</a></button>
                 </p>
             </td>
+            <td>
+                <p>
+                    <button type="button"><a asp-authorize asp-roles="Admin" asp-page="/Admin/Accounts/Index">Users</a></button>
+                </p>
+            </td>
         </tr>
         <tr>
             @*
@@ -67,11 +72,7 @@
                 </p>
             </td>
             *@
-            <td>
-                <p>
-                    <button type="button"><a asp-authorize asp-roles="Admin" asp-page="/Admin/Accounts/Index">Users</a></button>
-                </p>
-            </td>
+            
             @*
             <td>
                 <p>
