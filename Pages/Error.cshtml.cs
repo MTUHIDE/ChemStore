@@ -23,6 +23,7 @@ namespace ChemStoreWebApp.Pages
             _logger = logger;
         }
 
+        // Get function (change me)
         public void OnGet()
         {
             RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
