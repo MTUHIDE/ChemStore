@@ -1,0 +1,74 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.ContainerChemicalsModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ContainerChemicals</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ContainerID
+            </th>
+            <th>
+                PubchemCID
+            </th>
+            <th>
+                ChemicalCAS
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                CatalogNumber
+            </th>
+            <th>
+                PreferredUnit
+            </th>
+            <th>
+                StateOfMatter
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ContainerChemicals) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContainerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PubchemCID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChemicalCAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatalogNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreferredUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StateOfMatter)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

@@ -11,12 +11,12 @@ namespace ChemStoreWebApp.Security
 {
     public class AddRolesClaimsTransformation : IClaimsTransformation
     {
-        chemstoreContext db;
+        ChemstoreContext db;
 
 
         public AddRolesClaimsTransformation()
         {
-            db = new chemstoreContext();
+            db = new ChemstoreContext();
         }
 
 
@@ -32,16 +32,12 @@ namespace ChemStoreWebApp.Security
                 return principal;
             }
 
-            var user = (from a in db.Account
-                        where a.Email == nameId
-                        select a).FirstOrDefault();
+            var user = (from u in db.User.Include(u => u.Role)
+                        where u.Username == nameId
+                        select u).FirstOrDefault();
 
-            for (int i = user?.Role ?? 3; i <= 3; i++)
-            {
-                var role = new Claim(newIdentity.RoleClaimType, ((Roles)i).ToString());
-                newIdentity.AddClaim(role);
-            }
-
+            var role = new Claim(newIdentity.RoleClaimType, user.Role.Name);
+            newIdentity.AddClaim(role);
 
             return clone;
         }

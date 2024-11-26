@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChemStoreWebApp.Migrations
 {
-    [DbContext(typeof(chemstoreContext))]
+    [DbContext(typeof(ChemstoreContext))]
     partial class chemstoreContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -22,301 +22,493 @@ namespace ChemStoreWebApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Account", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.ContainerChemicals", b =>
                 {
-                    b.Property<int>("AccountId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ContainerID")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"), 1L, 1);
-
-                    b.Property<int?>("Department")
+                    b.Property<int>("PubchemCID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Supervisor")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("Account");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.Chemical", b =>
-                {
-                    b.Property<string>("CasNumber")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CatalogNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ChemicalName")
+                    b.Property<string>("ChemicalCAS")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CasNumber");
+                    b.Property<int>("PreferredUnit")
+                        .HasColumnType("int");
 
-                    b.ToTable("Chemical");
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("StateOfMatter")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContainerID", "PubchemCID");
+
+                    b.ToTable("ContainerChemicals");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.ChemicalHazards", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.ContainerHazards", b =>
                 {
-                    b.Property<int>("IDChemicalHazard")
+                    b.Property<int>("ContainerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.HasKey("ContainerID");
+
+                    b.HasIndex("HCode");
+
+                    b.ToTable("ContainerHazards");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.Department", b =>
+                {
+                    b.Property<int>("DepartmentID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDChemicalHazard"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentID"), 1L, 1);
 
-                    b.Property<string>("CasNumber")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CasNumberNavigationCasNumber")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("DepartmentID");
 
-                    b.Property<string>("HazardId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("IDChemicalHazard");
-
-                    b.HasIndex("CasNumberNavigationCasNumber");
-
-                    b.HasIndex("HazardId");
-
-                    b.ToTable("ChemicalHazards");
+                    b.ToTable("Department");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Container", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.HazardPictogram", b =>
                 {
-                    b.Property<long>("ContainerId")
+                    b.Property<string>("GHCode")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("nvarchar(1)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ContainerId"), 1L, 1);
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CasNumber")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CasNumberNavigationCasNumber")
+                    b.Property<string>("Pictogram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GHCode");
+
+                    b.ToTable("HazardPictogram");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.HazardPrecaution", b =>
+                {
+                    b.Property<string>("HCode")
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("PCode")
+                        .HasColumnType("nvarchar(1)");
+
+                    b.HasKey("HCode", "PCode");
+
+                    b.ToTable("HazardPrecaution");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.HazardStatement", b =>
+                {
+                    b.Property<string>("HCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Class")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SignalWord")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Statements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HCode");
+
+                    b.ToTable("HazardStatement");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.LocationAttribute", b =>
+                {
+                    b.Property<int>("LocationID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Key")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Retired")
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LocationID", "Key");
+
+                    b.ToTable("LocationAttribute");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.PrecautionaryStatement", b =>
+                {
+                    b.Property<string>("PCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(1)");
+
+                    b.Property<string>("Statement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PCode");
+
+                    b.ToTable("PrecautionaryStatement");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.Role", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleID"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RoleID");
+
+                    b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.RolePermissions", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocationID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasPermission")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RoomId")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasKey("RoleID", "LocationID", "Permission");
 
-                    b.Property<int>("SupervisorId")
-                        .HasColumnType("int");
+                    b.HasIndex("LocationID");
 
-                    b.Property<int>("Unit")
-                        .HasColumnType("int");
-
-                    b.HasKey("ContainerId");
-
-                    b.HasIndex("CasNumberNavigationCasNumber");
-
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Container");
+                    b.ToTable("RolePermissions");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Hazard", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.StatementPictogram", b =>
                 {
-                    b.Property<string>("HazardId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("GHCode")
+                        .HasColumnType("nvarchar(1)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("HCode")
+                        .HasColumnType("nvarchar(1)");
 
-                    b.HasKey("HazardId");
+                    b.HasKey("GHCode", "HCode");
 
-                    b.ToTable("Hazard");
+                    b.HasIndex("HCode");
 
-                    b.HasData(
-                        new
-                        {
-                            HazardId = "Corrosion",
-                            Description = "Corrosive"
-                        },
-                        new
-                        {
-                            HazardId = "Environment",
-                            Description = "Enviornmental Hazard"
-                        },
-                        new
-                        {
-                            HazardId = "ExclamationMark",
-                            Description = "Exclamation Mark"
-                        },
-                        new
-                        {
-                            HazardId = "ExplodingBomb",
-                            Description = "Exploding Bomb"
-                        },
-                        new
-                        {
-                            HazardId = "FlameOverCircle",
-                            Description = "Flame Over Circle"
-                        },
-                        new
-                        {
-                            HazardId = "Flame",
-                            Description = "Flame"
-                        },
-                        new
-                        {
-                            HazardId = "GasCylinder",
-                            Description = "Gas Cylinder"
-                        },
-                        new
-                        {
-                            HazardId = "HealthHazard",
-                            Description = "HealthHazard"
-                        },
-                        new
-                        {
-                            HazardId = "Skull",
-                            Description = "Skull"
-                        });
+                    b.ToTable("StatementPictogram");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Location", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.User", b =>
                 {
-                    b.Property<string>("RoomId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("BuildingName")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RoomNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoomId");
-
-                    b.ToTable("Location");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.Log", b =>
-                {
-                    b.Property<int>("IDLog")
+                    b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDLog"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
 
-                    b.Property<int?>("Action")
+                    b.Property<int?>("DepartmentID")
                         .HasColumnType("int");
 
-                    b.Property<long?>("ContainerID")
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoleID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
+
+                    b.HasIndex("DepartmentID");
+
+                    b.HasIndex("RoleID");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Container", b =>
+                {
+                    b.Property<int>("ContainerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContainerID"), 1L, 1);
+
+                    b.Property<int>("LocationID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Size")
+                        .HasColumnType("float");
+
+                    b.HasKey("ContainerID");
+
+                    b.HasIndex("LocationID");
+
+                    b.ToTable("X_Container");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Location", b =>
+                {
+                    b.Property<int>("LocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationID"), 1L, 1);
+
+                    b.Property<int>("DepartmentID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("Level")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<short?>("ParentID")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("SupervisorID")
+                        .HasColumnType("int");
+
+                    b.HasKey("LocationID");
+
+                    b.HasIndex("DepartmentID");
+
+                    b.HasIndex("SupervisorID");
+
+                    b.ToTable("X_Location");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Log", b =>
+                {
+                    b.Property<long>("LogID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("LogID"), 1L, 1);
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserID")
+                    b.Property<int>("Action")
                         .HasColumnType("int");
 
-                    b.Property<string>("key")
+                    b.Property<string>("Key1")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("table")
+                    b.Property<string>("Key2")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IDLog");
+                    b.Property<string>("NewValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Table")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("LogID");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Log");
+                    b.ToTable("X_Log");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.ChemicalHazards", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.ContainerChemicals", b =>
                 {
-                    b.HasOne("ChemStoreWebApp.Models.Chemical", "CasNumberNavigation")
-                        .WithMany("ChemicalHazards")
-                        .HasForeignKey("CasNumberNavigationCasNumber");
-
-                    b.HasOne("ChemStoreWebApp.Models.Hazard", "Hazard")
-                        .WithMany("ChemicalHazards")
-                        .HasForeignKey("HazardId");
-
-                    b.Navigation("CasNumberNavigation");
-
-                    b.Navigation("Hazard");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.Container", b =>
-                {
-                    b.HasOne("ChemStoreWebApp.Models.Chemical", "CasNumberNavigation")
-                        .WithMany("Container")
-                        .HasForeignKey("CasNumberNavigationCasNumber");
-
-                    b.HasOne("ChemStoreWebApp.Models.Location", "Room")
-                        .WithMany("Container")
-                        .HasForeignKey("RoomId");
-
-                    b.HasOne("ChemStoreWebApp.Models.Account", "Supervisor")
-                        .WithMany("Container")
-                        .HasForeignKey("SupervisorId")
+                    b.HasOne("ChemStoreWebApp.Models.X_Container", "X_Container")
+                        .WithMany()
+                        .HasForeignKey("ContainerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CasNumberNavigation");
-
-                    b.Navigation("Room");
-
-                    b.Navigation("Supervisor");
+                    b.Navigation("X_Container");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Log", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.ContainerHazards", b =>
                 {
-                    b.HasOne("ChemStoreWebApp.Models.Account", "User")
+                    b.HasOne("ChemStoreWebApp.Models.X_Container", "X_Container")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("ContainerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChemStoreWebApp.Models.HazardStatement", "HazardStatement")
+                        .WithMany()
+                        .HasForeignKey("HCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HazardStatement");
+
+                    b.Navigation("X_Container");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.HazardPrecaution", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.HazardStatement", "HazardStatement")
+                        .WithMany()
+                        .HasForeignKey("HCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HazardStatement");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.LocationAttribute", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.X_Location", "X_Location")
+                        .WithMany()
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("X_Location");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.RolePermissions", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.X_Location", "X_Location")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChemStoreWebApp.Models.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("X_Location");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.StatementPictogram", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.HazardPictogram", "HazardPictogram")
+                        .WithMany()
+                        .HasForeignKey("GHCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChemStoreWebApp.Models.HazardStatement", "HazardStatement")
+                        .WithMany()
+                        .HasForeignKey("HCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("HazardPictogram");
+
+                    b.Navigation("HazardStatement");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.User", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentID");
+
+                    b.HasOne("ChemStoreWebApp.Models.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Container", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.X_Location", "X_Location")
+                        .WithMany()
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("X_Location");
+                });
+
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Location", b =>
+                {
+                    b.HasOne("ChemStoreWebApp.Models.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChemStoreWebApp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("SupervisorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Account", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Log", b =>
                 {
-                    b.Navigation("Container");
+                    b.HasOne("ChemStoreWebApp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Chemical", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.Role", b =>
                 {
-                    b.Navigation("ChemicalHazards");
-
-                    b.Navigation("Container");
+                    b.Navigation("RolePermissions");
                 });
 
-            modelBuilder.Entity("ChemStoreWebApp.Models.Hazard", b =>
+            modelBuilder.Entity("ChemStoreWebApp.Models.X_Location", b =>
                 {
-                    b.Navigation("ChemicalHazards");
-                });
-
-            modelBuilder.Entity("ChemStoreWebApp.Models.Location", b =>
-                {
-                    b.Navigation("Container");
+                    b.Navigation("RolePermissions");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,50 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.RolePermissionsModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Container</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                RoleID
+            </th>
+            <th>
+                LocationID
+            </th>
+            <th>
+                Permission
+            </th>
+            <th>
+                HasPermission
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.RolePermissions) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Permission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasPermission)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,5 +1,6 @@
 ﻿@page
 @model ChemStoreWebApp.Pages.LogModel
+@using ChemStoreWebApp.Models.Enums
 @using ChemStoreWebApp.Utilities
 
 @{
@@ -143,11 +144,11 @@
 
                             <div class="row logResult">
                                 <div class="col logCol">
-                                    @Html.DisplayFor(modelItem => item.DateTime)
+                                    @Html.DisplayFor(modelItem => item.Timestamp)
                                 </div>
 
                                 <div class="col logCol">
-                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                    @Html.DisplayFor(modelItem => item.User.Username)
                                 </div>
 
                                 <div class="col logCol">
@@ -155,15 +156,15 @@
                                 </div>
 
                                 <div class="col logCol">
-                                    @Html.DisplayFor(modelItem => item.table)
+                                    @Html.DisplayFor(modelItem => item.Table)
                                 </div>
 
                                 <div class="col logCol">
-                                    @Html.DisplayFor(modelItem => item.key)
+                                    @Html.DisplayFor(modelItem => item.Key1)
                                 </div>
 
                                 <div class="col logCol">
-                                    @Html.DisplayFor(modelItem => item.Description)
+                                    @Html.DisplayFor(modelItem => item.Notes)
                                 </div>
                             </div>
                         }

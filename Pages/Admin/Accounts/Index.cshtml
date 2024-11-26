@@ -22,43 +22,47 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.Account[0].Name)
+                @Html.DisplayNameFor(model => model.User[0].Name)
             </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Account[0].Email)
+                    @Html.DisplayNameFor(model => model.User[0].Username)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Account[0].Role)
+                    @Html.DisplayNameFor(model => model.User[0].Role)
                 </th>
+                @*
                 <th>
                     @Html.DisplayNameFor(model => model.Account[0].Supervisor)
                 </th>
+                *@
                 <th>
-                @Html.DisplayNameFor(model => model.Account[0].Department)
+                @Html.DisplayNameFor(model => model.User[0].Department)
             </th> 
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Account) {
+@foreach (var item in Model.User) {
         <tr>
             <td>
-                <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.AccountId">Edit</a>
+                <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.UserID">Edit</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Username)
             </td>
             <td>
-                @((item.Role == null) ? "" : @EnumHelper.GetDisplayValue((Roles)item.Role))
+                @((item.Role == null) ? "" : (item.Role.Name)) @* Orginal if... false return '@EnumHelper.GetDisplayValue(item.Role))', but with the change to how roles are stored is this safe to delete? *@
             </td>
+            @*
             <td>
                 @Html.DisplayFor(modelItem => item.Supervisor)
             </td>
+            *@
             <td>
-                @(item.Department == null ? "" : @EnumHelper.GetDisplayValue((Departments)item.Department))
+                @(item.Department == null ? "" : item.Department.Name) @* Very similar to above ^^^: @EnumHelper.GetDisplayValue((Departments)item.Department)) *@
             </td>
         </tr>
 }

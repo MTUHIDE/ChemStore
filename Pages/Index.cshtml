@@ -1,5 +1,6 @@
 ﻿@page
 @model ChemStoreWebApp.Pages.SearchModel
+@using ChemStoreWebApp.Models.Enums
 @using ChemStoreWebApp.Utilities
 
 @{
@@ -40,18 +41,15 @@
                             <input type="text" class="filterInput" placeholder="Chemical Name"/>
                         </div>
                         <div class="row filterRow">
-                            <input type="text" class="filterInput" placeholder="CAS Number" asp-for="searchCAS"/>
-                        </div>
-                        <div class="row filterRow">
                             <input type="email" class="filterInput" placeholder="PI Email" asp-for="searchEmail"/>
                         </div>
                         <div class="row filterRow">
                             <input type="text" class="filterInput" placeholder="Hazard"/>
                         </div>
                         <div class="row filterRow">
-                            <select class="filterInput" asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" >
+                            @* <select class="filterInput" asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" >
                                 <option value="" selected disabled>Building</option>
-                            </select>
+                            </select> *@
                         </div>
                         <div class="row filterRow">
                             <input type="number" class="filterInput" placeholder="Room Number" />
@@ -60,9 +58,9 @@
                             <input type="number" class="filterInput" placeholder="Container Size" asp-for="searchSize"/>
                         </div>
                         <div class="row filterRow">
-                            <select class="filterInput" asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
+                            @* <select class="filterInput" asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
                                 <option value="" selected disabled>Units</option>
-                            </select>
+                            </select> *@
                         </div>
                         <div class="row filterRow">
                             <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
@@ -131,6 +129,7 @@
                         <thead>
                         </thead>
                         <tbody>
+                            @*
                             @if (Model.DisplayContainers.Count() > 0)
                             {
                                 var count = Model.DisplayContainers.Count();
@@ -184,7 +183,7 @@
                                             @Html.DisplayFor(modelItem => item.chem.CasNumber)
                                         </td>
                                         <td class="a">
-                                            @*TODO: actually implement conditional rendering based on data*@
+                                            // TODO: actually implement conditional rendering based on data
                                             <span class="hazards">
                                                 @if (i % 4 == 0)
                                                 {
@@ -238,7 +237,7 @@
                                             <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
                                         </td>
                                         <td class="b">
-                                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.ChemicalHazards">Safety Data Sheet</a>
+                                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">Safety Data Sheet</a> <!-- TODO: item.chem.ChemicalHazards -->
                                         </td>
                                     </tr>
                                 }
@@ -247,6 +246,8 @@
                             {
                                 <div class="noResults">No Results Found</div>
                             }
+                            *@
+                            <div class="noResults">No Results Found</div>
                         </tbody>
                     </table>
                 </form>

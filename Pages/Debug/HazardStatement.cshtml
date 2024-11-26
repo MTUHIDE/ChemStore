@@ -1,0 +1,57 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.HazardStatementModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Container</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                HCode
+            </th>
+            <th>
+                Statements
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Signal Word
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model.HazardStatement)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Statements)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignalWord)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

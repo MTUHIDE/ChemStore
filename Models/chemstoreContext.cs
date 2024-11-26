@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ChemStoreWebApp.Models.Enums;
 using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -10,26 +11,47 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ChemStoreWebApp.Models
 {
-    public partial class chemstoreContext : DbContext
+    public partial class ChemstoreContext : DbContext
     {
         IHttpContextAccessor httpContext;
-        public chemstoreContext()
+        public ChemstoreContext()
         {
         }
 
-        public chemstoreContext(DbContextOptions<chemstoreContext> options, IHttpContextAccessor httpContextAccessor)
+        public ChemstoreContext(DbContextOptions<ChemstoreContext> options, IHttpContextAccessor httpContextAccessor)
             : base(options)
         {
             httpContext = httpContextAccessor;
         }
 
-        public virtual DbSet<Account> Account { get; set; }
-        public virtual DbSet<Chemical> Chemical { get; set; }
-        public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
-        public virtual DbSet<Container> Container { get; set; }
-        public virtual DbSet<Hazard> Hazard { get; set; }
-        public virtual DbSet<Location> Location { get; set; }
-        public virtual DbSet<Log> Log { get; set; }
+        //NEW ADDITIONS:
+        public virtual DbSet<ContainerHazards> ContainerHazards { get; set; }
+        public virtual DbSet<X_Container> X_Container { get; set; }
+        public virtual DbSet<ContainerChemicals> ContainerChemicals { get; set; }
+        public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<HazardPictogram> HazardPictogram { get; set; }
+        public virtual DbSet<HazardPrecaution> HazardPrecaution { get; set; }
+        public virtual DbSet<HazardStatement> HazardStatement { get; set; }
+        public virtual DbSet<X_Location> X_Location { get; set; }
+        public virtual DbSet<LocationAttribute> LocationAttribute { get; set; }
+        public virtual DbSet<X_Log> X_Log { get; set; }
+        public virtual DbSet<PrecautionaryStatement> PrecautionaryStatement { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<RolePermissions> RolePermissions { get; set; }
+        public virtual DbSet<StatementPictogram> StatementPictogram { get; set; }
+        public virtual DbSet<User> User { get; set; }
+
+
+
+
+
+        //public virtual DbSet<Account> Account { get; set; }
+        // public virtual DbSet<Chemical> Chemical { get; set; }
+        // public virtual DbSet<ChemicalHazards> ChemicalHazards { get; set; }
+        //public virtual DbSet<Container> Container { get; set; }
+        // public virtual DbSet<Hazard> Hazard { get; set; }
+        public virtual DbSet<X_Location> Location { get; set; }
+        public virtual DbSet<X_Log> Log { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,8 +63,44 @@ namespace ChemStoreWebApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //ContainerChemicals (composite keys)
+            modelBuilder.Entity<ContainerChemicals>()
+                .HasKey(a => new { a.ContainerID, a.PubchemCID });
+
+            //HazardPrecaution (composite keys)
+            modelBuilder.Entity<HazardPrecaution>()
+                .HasKey(a => new { a.HCode, a.PCode });
+
+            //LocationAttribute (composite keys)
+            modelBuilder.Entity<LocationAttribute>()
+                .HasKey(a => new { a.LocationID, a.Key });
+
+            //RolePermissions (composite keys)
+            modelBuilder.Entity<RolePermissions>()
+                .HasKey(a => new { a.RoleID, a.LocationID, a.Permission });
+
+            //StatementPictogram (composite keys)
+            modelBuilder.Entity<StatementPictogram>()
+                .HasKey(a => new { a.GHCode, a.HCode });
+
+            // Disable "Cascade on Delete" for various things
+            // NOTE: "Cascade on Delete" is enabled by default for everything.
+            //       If there is weird deleting behavior, come back here.
+            modelBuilder.Entity<RolePermissions>()
+                .HasOne(e => e.X_Location)
+                .WithMany(e => e.RolePermissions)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RolePermissions>()
+                .HasOne(e => e.Role)
+                .WithMany(e => e.RolePermissions)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
             OnModelCreatingPartial(modelBuilder);
 
+            /*
             modelBuilder.Entity<Hazard>().HasData(
                    new Hazard { HazardId = "Corrosion", Description = "Corrosive" },
                    new Hazard { HazardId = "Environment", Description = "Enviornmental Hazard" },
@@ -53,6 +111,7 @@ namespace ChemStoreWebApp.Models
                    new Hazard { HazardId = "GasCylinder", Description = "Gas Cylinder" },
                    new Hazard { HazardId = "HealthHazard", Description = "HealthHazard" },
                    new Hazard { HazardId = "Skull", Description = "Skull" });
+            */
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
@@ -61,28 +120,31 @@ namespace ChemStoreWebApp.Models
         {
             var changeList = from e in ChangeTracker.Entries()
                              where e.State != EntityState.Detached && e.State != EntityState.Unchanged
-                             && (e.Entity is Container || e.Entity is Account || e.Entity is Chemical)
+                             // TODO: Put ContainerChemicals here instead of Chemical??
+                             && (e.Entity is X_Container || e.Entity is User /*|| e.Entity is Chemical*/)
                              select e;
 
-            List<Log> logList = new List<Log>();
+            List<X_Log> logList = new List<X_Log>();
 
             string uname = httpContext.HttpContext.User.Identity.Name;
-            int userId = (from a in Account
-                          where a.Email == uname
-                          select a.AccountId).FirstOrDefault();
+            int userId = (from a in User
+                          where a.Username == uname
+                          select a.UserID).FirstOrDefault();
 
             foreach (var entity in changeList)
             {
-                Log newLog = new Log
+                //old log converted to X_Log
+                X_Log newLog = new X_Log
                 {
-                    DateTime = DateTime.Now,
+                    //Datetime converted to Timestamp
+                    Timestamp = DateTime.Now,
                     UserID = userId
                 };
                 //Container changes
-                if (entity.Entity is Container container)
+                if (entity.Entity is X_Container container)
                 {
-                    newLog.table = "container";
-                    newLog.key = container.ContainerId.ToString();
+                    newLog.Table = "container";
+                    newLog.Key1 = container.ContainerID.ToString();
                     switch (entity.State)
                     {
                         case EntityState.Deleted:
@@ -101,11 +163,11 @@ namespace ChemStoreWebApp.Models
                                 //other edits besides Location made
                                 if (modifiedFields.Any(a => a.Metadata.Name != "RoomId"))
                                 {
-                                    logList.Add(new Log
+                                    logList.Add(new X_Log
                                     {
-                                        DateTime = DateTime.Now,
-                                        key = container.ContainerId.ToString(),
-                                        table = "container",
+                                        Timestamp = DateTime.Now,
+                                        Key1 = container.ContainerID.ToString(),
+                                        Table = "container",
                                         Action = ((int)Actions.ContainerEdited)
                                     });
                                 }
@@ -117,10 +179,12 @@ namespace ChemStoreWebApp.Models
                             break;
                     }
                 }
+                // TODO: Make this log ContainerChemicals changes? I guess?
+                /*
                 else if (entity.Entity is Chemical chemical)
                 {
                     //newLog.ChemicalCAS = chemical.CasNumber;
-                    newLog.key = chemical.CasNumber; // TODO: REMOVE
+                    // newLog.key = chemical.CasNumber; // TODO: REMOVE
                     newLog.key = "chemical";
                     switch (entity.State)
                     {
@@ -137,23 +201,24 @@ namespace ChemStoreWebApp.Models
                             break;
                     }
                 }
-                else if (entity.Entity is Account account)
+                */
+                else if (entity.Entity is User account)
                 //Account changes. This will need to be modified if we modify the logic
                 {
-                    newLog.key = account.AccountId.ToString();
-                    newLog.table = "account";
+                    newLog.Key1 = account.UserID.ToString();
+                    newLog.Table = "account";
                     //if they are added and they aren't just a member, or their new role is less their old role, they have been promoted
                     if ((entity.State == EntityState.Added && ((int)entity.CurrentValues["Role"]) != ((int)Roles.Member)) ||
                         (entity.State == EntityState.Modified && (((int)entity.CurrentValues["Role"]) < ((int)entity.OriginalValues["Role"]))))
                     {
                         newLog.Action = ((int)Actions.UserPromoted);
-                        newLog.Description = $"Promoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"])}";
+                        newLog.Notes = $"Promoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"])}";
                     }
                     else if (entity.State == EntityState.Deleted ||
                       (entity.State == EntityState.Modified && (((int)entity.CurrentValues["Role"]) > ((int)entity.OriginalValues["Role"]))))
                     {
                         newLog.Action = ((int)Actions.UserDemoted);
-                        newLog.Description = $"Demoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {(entity.State == EntityState.Deleted ? "Member" : EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"]))}";
+                        newLog.Notes = $"Demoted User {entity.CurrentValues["Name"]} - {entity.CurrentValues["Email"]} to {(entity.State == EntityState.Deleted ? "Member" : EnumHelper.GetDisplayValue((Roles)entity.CurrentValues["Role"]))}";
                     }
                 }
 

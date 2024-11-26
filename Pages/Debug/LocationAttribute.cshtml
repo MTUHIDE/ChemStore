@@ -1,0 +1,44 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.LocationAttributeModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Container</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                LocationID
+            </th>
+            <th>
+                Key
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.LocationAttribute) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
