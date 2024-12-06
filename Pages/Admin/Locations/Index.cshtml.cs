@@ -22,7 +22,7 @@ namespace ChemStoreWebApp.Pages.Admin.Location
             _context = context;
         }
 
-        public IList<Models.X_Location> Location { get;set; }
+        public IList<X_Location> Location { get;set; }
 
         public async Task OnGetAsync()
         {
@@ -36,7 +36,7 @@ namespace ChemStoreWebApp.Pages.Admin.Location
                 return NotFound();
             }
 
-            Models.X_Location location = await _context.Location.FindAsync(selectedLocation);
+            X_Location location = await _context.Location.FindAsync(selectedLocation);
 
             if (location != null)
             {
