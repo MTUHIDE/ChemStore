@@ -31,8 +31,13 @@ Chem Store is a chemical tracking website that allows easy navigation and organi
 	3. Run `Update-Database` to create all tables locally (If this fails, try running `EntityFrameworkCore\Update-Database`)
 
 9. Return to SSMS, right click on the chemstore database and click Refresh. There should now be tables in the Table folder that match the classes in the Models folder of the project.
-	1. In order for the website to work, there must be an entry in the account table with your MTU email, and a role of 0.
-	2. The list of items in container is what will show on the home page, as long as its chemical and location are in their respective tables.
+	1. In order for the website to work, there must be an entry in the User table with your MTU email. Run the following SQL script, replacing `[YOUR MTU EMAIL]` with your MTU email, and `[YOUR NAME]` with your name.
+
+```
+INSERT INTO [chemstore].[dbo].[Role] VALUES('Developer')
+INSERT INTO [chemstore].[dbo].[Department] VALUES('Debug')
+INSERT INTO [chemstore].[dbo].[User] VALUES('[YOUR MTU EMAIL]', '[YOUR NAME]', 1, 1)
+```
 
 ## Errors and Fixes
 * Nuget.org not installed as default package
