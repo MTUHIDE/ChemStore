@@ -12,17 +12,17 @@ using System.Data;
 
 namespace ChemStoreWebApp.Pages.Admin.Location
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Developer")]
     public class IndexModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public IndexModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public IndexModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }
 
-        public IList<Models.Location> Location { get;set; }
+        public IList<X_Location> Location { get;set; }
 
         public async Task OnGetAsync()
         {
@@ -36,7 +36,7 @@ namespace ChemStoreWebApp.Pages.Admin.Location
                 return NotFound();
             }
 
-            Models.Location location = await _context.Location.FindAsync(selectedLocation);
+            X_Location location = await _context.Location.FindAsync(selectedLocation);
 
             if (location != null)
             {

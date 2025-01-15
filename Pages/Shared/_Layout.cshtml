@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using ChemStoreWebApp.Models.Enums
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,7 +32,14 @@
                         <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Log">Log</a>
                         <a class="nav-item nav-link text-dark" asp-area="" asp-page="/ContactUs">Contact</a>
-                        <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Developer"))
+                        {
+                            <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Admin/Index">Admin</a>
+                        }
+                        @if (User.IsInRole("Developer"))
+                        {
+                            <a class="nav-item nav-link text-dark" asp-area="" asp-page="/Debug/Index">Debug</a>
+                        }
                     </div>
                 </div>
                 @{
@@ -56,9 +64,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="position: fixed">
         <div class="container">
-            &copy; 2020 - ChemStore - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - ChemStore - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 

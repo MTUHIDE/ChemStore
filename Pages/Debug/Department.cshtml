@@ -1,0 +1,38 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.DepartmentModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Container</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                DepartmentID
+            </th>
+            <th>
+                Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Department) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

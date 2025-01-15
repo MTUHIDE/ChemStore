@@ -10,6 +10,7 @@ using ChemStoreWebApp.Utilities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
 using ChemStoreWebApp.ViewModels;
+using ChemStoreWebApp.Models.Enums;
 
 namespace ChemStoreWebApp.Pages
 {
@@ -27,9 +28,9 @@ namespace ChemStoreWebApp.Pages
             {(int)Units.pound,1}
         }; // Dictionary to sort by units
 
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public SearchModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public SearchModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }
@@ -54,14 +55,14 @@ namespace ChemStoreWebApp.Pages
         public string searchRetired { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<long> chemicalsToDelete { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public int buildingIndex { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string RoomIndex { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public int buildingEditIndex { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string RoomEditIndex { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public int buildingIndex { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string RoomIndex { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public int buildingEditIndex { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string RoomEditIndex { get; set; }
         public SelectList Categories { get; set; }
         [BindProperty(SupportsGet = true)]
         public bool createError { get; set; } = false;
@@ -119,28 +120,29 @@ namespace ChemStoreWebApp.Pages
             foreach (long id in containerIds)
             {
                 //Finds the container associated with the given id and deletes it
-                ChemStoreWebApp.Models.Container container = _context.Container.Find(id);
+                ChemStoreWebApp.Models.X_Container container = _context.X_Container.Find(id);
 
                 if (container != null)
                 {
-                    _context.Container.Remove(container);
+                    _context.X_Container.Remove(container);
                     _context.SaveChanges();
                 }
             }
             return containerIds;
         }
 
-        public long addToDatabase(Models.Container con)
+        public long addToDatabase(Models.X_Container con)
         {
-            _context.Container.Add(con);
+            _context.X_Container.Add(con);
             _context.SaveChanges();
             createError = false;
-            return con.ContainerId;
+            return con.ContainerID;
         }
 
         private int getAmount(Units unit)
         {
-            return (from con in DisplayContainers where con.con.Unit == (int)unit select con.con.Amount).Sum();
+            return 0;
+            //return (from con in DisplayContainers where con.conChem.PreferredUnit == (int)unit select con.con.Amount).Sum();
         }
 
         //Condenses Units into a smaller unit if necessary
@@ -198,7 +200,7 @@ namespace ChemStoreWebApp.Pages
             //Units defaultUnit = 
 
             //chemicalAmount = DisplayContainers.Sum(con => con.con.Amount);
-            uniqueBuildings = DisplayContainers.Select(con => con.loc.BuildingName).Distinct().Count();
+            uniqueBuildings = DisplayContainers.Select(con => con.loc.LocationID).Distinct().Count();
             numContainers = DisplayContainers.Count();
         }
 
@@ -212,18 +214,18 @@ namespace ChemStoreWebApp.Pages
             var checkCase = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
 
             //  EF.Functions.Like( is necesary to get this server side (can't use .contains()
-            var containers = from con in _context.Container
-                             join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
-                             join acc in _context.Account on con.SupervisorId equals acc.AccountId
-                             join loc in _context.Location on con.RoomId equals loc.RoomId
-                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(chem.CasNumber, "%" + searchCAS + "%")) &&
-                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(chem.ChemicalName, "%" + searchString + "%")) &&
-                                   (string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
-                                   (string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) &&
-                                   (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) &&
-                                   (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) &&
-                                   (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment))
-                             select new DisplayContainer(con, chem, loc, acc);
+            var containers = from con in _context.X_Container
+                             join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
+                             // join acc in _context.Account on con.SupervisorId equals acc.AccountId
+                             join loc in _context.X_Location on con.LocationID equals loc.LocationID
+                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(conChem.ChemicalCAS, "%" + searchCAS + "%")) &&
+                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(con.ProductName, "%" + searchString + "%")) //&&
+                                   //(string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
+                                   //(string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) //&&
+                                   // (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) && // 
+                                   // (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) && // do we even need to keep this? 
+                                   // (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment)) // should use location
+                             select new DisplayContainer(con, loc, conChem);
 
             return containers;
         }
@@ -241,17 +243,20 @@ namespace ChemStoreWebApp.Pages
         {
             try
             {
-                Models.Container con = (from c in _context.Container
-                                 where c.ContainerId == Int32.Parse(Request.Form["ContainerID"])
+                Models.X_Container con = (from c in _context.X_Container
+                                 where c.ContainerID == Int32.Parse(Request.Form["ContainerID"])
                                  select c).Single();
-                con.CasNumber = Request.Form["Cas Number"];
-                con.SupervisorId = (from s in _context.Account
+                //con.CasNumber = Request.Form["Cas Number"];
+                /*
+                // Orginal, but supervisorID is now taken from Location
+                con.SupervisorId = (from s in _context.User
                                     where s.Name.Equals(Request.Form["Supervisor"], StringComparison.OrdinalIgnoreCase)
                                     select s.AccountId).FirstOrDefault();
-                con.Amount = Int32.Parse(Request.Form["Amount"]);
-                con.RoomId = (from l in _context.Location
-                              where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
-                              select l.RoomId).Single();
+                */
+                //con.Amount = Int32.Parse(Request.Form["Amount"]);
+                con.LocationID = (from l in _context.X_Location
+                              //where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
+                              select l.LocationID).Single();
                 _context.SaveChanges();
             }
             catch
@@ -263,46 +268,52 @@ namespace ChemStoreWebApp.Pages
         }
 
 
-        public async Task<IActionResult> OnPostCreate()
+        /*public async Task<IActionResult> OnPostCreate()
         {
-            Models.Container newCon = new Models.Container();
-            newCon.CasNumber = Request.Form["CAS Number"];
-            newCon.Unit = 0;
-            newCon.Retired = false;
-            var roomName = RoomIndex;
-            var buildingInt = buildingIndex;
+            Models.X_Container newCon = new Models.X_Container();
+            //newCon.CasNumber = Request.Form["CAS Number"];
+            //newCon.Unit = 0;
+            //newCon.Retired = false;
+            //var roomName = RoomIndex;
+            //var buildingInt = buildingIndex;
             var supervisorName = Request.Form["Supervisor"];
             try
             {
-                var location = _context.Location.Single(x => x.BuildingName == buildingInt && x.RoomNumber == roomName);
-                newCon.RoomId = location.RoomId;
+                //var location = _context.X_Location; //.Single(/*x => x.BuildingName == buildingInt && x.RoomNumber == roomName*///);
+                //newCon.LocationID = location.LocationID;
+                /*
+                // Orginal. but supversiorName would have to be found by connecting the supervisorID from location connecting back to User.Name
                 var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
-                newCon.SupervisorId = supervisor.AccountId;
-                newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
-                addToDatabase(newCon);
-            }
-            catch
-            {
-                createError = true;
-            }
-            return RedirectToPage();
-        }
+                */
+                /*
+                // Orginal. But supervisorID is grabbed from location now
+                //newCon.SupervisorId = supervisor.AccountId;
+                */
+                //newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
+                //addToDatabase(newCon);
+        //    }
+        //    catch
+        //    {
+        //        createError = true;
+        //    }
+        //    return RedirectToPage();
+        //}
 
-        public IEnumerable<Location> GetSubCategories(int? buildingIndex)
+        public IEnumerable<X_Location> GetSubCategories(int? buildingIndex)
         {
-            var subCategories = _context.Location.Select(x =>
-                new Location { BuildingName = x.BuildingName, RoomId = x.RoomId, RoomNumber = x.RoomNumber });
-            return subCategories.Where(s => s.BuildingName == buildingIndex);
+            var subCategories = _context.X_Location.Select(x =>
+                new X_Location { LocationID = x.LocationID /*BuildingName = x.BuildingName, RoomId = x.RoomId, RoomNumber = x.RoomNumber*/ });
+            return subCategories.Where(s => s.LocationID == buildingIndex);
         }
-        public JsonResult OnGetSubCategories()
-        {
-            return new JsonResult(GetSubCategories(buildingIndex));
-        }
+        //public JsonResult OnGetSubCategories()
+        //{
+        //    return new JsonResult(GetSubCategories(buildingIndex));
+        //}
 
-        public JsonResult OnGetEditCategories()
-        {
-            return new JsonResult(GetSubCategories(buildingEditIndex));
-        }
+        //public JsonResult OnGetEditCategories()
+        //{
+        //    return new JsonResult(GetSubCategories(buildingEditIndex));
+        //}
 
         public async Task GetDisplayContainer()
         {
@@ -314,20 +325,24 @@ namespace ChemStoreWebApp.Pages
             return DisplayContainers[index];
         }
 
+        /* Removed because it was stupid and it doesn't seem like it was used for anything anyway - Yasmin
         public JsonResult OnGetListItem(int containerListIndex)
         {
             var returnVal = GetListItem(containerListIndex);
-            List<string> returnList = new List<string>();
-            returnList.Add(returnVal.chem.ChemicalName);
-            returnList.Add(returnVal.chem.CasNumber);
-            returnList.Add(returnVal.supervisor.Name);
-            returnList.Add(returnVal.con.Amount.ToString());
-            returnList.Add(returnVal.con.ContainerId.ToString());
-            returnList.Add(returnVal.loc.BuildingName.ToString());
-            returnList.Add(returnVal.loc.RoomNumber);
-            returnList.Add(returnVal.chem.ChemicalHazards.ToString());
+            List<string> returnList = new()
+            {
+                returnVal.chem.ChemicalName,
+                returnVal.chem.CasNumber,
+                returnVal.supervisor.Name,
+                returnVal.con.Amount.ToString(),
+                returnVal.con.ContainerId.ToString(),
+                returnVal.loc.BuildingName.ToString(),
+                returnVal.loc.RoomNumber,
+                returnVal.chem.ChemicalHazards.ToString()
+            };
             return new JsonResult(returnList);
         }
+        */
 
         /// <summary>
         /// Runs on every search and returns a list of containers that fit the given search criteria
@@ -362,35 +377,36 @@ namespace ChemStoreWebApp.Pages
             //Has to be sorted on reload with current setup
             IOrderedEnumerable<DisplayContainer> temp = sortMethod switch
             {
-                1 => DisplayContainers.OrderByDescending(c => c.chem.ChemicalName),
-                2 => DisplayContainers.OrderBy(c => c.con.CasNumber),
-                3 => DisplayContainers.OrderByDescending(c => c.con.CasNumber),
-                4 => DisplayContainers.OrderBy(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
-                5 => DisplayContainers.OrderByDescending(c => c.loc.BuildingName).ThenBy(c => c.chem.ChemicalName),
+                1 => DisplayContainers.OrderByDescending(c => c.con.ProductName),
+                2 => DisplayContainers.OrderBy(c => c.conChem.ChemicalCAS),
+                3 => DisplayContainers.OrderByDescending(c => c.conChem.ChemicalCAS),
+                4 => DisplayContainers.OrderBy(c => c.loc.LocationID).ThenBy(c => c.con.ProductName),
+                5 => DisplayContainers.OrderByDescending(c => c.loc.LocationID).ThenBy(c => c.con.ProductName),
 
-                _ => DisplayContainers.OrderBy(c => c.chem.ChemicalName),
+                _ => DisplayContainers.OrderBy(c => c.con.ProductName)
             };
 
             //Always sort by size of container
-            DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.con.Unit).ThenBy(c => c.con.Amount).ToList()
-                                            : temp.ThenByDescending(c => c.con.Unit).ThenByDescending(c => c.con.Amount).ToList();
+            DisplayContainers = revNumsPrev ? temp.ThenBy(c => c.conChem.PreferredUnit).ToList()   //.ThenBy(c => c.con.Amount).ToList()
+                                            : temp.ThenByDescending(c => c.conChem.PreferredUnit).ToList();  //.ThenByDescending(c => c.con.Amount).ToList();
         }
 
         public PartialViewResult OnGetEditModal(long conid)
         {
-            var container = (from con in _context.Container
-                             join chem in _context.Chemical on con.CasNumber equals chem.CasNumber
-                             where con.ContainerId == conid
-                             select new ViewModels.ContainerViewModel
+            var container = (from con in _context.X_Container
+                             join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
+                             join loc in _context.X_Location on con.LocationID equals loc.LocationID
+                             where con.ContainerID == conid
+                             select new //ViewModels.ContainerViewModel
                              {
-                                 ChemicalName = chem.ChemicalName,
-                                 ContainerId = con.ContainerId,
-                                 Unit = con.Unit,
-                                 Amount = con.Amount,
-                                 Retired = con.Retired,
-                                 CasNumber = con.CasNumber,
-                                 RoomId = con.RoomId,
-                                 SupervisorId = con.SupervisorId
+                                 ContainerName = con.ProductName,
+                                 ContainerID = con.ContainerID,
+                                 Unit = conChem.PreferredUnit,
+                                 //Amount = con.Amount,
+                                 //Retired = con.Retired,
+                                 CasNumber = conChem.ChemicalCAS,
+                                 LocationID = con.LocationID,
+                                 SupervisorId = loc.SupervisorID
                              }).FirstOrDefault();
             return Partial("_EditModal", container);
         }
@@ -401,7 +417,7 @@ namespace ChemStoreWebApp.Pages
         }
         public IActionResult OnGetAutoComplete(string term)
         {
-            var names = _context.Account.Where(a => a.Name.Contains(term)).Select(a => a.Name).Take(3).ToList();
+            var names = _context.User.Where(a => a.Name.Contains(term)).Select(a => a.Name).Take(3).ToList();
             return new JsonResult(names);
         }
     }

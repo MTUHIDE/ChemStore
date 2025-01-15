@@ -12,21 +12,22 @@ using System.Data;
 
 namespace ChemStoreWebApp.Pages.Admin.Account
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Developer")]
     public class IndexModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.chemstoreContext _context;
+        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
 
-        public IndexModel(ChemStoreWebApp.Models.chemstoreContext context)
+        public IndexModel(ChemStoreWebApp.Models.ChemstoreContext context)
         {
             _context = context;
         }
 
-        public IList<Models.Account> Account { get;set; }
+        // public IList<Models.User> User { get;set; } // This is orginal line. Hides an inherited model. Is this safe to delete?
+        public new IList<Models.User> User { get; set; }
 
         public async Task OnGetAsync()
         {
-            Account = await _context.Account.ToListAsync();
+            User = await _context.User.ToListAsync();
         }
     }
 }

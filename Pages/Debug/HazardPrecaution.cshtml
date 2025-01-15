@@ -1,0 +1,39 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.HazardPrecautionModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hazard Precaution</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                PCode
+            </th>
+            <th>
+                HCode
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model.HazardPrecaution)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HCode)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

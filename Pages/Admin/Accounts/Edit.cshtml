@@ -1,4 +1,5 @@
 ﻿@page
+@using ChemStoreWebApp.Models.Enums
 @model ChemStoreWebApp.Pages.Admin.Account.EditModel
 
 @{
@@ -21,41 +22,43 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Account.AccountId" />
+            <input type="hidden" asp-for="User.UserID" />
                 <div class="mb-3">
-                    <label asp-for="Account.Name" class="control-label"></label>
-                    <input asp-for="Account.Name" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
-                    <span asp-validation-for="Account.Name" class="text-danger"></span>
+                    <label asp-for="User.Name" class="control-label"></label>
+                    <input asp-for="User.Name" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
+                    <span asp-validation-for="User.Name" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Account.Email" class="control-label"></label>
-                    <input asp-for="Account.Email" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
-                    <span asp-validation-for="Account.Email" class="text-danger"></span>
+                    <label asp-for="User.Username" class="control-label"></label>
+                    <input asp-for="User.Username" class="form-control" style="width:150px; border-radius:5px; height:25px;" />
+                    <span asp-validation-for="User.Username" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Account.Role" class="control-label"></label>
+                    <label asp-for="User.RoleID" class="control-label"></label>
                     <br />
-                    <select asp-for="Account.Role" asp-items="Html.GetEnumSelectList<Roles>()" id="selectRole" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
+                    <select asp-for="User.RoleID" asp-items="Html.GetEnumSelectList<Roles>()" id="selectRole" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
                         <option value="" selected disabled>Role</option>
                     </select>
-                    <span asp-validation-for="Account.Role" class="text-danger"></span>
+                    <span asp-validation-for="User.RoleID" class="text-danger"></span>
                 </div>
 
+                @*
                 <div class="mb-3">
                     <label asp-for="Account.Supervisor" class="control-label"></label>
                     <input asp-for="Account.Supervisor" class="form-control" /> <!--style="width:150px; border-radius:5px; height:25px;" />-->
                     <span asp-validation-for="Account.Supervisor" class="text-danger"></span>
                 </div>
+                *@
 
                 <div class="mb-3">
-                    <label asp-for="Account.Department" class="control-label"></label>
+                    <label asp-for="User.DepartmentID" class="control-label"></label>
                     <br />
-                    <select asp-for="Account.Department" asp-items="Html.GetEnumSelectList<Departments>()" id="selectDepartment" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
+                    <select asp-for="User.DepartmentID" asp-items="Html.GetEnumSelectList<Departments>()" id="selectDepartment" class="rounded-dropdown inputPlaceholder" style="width:150px; border-radius:5px; height:25px;">
                         <option value="" selected disabled>Department</option>
                     </select>
-                    <span asp-validation-for="Account.Department" class="text-danger"></span>
+                    <span asp-validation-for="User.DepartmentID" class="text-danger"></span>
                 </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

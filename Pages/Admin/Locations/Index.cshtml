@@ -8,6 +8,26 @@
 
 <!DOCTYPE html>
 
+<style>
+    .collapsibleList ul 
+    {
+        list-style-type: none; /* Remove the bullet points */
+        display: none; /* Hide everything under it by default */
+        margin-left: 20px; /* How far all the sub items should be indented */
+    }
+
+    .collapsibleList li 
+    {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .collapsibleList li.open > ul 
+    {
+        display: block; /* Show eveything under it when opened */
+    }
+</style>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -22,23 +42,48 @@
 <p>
         <a asp-authorize asp-roles="Admin" asp-page="Create">Create New</a>
 </p>
+
+<ul class="collapsibleList">
+    <li>
+        @foreach (var item in Model.Location)
+        {
+            @if (item.Level == '0') // If we're base level we'll start here... How far can this depth train go? Cause its going to be hella nested
+            {
+                @Html.DisplayFor(modelItem => item.Name) // Are we worried if this floor isHidden or not? Cause we might need to add to the if() above to check if the location is to be hidden
+                <ul class="collapsibleList">
+                    <li>
+                        @foreach (var item2 in Model.Location) // There's gotta be a better way than embedded for loops right??
+                        {
+                            @if (item2.ParentID == item.LocationID) // If this item is a child of first item... I don't need to also check this item's level right?
+                            {
+                                @Html.DisplayFor(modelItem => item2.Name)
+                            }
+                        }
+                    </li>
+                </ul>
+            }
+        }
+    </li>
+</ul>
+
+<!--
 <table class="table">
     <thead>
         <tr>
-            <th></th>
+            @* <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Location[0].RoomNumber)
             </th> 
             <th>
                 @Html.DisplayNameFor(model => model.Location[0].BuildingName)
             </th>
-            <th></th>
+            <th></th> *@
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Location) {
         <tr>
-            <td>
+            @* <td>
                         <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.RoomId">Edit</a>
             </td>
             <td>
@@ -51,13 +96,15 @@
                   <button type="button" class="searchPageBtns redBtn" id="delModalBtn" onclick="updateForm('@item.RoomId')" data-toggle="modal" data-target="#confirmationModal">
                         Delete
                   </button>
-            </td>
+            </td> *@
         </tr>
 }
     </tbody>
 </table>
-
+-->
+    
     <!-- Confirmation Modal -->
+    <!--
     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -78,6 +125,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+    -->
 </body>
 </html>

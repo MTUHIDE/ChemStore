@@ -28,7 +28,7 @@ namespace ChemStoreWebApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<chemstoreContext>(options =>
+            services.AddDbContext<ChemstoreContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ChemStoreDB"), providerOptions => providerOptions.EnableRetryOnFailure()));
 
             services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)

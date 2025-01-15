@@ -1,0 +1,39 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Debug.PrecautionaryStatementModel
+@using ChemStoreWebApp.Utilities
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Precautionary Statement</title>
+</head>
+<body>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                PCode
+            </th>
+            <th>
+                Statement
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model.PrecautionaryStatement)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Statement)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
