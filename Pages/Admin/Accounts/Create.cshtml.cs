@@ -15,7 +15,7 @@ using Microsoft.Build.Framework.Profiler;
 
 namespace ChemStoreWebApp.Pages.Admin.Account
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Developer")]
     public class CreateModel : PageModel
     {
         private readonly ChemstoreContext _context;

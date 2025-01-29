@@ -12,7 +12,7 @@ using System.Data;
 
 namespace ChemStoreWebApp.Pages.Admin.Account
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Developer")]
     public class EditModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
