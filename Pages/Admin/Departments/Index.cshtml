@@ -1,0 +1,44 @@
+﻿@page
+@model ChemStoreWebApp.Pages.Admin.Departments.IndexModel
+@using ChemStoreWebApp.Utilities
+
+@{
+    // ../Shared/_Layout.cshtml uses this for the page title
+    ViewData["Title"] = "Departments Admin Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="\css\adminSubpageLayout.css" asp-append-version="true" />
+
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <h2>Departments</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="checkboxCol"></th>
+                <th>
+                    Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Department) {
+                <tr>
+                    <td class="checkboxCol">
+                        <input type="checkbox" id=@item.DepartmentID/>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
