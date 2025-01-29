@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ChemStoreWebApp.Pages
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Developer")]
     public class LogModel : PageModel
     {
         private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
