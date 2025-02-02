@@ -45,7 +45,8 @@
 @foreach (var item in Model.User) {
         <tr>
             <td>
-                <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.UserID">Edit</a>
+                @* <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.UserID">Edit</a> *@
+                        <input type="checkbox" id=@item.UserID onchange="showPopup(this)"/>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -68,5 +69,21 @@
 }
     </tbody>
 </table>
+    <div id="editPopUp" style="display:none; position:fixed; top:87.5%; left:50%; transform:translate(-50%, -50%); width:1150px;
+    background:white; padding:20px; border:1px solid black;">
+        <p>Edit user(s)</p>
+        <button onclick="closeModal()">Edit</button>
+    </div>
+    <script>
+        function showPopup(checkbox) {
+            if (checkbox.checked) {
+                document.getElementById("editPopUp").style.display = "block";
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("editPopUp").style.display = "none";
+        }
+    </script>
 </body>
 </html>
