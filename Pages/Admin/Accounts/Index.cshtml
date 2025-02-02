@@ -69,20 +69,55 @@
 }
     </tbody>
 </table>
-    <div id="editPopUp" style="display:none; position:fixed; top:87.5%; left:50%; transform:translate(-50%, -50%); width:1150px;
+    @* Pop-up if a checkbox has been checked from a certain user *@
+    <div id="checkboxPopUp" style="display:none; position:fixed; top:87.5%; left:50%; transform:translate(-50%, -50%); width:1150px;
     background:white; padding:20px; border:1px solid black;">
         <p>Edit user(s)</p>
-        <button onclick="closeModal()">Edit</button>
+        <button onclick="editUser()">Edit</button>
+        <button onclick="deleteUser()">Delete</button>
     </div>
+    @* Pop-up for edit the user information *@
+    <div id="editPopUp" style="display:none; position:fixed; top:65%; left:10%; transform:translate(-50%, -50%); width:200px; height: 600px;
+    background:white; padding:20px; border:1px solid black;">
+        <p>Edit user(s)</p>
+        <textarea> id="editName" </textarea>
+        <textarea> id="editUsername" </textarea>
+        <select id="editRole">
+            <option value="admin"Admin></option>
+            <option value="employee" Employee></option>
+            <option value="associate" Associate></option>
+            <option value="member" Member></option>
+        </select>
+        <select id="editDepartment">
+            <option value="rotc" rotc></option>
+            <option value="appComp" Applied Computing></option>
+            <option value="eng" Engineering></option>
+            <option value="compScie" Computer Science></option>
+        </select>
+        <button onclick="save()">Save</button>
+    </div>
+
     <script>
         function showPopup(checkbox) {
             if (checkbox.checked) {
-                document.getElementById("editPopUp").style.display = "block";
+                document.getElementById("checkboxPopUp").style.display = "block";
+            } else if (!Model.User.checkbox.checked) {
+                document.getElementById("checkboxPopUp").style.display = "none";
             }
         }
 
-        function closeModal() {
-            document.getElementById("editPopUp").style.display = "none";
+        function editUser() {
+            document.getElementById("checkboxPopUp").style.display = "none";
+            document.getElementById("editPopUp").style.display = "block";
+            
+        }
+
+        function deleteUser() {
+            document.getElementById("checkboxPopUp").style.display = "none";
+        }
+
+        function save() {
+            
         }
     </script>
 </body>
