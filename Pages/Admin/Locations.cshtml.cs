@@ -1,28 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ChemStoreWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ChemStoreWebApp.Models;
-using System.Drawing.Printing;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace ChemStoreWebApp.Pages.Admin.Location
+namespace ChemStoreWebApp.Pages.Admin
 {
     [Authorize(Roles = "Admin, Developer")]
-    public class IndexModel : PageModel
+    public class LocationModel : PageModel
     {
-        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
+        private readonly ChemstoreContext _context;
 
-        public IndexModel(ChemStoreWebApp.Models.ChemstoreContext context)
+        public LocationModel(ChemstoreContext context)
         {
             _context = context;
         }
 
-        public IList<X_Location> Location { get;set; }
+        public IList<X_Location> Location { get; set; }
 
         public async Task OnGetAsync()
         {
