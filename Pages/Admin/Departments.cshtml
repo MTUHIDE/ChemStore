@@ -1,5 +1,5 @@
 ﻿@page
-@model ChemStoreWebApp.Pages.Admin.Departments.IndexModel
+@model ChemStoreWebApp.Pages.Admin.DepartmentsModel
 @using ChemStoreWebApp.Utilities
 
 @{
@@ -7,13 +7,9 @@
     ViewData["Title"] = "Departments Admin Page";
 }
 
-<!DOCTYPE html>
-
 <html>
 <head>
     <link rel="stylesheet" href="\css\adminSubpageLayout.css" asp-append-version="true" />
-
-    <meta name="viewport" content="width=device-width" />
 </head>
 
 <body>
@@ -40,5 +36,32 @@
             }
         </tbody>
     </table>
+    <style>
+        button {
+            background-color: #ffcd00;
+            width: 150px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        a {
+            color: black;
+        }
+    </style>
+    <table class="table" align="center" cellpadding="20">
+        <tr>
+            <td>
+                <p>
+                    <button type="button"><a asp-authorize asp-roles="Admin">Add New</a></button>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <button type="button"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
+                </p>
+            </td>
+        </tr>
+    </table>
+
 </body>
 </html>

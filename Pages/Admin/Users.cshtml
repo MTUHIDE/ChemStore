@@ -1,42 +1,32 @@
 ﻿@page
-@model ChemStoreWebApp.Pages.Admin.Account.IndexModel
+@model ChemStoreWebApp.Pages.Admin.UserModel
 @using ChemStoreWebApp.Utilities
 
 @{
-    Layout = "../../Shared/_Layout.cshtml";
+    // ../Shared/_Layout.cshtml uses this for the page title
+    ViewData["Title"] = "Users Admin Page";
 }
-
-<!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
 </head>
+
 <body>
-<p>
-        <a asp-authorize asp-roles="Admin" asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.User[0].Name)
+                Name
             </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.User[0].Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.User[0].Role)
-                </th>
-                @*
-                <th>
-                    @Html.DisplayNameFor(model => model.Account[0].Supervisor)
-                </th>
-                *@
-                <th>
-                @Html.DisplayNameFor(model => model.User[0].Department)
+            <th>
+                Username
+            </th>
+            <th>
+                Role
+            </th>
+            <th>
+                Department
             </th> 
             <th></th>
         </tr>
@@ -57,11 +47,6 @@
             <td>
                 @((item.Role == null) ? "" : (item.Role.Name)) @* Orginal if... false return '@EnumHelper.GetDisplayValue(item.Role))', but with the change to how roles are stored is this safe to delete? *@
             </td>
-            @*
-            <td>
-                @Html.DisplayFor(modelItem => item.Supervisor)
-            </td>
-            *@
             <td>
                 @(item.Department == null ? "" : item.Department.Name) @* Very similar to above ^^^: @EnumHelper.GetDisplayValue((Departments)item.Department)) *@
             </td>
