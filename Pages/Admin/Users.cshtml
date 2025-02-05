@@ -62,11 +62,11 @@
         <button onclick="deleteUser()">Delete</button>
     </div>
     @* Pop-up for edit the user information *@
-    <div id="editPopUp" style="display:none; position:fixed; top:65%; left:10%; transform:translate(-50%, -50%); width:200px; height: 600px;
+    <div id="editPopUp" style="display:none; position:fixed; top:51%; left:9%; transform:translate(-50%, -50%); width:330px; height: 790px;
     background:white; padding:20px; border:1px solid black;">
         <p>Edit user(s)</p>
-        <textarea> id="editName" </textarea>
-        <textarea> id="editUsername" </textarea>
+        <textarea id="editName" required placeholder="Edit Name"></textarea>
+        <textarea id="editUsername" required placeholder="Edit Username"></textarea>
         <select id="editRole">
             <option value="admin"Admin></option>
             <option value="employee" Employee></option>
