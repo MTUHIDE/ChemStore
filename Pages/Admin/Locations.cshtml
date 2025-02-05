@@ -1,12 +1,11 @@
 ﻿@page
-@model ChemStoreWebApp.Pages.Admin.Location.IndexModel
+@model ChemStoreWebApp.Pages.Admin.LocationModel
 @using ChemStoreWebApp.Utilities
 
 @{
-    Layout = "../../Shared/_Layout.cshtml";
+    // ../Shared/_Layout.cshtml uses this for the page title
+    ViewData["Title"] = "Locations Admin Page";
 }
-
-<!DOCTYPE html>
 
 <style>
     .collapsibleList ul 
@@ -30,19 +29,9 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
 </head>
-<body>
-    <script>
-        function updateForm(roomId) {
-            document.getElementById("selectedLocation").value = roomId;
-        }
-    </script>
-<p>
-        <a asp-authorize asp-roles="Admin" asp-page="Create">Create New</a>
-</p>
 
+<body>
 <ul class="collapsibleList">
     <li>
         @foreach (var item in Model.Location)
