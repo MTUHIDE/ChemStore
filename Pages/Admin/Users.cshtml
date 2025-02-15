@@ -3,106 +3,102 @@
 @using ChemStoreWebApp.Utilities
 
 @{
-    // ../Shared/_Layout.cshtml uses this for the page title
+    // Set the page title, which is used in the layout for display
     ViewData["Title"] = "Users Admin Page";
 }
 
 <html>
 <head>
-</head>
+    <!-- Include Bootstrap CSS and JS for styling and functionality -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Ensure the full height of the page is utilized */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
+        .d-flex {
+            height: 100vh; /* Make the container take up the full viewport height */
+        }
+
+        .sidebar {
+            width: 250px;
+            transition: width 0.3s; /* Smooth transition when collapsing */
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+            .sidebar.collapsed {
+                width: 50px; /* Collapse sidebar width */
+            }
+
+        .content {
+            transition: margin-left 0.3s; /* Smooth transition for content adjustment */
+            margin-left: 250px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+            .content.expanded {
+                margin-left: 50px; /* Adjust content when sidebar is collapsed */
+            }
+    </style>
+</head>
 <body>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                Name
-            </th>
-            <th>
-                Username
-            </th>
-            <th>
-                Role
-            </th>
-            <th>
-                Department
-            </th> 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.User) {
-        <tr>
-            <td>
-                @* <a asp-page="./Edit" asp-authorize asp-roles="Admin" asp-route-id="@item.UserID">Edit</a> *@
-                        <input type="checkbox" id=@item.UserID onchange="showPopup(this)"/>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @((item.Role == null) ? "" : (item.Role.Name)) @* Orginal if... false return '@EnumHelper.GetDisplayValue(item.Role))', but with the change to how roles are stored is this safe to delete? *@
-            </td>
-            <td>
-                @(item.Department == null ? "" : item.Department.Name) @* Very similar to above ^^^: @EnumHelper.GetDisplayValue((Departments)item.Department)) *@
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-    @* Pop-up if a checkbox has been checked from a certain user *@
-    <div id="checkboxPopUp" style="display:none; position:fixed; top:87.5%; left:50%; transform:translate(-50%, -50%); width:1150px;
-    background:white; padding:20px; border:1px solid black;">
-        <p>Edit user(s)</p>
-        <button onclick="editUser()">Edit</button>
-        <button onclick="deleteUser()">Delete</button>
-    </div>
-    @* Pop-up for edit the user information *@
-    <div id="editPopUp" style="display:none; position:fixed; top:51%; left:9%; transform:translate(-50%, -50%); width:330px; height: 790px;
-    background:white; padding:20px; border:1px solid black;">
-        <p>Edit user(s)</p>
-        <textarea id="editName" required placeholder="Edit Name"></textarea>
-        <textarea id="editUsername" required placeholder="Edit Username"></textarea>
-        <select id="editRole">
-            <option value="admin"Admin></option>
-            <option value="employee" Employee></option>
-            <option value="associate" Associate></option>
-            <option value="member" Member></option>
-        </select>
-        <select id="editDepartment">
-            <option value="rotc" rotc></option>
-            <option value="appComp" Applied Computing></option>
-            <option value="eng" Engineering></option>
-            <option value="compScie" Computer Science></option>
-        </select>
-        <button onclick="save()">Save</button>
+    <div class="d-flex">
+        <!-- Sidebar with filter options -->
+        <div id="sidebar" class="bg-light sidebar p-3 position-absolute top-20 start-0">
+            <button class="btn btn-warning w-100 mb-3" onclick="toggleSidebar()">Toggle Filters</button>
+            <div id="filterContent">
+                <h6>Filters</h6>
+                <label for="roleFilter">Role:</label>
+                <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
+                <label for="deptFilter">Department:</label>
+                <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
+            </div>
+        </div>
+
+        <!-- Main content area displaying users -->
+        <div id="content" class="content flex-grow-1 p-3">
+            <h2 class="mb-3">Users</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th></th> <!-- Column for checkboxes -->
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.User)
+                    {
+                        <tr>
+                            <td>
+                                <!-- Checkbox for selecting a user -->
+                                <input type="checkbox" id=@item.UserID/>
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                            <td>@((item.Role == null) ? "" : (item.Role.Name))</td>
+                            <td>@(item.Department == null ? "" : item.Department.Name)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
-        function showPopup(checkbox) {
-            if (checkbox.checked) {
-                document.getElementById("checkboxPopUp").style.display = "block";
-            } else if (!Model.User.checkbox.checked) {
-                document.getElementById("checkboxPopUp").style.display = "none";
-            }
-        }
-
-        function editUser() {
-            document.getElementById("checkboxPopUp").style.display = "none";
-            document.getElementById("editPopUp").style.display = "block";
-            
-        }
-
-        function deleteUser() {
-            document.getElementById("checkboxPopUp").style.display = "none";
-        }
-
-        function save() {
-            
+        /* Function to toggle the sidebar visibility */
+        function toggleSidebar() {
+            let sidebar = document.getElementById("sidebar");
+            let content = document.getElementById("content");
+            sidebar.classList.toggle("collapsed");
+            content.classList.toggle("expanded");
         }
     </script>
 </body>
