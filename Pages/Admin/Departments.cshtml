@@ -12,7 +12,19 @@
     <link rel="stylesheet" href="\css\adminSubpageLayout.css" asp-append-version="true" />
 </head>
 
+<style>
+
+    .btn-primary{
+        background-color: #ffcd00;
+        border-radius: 10px;
+        color: black;
+        border: 10px black;
+        padding: 3px 15px;
+    }
+</style>
+
 <body>
+<div class="container-fluid">
     <h2>Departments</h2>
     <table class="table">
         <thead>
@@ -24,10 +36,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Department) {
+            @foreach (var item in Model.Department)
+            {
                 <tr>
                     <td class="checkboxCol">
-                        <input type="checkbox" id=@item.DepartmentID/>
+                        <input type="checkbox" id=@item.DepartmentID />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -36,32 +49,14 @@
             }
         </tbody>
     </table>
-    <style>
-        button {
-            background-color: #ffcd00;
-            width: 150px;
-            height: 40px;
-            border-radius: 10px;
-        }
-
-        a {
-            color: black;
-        }
-    </style>
-    <table class="table" align="center" cellpadding="20">
-        <tr>
-            <td>
-                <p>
-                    <button type="button"><a asp-authorize asp-roles="Admin">Add New</a></button>
-                </p>
-            </td>
-            <td>
-                <p>
-                    <button type="button"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
-                </p>
-            </td>
-        </tr>
-    </table>
-
+    <div class="row align-items-end">
+        <div class="p-2">
+            <button type="button" class="btn-primary"><a asp-authorize asp-roles="Admin">Add New</a></button>
+        </div>
+        <div class="p-2">
+            <button type="button" class="btn-primary"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
