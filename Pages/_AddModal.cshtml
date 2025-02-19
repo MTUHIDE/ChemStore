@@ -21,9 +21,9 @@
     <select asp-for="BuildingIndex" class="filterInput buildingSelector" asp-items="Html.GetEnumSelectList<Buildings>()" onchange="getRoomsOfBuilding()">
         <option value="" disabled selected hidden>Building</option>
     </select> *@
-    <select asp-for="RoomIndex" class="filterInput roomSelector">
+    @* <select asp-for="RoomIndex" class="filterInput roomSelector">
         <option value="" disabled selected hidden>Room Number</option>
-    </select> <br />
+    </select> <br /> *@
     <select name="Hazard" class="filterInput hazardSelector" value="">
         <option value="" disabled selected hidden>Hazard</option>
     </select> <br />

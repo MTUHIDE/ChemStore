@@ -352,7 +352,7 @@ tr {
     width: 95%;
     margin: auto;
     display: grid;
-    grid-template-columns: 50% 15% 20% 10% 5%;
+    grid-template-columns: 45% 20% 20% 10% 5%;
 }
 
 .expandable {

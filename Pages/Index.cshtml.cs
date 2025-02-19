@@ -1,16 +1,15 @@
+using ChemStoreWebApp.Models;
+using ChemStoreWebApp.Models.Enums;
+using ChemStoreWebApp.Utilities;
+using ChemStoreWebApp.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ChemStoreWebApp.Models;
-using ChemStoreWebApp.Utilities;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.ComponentModel;
-using ChemStoreWebApp.ViewModels;
-using ChemStoreWebApp.Models.Enums;
 
 namespace ChemStoreWebApp.Pages
 {
@@ -28,9 +27,9 @@ namespace ChemStoreWebApp.Pages
             {(int)Units.pound,1}
         }; // Dictionary to sort by units
 
-        private readonly ChemStoreWebApp.Models.ChemstoreContext _context;
+        private readonly ChemstoreContext _context;
 
-        public SearchModel(ChemStoreWebApp.Models.ChemstoreContext context)
+        public SearchModel(ChemstoreContext context)
         {
             _context = context;
         }
@@ -38,21 +37,24 @@ namespace ChemStoreWebApp.Pages
 
         // variables bound to the URL storing search terms
         [BindProperty(SupportsGet = true)]
-        public string searchEmail { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchString { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchCAS { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchBuilding { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchSize { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchUnits { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchDepartment { get; set; }
-        [BindProperty(SupportsGet = true)]
-        public string searchRetired { get; set; }
+        public string SearchConName { get; set; }
+
+        //[BindProperty(SupportsGet = true)]
+        //public string searchEmail { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchString { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchCAS { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchBuilding { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchSize { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchUnits { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchDepartment { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string searchRetired { get; set; }
         [BindProperty(SupportsGet = true)]
         public List<long> chemicalsToDelete { get; set; }
         //[BindProperty(SupportsGet = true)]
@@ -80,7 +82,7 @@ namespace ChemStoreWebApp.Pages
         public bool revNums { get; set; } = false;
         [BindProperty(SupportsGet = true)]
         public bool revNumsPrev { get; set; } = false;
-        
+
         [BindProperty(SupportsGet = true)]
         public int numContainers { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -102,15 +104,16 @@ namespace ChemStoreWebApp.Pages
         /// Checks if there is text entered in any of the search fields
         /// </summary>
         /// <returns>True if text is entered</returns>
-        public Boolean textEntered()
+        public bool textEntered()
         {
-            return !(string.IsNullOrEmpty(searchEmail) &&
-                string.IsNullOrEmpty(searchCAS) &&
-                string.IsNullOrEmpty(searchString) &&
-                string.IsNullOrEmpty(searchBuilding) &&
-                string.IsNullOrEmpty(searchSize) &&
-                string.IsNullOrEmpty(searchUnits) &&
-                string.IsNullOrEmpty(searchDepartment));
+            return !(string.IsNullOrEmpty(SearchConName));
+            //return !(string.IsNullOrEmpty(searchEmail) &&
+            //    string.IsNullOrEmpty(searchCAS) &&
+            //    string.IsNullOrEmpty(searchString) &&
+            //    string.IsNullOrEmpty(searchBuilding) &&
+            //    string.IsNullOrEmpty(searchSize) &&
+            //    string.IsNullOrEmpty(searchUnits) &&
+            //    string.IsNullOrEmpty(searchDepartment));
         }
 
 
@@ -120,7 +123,7 @@ namespace ChemStoreWebApp.Pages
             foreach (long id in containerIds)
             {
                 //Finds the container associated with the given id and deletes it
-                ChemStoreWebApp.Models.X_Container container = _context.X_Container.Find(id);
+                X_Container container = _context.X_Container.Find(id);
 
                 if (container != null)
                 {
@@ -131,7 +134,7 @@ namespace ChemStoreWebApp.Pages
             return containerIds;
         }
 
-        public long addToDatabase(Models.X_Container con)
+        public long addToDatabase(X_Container con)
         {
             _context.X_Container.Add(con);
             _context.SaveChanges();
@@ -164,7 +167,7 @@ namespace ChemStoreWebApp.Pages
                     break;
             }
 
-            if(unit == Units.mL)
+            if (unit == Units.mL)
             {
                 if (amount > 10000)
                 {
@@ -172,13 +175,13 @@ namespace ChemStoreWebApp.Pages
                 }
                 return (amount, Units.mL);
             }
-            else if(unit == Units.mg)
+            else if (unit == Units.mg)
             {
-                if(amount > 10000000)
+                if (amount > 10000000)
                 {
                     return (amount / 1000000, Units.kg);
                 }
-                else if(amount > 10000)
+                else if (amount > 10000)
                 {
                     return (amount / 1000, Units.g);
                 }
@@ -191,7 +194,7 @@ namespace ChemStoreWebApp.Pages
         {
             liquidAmount = getAmount(Units.L) * 1000 + getAmount(Units.mL);
             (liquidAmount, liquidUnit) = unitCondenser(liquidAmount, Units.mL);
-            solidAmount = getAmount(Units.kg) * 1000000 + getAmount(Units.g) * 1000 + getAmount(Units.mg); 
+            solidAmount = getAmount(Units.kg) * 1000000 + getAmount(Units.g) * 1000 + getAmount(Units.mg);
             (solidAmount, solidUnit) = unitCondenser(solidAmount, Units.mg);
             pounds = getAmount(Units.pound);
             gallons = getAmount(Units.gallon);
@@ -218,13 +221,14 @@ namespace ChemStoreWebApp.Pages
                              join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
                              // join acc in _context.Account on con.SupervisorId equals acc.AccountId
                              join loc in _context.X_Location on con.LocationID equals loc.LocationID
-                             where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(conChem.ChemicalCAS, "%" + searchCAS + "%")) &&
-                                   (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(con.ProductName, "%" + searchString + "%")) //&&
-                                   //(string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
-                                   //(string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) //&&
-                                   // (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) && // 
-                                   // (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) && // do we even need to keep this? 
-                                   // (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment)) // should use location
+                             where (string.IsNullOrEmpty(SearchConName)) || EF.Functions.Like(con.ProductName, "%" + SearchConName + "%")
+                             //where (string.IsNullOrEmpty(searchCAS)        || EF.Functions.Like(conChem.ChemicalCAS, "%" + searchCAS + "%")) &&
+                             //      (string.IsNullOrEmpty(searchString)     || EF.Functions.Like(con.ProductName, "%" + searchString + "%")) //&&
+                             //(string.IsNullOrEmpty(searchBuilding)   || loc.BuildingName.ToString().Equals(searchBuilding)) &&
+                             //(string.IsNullOrEmpty(searchSize)       || con.Amount != Int32.Parse(searchSize)) //&&
+                             // (string.IsNullOrEmpty(searchEmail)      || EF.Functions.Like(acc.Email, "%" + searchEmail + "%")) && // 
+                             // (string.IsNullOrEmpty(searchUnits)      || con.Unit.Equals((Units)Int32.Parse(searchUnits))) && // do we even need to keep this? 
+                             // (string.IsNullOrEmpty(searchDepartment) || acc.Department.ToString().Equals(searchDepartment)) // should use location
                              select new DisplayContainer(con, loc, conChem);
 
             return containers;
@@ -244,8 +248,8 @@ namespace ChemStoreWebApp.Pages
             try
             {
                 Models.X_Container con = (from c in _context.X_Container
-                                 where c.ContainerID == Int32.Parse(Request.Form["ContainerID"])
-                                 select c).Single();
+                                          where c.ContainerID == Int32.Parse(Request.Form["ContainerID"])
+                                          select c).Single();
                 //con.CasNumber = Request.Form["Cas Number"];
                 /*
                 // Orginal, but supervisorID is now taken from Location
@@ -255,8 +259,8 @@ namespace ChemStoreWebApp.Pages
                 */
                 //con.Amount = Int32.Parse(Request.Form["Amount"]);
                 con.LocationID = (from l in _context.X_Location
-                              //where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
-                              select l.LocationID).Single();
+                                      //where l.BuildingName == buildingEditIndex && l.RoomNumber == RoomEditIndex
+                                  select l.LocationID).Single();
                 _context.SaveChanges();
             }
             catch
@@ -280,17 +284,17 @@ namespace ChemStoreWebApp.Pages
             try
             {
                 //var location = _context.X_Location; //.Single(/*x => x.BuildingName == buildingInt && x.RoomNumber == roomName*///);
-                //newCon.LocationID = location.LocationID;
-                /*
-                // Orginal. but supversiorName would have to be found by connecting the supervisorID from location connecting back to User.Name
-                var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
-                */
-                /*
-                // Orginal. But supervisorID is grabbed from location now
-                //newCon.SupervisorId = supervisor.AccountId;
-                */
-                //newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
-                //addToDatabase(newCon);
+                                                                                                                                  //newCon.LocationID = location.LocationID;
+        /*
+        // Orginal. but supversiorName would have to be found by connecting the supervisorID from location connecting back to User.Name
+        var supervisor = _context.Account.FirstOrDefault(x => x.Name == supervisorName);
+        */
+        /*
+        // Orginal. But supervisorID is grabbed from location now
+        //newCon.SupervisorId = supervisor.AccountId;
+        */
+        //newCon.Amount = Convert.ToInt32(Request.Form["Amount"]);
+        //addToDatabase(newCon);
         //    }
         //    catch
         //    {
@@ -321,7 +325,7 @@ namespace ChemStoreWebApp.Pages
         }
 
         public DisplayContainer GetListItem(int index)
-        { 
+        {
             return DisplayContainers[index];
         }
 
@@ -397,16 +401,10 @@ namespace ChemStoreWebApp.Pages
                              join conChem in _context.ContainerChemicals on con.ContainerID equals conChem.ContainerID
                              join loc in _context.X_Location on con.LocationID equals loc.LocationID
                              where con.ContainerID == conid
-                             select new //ViewModels.ContainerViewModel
+                             select new ContainerViewModel
                              {
                                  ContainerName = con.ProductName,
-                                 ContainerID = con.ContainerID,
-                                 Unit = conChem.PreferredUnit,
-                                 //Amount = con.Amount,
-                                 //Retired = con.Retired,
-                                 CasNumber = conChem.ChemicalCAS,
-                                 LocationID = con.LocationID,
-                                 SupervisorId = loc.SupervisorID
+                                 ChemicalCAS = conChem.ChemicalCAS
                              }).FirstOrDefault();
             return Partial("_EditModal", container);
         }
