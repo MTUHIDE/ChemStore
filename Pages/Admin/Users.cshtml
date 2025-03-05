@@ -50,13 +50,48 @@
     <div class="d-flex">
         <!-- Sidebar with filter options -->
         <div id="sidebar" class="bg-light sidebar p-3 position-absolute top-20 start-0">
-            <button class="btn btn-warning w-100 mb-3" onclick="toggleSidebar()">Toggle Filters</button>
+            <button class="btn btn-warning w-100 mb-3" onclick="toggleSidebar()">Toggle Sidebar</button>
             <div id="filterContent">
                 <h6>Filters</h6>
+                <label for="nameFilter">Name:</label>
+                <input type="text" id="nameFilter" class="form-control mb-2" placeholder="Filter by name">
                 <label for="roleFilter">Role:</label>
                 <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
                 <label for="deptFilter">Department:</label>
                 <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
+                <h6> </h6>
+                <button class="btn btn-primary w-80 mb-3">Apply Filters</button>
+            </div>
+            <div id="editContent">
+                <h6>Edit</h6>
+                <div class="d-inline-flex"> <!-- Using d-flex to put things on the same line/row -->
+                    <label for="nameEdit" class="me-2">Name:</label>
+                    <input type="text" id="nameEditor" class="form-control mb-2" placeholder="Edit name">
+                </div>
+                <div class="d-inline-flex">
+                    <label for="usernameEdit" class="me-2">Uname:</label>
+                    <input type="text" id="usernameEditor" class="form-control mb-2" placeholder="Edit username">
+                </div>
+                <div class="d-inline-flex">
+                    <label for="roleEdit" class="me-3">Role:</label>
+                    <select class="form-select" id="roleEditor">
+                        <option selected>Role</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Developer</option>
+                        <option value="3">User</option>
+                    </select>
+                </div>
+                <div class="d-inline-flex">
+                    <label for="departmentEdit" class="me-2">Dept:</label>
+                    <select class="form-select" id="departmentEditor">
+                        <option selected>Department</option>
+                        <option value="1">Computer Science</option>
+                        <option value="2">Engineering</option>
+                        <option value="3">Chemistry</option>
+                    </select> 
+                </div>
+                <h6> </h6>
+                <button class="btn btn-primary btn-lg w-80 mb-3">Save</button>
             </div>
         </div>
 

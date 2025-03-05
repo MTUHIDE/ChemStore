@@ -1,5 +1,6 @@
 using ChemStoreWebApp.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -23,6 +24,32 @@ namespace ChemStoreWebApp.Pages.Admin
         public async Task OnGetAsync()
         {
             User = await _context.User.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostEdit()
+        {
+            try
+            {
+                // Get list of user ids for users who are checked
+
+                // Select users who are checked using user id list
+                // User user = (from c in _context.User
+                //             where ...
+                //             select c);
+
+                // Set user's properties to updated values
+                // (i.e. using "user.name = newName" syntax)
+
+                // Save changes to the database
+                // _context.SaveChanges();
+            }
+            catch
+            {
+                // Handle error?
+            }
+
+            // Refresh the page???
+            return RedirectToPage();
         }
     }
 }
