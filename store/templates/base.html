@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chem Store Web App</title>
+
+        <link rel="shortcut icon" href="{% static 'store/images/beaker_icon.ico' %}">
+
+        <!-- Bootstrap CSS -->
+        {% load django_bootstrap5 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+        {% block head %}
+        {% endblock %}
+    </head>
+
+    <body>
+    {% block body %}
+    {% endblock %}
+    </body>
+</html>
