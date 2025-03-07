@@ -3,21 +3,78 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Chem Store Web App</title>
+        <meta name="viewport" content="width-devide-width, initial-scale=1.0">
 
         <link rel="shortcut icon" href="{% static 'store/images/beaker_icon.ico' %}">
+
+        <title>{% block title %}{% endblock %} - Chem Store</title>
 
         <!-- Bootstrap CSS -->
         {% load django_bootstrap5 %}
         {% bootstrap_css %}
         {% bootstrap_javascript %}
 
+         <link rel="stylesheet" href="{% static 'store/css/site.css' %}">
+        <!-- TODO: Load font-awesome fonts css? If it's necessary? -->
+
         {% block head %}
         {% endblock %}
     </head>
 
     <body>
-    {% block body %}
-    {% endblock %}
+        <!-- Header -->
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'store:index' %}">
+                        <!-- TODO: set logo size some other way? use img-fluid class with setting navbar height? -->
+                        <img src="{% static 'store/images/mtulogo.png' %}" alt="MTU Logo" class="d-inline-block align-text-center" style="height:50px; padding: 5px;" />
+                        &nbsp Chem Store
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- TODO: add "aria-current" attribute on the active nav-link -->
+                    <div class="navbar-collapse collapse" id="navbarNav">
+                        <!-- TODO: add links to pages as they're created (log, contact, admin, debug) -->
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
+                            <a class="nav-item nav-link text-dark" href="">Log</a>
+                            <a class="nav-item nav-link text-dark" href="">Contact</a>
+                            <!-- TODO: check if user is admin or developer -->
+                            <a class="nav-item nav-link text-dark" href="">Admin</a>
+                            <!-- TODO: check if user is developer -->
+                            <a class="nav-item nav-link text-dark" href="">Debug</a>
+                        </div>
+                    </div>
+                    <!-- TODO: display user's highest role here? is this still relevant? -->
+                    <!-- <span class="navbar-text">@User.Identity.Name - @role</span> -->
+                    <!-- TODO: is this even needed? can you ever be on the page without being logged in? -->
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/LoginPage">Login</a>
+                    </li>
+                    -->
+                </div>
+            </nav>
+        </header>
+
+        <!-- Body -->
+        <div class="container">
+            <main>
+                {% block body %}
+                {% endblock %}
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer border-top text-muted bg-white fixed-bottom">
+            <div class="container-fluid">
+                <!-- TODO: link to privacy page -->
+                &copy; 2025 - ChemStore - <a href="">Privacy</a>
+            </div>
+        </footer>
     </body>
 </html>

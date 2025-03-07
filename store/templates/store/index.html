@@ -4,11 +4,13 @@
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
 
+<!-- Set the first part of title -->
+{% block title %}Home{% endblock %}
+
 {% block body %}
 
     <!-- Everything in this block will be inserted into the body block in base.html -->
     <div class="container">
-        <img src="{% static 'store/images/mtulogo.png' %}" alt="MTU Logo" class="img-fluid">
         <h1>{{ greeting }}</h1>
     </div>
 

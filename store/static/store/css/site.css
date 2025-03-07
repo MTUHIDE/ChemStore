@@ -1,0 +1,198 @@
+/* TODO: Literally just copy-pasted from the original; clean this up */
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+.sideFilters {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  color: #f6d808;
+  background-color: #000; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+.moreFilters {
+  display: none;
+  margin-top: 10px;
+}
+
+.searchMain {
+  margin: 10px;
+  margin-top: 40px;
+  margin-left: 40px;
+  width: 40%;
+  border-radius: 20px;
+  border-width: 1px;
+  padding: 5px;
+  padding-left: 10px;
+  outline-style: none;
+}
+
+.underSearchBar {
+  display: block;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 4px;
+}
+
+.button1:hover {
+  background-color: black;
+  color: #ffcd00;
+}
+
+.button2 {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 4px;
+}
+
+.button2:hover {
+  background-color: #f6d808;
+  color: black;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+/* html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+} */
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Navber styles
+-------------------------------------------------- */
+.navbar {
+  height: fit-content;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/*------------------BEGIN HAZARD SYMBOL CLASSES--------------------------*/
+
+.hazards {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 60px;
+}
+
+.hazard {
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-size: cover;
+}
+
+.hazard-edit {
+  width: 4rem;
+  height: 4rem;
+  display: block;
+  background-size: cover;
+}
+
+.hazard-corrosion {
+  background-image: url(../assets/hazards/corrosion-pictogram.jpg);
+}
+
+.hazard-environment {
+  background-image: url(../assets/hazards/environment-pictogram.jpg);
+}
+
+.hazard-exclamation {
+  background-image: url(../assets/hazards/exclamation-mark-pictogram.jpg);
+}
+
+.hazard-bomb {
+  background-image: url(../assets/hazards/exploding-bomb-pictogram.jpg);
+}
+
+.hazard-flame-circle {
+  background-image: url(../assets/hazards/flame-over-circle-pictogram.jpg);
+}
+
+.hazard-flame {
+  background-image: url(../assets/hazards/flame-pictogram.jpg);
+}
+
+.hazard-gas {
+  background-image: url(../assets/hazards/gas-cylinder-pictogram.jpg);
+}
+
+.hazard-health {
+  background-image: url(../assets/hazards/health-hazard-pictogram.jpg);
+}
+
+.hazard-skull {
+  background-image: url(../assets/hazards/skull-pictogram.jpg);
+}
+
+.hazard-check {
+  width: 100% !important;
+}
+
+/*--------------------END HAZARD SYMBOL CLASSES --------------------*/
+
+ul.ui-autocomplete {
+  position: absolute;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.form-inline > .form-group-vertical {
+  padding: 10px;
+}
