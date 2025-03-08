@@ -1,3 +1,4 @@
 /.venv/
 /dev_db.sqlite3
 /staticfiles/
+**/__pycache__/
