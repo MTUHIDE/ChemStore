@@ -25,13 +25,37 @@
 
         .sidebar {
             width: 250px;
-            transition: width 0.3s; /* Smooth transition when collapsing */
-            overflow-x: hidden;
+            transition: width 0.3s, visibility 0.3s;
+            visibility: visible;
             height: 100vh;
+            position: relative;
         }
 
             .sidebar.collapsed {
                 width: 50px; /* Collapse sidebar width */
+                visibility: hidden;
+            }
+
+        .controls-wrapper {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 225px;
+            transition: opacity 0.3s;
+        }
+
+            .sidebar.collapsed .controls-wrapper {
+                opacity: 0;
+            } 
+
+        .column {
+            width: 45px;
+            height: 100vh;
+            visibility: hidden;
+        }
+
+            .column.visible {
+                visibility: visible;
             }
 
         .content {
@@ -44,59 +68,75 @@
             .content.expanded {
                 margin-left: 50px; /* Adjust content when sidebar is collapsed */
             }
+
+        .miniToggle {
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
     </style>
 </head>
 <body>
     <div class="d-flex">
         <!-- Sidebar with filter options -->
         <div id="sidebar" class="bg-light sidebar p-3 position-absolute top-20 start-0">
-            <button class="btn btn-warning w-100 mb-3" onclick="toggleSidebar()">Toggle Sidebar</button>
-            <div id="filterContent">
-                <h6>Filters</h6>
-                <label for="nameFilter">Name:</label>
-                <input type="text" id="nameFilter" class="form-control mb-2" placeholder="Filter by name">
-                <label for="roleFilter">Role:</label>
-                <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
-                <label for="deptFilter">Department:</label>
-                <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
-                <h6> </h6>
-                <button class="btn btn-primary w-80 mb-3">Apply Filters</button>
-            </div>
-            <div id="editContent">
-                <h6>Edit</h6>
-                <div class="d-inline-flex"> <!-- Using d-flex to put things on the same line/row -->
-                    <label for="nameEdit" class="me-2">Name:</label>
-                    <input type="text" id="nameEditor" class="form-control mb-2" placeholder="Edit name">
+            <div class="controls-wrapper">
+                <button class="btn btn-warning w-100 mb-3" onclick="toggleSidebar()">Toggle Sidebar</button>
+                <div id="filterContent">
+                    <h6>Filters</h6>
+                    <label for="nameFilter">Name:</label>
+                    <input type="text" id="nameFilter" class="form-control mb-2" placeholder="Filter by name">
+                    <label for="roleFilter">Role:</label>
+                    <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
+                    <label for="deptFilter">Department:</label>
+                    <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
+                    <h6> </h6>
+                    <button class="btn btn-primary w-80 mb-3">Apply Filters</button>
                 </div>
-                <div class="d-inline-flex">
-                    <label for="usernameEdit" class="me-2">Uname:</label>
-                    <input type="text" id="usernameEditor" class="form-control mb-2" placeholder="Edit username">
+                <div id="editContent">
+                    <h6>Edit</h6>
+                    <div class="d-inline-flex">
+                        <!-- Using d-flex to put things on the same line/row -->
+                        <label for="nameEdit" class="me-2">Name:</label>
+                        <input type="text" id="nameEditor" class="form-control mb-2" placeholder="Edit name">
+                    </div>
+                    <div class="d-inline-flex">
+                        <label for="usernameEdit" class="me-2">Uname:</label>
+                        <input type="text" id="usernameEditor" class="form-control mb-2" placeholder="Edit username">
+                    </div>
+                    <div class="d-inline-flex">
+                        <label for="roleEdit" class="me-3">Role:</label>
+                        <select class="form-select" id="roleEditor">
+                            <option selected>Role</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Developer</option>
+                            <option value="3">User</option>
+                        </select>
+                    </div>
+                    <div class="d-inline-flex">
+                        <label for="departmentEdit" class="me-2">Dept:</label>
+                        <select class="form-select" id="departmentEditor">
+                            <option selected>Department</option>
+                            <option value="1">Computer Science</option>
+                            <option value="2">Engineering</option>
+                            <option value="3">Chemistry</option>
+                        </select>
+                    </div>
+                    <h6> </h6>
+                    <button class="btn btn-primary btn-lg w-80 mb-3">Save</button>
                 </div>
-                <div class="d-inline-flex">
-                    <label for="roleEdit" class="me-3">Role:</label>
-                    <select class="form-select" id="roleEditor">
-                        <option selected>Role</option>
-                        <option value="1">Admin</option>
-                        <option value="2">Developer</option>
-                        <option value="3">User</option>
-                    </select>
-                </div>
-                <div class="d-inline-flex">
-                    <label for="departmentEdit" class="me-2">Dept:</label>
-                    <select class="form-select" id="departmentEditor">
-                        <option selected>Department</option>
-                        <option value="1">Computer Science</option>
-                        <option value="2">Engineering</option>
-                        <option value="3">Chemistry</option>
-                    </select> 
-                </div>
-                <h6> </h6>
-                <button class="btn btn-primary btn-lg w-80 mb-3">Save</button>
             </div>
         </div>
 
+        <div id="column" class="bg-light column p-2 position-absolute top-20 start-0">
+            <button class="miniToggle" onclick="toggleSidebar()">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+
         <!-- Main content area displaying users -->
-        <div id="content" class="content flex-grow-1 p-3">
+        <div id="content" class="content flex-grow-1 p-1">
             <h2 class="mb-3">Users</h2>
             <table class="table table-hover">
                 <thead>
@@ -132,8 +172,10 @@
         function toggleSidebar() {
             let sidebar = document.getElementById("sidebar");
             let content = document.getElementById("content");
+            let column = document.getElementById("column");
             sidebar.classList.toggle("collapsed");
             content.classList.toggle("expanded");
+            column.classList.toggle("visible");
         }
     </script>
 </body>
