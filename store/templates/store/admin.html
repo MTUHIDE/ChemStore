@@ -1,0 +1,16 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}Admin{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+<!-- Everything in this block will be inserted into the body block in base.html -->
+{% block body %}
+<h1>Admin</h1>
+{% endblock %}

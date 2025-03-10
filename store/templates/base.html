@@ -38,15 +38,14 @@
                     </button>
                     <!-- TODO: add "aria-current" attribute on the active nav-link -->
                     <div class="navbar-collapse collapse" id="navbarNav">
-                        <!-- TODO: add links to pages as they're created (log, contact, admin, debug) -->
                         <div class="navbar-nav">
                             <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
-                            <a class="nav-item nav-link text-dark" href="">Log</a>
-                            <a class="nav-item nav-link text-dark" href="">Contact</a>
+                            <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
+                            <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
                             <!-- TODO: check if user is admin or developer -->
-                            <a class="nav-item nav-link text-dark" href="">Admin</a>
+                            <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
                             <!-- TODO: check if user is developer -->
-                            <a class="nav-item nav-link text-dark" href="">Debug</a>
+                            <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
                         </div>
                     </div>
                     <!-- TODO: display user's highest role here? is this still relevant? -->
@@ -72,8 +71,7 @@
         <!-- Footer -->
         <footer class="footer border-top text-muted bg-white fixed-bottom">
             <div class="container-fluid">
-                <!-- TODO: link to privacy page -->
-                &copy; 2025 - ChemStore - <a href="">Privacy</a>
+                &copy; 2025 - ChemStore - <a href="{% url 'store:privacy' %}">Privacy</a>
             </div>
         </footer>
     </body>
