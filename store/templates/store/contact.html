@@ -12,10 +12,11 @@
 
 <!-- Everything in this block will be inserted into the body block in base.html -->
 {% block body %}
+<!-- TODO: rewrite this using Django form tools. it needs to send an email to the specified email -->
 <div class="row">
     <div class="col-md-12">
         <h3>Contact us</h3>
-        <p>Email us at: <strong>jeholtre@mtu.edu</strong></p>
+        <p>Email us at: <strong>{{ email }}</strong></p>
     </div>
 </div>
 <form class="form form-horizontal" method="post">

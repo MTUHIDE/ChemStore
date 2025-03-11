@@ -15,7 +15,9 @@ def log(request):
 
 
 def contact(request):
-    data = {}
+    data = {
+        "email": "jeholtre@mtu.edu",
+    }
     return render(request, "store/contact.html", data)
 
 
