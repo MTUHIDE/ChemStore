@@ -1,8 +1,12 @@
 using ChemStoreWebApp.Models;
+using ChemStoreWebApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace ChemStoreWebApp.Pages.Admin
@@ -23,5 +27,6 @@ namespace ChemStoreWebApp.Pages.Admin
         {
             Department = await _context.Department.ToListAsync();
         }
+
     }
 }

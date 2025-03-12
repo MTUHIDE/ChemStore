@@ -15,48 +15,114 @@
 <style>
 
     .btn-primary{
-        background-color: #ffcd00;
-        border-radius: 10px;
-        color: black;
-        border: 10px black;
-        padding: 3px 15px;
+    background-color: #ffcd00;
+    border-radius: 10px;
+    color: black;
+    border: 10px black;
+    padding: 3px 15px;
     }
 </style>
 
 <body>
-<div class="container-fluid">
-    <h2>Departments</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="checkboxCol"></th>
-                <th>
-                    Name
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Department)
-            {
+    <div class="container-fluid">
+        <h2>Departments</h2>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td class="checkboxCol">
-                        <input type="checkbox" id=@item.DepartmentID />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
+                    <th class="checkboxCol"></th>
+                    <th>
+                        Name
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <div class="row align-items-end">
-        <div class="p-2">
-            <button type="button" class="btn-primary"><a asp-authorize asp-roles="Admin">Add New</a></button>
-        </div>
-        <div class="p-2">
-            <button type="button" class="btn-primary"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Department)
+                {
+                    <tr>
+                        <td class="checkboxCol">
+                            <input type="checkbox" id=@item.DepartmentID />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row align-items-end">
+             <div class="p-2">
+                    <button type="button" class="btn-primary" id="addBtn"><a asp-authorize asp-roles="Admin">Add New</a></button>
+             </div>
+             <div class="p-2">
+               <button type="button" class="btn-primary" id="deleteBtn"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
+             </div>
         </div>
     </div>
-</div>
+
+<!---Modal for add new button-->
+    <div class="modal" id="addNewModal">
+        <div class="modalContent" id="addNewContent">
+            <span class="close" id="close1">&times;</span>
+            <p>Department Name:</p>
+            <input type="text" maxlength="40" placeholder="New Name" size="10"/>
+            <br /><br />
+            <button type="button" class="confirmBtn">Confirm</button>
+        </div> 
+    </div>
+
+    <!--Modal for delete button-->
+ 
+    <div class="modal" id="deleteModal">
+        <div class="modalContent" id="deleteModalContent">
+            <span class="close" id="close2">&times;</span>
+            <p>Are you sure you want to delete?:</p>
+            <button type="button" class="confirmBtn">Confirm</button>
+        </div>
+    </div>
+
+
+<!--Functionality for "add new" modal-->
+    <script>
+        var modal = document.getElementById("addNewModal");
+        var btn = document.getElementById("addBtn");
+        var span = document.getElementById("close1");
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+<!--Functionality for "delete" modal-->
+    <script>
+        var modal = document.getElementById("deleteModal");
+        var btn = document.getElementById("deleteBtn");
+        var span = document.getElementById("close2");
+
+        btn.onclick = function() {
+          modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+
+
 </body>
 </html>
