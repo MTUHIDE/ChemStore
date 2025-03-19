@@ -31,7 +31,7 @@
                         </button>
                     </div>
                 </div>
-                   
+
                 <div class="col-12 search">
                     <form id="filterForm">
                         <div class="row filterRow">
@@ -59,13 +59,13 @@
                                 <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
-                
+
             </div>
         </div>
-        
+
         <div class="col resultsContainer">
             <!-- @if (Model.LogEntries.Count() > 0)
             {
@@ -73,7 +73,7 @@
                 <div class="row orderRow">
                     <div class="col orderBtnCol">
                         <button type="submit" class="tableBtn" form="filterForm" name="sortMethod" value="0">
-                            Date   
+                            Date
                             <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
                                                 (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                         </button>
@@ -82,7 +82,7 @@
 
                     <div class="col orderBtnCol">
                         <button type="submit" class="tableBtn" form="filterForm" name="sortMethod" value="2">
-                            User   
+                            User
                             <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
                                                 (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                         </button>
@@ -132,13 +132,13 @@
 
                         if (count < end) { end = count; }
 
-                       
+
 
                      @*   if (!Model.textEntered())
                         {
                             <p class="noFilters">No Filters Applied</p>
                         }*@
-                        
+
                         // Display Logs
                         @for(var i = start; i < end; i++)
                         {
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         }
-                    } 
+                    }
                     else
                     {
                         if (Model.textEntered())
