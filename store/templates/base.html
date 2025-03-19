@@ -43,7 +43,10 @@
                             <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
                             <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
                             <!-- TODO: check if user is admin or developer -->
+                            {% comment %}
                             <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
+                            {% endcomment %}
+                            <a class="nav-item nav-link text-dark" href="{% url 'admin:index' %}">Admin</a>
                             <!-- TODO: check if user is developer -->
                             <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
                         </div>

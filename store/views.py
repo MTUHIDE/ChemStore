@@ -21,9 +21,9 @@ def contact(request):
     return render(request, "store/contact.html", data)
 
 
-def admin(request):
-    data = {}
-    return render(request, "store/admin.html", data)
+# def admin(request):
+#     data = {}
+#     return render(request, "store/admin.html", data)
 
 
 def debug(request):
