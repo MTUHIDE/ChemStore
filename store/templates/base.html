@@ -21,59 +21,61 @@
         {% endblock %}
     </head>
 
-    <body class="d-flex flex-column vh-100">
-        <!-- Header -->
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{% url 'store:index' %}">
-                        <!-- TODO: set logo size some other way? use img-fluid class with setting navbar height? -->
-                        <img src="{% static 'store/images/mtulogo.png' %}" alt="MTU Logo" class="d-inline-block align-text-center" style="height:50px; padding: 5px;" />
-                        &nbsp Chem Store
-                    </a>
+    <body>
+        <div class="d-flex flex-column vh-100">
+            <!-- Header -->
+            <header>
+                <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="{% url 'store:index' %}">
+                            <!-- TODO: set logo size some other way? use img-fluid class with setting navbar height? -->
+                            <img src="{% static 'store/images/mtulogo.png' %}" alt="MTU Logo" class="d-inline-block align-text-center" style="height:50px; padding: 5px;" />
+                            &nbsp Chem Store
+                        </a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!-- TODO: add "aria-current" attribute on the active nav-link -->
-                    <div class="navbar-collapse collapse" id="navbarNav">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
-                            <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
-                            <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
-                            <!-- TODO: check if user is admin or developer -->
-                            {% comment %}
-                            <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
-                            {% endcomment %}
-                            <a class="nav-item nav-link text-dark" href="{% url 'admin:index' %}">Admin</a>
-                            <!-- TODO: check if user is developer -->
-                            <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <!-- TODO: add "aria-current" attribute on the active nav-link -->
+                        <div class="navbar-collapse collapse" id="navbarNav">
+                            <div class="navbar-nav">
+                                <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
+                                <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
+                                <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
+                                <!-- TODO: check if user is admin or developer -->
+                                {% comment %}
+                                <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
+                                {% endcomment %}
+                                <a class="nav-item nav-link text-dark" href="{% url 'admin:index' %}">Admin</a>
+                                <!-- TODO: check if user is developer -->
+                                <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
+                            </div>
                         </div>
+                        <!-- TODO: display user's highest role here? is this still relevant? -->
+                        <!-- <span class="navbar-text">@User.Identity.Name - @role</span> -->
+                        <!-- TODO: is this even needed? can you ever be on the page without being logged in? -->
+                        <!--
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/LoginPage">Login</a>
+                        </li>
+                        -->
                     </div>
-                    <!-- TODO: display user's highest role here? is this still relevant? -->
-                    <!-- <span class="navbar-text">@User.Identity.Name - @role</span> -->
-                    <!-- TODO: is this even needed? can you ever be on the page without being logged in? -->
-                    <!--
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/LoginPage">Login</a>
-                    </li>
-                    -->
+                </nav>
+            </header>
+
+            <!-- Body -->
+            <main class="flex-grow-1">
+                {% block body %}
+                {% endblock %}
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer py-3 border-top text-muted bg-white">
+                <div class="container-fluid">
+                    &copy; 2025 - ChemStore - <a href="{% url 'store:privacy' %}">Privacy</a>
                 </div>
-            </nav>
-        </header>
-
-        <!-- Body -->
-        <main class="flex-grow-1">
-            {% block body %}
-            {% endblock %}
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer py-3 border-top text-muted bg-white">
-            <div class="container-fluid">
-                &copy; 2025 - ChemStore - <a href="{% url 'store:privacy' %}">Privacy</a>
-            </div>
-        </footer>
+            </footer>
+        </div>
     </body>
 </html>
