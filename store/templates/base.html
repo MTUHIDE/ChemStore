@@ -21,7 +21,7 @@
         {% endblock %}
     </head>
 
-    <body>
+    <body class="d-flex flex-column vh-100">
         <!-- Header -->
         <header>
             <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow">
@@ -64,15 +64,13 @@
         </header>
 
         <!-- Body -->
-        <div class="container">
-            <main>
-                {% block body %}
-                {% endblock %}
-            </main>
-        </div>
+        <main class="flex-grow-1">
+            {% block body %}
+            {% endblock %}
+        </main>
 
         <!-- Footer -->
-        <footer class="footer border-top text-muted bg-white fixed-bottom">
+        <footer class="footer py-3 border-top text-muted bg-white">
             <div class="container-fluid">
                 &copy; 2025 - ChemStore - <a href="{% url 'store:privacy' %}">Privacy</a>
             </div>

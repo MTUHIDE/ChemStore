@@ -100,29 +100,6 @@ button.accept-policy {
   line-height: inherit;
 }
 
-/* Navbar styles
--------------------------------------------------- */
-.navbar {
-  height: fit-content;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
-}
-
 /*------------------BEGIN HAZARD SYMBOL CLASSES--------------------------*/
 
 .hazards {
