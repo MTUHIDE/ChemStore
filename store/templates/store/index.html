@@ -34,33 +34,22 @@
                 <div class="col-12 search">
                     <form id="filterForm">
                         <div class="row filterRow">
-                            <input type="text" class="filterInput" placeholder="Container Name"/>
-                        </div>
-                        <!-- <div class="row filterRow">
-                            <input type="email" class="filterInput" placeholder="PI Email" asp-for="searchEmail"/>
+                            <input id="location_id" type="text" class="filterInput" placeholder="Location"/>
                         </div>
                         <div class="row filterRow">
-                            <input type="text" class="filterInput" placeholder="Hazard"/>
+                            <input id="hazard_id" type="text" class="filterInput" placeholder="Hazard"/>
                         </div>
                         <div class="row filterRow">
-                            <select class="filterInput" asp-for="searchBuilding" asp-items="Html.GetEnumSelectList<Buildings>()" id="selectBuilding" >
-                                <option value="" selected disabled>Building</option>
+                            <input id="cas_id" type="text" class="filterInput" placeholder="CAS Number" />
+                        </div>
+                        <div class="row filterRow">
+                            <select class="filterInput" >
+                                <option id="department_id" value="" selected disabled>Department</option>
                             </select>
                         </div>
-                        <div class="row filterRow">
-                            <input type="number" class="filterInput" placeholder="Room Number" />
-                        </div>
-                        <div class="row filterRow">
-                            <input type="number" class="filterInput" placeholder="Container Size" asp-for="searchSize"/>
-                        </div>
-                        <div class="row filterRow">
-                            <select class="filterInput" asp-for="searchUnits" asp-items="Html.GetEnumSelectList<Units>()">
-                                <option value="" selected disabled>Units</option>
-                            </select>
-                        </div> -->
                         <div class="row filterRow">
                             <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
-                            <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
+                            <div class="col-12 filterBtnRow"><button type="submit" onclick="" class="filterBtn">Apply Filter</button></div>
                         </div>
                     </form>
                 </div>
@@ -128,6 +117,7 @@
                         <thead>
                         </thead>
                         <tbody>
+
                             <!-- TODO: reimplement... all of this -->
                             <!-- @if (Model.DisplayContainers.Count() > 0) -->
                             <!-- { -->
@@ -243,7 +233,7 @@
                             <!-- } -->
                             <!-- else -->
                             <!-- { -->
-                                <div class="noResults">No Results Found</div>
+                                <!-- <div class="noResults">No Results Found</div> -->
                             <!-- } -->
                         </tbody>
                     </table>
@@ -288,7 +278,7 @@
             </div>
 
             <div id="deleteDiv" style="display: none">
-                <!-- Button trigger for modal -->
+                <-- Button trigger for modal -->
                 <!--<button type="button" class="searchPageBtns redBtn" id="delModalBtn" style="pointer-events: none;" data-toggle="modal" data-target="#confirmatioinModal" disabled>
                     Delete
                 </button>
@@ -523,6 +513,15 @@
             $('.miniToggle').css('display', 'block');
             filterOpen = false;
         }
+    }
+
+    function applyFilter() {
+        let location = document.getElementById("location_id");
+        let hazard = document.getElementById("hazard_id");
+        let cas = document.getElementById("cas_id");
+        let department = document.getElementById("department_id");
+
+
     }
 </script>
 <script>
