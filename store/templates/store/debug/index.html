@@ -1,0 +1,93 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}Debug{% endblock %}
+
+{% block head %}
+<style>
+    button {
+        background-color: #ffcd00;
+        width: 200px;
+        height: 90px;
+        border-radius: 10px;
+    }
+
+    .editTable {
+        border: 2px solid black;
+        width: 700px;
+    }
+
+    a {
+        color: black;
+    }
+</style>
+{% endblock %}
+
+<!-- Everything in this block will be inserted into the body block in base.html -->
+{% block body %}
+<div class="text-center">
+    <h1 class="display-4">Directly View Tables</h1>
+
+    <table class="editTable" align="center" cellpadding="20">
+        <tr>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/container' %}">Container</a></button>
+            </td>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/container_chemicals' %}">ContainerChemicals</a></button>
+            </td>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/container_hazards' %}" {% endcomment %}>ContainerHazards</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/department' %}">Department</a></button>
+            </td>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/hazard_pictogram' %}">HazardPictogram</a></button>
+            </td>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/hazard_precaution' %}" {% endcomment %}>HazardPrecaution</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/hazard_statement' %}">HazardStatement</a></button>
+            </td>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/location' %}">Location</a></button>
+            </td>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/location_attribute' %}">LocationAttribute</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/log' %}" {% endcomment %}>Log</a></button>
+            </td>
+            <td>
+                <button type="button"><a href="{% url 'store:debug/precautionary_statement' %}">PrecautionaryStatement</a></button>
+            </td>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/role' %}" {% endcomment %}>Role</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/role_permissions' %}" {% endcomment %}>RolePermissions</a></button>
+            </td>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/statement_pictogram' %}" {% endcomment %}>StatementPictogram</a></button>
+            </td>
+            <td>
+                <button type="button"><a {% comment %} href="{% url 'store:debug/user' %}" {% endcomment %}>User</a></button>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

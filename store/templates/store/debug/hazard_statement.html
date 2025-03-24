@@ -1,0 +1,58 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}HazardStatement Debug{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+<!-- Everything in this block will be inserted into the body block in base.html -->
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                HCode
+            </th>
+            <th>
+                Statements
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Signal Word
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            {% comment %} @foreach (var item in Model.HazardStatement)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Statements)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SignalWord)
+            </td>
+        </tr>
+} {% endcomment %}
+    </tbody>
+</table>
+{% endblock %}

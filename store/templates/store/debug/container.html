@@ -1,0 +1,57 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}Container Debug{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+<!-- Everything in this block will be inserted into the body block in base.html -->
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ContainerID
+            </th>
+            <th>
+                ProductName
+            </th>
+            <th>
+                Size
+            </th>
+            <th>
+                Notes
+            </th>
+            <th>
+                LocationID
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+<!-- @foreach (var item in Model.X_Container) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContainerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocationID)
+            </td>
+        </tr>
+} -->
+    </tbody>
+</table>
+{% endblock %}

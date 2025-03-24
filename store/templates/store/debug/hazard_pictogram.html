@@ -1,0 +1,46 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}HazardPictogram Debug{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+<!-- Everything in this block will be inserted into the body block in base.html -->
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                GHCode
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Pictogram
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            {% comment %} @foreach (var item in Model.HazardPictogram)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GHCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pictogram)
+            </td>
+        </tr>
+} {% endcomment %}
+    </tbody>
+</table>
+{% endblock %}
