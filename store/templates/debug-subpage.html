@@ -26,12 +26,6 @@
             </thead>
             <tbody>
                 {% block tbody %}
-                {% for item in model %}
-                <tr>
-                    <td>{{ item.department_id }}</td>
-                    <td>{{ item.name }}</td>
-                </tr>
-                {% endfor %}
                 {% endblock %}
             </tbody>
         </table>
