@@ -10,6 +10,6 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('admin', views.admin, name='admin'),
     path('debug', views.debug_index, name='debug'),
-    path('debug/<str:model_url>', views.debug_subpage, name='debug_subpage'),
+    path('debug/<slug:model_slug>', views.debug_subpage, name='debug_subpage'),
     path('privacy', views.privacy, name='privacy'),
 ]

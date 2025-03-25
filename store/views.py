@@ -28,35 +28,34 @@ def admin(request):
     return render(request, "store/admin.html", data)
 
 
-debug_models = [
-    ("container", "Container", models.Container),
-    ("container_chemicals", "ContainerChemicals", models.ContainerChemicals),
-    # ("container_hazards", "ContainerHazards", models.ContainerHazards),
-    ("department", "Department", models.Department),
-    ("hazard_pictogram", "HazardPictogram", models.HazardPictogram),
-    # ("hazard_precaution", "HazardPrecaution", models.HazardPrecaution),
-    ("hazard_statement", "HazardStatement", models.HazardStatement),
-    ("location", "Location", models.Location),
-    ("location_attribute", "LocationAttribute", models.LocationAttribute),
-    # ("log", "Log", models.Log),
-    ("precautionary_statement", "PrecautionaryStatement",
-     models.PrecautionaryStatement),
-    # ("role", "Role", models.Role),
-    # ("role_permissions", "RolePermissions", models.RolePermissions),
-    # ("statement_pictogram", "StatementPictogram", models.StatementPictogram),
-    # ("user", "User", models.User),
-]
+debug_models = {
+    "Container": models.Container,
+    "Container Chemicals": models.ContainerChemicals,
+    # "Container Hazards": models.ContainerHazards,
+    "Department": models.Department,
+    "Hazard Pictogram": models.HazardPictogram,
+    # "Hazard Precaution": models.HazardPrecaution,
+    "Hazard Statement": models.HazardStatement,
+    "Location": models.Location,
+    "Location Attribute": models.LocationAttribute,
+    # "Log": models.Log,
+    "Precautionary Statement": models.PrecautionaryStatement,
+    # "Role": models.Role,
+    # "Role Permissions": models.RolePermissions,
+    # "Statement Pictogram": models.StatementPictogram,
+    # "User": models.User,
+}
 
 
 def debug_index(request):
     return render(request, "store/debug/index.html", {
-        "models": [(x[0], x[1]) for x in debug_models]
+        "models": list(debug_models)
     })
 
 
-def debug_subpage(request, model_url):
-    model = [x[2] for x in debug_models if x[0] == model_url][0]
-    return render(request, f"store/debug/{model_url}.html", {
+def debug_subpage(request, model_slug):
+    model = debug_models[model_slug.replace("-", " ").title()]
+    return render(request, f"store/debug/{model_slug}.html", {
         "model": model.objects.all()
     })
 
