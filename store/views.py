@@ -54,9 +54,9 @@ def debug_index(request):
     })
 
 
-def debug_subpage(request, model_str):
-    model = [x[2] for x in debug_models if x[0] == model_str][0]
-    return render(request, f"store/debug/{model_str}.html", {
+def debug_subpage(request, model_url):
+    model = [x[2] for x in debug_models if x[0] == model_url][0]
+    return render(request, f"store/debug/{model_url}.html", {
         "model": model.objects.all()
     })
 
