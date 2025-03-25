@@ -10,7 +10,7 @@ urlpatterns = [
     path('contact', views.contact, name='contact'),
     path('admin', views.admin, name='admin'),
 
-    path('debug', views.debug_index, name='debug/index'),
+    path('debug', views.debug_index, name='debug'),
     path('debug/container', views.debug_container, name='debug/container'),
     path('debug/container_chemicals', views.debug_container_chemicals,
          name='debug/container_chemicals'),
