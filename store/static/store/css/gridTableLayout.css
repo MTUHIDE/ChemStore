@@ -1,0 +1,17 @@
+.grid-table {
+  width: fit-content;
+  max-width: 720px;
+}
+
+.grid-table-btn {
+  color: black;
+  background-color: #ffcd00;
+  min-width: 200px;
+  padding: 35px 0;
+  border-radius: 10px;
+}
+
+.grid-table-btn:hover {
+  color: white;
+  background-color: #fbad18;
+}

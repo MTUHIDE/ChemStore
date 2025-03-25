@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Container, ContainerChemicals, Location, LocationAttribute, Department, HazardStatement, PrecautionaryStatement, HazardPictogram
+from . import models
 
 
 def index(request):
@@ -28,64 +28,36 @@ def admin(request):
     return render(request, "store/admin.html", data)
 
 
+debug_models = [
+    ("container", "Container", models.Container),
+    ("container_chemicals", "ContainerChemicals", models.ContainerChemicals),
+    # ("container_hazards", "ContainerHazards", models.ContainerHazards),
+    ("department", "Department", models.Department),
+    ("hazard_pictogram", "HazardPictogram", models.HazardPictogram),
+    # ("hazard_precaution", "HazardPrecaution", models.HazardPrecaution),
+    ("hazard_statement", "HazardStatement", models.HazardStatement),
+    ("location", "Location", models.Location),
+    ("location_attribute", "LocationAttribute", models.LocationAttribute),
+    # ("log", "Log", models.Log),
+    ("precautionary_statement", "PrecautionaryStatement",
+     models.PrecautionaryStatement),
+    # ("role", "Role", models.Role),
+    # ("role_permissions", "RolePermissions", models.RolePermissions),
+    # ("statement_pictogram", "StatementPictogram", models.StatementPictogram),
+    # ("user", "User", models.User),
+]
+
+
 def debug_index(request):
-    data = {}
-    return render(request, "store/debug/index.html", data)
-
-
-def debug_container(request):
-    containers = Container.objects.all()
-    return render(request, "store/debug/container.html", {
-        "containers": containers
+    return render(request, "store/debug/index.html", {
+        "models": [(x[0], x[1]) for x in debug_models]
     })
 
 
-def debug_container_chemicals(request):
-    container_chemicals = ContainerChemicals.objects.all()
-    return render(request, "store/debug/container_chemicals.html", {
-        "container_chemicals": container_chemicals
-    })
-
-
-def debug_location(request):
-    location = Location.objects.all()
-    return render(request, "store/debug/location.html", {
-        "location": location
-    })
-
-
-def debug_location_attribute(request):
-    location_attribute = LocationAttribute.objects.all()
-    return render(request, "store/debug/location_attribute.html", {
-        "location_attribute": location_attribute
-    })
-
-
-def debug_department(request):
-    department = Department.objects.all()
-    return render(request, "store/debug/department.html", {
-        "department": department
-    })
-
-
-def debug_hazard_statement(request):
-    hazard_statement = HazardStatement.objects.all()
-    return render(request, "store/debug/hazard_statement.html", {
-        "hazard_statement": hazard_statement
-    })
-
-
-def debug_precautionary_statement(request):
-    precautionary_statement = PrecautionaryStatement.objects.all()
-    return render(request, "store/debug/precautionary_statement.html", {
-        "precautionary_statement": precautionary_statement
-    })
-
-
-def debug_hazard_pictogram(request):
-    hazard_pictogram = HazardPictogram.objects.all()
-    return render(request, "store/debug/hazard_pictogram.html", {
-        "hazard_pictogram": hazard_pictogram
+def debug_subpage(request, model_str):
+    model = [x[2] for x in debug_models if x[0] == model_str][0]
+    return render(request, f"store/debug/{model_str}.html", {
+        "model": model.objects.all()
     })
 
 
