@@ -54,10 +54,12 @@ def debug_index(request):
 
 
 def debug_subpage(request, model_slug):
-    model = debug_models[model_slug.replace("-", " ").title()]
-    return render(request, f"store/debug/{model_slug}.html", {
-        "model": model.objects.all()
-    })
+    model_name = model_slug.replace("-", " ").title()
+    data = {
+        "model_str": model_name.replace(" ", ""),
+        "model": debug_models[model_name].objects.all()
+    }
+    return render(request, f"store/debug/{model_slug}.html", data)
 
 
 def privacy(request):

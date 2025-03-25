@@ -1,0 +1,43 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}{{ model_str }} Debug{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+<!-- Everything in this block will be inserted into the body block in base.html -->
+{% block body %}
+<div class="container-fluid text-center">
+    <h1 class="display-5">{{ model_str }} Table</h1>
+
+    {% if model %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    {% block thead %}
+                    {% endblock %}
+                </tr>
+            </thead>
+            <tbody>
+                {% block tbody %}
+                {% for item in model %}
+                <tr>
+                    <td>{{ item.department_id }}</td>
+                    <td>{{ item.name }}</td>
+                </tr>
+                {% endfor %}
+                {% endblock %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>Table is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}
