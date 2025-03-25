@@ -1,75 +1,38 @@
-<!-- We extend the base.html file -->
-{% extends 'base.html' %}
+<!-- We extend the debug-subpage.html file -->
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
 
-<!-- Set the first part of title -->
-{% block title %}ContainerChemicals Debug{% endblock %}
+<!--
+The debug-subpage.html template already includes most of the table, so
+we just need to specify the thead row and tbody rows
+-->
 
-{% block head %}
+{% block thead %}
+<tr>
+    <th scope="col">ContainerID</th>
+    <th scope="col">PubchemCID</th>
+    <th scope="col">ChemicalCAS</th>
+    <th scope="col">Quantity</th>
+    <th scope="col">Manufacturer</th>
+    <th scope="col">CatalogNumber</th>
+    <th scope="col">PreferredUnit</th>
+    <th scope="col">StateOfMatter</th>
+</tr>
 {% endblock %}
 
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                ContainerID
-            </th>
-            <th>
-                PubchemCID
-            </th>
-            <th>
-                ChemicalCAS
-            </th>
-            <th>
-                Quantity
-            </th>
-            <th>
-                Manufacturer
-            </th>
-            <th>
-                CatalogNumber
-            </th>
-            <th>
-                PreferredUnit
-            </th>
-            <th>
-                StateOfMatter
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in model %}
-        <tr>
-            <td>
-                {{ item.container }}
-            </td>
-            <td>
-                {{ item.pubchem_cid }}
-            </td>
-            <td>
-                {{ item.chemical_cas }}
-            </td>
-            <td>
-                {{ item.quantity }}
-            </td>
-            <td>
-                {{ item.manufacturer }}
-            </td>
-            <td>
-                {{ item.catalog_number }}
-            </td>
-            <td>
-                {{ item.preferred_unit }}
-            </td>
-            <td>
-                {{ item.state_of_matter }}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block tbody %}
+{% for item in model %}
+<tr>
+    <td>{{ item.container }}</td>
+    <td>{{ item.pubchem_cid }}</td>
+    <td>{{ item.chemical_cas }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>{{ item.manufacturer }}</td>
+    <td>{{ item.catalog_number }}</td>
+    <td>{{ item.preferred_unit }}</td>
+    <td>{{ item.state_of_matter }}</td>
+</tr>
+{% endfor %}
 {% endblock %}
