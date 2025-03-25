@@ -1,39 +1,26 @@
-<!-- We extend the base.html file -->
-{% extends 'base.html' %}
+<!-- We extend the debug-subpage.html file -->
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
 
-<!-- Set the first part of title -->
-{% block title %}Department Debug{% endblock %}
+<!--
+The debug-subpage.html template already includes most of the table, so
+we just need to specify the thead row and tbody rows
+-->
 
-{% block head %}
+{% block thead %}
+<tr>
+    <th scope="col">DepartmentID</th>
+    <th scope="col">Name</th>
+</tr>
 {% endblock %}
 
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                DepartmentID
-            </th>
-            <th>
-                Name
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in model %}
-        <tr>
-            <td>
-                {{ item.department_id }}
-            </td>
-            <td>
-                {{ item.name }}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% block tbody %}
+{% for item in model %}
+<tr>
+    <td>{{ item.department_id }}</td>
+    <td>{{ item.name }}</td>
+</tr>
+{% endfor %}
 {% endblock %}
