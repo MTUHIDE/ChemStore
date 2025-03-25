@@ -24,16 +24,16 @@
         </tr>
     </thead>
     <tbody>
-{% comment %} @foreach (var item in Model.Department) {
+        {% for item in model %}
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DepartmentID)
+                {{ item.department_id }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                {{ item.name }}
             </td>
         </tr>
-} {% endcomment %}
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
