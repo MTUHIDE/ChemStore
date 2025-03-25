@@ -42,34 +42,34 @@
         </tr>
     </thead>
     <tbody>
-{% comment %} @foreach (var item in Model.ContainerChemicals) {
+        {% for item in model %}
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ContainerID)
+                {{ item.container }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PubchemCID)
+                {{ item.pubchem_cid }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ChemicalCAS)
+                {{ item.chemical_cas }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                {{ item.quantity }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
+                {{ item.manufacturer }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CatalogNumber)
+                {{ item.catalog_number }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PreferredUnit)
+                {{ item.preferred_unit }}
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StateOfMatter)
+                {{ item.state_of_matter }}
             </td>
         </tr>
-} {% endcomment %}
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
