@@ -4,21 +4,21 @@
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
 
-<!-- Set the first part of title -->
-{% block title %}Container Debug{% endblock %}
-
-{%block head%}
-{%endblock%}
+<!--
+The debug-subpage.html template already includes most of the table, so
+we just need to specify the thead row and tbody rows
+-->
 
 {% block thead %}
-    <tr>
-        <th scope="col">ContainerID</th>
-        <th scope="col">ProductName</th>
-        <th scope="col">Size</th>
-        <th scope="col">Notes</th>
-        <th scope="col">LocationID</th>
-    </tr>
+<tr>
+    <th scope="col">ContainerID</th>
+    <th scope="col">ProductName</th>
+    <th scope="col">Size</th>
+    <th scope="col">Notes</th>
+    <th scope="col">LocationID</th>
+</tr>
 {%endblock%}
+
 {%block tbody%}
 {% for item in model %}
     <tr>
@@ -30,43 +30,3 @@
     </tr>
 {% endfor %}
 {% endblock %}
-<!-- <table class="table">
-    <thead>
-        <tr>
-            <th>
-                ContainerID
-            </th>
-            <th>
-                ProductName
-            </th>
-            <th>
-                Size
-            </th>
-            <th>
-                Notes
-            </th>
-            <th>
-                LocationID
-            </th>
-        </tr>
-    </thead>
-    <tbody> -->
-<!-- @foreach (var item in Model.X_Container) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContainerID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationID)
-            </td>
-        </tr>
-} -->

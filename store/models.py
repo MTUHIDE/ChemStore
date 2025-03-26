@@ -23,7 +23,7 @@ class ContainerChemicals(models.Model):
 
 class Location(models.Model):
     location_id = models.AutoField(primary_key=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     level = models.IntegerField()
     name = models.CharField(max_length=100)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True)
