@@ -13,8 +13,8 @@
 
 <!-- Everything in this block will be inserted into the body block in base.html -->
 {% block body %}
-<div class="container-fluid homeContainer">
-    <div class="row searchContainer">
+<div class="container-fluid h-100">
+    <div class="row h-100">
         <div class="col-sm-4 col-lg-3 filterLeft" id="search">
             <button class ="miniToggle" title="Show Filter" onclick="toggleFilter()">
                 <i class="fa-solid fa-sliders"></i>
@@ -84,12 +84,13 @@
             </div>
         </div>
 
-        <div class="col resultsContainer">
-            <div class="row resultsTopper">
+        <!-- Container Display -->
+        <div class="col p-0">
+            {% comment %} <div class="row py-3 resultsTopper">
                 <div class="col topperCol">Showing</div>
                 <div class="col topperCol"> <!-- @Model.numContainers --> Containers</div>
                 <div class="col topperCol"> <!-- @Model.uniqueBuildings --> Buildings</div>
-            </div>
+            </div> {% endcomment %}
             <!-- <div class="row resultsTopper">
 
                 @if (Model.liquidAmount != 0)
@@ -122,9 +123,9 @@
                 }
             </div> -->
 
-            <div class="row results" id="results">
-                <form method="post" id="deleteForm" style="width:100%">
-                    <table class="table">
+            <div class="d-flex flex-column results h-100" id="results">
+                <form method="post" class="flex-grow-1 p-0" id="deleteForm">
+                    <table class="table m-0">
                         <thead>
                         </thead>
                         <tbody>
@@ -250,7 +251,7 @@
                     </table>
                 </form>
             </div>
-            <div class="row pageSelectorCont">
+            {% comment %} <div class="row pageSelectorCont">
                 <div class="col-12">
                     <!-- @for (var i = 1; i <= Model.DisplayContainers.Count() / 25 + 1; i++)
                     {
@@ -260,7 +261,7 @@
                     <a href=""> > </a>
                     <a href=""> >> </a>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </div>
 </div>

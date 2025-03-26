@@ -11,20 +11,8 @@
   --section-border: 1px solid var(--med-grey);
 }
 
-.homeContainer {
-  /*width: 100vw;*/
-  height: 90vh;
-  max-height: 90vh;
-  overflow-y: hidden;
-}
-
-.search-container {
-  max-height: 90vh;
-}
-
 /*Results Topper*/
 .resultsTopper {
-  min-height: 7vh;
   box-shadow: var(--section-shadow);
   border-bottom: 1px solid var(--husky-yellow);
   background-color: white;
@@ -49,10 +37,9 @@
 .filterLeft {
   background-color: var(--med-grey);
   padding: 1vh 2vw;
-  height: 90vh;
   transition: flex 0.2s ease-in-out;
   border-right: 1px solid var(--accnt-grey);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .filterSection {
@@ -136,7 +123,6 @@
 
 .toggleFilterBar {
   background-color: var(--med-grey);
-  height: 90vh;
   width: 4vw;
   display: none;
   justify-content: center;
@@ -195,23 +181,14 @@
 /*End Filter Bar*/
 
 /*Results Section*/
-.resultsContainer {
-  background-color: white;
-}
-
 .results::-webkit-scrollbar {
   display: none;
 }
 
 .results {
-  display: flex;
-  justify-content: center;
-  border-bottom: var(--section-border);
   background-color: var(--lght-grey);
   overflow-y: scroll;
-  -ms-overflow-style: none;
   scrollbar-width: none;
-  height: 77vh;
 }
 
 .noResults {
