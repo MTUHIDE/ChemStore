@@ -32,7 +32,18 @@
                     </div>
 
                 <div class="col-12 search">
-                    <form id="filterForm">
+                    <form method = "post">
+                        {% csrf_token %}
+                        {{ filter_form }}
+                        <div class="row filterRow">
+                            <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
+                            <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
+                        </div>
+                    </form>
+                    <!-- <form>
+                        <div class="row filterRow">
+                            <input type="text" class="filterInput" placeholder="Container Name"/>
+                        </div>
                         <div class="row filterRow">
                             <input id="location_id" type="text" class="filterInput" placeholder="Location"/>
                         </div>
@@ -51,7 +62,7 @@
                             <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
                             <div class="col-12 filterBtnRow"><button type="submit" onclick="" class="filterBtn">Apply Filter</button></div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
 

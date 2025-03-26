@@ -1,12 +1,45 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 
 from . import models
+from .forms import FilterForm
 
 
 def index(request):
+    # TODO: Handle filtering & pagination
     # Everything in the dictionary can be referenced by the template
+    if request.method == "POST":
+        form = FilterForm(request.POST)
+        if form.is_valid():
+            container_name = request.POST.get("container_name", "")
+            location = request.POST.get("location", "")
+            hazard = request.POST.get("hazard", "")
+            cas_number = request.POST.get("cas_number", "")
+
+            # do the filtering
+            containers = models.Container.objects
+            if container_name:
+                containers = containers.filter(product_name__contains=container_name)
+            else:
+                containers = containers.all()
+            # TODO: the rest of the filter fields
+    else:
+        form = FilterForm()
+        # TODO: do pagination (25 per page)
+        containers = models.Container.objects.all()
+        # if no page number already, default to 1
+        # otherwise go either up or down based on input? idk
+        # how does this work
+
+    paginator = Paginator(containers, 25)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     data = {
-        "greeting": "Hello world!"
+        "filter_form": form,
+        # "containers": containers,
+        "page_obj": page_obj
     }
     return render(request, "store/index.html", data)
 
