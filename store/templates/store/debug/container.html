@@ -1,5 +1,5 @@
 <!-- We extend the base.html file -->
-{% extends 'base.html' %}
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -7,12 +7,30 @@
 <!-- Set the first part of title -->
 {% block title %}Container Debug{% endblock %}
 
-{% block head %}
-{% endblock %}
+{%block head%}
+{%endblock%}
 
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
+{% block thead %}
+    <tr>
+        <th scope="col">ContainerID</th>
+        <th scope="col">ProductName</th>
+        <th scope="col">Size</th>
+        <th scope="col">Notes</th>
+        <th scope="col">LocationID</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+    {% for item in model %}
+        <tr>
+            <td>{{ item.container_id }}</td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.notes }}</td>
+            <td>{{ item.location }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+<!-- <table class="table">
     <thead>
         <tr>
             <th>
@@ -32,7 +50,7 @@
             </th>
         </tr>
     </thead>
-    <tbody>
+    <tbody> -->
 <!-- @foreach (var item in Model.X_Container) {
         <tr>
             <td>
@@ -52,6 +70,3 @@
             </td>
         </tr>
 } -->
-    </tbody>
-</table>
-{% endblock %}
