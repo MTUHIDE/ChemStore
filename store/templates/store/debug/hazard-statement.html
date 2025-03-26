@@ -1,5 +1,5 @@
 <!-- We extend the base.html file -->
-{% extends 'base.html' %}
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -10,49 +10,27 @@
 {% block head %}
 {% endblock %}
 
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                HCode
-            </th>
-            <th>
-                Statements
-            </th>
-            <th>
-                Class
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                Signal Word
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-            {% comment %} @foreach (var item in Model.HazardStatement)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.HCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Statements)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SignalWord)
-            </td>
-        </tr>
-} {% endcomment %}
-    </tbody>
-</table>
+{% block thead %}
+    <tr>
+        <th scope="col">Hazard Code</th>
+        <th scope="col">Statements</th>
+        <th scope="col">Hazard Class</th>
+        <th scope="col">Category</th>
+        <th scope="col">Signal Word</th>
+        <th scope="col">Precautionary Statement</th>
+        <th scope="col">Pictograms</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+{% for item in model %}
+    <tr>
+        <td>{{ item.hazard_code }}</td>
+        <td>{{ item.statements }}</td>
+        <td>{{ item.hazard_class }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.signal_word }}</td>
+        <td>{{ item.precautionary_statements }}</td>
+        <td>{{ item.pictograms }}</td>
+    </tr>
+{% endfor %}
 {% endblock %}

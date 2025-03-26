@@ -20,15 +20,15 @@
     </tr>
 {%endblock%}
 {%block tbody%}
-    {% for item in model %}
-        <tr>
-            <td>{{ item.container_id }}</td>
-            <td>{{ item.product_name }}</td>
-            <td>{{ item.size }}</td>
-            <td>{{ item.notes }}</td>
-            <td>{{ item.location }}</td>
-        </tr>
-    {% endfor %}
+{% for item in model %}
+    <tr>
+        <td>{{ item.container_id }}</td>
+        <td>{{ item.product_name }}</td>
+        <td>{{ item.size }}</td>
+        <td>{{ item.notes }}</td>
+        <td>{{ item.location }}</td>
+    </tr>
+{% endfor %}
 {% endblock %}
 <!-- <table class="table">
     <thead>

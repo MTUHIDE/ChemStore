@@ -1,5 +1,5 @@
 <!-- We extend the base.html file -->
-{% extends 'base.html' %}
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -7,39 +7,17 @@
 <!-- Set the first part of title -->
 {% block title %}LocationAttribute Debug{% endblock %}
 
-{% block head %}
-{% endblock %}
-
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                LocationID
-            </th>
-            <th>
-                Key
-            </th>
-            <th>
-                Value
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-{% comment %} @foreach (var item in Model.LocationAttribute) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Key)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Value)
-            </td>
-        </tr>
-} {% endcomment %}
-    </tbody>
-</table>
+{% block thead %}
+    <tr>
+        <th scope="col">AttributeID</th>
+        <th scope="col">Value</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+{% for item in model %}
+    <tr>
+        <td>{{ item.attribute_id }}</td>
+        <td>{{ item.value }}</td>
+    </tr>
+{% endfor %}
 {% endblock %}
