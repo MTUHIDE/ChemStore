@@ -1,5 +1,5 @@
 <!-- We extend the base.html file -->
-{% extends 'base.html' %}
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -7,34 +7,17 @@
 <!-- Set the first part of title -->
 {% block title %}PrecautionaryStatement Debug{% endblock %}
 
-{% block head %}
-{% endblock %}
-
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                PCode
-            </th>
-            <th>
-                Statement
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-            {% comment %} @foreach (var item in Model.PrecautionaryStatement)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Statement)
-            </td>
-        </tr>
-} {% endcomment %}
-    </tbody>
-</table>
+{% block thead %}
+    <tr>
+        <th scope="col">Precautionary Code</th>
+        <th scope="col">Statement</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+{% for item in model %}
+    <tr>
+        <td>{{ item.precautionary_code }}</td>
+        <td>{{ item.statement }}</td>
+    </tr>
+{% endfor %}
 {% endblock %}

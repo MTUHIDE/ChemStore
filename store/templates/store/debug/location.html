@@ -1,5 +1,5 @@
 <!-- We extend the base.html file -->
-{% extends 'base.html' %}
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -7,63 +7,27 @@
 <!-- Set the first part of title -->
 {% block title %}Location Debug{% endblock %}
 
-{% block head %}
-{% endblock %}
-
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                LocationID
-            </th>
-            <th>
-                ParentID
-            </th>
-            <th>
-                Level
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                DepartmentID
-            </th>
-            <th>
-                SupervisorID
-            </th>
-            <th>
-                IsHidden
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-{% comment %} @foreach (var item in Model.X_Location) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParentID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Level)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartmentID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupervisorID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsHidden)
-            </td>
-        </tr>
-} {% endcomment %}
-    </tbody>
-</table>
+{% block thead %}
+    <tr>
+        <th scope="col">LocationID</th>
+        <th scope="col">Parent</th>
+        <th scope="col">Level</th>
+        <th scope="col">Name</th>
+        <th scope="col">Department</th>
+        <th scope="col">Is Hidden</th>
+        <th scope="col">Attributes</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+{% for item in model %}
+    <tr>
+        <td>{{ item.location_id }}</td>
+        <td>{{ item.parent }}</td>
+        <td>{{ item.level }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.department }}</td>
+        <td>{{ item.is_hidden }}</td>
+        <td>{{ item.attributes }}</td>
+    </tr>
+{% endfor %}
 {% endblock %}

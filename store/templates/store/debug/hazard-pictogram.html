@@ -1,5 +1,5 @@
 <!-- We extend the base.html file -->
-{% extends 'base.html' %}
+{% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -7,40 +7,19 @@
 <!-- Set the first part of title -->
 {% block title %}HazardPictogram Debug{% endblock %}
 
-{% block head %}
-{% endblock %}
-
-<!-- Everything in this block will be inserted into the body block in base.html -->
-{% block body %}
-<table class="table">
-    <thead>
+{% block thead %}
+    <tr>
+        <th scope="col">PictogramID</th>
+        <th scope="col">image</th>
+        <th scope="col">Description</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+    {% for item in model %}
         <tr>
-            <th>
-                GHCode
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Pictogram
-            </th>
+            <td>{{ item.pictogram_id }}</td>
+            <td>{{ item.image }}</td>
+            <td>{{ item.description }}</td>
         </tr>
-    </thead>
-    <tbody>
-            {% comment %} @foreach (var item in Model.HazardPictogram)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GHCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pictogram)
-            </td>
-        </tr>
-} {% endcomment %}
-    </tbody>
-</table>
+    {% endfor %}
 {% endblock %}
