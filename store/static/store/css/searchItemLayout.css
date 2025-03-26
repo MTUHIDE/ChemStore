@@ -49,9 +49,6 @@
   padding: 0;
 }
 
-.filterHeader {
-  display: flex;
-}
 
 .filterHeaderLeft {
   width: 95%;
@@ -59,8 +56,6 @@
 
 .filterHeader h2,
 .chemHeader h2 {
-  font-size: 1.375vw;
-  margin-bottom: 2vh;
   color: var(--drk-grey);
 }
 
@@ -131,7 +126,6 @@
   background: none;
   font-size: 1.5vw;
   border: none;
-  display: none;
 }
 
 .miniToggle:hover {
@@ -159,11 +153,6 @@
   .contBtnSecon {
     padding: 1vw 1.5vw;
     font-size: 1.55vw;
-  }
-
-  .filterHeader h2,
-  .chemHeader h2 {
-    font-size: 2vw;
   }
 
   .hideFilter {
