@@ -6,27 +6,35 @@ from .forms import FilterForm
 
 
 def index(request):
-    # TODO: Handle filtering & pagination
+    # TODO: Handle pagination
     # Everything in the dictionary can be referenced by the template
+
+    containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
+
     if request.method == "POST":
         form = FilterForm(request.POST)
         if form.is_valid():
-            container_name = request.POST.get("container_name", "")
-            location = request.POST.get("location", "")
-            hazard = request.POST.get("hazard", "")
-            cas_number = request.POST.get("cas_number", "")
+            containers = containers.filter(
+                product_name__icontains=form.cleaned_data["container_name"],                  # case-insensitive container name
+                location__name__icontains=form.cleaned_data["location"],                      # case-insensitive location name for "top-level" location
+                containerchemicals__chemical_cas__icontains=form.cleaned_data["cas_number"],  # case-insensitive CAS number of any chemical in the container
+            )
 
-            # do the filtering
-            containers = models.Container.objects
-            if container_name:
-                containers = containers.filter(product_name__contains=container_name)
-            else:
-                containers = containers.all()
-            # TODO: the rest of the filter fields
+            if form.cleaned_data["hazard"]:
+                # filter by hazard statement
+                # this needs to be separate because if the hazard is blank, it will filter out all containers that have no hazards
+                containers = containers.filter(hazards__hazard_code__icontains=form.cleaned_data["hazard"])
+
+            if form.cleaned_data["department"]:
+                # filter by department
+                # this needs to be separate because if the department is blank, it will filter out all containers
+                containers = containers.filter(location__department=form.cleaned_data["department"])
+
+            print(containers.all().count())  # for debugging purposes
+
     else:
         form = FilterForm()
         # TODO: do pagination (25 per page)
-        containers = models.Container.objects.all()
         # if no page number already, default to 1
         # otherwise go either up or down based on input? idk
         # how does this work
