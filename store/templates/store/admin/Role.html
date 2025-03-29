@@ -1,0 +1,67 @@
+<!-- We extend the admin-subpage.html file -->
+{% extends 'admin-subpage.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!--
+The admin-subpage.html template already includes most of the table, so
+we just need to specify the thead row and tbody rows
+-->
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
+{% endblock %}
+
+{% block body %}
+    <h2>Roles</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="checkboxCol"></th>
+                <th>
+                    Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in model.Role %}
+                <tr>
+                    <td class="checkboxCol">
+                        <input type="checkbox" id=@item.RoleID/>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <style>
+        button {
+            background-color: #ffcd00;
+            width: 150px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        a {
+            color: black;
+        }
+    </style>
+    <table class="table" align="center" cellpadding="20">
+        <tr>
+            <td>
+                <p>
+                    <button type="button"><a asp-authorize asp-roles="Admin">Add New</a></button>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <button type="button"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}
