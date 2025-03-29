@@ -78,7 +78,7 @@ def admin_subpage(request, model_slug):
     model_name = model_slug.replace("-", " ").title()
     data = {
         "model_str": model_name.replace(" ", ""),
-        "model": debug_models[model_name].objects.all()
+        "model": admin_models[model_name].objects.all()
     }
     return render(request, f"store/admin/{model_slug}.html", data)
 
