@@ -1,0 +1,47 @@
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}Admin{% endblock %}
+
+<style>
+    button {
+        background-color: #ffcd00;
+        width: 100px;
+        height: 90px;
+        border-radius: 10px;
+    }
+
+    .editTable {
+        border: 2px solid black;
+    }
+
+    a {
+        color: black;
+    }
+</style>
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'store/css/gridTableLayout.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1 class="display-4">Admin</h1>
+
+        <div class="grid-table mx-auto px-3 border border-dark rounded">
+        <div class="row justify-content-around">
+            {% for model_name in models %}
+            <div class="col py-3">
+                <a class="btn grid-table-btn" href="{% url 'store:admin_subpage' model_name|slugify %}">
+                    {{ model_name|cut:" " }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

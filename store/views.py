@@ -63,11 +63,24 @@ def contact(request):
     }
     return render(request, "store/contact.html", data)
 
+admin_models = {
+    "Location": models.AdminLocation,
+    "Users": models.AdminUsers,
+    "Department": models.AdminDepartment,
+    "Role": models.AdminRole
+}
 
-def admin(request):
-    data = {}
-    return render(request, "store/admin.html", data)
+def admin_index(request):
+    return render(request, "store/admin/index.html", {
+                  "models": list(admin_models)})
 
+def admin_subpage(request, model_slug):
+    model_name = model_slug.replace("-", " ").title()
+    data = {
+        "model_str": model_name.replace(" ", ""),
+        "model": debug_models[model_name].objects.all()
+    }
+    return render(request, f"store/admin/{model_slug}.html", data)
 
 debug_models = {
     "Container": models.Container,
