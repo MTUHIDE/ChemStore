@@ -76,24 +76,24 @@ def admin_index(request):
 
 def admin_location(request):
     return render(
-        request, "store/admin/location.html", {"model": models.Location }
+        request, "store/admin/location.html", {"model": models.Location.objects.all() }
     )
 
 
 def admin_user(request):
     return render(request, "store/admin/user.html")
-    # return render(request, "store/admin/user.html", {"model": models.User })
+    # return render(request, "store/admin/user.html", {"model": models.User.objects.all() })
 
 
 def admin_department(request):
     return render(
-        request, "store/admin/department.html", {"model": models.Department }
+        request, "store/admin/department.html", {"model": models.Department.objects.all() }
     )
 
 
 def admin_role(request):
     return render(request, "store/admin/role.html")
-    # return render(request, "store/admin/role.html", {"model": models.Role})
+    # return render(request, "store/admin/role.html", {"model": models.Role.objects.all()})
 
 
 debug_models = {
