@@ -87,14 +87,14 @@
         </div>
 
         <!-- Container Display -->
-        <div class="col p-0">
+        <div class="col h-100 p-0">
             {% comment %} <div class="row py-3 resultsTopper">
                 <div class="col topperCol">Showing</div>
                 <div class="col topperCol"> <!-- @Model.numContainers --> Containers</div>
                 <div class="col topperCol"> <!-- @Model.uniqueBuildings --> Buildings</div>
             </div> {% endcomment %}
-            <!-- <div class="row resultsTopper">
 
+            {% comment %} <div class="row resultsTopper">
                 @if (Model.liquidAmount != 0)
                 {
                     <div class="col topperCol">
@@ -123,135 +123,138 @@
                         @Model.gallons gallons
                     </div>
                 }
-            </div> -->
+            </div> {% endcomment %}
 
             <div class="d-flex flex-column results h-100" id="results">
-                <form method="post" class="flex-grow-1 p-0" id="deleteForm">
+                <form method="post" class="flex-fill overflow-y-auto" id="deleteForm">
                     <table class="table m-0">
-                        <thead>
+                        <thead class="bg-white border-bottom">
+                            <tr class="py-2">
+                                <th scope="col">
+                                    Container Name
+                                    {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
+                                    {% comment %} <button type="submit" class="btn" form="filterForm" name="sortMethod" value="0">
+                                        <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
+                                    (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                                    </button>
+                                    <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
+                                    <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
+                                    <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> --> {% endcomment %}
+                                </th>
+                                <th scope="col">
+                                    CAS Number
+                                    {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
+                                    {% comment %} <button type="submit" class="btn" form="filterForm" name="sortMethod" value="2">
+                                        <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
+                                    (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
+                                    </button> {% endcomment %}
+                                </th>
+                                <th scope="col">Hazards</th>
+                                <th scope="col">
+                                    Size
+                                    {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
+                                    {% comment %} <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
+                                        <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
+                                    </button>
+                                    <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden> {% endcomment %}
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
-
-                            <!-- TODO: reimplement... all of this -->
-                            <!-- @if (Model.DisplayContainers.Count() > 0) -->
-                            <!-- { -->
-                                <!-- var count = Model.DisplayContainers.Count(); -->
-                                <!-- var start = 0; -->
-                                <!-- var end = 25; -->
-                                <!-- var numOfPages = Model.DisplayContainers.Count() / 25; -->
-
-                                <!-- @if (!Model.textEntered()) -->
-                                <!-- { -->
-                                    <!-- /*<p class="noFilters">No Filters Applied</p>*/ -->
-                                <!-- } -->
-
-
-                                <!-- if (count < end) { end = count; } -->
-
-                                <!-- <tr> -->
-                                    <!-- <td> -->
-                                        <!-- Container Name -->
-                                        <!-- <button type="submit" class="btn" form="filterForm" name="sortMethod" value="0"> -->
-                                            <!-- <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" : -->
-                                        <!-- (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg"> -->
-                                        <!-- </button> -->
-                                        <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
-                                        <!-- <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden> -->
-                                        <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
-                                    <!-- </td> -->
-                                    <!-- <td> -->
-                                        <!-- CAS Number -->
-                                        <!-- <button type="submit" class="btn" form="filterForm" name="sortMethod" value="2"> -->
-                                            <!-- <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" : -->
-                                        <!-- (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg"> -->
-                                        <!-- </button> -->
-                                    <!-- </td> -->
-                                    <!-- <td>Hazards</td> -->
-                                    <!-- @* <td> -->
-                                        <!-- Size -->
-                                        <!-- <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true"> -->
-                                            <!-- <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg"> -->
-                                        <!-- </button> -->
-                                        <!-- <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden> -->
-                                    <!-- </td> *@ -->
-                                <!-- </tr> -->
-                                <!-- @for (var i = start; i < end; i++) -->
-                                <!-- { -->
-                                    <!-- var item = Model.DisplayContainers[i]; -->
-                                    <!-- <tr class="expandable"> -->
-                                        <!-- <td class="a"> -->
-                                            <!-- @Html.DisplayFor(modelItem => item.con.ProductName) -->
-                                        <!-- </td> -->
-                                        <!-- <td class="a"> -->
-                                            <!-- @Html.DisplayFor(modelItem => item.conChem.ChemicalCAS) -->
-                                        <!-- </td> -->
-                                        <!-- <td class="a"> -->
-                                            <!-- TODO: actually implement conditional rendering based on data -->
-                                            <!-- <span class="hazards"> -->
-                                                <!-- @if (i % 4 == 0) -->
-                                                <!-- { -->
-                                                    <!-- <span class="hazard hazard-exclamation"></span> -->
-                                                    <!-- <span class="hazard hazard-skull"></span> -->
-                                                    <!-- <span class="hazard hazard-gas"></span> -->
-                                                    <!-- <span class="hazard hazard-environment"></span> -->
-                                                    <!-- <span class="hazard hazard-bomb"></span> -->
-                                                    <!-- <span class="hazard hazard-corrosion"></span> -->
-                                                <!-- } -->
-                                                <!-- else if (i % 4 == 1) -->
-                                                <!-- { -->
-                                                    <!-- <span class="hazard hazard-bomb"></span> -->
-                                                    <!-- <span class="hazard hazard-corrosion"></span> -->
-                                                <!-- } -->
-                                                <!-- else if (i % 4 == 2) -->
-                                                <!-- { -->
-                                                    <!-- <span class="hazard hazard-bomb"></span> -->
-                                                    <!-- <span class="hazard hazard-flame"></span> -->
-                                                    <!-- <span class="hazard hazard-corrosion"></span> -->
-                                                <!-- } -->
-                                                <!-- else if (i % 4 == 3) -->
-                                                <!-- { -->
-                                                    <!-- <span class="hazard hazard-skull"></span> -->
-                                                    <!-- <span class="hazard hazard-bomb"></span> -->
-                                                    <!-- <span class="hazard hazard-flame"></span> -->
-                                                    <!-- <span class="hazard hazard-corrosion"></span> -->
-                                                <!-- } -->
-                                            <!-- </span> -->
-                                        <!-- </td> -->
-                                        <!-- @* <td class="a"> -->
-                                            <!-- @Html.DisplayFor(modelItem => item.conChem.Quantity) -->
-                                            <!-- @EnumHelper.GetDisplayValue((Units)item.con.Unit) -->
-                                        <!-- </td> *@ -->
-                                        <!-- <td class="a"> -->
-                                            <!-- <button type="button" class="btn" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerID)"> -->
-                                                <!-- <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px"> -->
-                                            <!-- </button> -->
-                                            <!-- <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerID" style="display: none"> -->
-                                        <!-- </td> -->
-                                    <!-- </tr> -->
-                                    <!-- @* <tr class="moreInformation"> -->
-                                        <!-- <td class="building"> -->
-                                            <!-- @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName) -->
-                                            <!-- @Html.DisplayFor(modelItem => item.loc.RoomNumber) -->
-                                        <!-- </td> -->
-                                        <!-- <td class="dpt"> -->
-                                            <!-- @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) Displayed department for testing, you can remove if not needed -->
-                                        <!-- </td> -->
-                                        <!-- <td class="b"> -->
-                                            <!-- <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a> -->
-                                        <!-- </td> -->
-                                        <!-- <td class="b"> -->
-                                            <!-- <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">Safety Data Sheet</a> TODO: item.chem.ChemicalHazards -->
-                                        <!-- </td> -->
-                                    <!-- </tr> *@ -->
-                                <!-- } -->
-                            <!-- } -->
-                            <!-- else -->
-                            <!-- { -->
-                                <!-- <div class="noResults">No Results Found</div> -->
-                            <!-- } -->
+                            {% if page_obj %}
+                                {% for container in page_obj %}
+                                    <tr class="expandable my-2">
+                                        <td class="a">
+                                            {{ container.product_name }}
+                                        </td>
+                                        <td class="a">
+                                            CAS num(s)?
+                                            {% comment %} TODO: display container's CAS number(s)?? {% endcomment %}
+                                        </td>
+                                        <td class="a">
+                                            {% comment %} TODO: actually implement conditional rendering based on data {% endcomment %}
+                                            <span class="hazards">
+                                                <span class="hazard {% cycle "hazard-exclamation" "hazard-skull" "hazard-gas" "hazard-environment" "hazard-bomb" "hazard-corrosion" %}"></span>
+                                            </span>
+                                        </td>
+                                        <td class="a">
+                                            qqq uu
+                                            {% comment %} TODO: display container's size I guess? {% endcomment %}
+                                            {% comment %} @Html.DisplayFor(modelItem => item.conChem.Quantity)
+                                            @EnumHelper.GetDisplayValue((Units)item.con.Unit) {% endcomment %}
+                                        </td>
+                                        <td class="a">
+                                            _
+                                            {% comment %} TODO: add edit icon for opening edit modal {% endcomment %}
+                                            {% comment %} <button type="button" class="btn" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerID)">
+                                                <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
+                                            </button>
+                                            <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerID" style="display: none"> {% endcomment %}
+                                        </td>
+                                    </tr>
+                                    {% comment %} <tr class="moreInformation">
+                                        <td class="building">
+                                            @EnumHelper.GetDisplayValue((Buildings)item.loc.BuildingName)
+                                            @Html.DisplayFor(modelItem => item.loc.RoomNumber)
+                                        </td>
+                                        <td class="dpt">
+                                            @EnumHelper.GetDisplayValue((Departments)item.supervisor.Department) Displayed department for testing, you can remove if not needed
+                                        </td>
+                                        <td class="b">
+                                            <a asp-page="Admin/Chemicals/Details" asp-route-id="@item.chem.CasNumber">More Details</a>
+                                        </td>
+                                        <td class="b">
+                                            <a asp-page="Admin/Hazards/Details" asp-route-id="@item.chem.CasNumber">Safety Data Sheet</a> TODO: item.chem.ChemicalHazards
+                                        </td>
+                                    </tr> {% endcomment %}
+                                {% endfor %}
+                            {% endif %}
                         </tbody>
                     </table>
                 </form>
+
+                {% if not page_obj %}
+                {% comment %} TODO: format this to be at the top of the page without forcing the table to shrink {% endcomment %}
+                <div class="flex-fill d-flex justify-content-center">
+                    <p class="h4 no-results-text">No Results Found</p>
+                </div>
+                {% endif %}
+
+                {% if page_obj.has_other_pages %}
+                <nav class="pageSelectorCont bg-white border-top">
+                    <ul class="pagination my-2">
+                    {% comment %} <span class="step-links col-12"> {% endcomment %}
+                        {% if page_obj.number|add:"-1" > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">&laquo; 1</a>
+                            </li>
+                        {% endif %}
+                        {% if page_obj.has_previous %}
+                            <li class="page-item" style="grid-column-start: 2">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo; {{ page_obj.previous_page_number }}</a>
+                            </li>
+                        {% endif %}
+
+                        {% comment %} <span class="current"> {% endcomment %}
+                        <li class="page-item active" aria-current="page" style="grid-column-start: 3">
+                            <span class="page-link">{{ page_obj.number }}</span>
+                        </li>
+                        {% comment %} </span> {% endcomment %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }} &rsaquo;</a>
+                            </li>
+                        {% endif %}
+                        {% if page_obj.number|add:"1" < page_obj.paginator.num_pages %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }} &raquo;</a>
+                            </li>
+                        {% endif %}
+                    {% comment %} </span> {% endcomment %}
+                    </ul>
+                </nav>
+                {% endif %}
             </div>
             {% comment %} <div class="row pageSelectorCont">
                 <div class="col-12">
