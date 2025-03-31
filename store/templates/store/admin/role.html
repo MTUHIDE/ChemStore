@@ -1,5 +1,5 @@
-<!-- We extend the admin-subpage.html file -->
-{% extends 'admin-subpage.html' %}
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
@@ -8,58 +8,66 @@
 {% block title %}Roles{% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
+<link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
+
+<style>
+    {% comment %} button {
+        background-color: #ffcd00;
+        width: 150px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    a {
+        color: black;
+    } {% endcomment %}
+
+    .btn-primary{
+        background-color: #ffcd00;
+        border-radius: 10px;
+        color: black;
+        border: 10px black;
+        padding: 3px 15px;
+    }
+</style>
 {% endblock %}
 
 {% block body %}
-    <h2>Roles</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th class="checkboxCol"></th>
-                <th>
-                    Name
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in model.Role %}
+<div class="container-fluid">
+    <h1 class="display-5 text-center">Roles</h1>
+
+    {% if model %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <thead>
                 <tr>
-                    <td class="checkboxCol">
-                        <input type="checkbox" id=@item.RoleID/>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
+                    <th class="checkboxCol"></th>
+                    <th>Name</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <style>
-        button {
-            background-color: #ffcd00;
-            width: 150px;
-            height: 40px;
-            border-radius: 10px;
-        }
+            </thead>
+            <tbody>
+                {% for item in model %}
+                    <tr>
+                        <td class="checkboxCol">
+                            <input type="checkbox" id="{{ item.id }}" />
+                        </td>
+                        <td>{{ item.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div>Table is empty.</div>
+    {% endif %}
 
-        a {
-            color: black;
-        }
-    </style>
-    <table class="table" align="center" cellpadding="20">
-        <tr>
-            <td>
-                <p>
-                    <button type="button"><a asp-authorize asp-roles="Admin">Add New</a></button>
-                </p>
-            </td>
-            <td>
-                <p>
-                    <button type="button"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
-                </p>
-            </td>
-        </tr>
-    </table>
-
+    <div class="row align-items-end">
+        <div class="p-2">
+            <button type="button" class="btn-primary" id="addBtn"><a>Add New</a></button>
+        </div>
+        <div class="p-2">
+            <button type="button" class="btn-primary" id="deleteBtn"><a>Delete Selected</a></button>
+        </div>
+   </div>
+</div>
 {% endblock %}
