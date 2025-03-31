@@ -14,8 +14,11 @@
         {% bootstrap_css %}
         {% bootstrap_javascript %}
 
+        <!-- FontAwesome -->
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+
          <link rel="stylesheet" href="{% static 'store/css/site.css' %}">
-        <!-- TODO: Load font-awesome fonts css? If it's necessary? -->
 
         {% block head %}
         {% endblock %}

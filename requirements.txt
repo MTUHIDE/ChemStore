@@ -3,3 +3,4 @@ python-dotenv~=1.0.1
 whitenoise~=6.9.0
 django-bootstrap5==25.1
 pillow~=11.1
+fontawesomefree==6.6.0
