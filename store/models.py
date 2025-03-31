@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -73,16 +72,3 @@ class HazardPictogram(models.Model):
     pictogram_id = models.AutoField(primary_key=True)
     image = models.ImageField()
     description = models.CharField(max_length=100)
-
-# Temp Models just to create admin_models in views.py
-class AdminLocation(models.Model):
-    location_id = models.AutoField(primary_key=True)
-
-class AdminUsers(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-class AdminDepartment(models.Model):
-    department_id = models.AutoField(primary_key=True)
-
-class AdminRole(models.Model):
-    role_id = models.AutoField(primary_key=True)
