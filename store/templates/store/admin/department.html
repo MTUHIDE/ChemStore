@@ -1,118 +1,126 @@
-{% extends 'admin-subpage.html' %}
+<!-- We extend the base.html file -->
+{% extends 'base.html' %}
 
+<!-- Static files need to be loaded on every template file -->
 {% load static %}
 
+<!-- Set the first part of title -->
+{% block title %}Department{% endblock %}
+
 {% block head %}
-    <link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
-{% endblock %}
+<link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
 
 <style>
     .btn-primary{
-    background-color: #ffcd00;
-    border-radius: 10px;
-    color: black;
-    border: 10px black;
-    padding: 3px 15px;
+        background-color: #ffcd00;
+        border-radius: 10px;
+        color: black;
+        border: 10px black;
+        padding: 3px 15px;
     }
 </style>
+{% endblock %}
 
 {%block body%}
-    <div class="container-fluid">
-        <h2>Departments</h2>
-        <table class="table">
+<div class="container-fluid">
+    <h1 class="display-5 text-center">Departments</h1>
+
+    {% if model %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
             <thead>
                 <tr>
                     <th class="checkboxCol"></th>
-                    <th>
-                        Name
-                    </th>
+                    <th>Name</th>
                 </tr>
             </thead>
             <tbody>
-                {% for item in model.Department %}
+                {% for item in model %}
                     <tr>
                         <td class="checkboxCol">
-                            <input type="checkbox" id=@item.DepartmentID />
+                            <input type="checkbox" id="{{ item.department_id }}" />
                         </td>
                         <td>
-                            {{ item.Name }}
+                            {{ item.name }}
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <div class="row align-items-end">
-             <div class="p-2">
-                    <button type="button" class="btn-primary" id="addBtn"><a asp-authorize asp-roles="Admin">Add New</a></button>
-             </div>
-             <div class="p-2">
-               <button type="button" class="btn-primary" id="deleteBtn"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
-             </div>
-        </div>
     </div>
+    {% else %}
+    <div>Table is empty.</div>
+    {% endif %}
+
+    <div class="row align-items-end">
+        <div class="p-2">
+               <button type="button" class="btn-primary" id="addBtn"><a asp-authorize asp-roles="Admin">Add New</a></button>
+        </div>
+        <div class="p-2">
+          <button type="button" class="btn-primary" id="deleteBtn"><a asp-authorize asp-roles="Admin">Delete Selected</a></button>
+        </div>
+   </div>
+</div>
 
 <!---Modal for add new button-->
-    <div class="modal" id="addNewModal">
-        <div class="modalContent" id="addNewContent">
-            <span class="close" id="close1">&times;</span>
-            <p>Department Name:</p>
-            <input type="text" maxlength="40" placeholder="New Name" size="10"/>
-            <br /><br />
-            <button type="button" class="confirmBtn">Confirm</button>
-        </div>
+<div class="modal" id="addNewModal">
+    <div class="modalContent" id="addNewContent">
+        <span class="close" id="close1">&times;</span>
+        <p>Department Name:</p>
+        <input type="text" maxlength="40" placeholder="New Name" size="10"/>
+        <br /><br />
+        <button type="button" class="confirmBtn">Confirm</button>
     </div>
+</div>
 
-    <!--Modal for delete button-->
-
-    <div class="modal" id="deleteModal">
-        <div class="modalContent" id="deleteModalContent">
-            <span class="close" id="close2">&times;</span>
-            <p>Are you sure you want to delete?:</p>
-            <button type="button" class="confirmBtn">Confirm</button>
-        </div>
+<!--Modal for delete button-->
+<div class="modal" id="deleteModal">
+    <div class="modalContent" id="deleteModalContent">
+        <span class="close" id="close2">&times;</span>
+        <p>Are you sure you want to delete?:</p>
+        <button type="button" class="confirmBtn">Confirm</button>
     </div>
-
+</div>
 
 <!--Functionality for "add new" modal-->
-    <script>
-        let modal = document.getElementById("addNewModal");
-        let btn = document.getElementById("addBtn");
-        let span = document.getElementById("close1");
+<script>
+    let modal = document.getElementById("addNewModal");
+    let btn = document.getElementById("addBtn");
+    let span = document.getElementById("close1");
 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
 
-        span.onclick = function() {
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
             modal.style.display = "none";
         }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
+    }
+</script>
 
 <!--Functionality for "delete" modal-->
-    <script>
-        let modal = document.getElementById("deleteModal");
-        let btn = document.getElementById("deleteBtn");
-        let span = document.getElementById("close2");
+<script>
+    let modal = document.getElementById("deleteModal");
+    let btn = document.getElementById("deleteBtn");
+    let span = document.getElementById("close2");
 
-        btn.onclick = function() {
-          modal.style.display = "block";
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+        modal.style.display = "none";
         }
-
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
-    </script>
-
+    }
+</script>
 {% endblock %}
