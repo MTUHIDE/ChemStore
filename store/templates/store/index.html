@@ -141,7 +141,7 @@
                                     <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> --> {% endcomment %}
                                 </th>
                                 <th scope="col">
-                                    CAS Number
+                                    Location
                                     {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
                                     {% comment %} <button type="submit" class="btn" form="filterForm" name="sortMethod" value="2">
                                         <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
@@ -167,8 +167,7 @@
                                             {{ container.product_name }}
                                         </td>
                                         <td class="a">
-                                            CAS num(s)?
-                                            {% comment %} TODO: display container's CAS number(s)?? {% endcomment %}
+                                            {{ container.location }}
                                         </td>
                                         <td class="a">
                                             {% comment %} TODO: actually implement conditional rendering based on data {% endcomment %}
