@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -24,12 +25,21 @@ class ContainerChemicals(models.Model):
 class Location(models.Model):
     location_id = models.AutoField(primary_key=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
-    level = models.IntegerField()
+    level = models.IntegerField(null=True)
     name = models.CharField(max_length=100)
     department = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True)
     # supervisor_id
     is_hidden = models.BooleanField(default=False)
     attributes = models.ManyToManyField("LocationAttribute")
+
+    def __str__(self):
+        # include all parent locations in the string
+        location = self
+        location_string = ""
+        while location is not None:
+            location_string = location.name + " > " + location_string
+            location = location.parent
+        return location_string[:-3]  # remove the last " > "
 
 
 class LocationAttribute(models.Model):
@@ -40,6 +50,9 @@ class LocationAttribute(models.Model):
 class Department(models.Model):
     department_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class HazardStatement(models.Model):
@@ -56,8 +69,20 @@ class PrecautionaryStatement(models.Model):
     precautionary_code = models.CharField(max_length=10, primary_key=True)
     statement = models.TextField()
 
-
 class HazardPictogram(models.Model):
     pictogram_id = models.AutoField(primary_key=True)
     image = models.ImageField()
     description = models.CharField(max_length=100)
+
+# Temp Models just to create admin_models in views.py
+class AdminLocation(models.Model):
+    location_id = models.AutoField(primary_key=True)
+
+class AdminUsers(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class AdminDepartment(models.Model):
+    department_id = models.AutoField(primary_key=True)
+
+class AdminRole(models.Model):
+    role_id = models.AutoField(primary_key=True)

@@ -1,13 +1,26 @@
-from django import forms
+from django.forms import Form, CharField, TextInput, SelectMultiple, ModelChoiceField
+
+from .models import Department
 
 
-class FilterForm(forms.Form):
-    container_name = forms.CharField(required=False,
-                                     label="", widget=forms.TextInput(attrs={"placeholder": "Container"}))
-    location = forms.CharField(required=False,
-                               label="", widget=forms.TextInput(attrs={"placeholder": "Location"}))
-    hazard = forms.CharField(required=False, label="", widget=forms.TextInput(
-        attrs={"placeholder": "Hazard"}))
-    cas_number = forms.CharField(required=False,
-                                 label="", widget=forms.TextInput(attrs={"placeholder": "CAS Number"}))
-    # TODO: add department dropdown
+class FilterForm(Form):
+    container_name = CharField(required=False,
+                               label="",
+                               widget=TextInput(attrs={"placeholder": "Container"}))
+
+    location = CharField(required=False,
+                         label="",
+                         widget=TextInput(attrs={"placeholder": "Location"}))
+
+    hazard = CharField(required=False,
+                       label="",
+                       widget=TextInput(attrs={"placeholder": "Hazard"}))
+
+    cas_number = CharField(required=False,
+                           label="",
+                           widget=TextInput(attrs={"placeholder": "CAS Number"}))
+
+    department = ModelChoiceField(required=False,
+                                  label="",
+                                  queryset=Department.objects.all(),
+                                  empty_label="Select a department")
