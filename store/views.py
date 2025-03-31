@@ -69,24 +69,32 @@ def contact(request):
     }
     return render(request, "store/contact.html", data)
 
-admin_models = {
-    "Location": models.AdminLocation,
-    "Users": models.AdminUsers,
-    "Department": models.AdminDepartment,
-    "Role": models.AdminRole
-}
 
 def admin_index(request):
-    return render(request, "store/admin/index.html", {
-                  "models": list(admin_models)})
+    return render(request, "store/admin/index.html")
 
-def admin_subpage(request, model_slug):
-    model_name = model_slug.replace("-", " ").title()
-    data = {
-        "model_str": model_name.replace(" ", ""),
-        "model": admin_models[model_name].objects.all()
-    }
-    return render(request, f"store/admin/{model_slug}.html", data)
+
+def admin_location(request):
+    return render(
+        request, "store/admin/location.html", {"model": models.Location }
+    )
+
+
+def admin_user(request):
+    return render(request, "store/admin/user.html")
+    # return render(request, "store/admin/user.html", {"model": models.User })
+
+
+def admin_department(request):
+    return render(
+        request, "store/admin/department.html", {"model": models.Department }
+    )
+
+
+def admin_role(request):
+    return render(request, "store/admin/role.html")
+    # return render(request, "store/admin/role.html", {"model": models.Role})
+
 
 debug_models = {
     "Container": models.Container,

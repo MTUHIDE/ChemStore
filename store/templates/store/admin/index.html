@@ -12,18 +12,31 @@
 {% endblock %}
 
 {% block body %}
-    <div class="text-center">
-        <h1 class="display-4">Admin</h1>
+<div class="container text-center">
+    <h1 class="display-4">Admin</h1>
 
-        <div class="grid-table mx-auto px-3 border border-dark rounded">
-        <div class="row justify-content-around">
-            {% for model_name in models %}
+    <div class="grid-table mx-auto px-3 border border-dark rounded">
+        <div class="row row-cols-md-2 justify-content-around">
             <div class="col py-3">
-                <a class="btn grid-table-btn" href="{% url 'store:admin_subpage' model_name|slugify %}">
-                    {{ model_name|cut:" " }}
+                <a class="btn grid-table-btn" href="{% url 'store:admin_location' %}">
+                    Locations
                 </a>
             </div>
-            {% endfor %}
+            <div class="col py-3">
+                <a class="btn grid-table-btn" href="{% url 'store:admin_user' %}">
+                    Users
+                </a>
+            </div>
+            <div class="col py-3">
+                <a class="btn grid-table-btn" href="{% url 'store:admin_department' %}">
+                    Departments
+                </a>
+            </div>
+            <div class="col py-3">
+                <a class="btn grid-table-btn" href="{% url 'store:admin_role' %}">
+                    Roles
+                </a>
+            </div>
         </div>
     </div>
 </div>
