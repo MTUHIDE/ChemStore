@@ -15,10 +15,16 @@ def index(request):
         form = FilterForm(request.POST)
         if form.is_valid():
             containers = containers.filter(
-                product_name__icontains=form.cleaned_data["container_name"],                  # case-insensitive container name
-                location__name__icontains=form.cleaned_data["location"],                      # case-insensitive location name for "top-level" location
-                containerchemicals__chemical_cas__icontains=form.cleaned_data["cas_number"],  # case-insensitive CAS number of any chemical in the container
+                product_name__icontains=form.cleaned_data["container_name"] # case-insensitive container name
             )
+
+            if form.cleaned_data["cas_number"]:
+                # filter by chemical CAS number
+                containers = containers.filter(containerchemicals__chemical_cas__icontains=form.cleaned_data["cas_number"])
+
+            if form.cleaned_data["location"]:
+                # filter by location
+                containers = containers.filter(location__name__icontains=form.cleaned_data["location"])
 
             if form.cleaned_data["hazard"]:
                 # filter by hazard statement
