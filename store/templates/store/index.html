@@ -28,33 +28,10 @@
                         {% csrf_token %}
                         {{ filter_form }}
                         <div class="row filterRow">
-                            <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter</button></div>
-                            <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
+                            <div class="col-12 filterBtnRow"><button type="submit" class="btn filterBtn">Apply Filter</button></div>
+                            <div class="col-12 filterBtnRow"><a href="." class="btn filterBtnSecon">Clear Filter</a></div>
                         </div>
                     </form>
-                    <!-- <form>
-                        <div class="row filterRow">
-                            <input type="text" class="filterInput" placeholder="Container Name"/>
-                        </div>
-                        <div class="row filterRow">
-                            <input id="location_id" type="text" class="filterInput" placeholder="Location"/>
-                        </div>
-                        <div class="row filterRow">
-                            <input id="hazard_id" type="text" class="filterInput" placeholder="Hazard"/>
-                        </div>
-                        <div class="row filterRow">
-                            <input id="cas_id" type="text" class="filterInput" placeholder="CAS Number" />
-                        </div>
-                        <div class="row filterRow">
-                            <select class="filterInput" >
-                                <option id="department_id" value="" selected disabled>Department</option>
-                            </select>
-                        </div>
-                        <div class="row filterRow">
-                            <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
-                            <div class="col-12 filterBtnRow"><button type="submit" onclick="" class="filterBtn">Apply Filter</button></div>
-                        </div>
-                    </form> -->
                 </div>
             </div>
 
