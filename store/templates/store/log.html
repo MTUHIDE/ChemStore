@@ -125,6 +125,12 @@
             } -->
             <div class="row logResults" id="results">
                 <div class="col">
+                    <div class="row logResult">
+                        <div class="col logCol">
+                            TimeStamp
+                            {% comment %} @Html.DisplayFor(modelItem => item.Timestamp) {% endcomment %}
+                        </div>
+                    </div>
                     <!-- @if(Model.LogEntries.Count() > 0)
                     {
                         var count = Model.LogEntries.Count();
