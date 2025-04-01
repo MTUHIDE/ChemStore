@@ -17,24 +17,15 @@
 <div class="container-fluid h-100">
     <div class="row h-100">
         <!-- Filter Menu -->
-        <div class="col-sm-4 col-lg-3 filterLeft" id="search">
-            <button class="miniToggle" title="Show Filter" onclick="toggleFilter()">
-                <i class="fa-solid fa-sliders"></i>
-            </button>
+        <div class="offcanvas offcanvas-start filterLeft" id="search" tabindex="-1" aria-labelledby="offcanvasLabel">
             <div class="row logFilterSection filterInputs">
-                <div class="col-12 filterHeader">
-                    <div class="filterHeaderLeft">
-                        <h2>Filter Results</h2>
-                    </div>
-                    <div>
-                        <button class="hideFilter filterInputs" title="Hide Filter" onclick="toggleFilter()">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
+                <div class="offcanvas-header filterHeader">
+                    <h4 class="offcanvas-title" id="offcanvasLabel">Filter Results</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
-                <div class="col-12 search">
-                    <form id="filterForm">
+                <div class="offcanvas-body search">
+                    <form method="post" id="filterForm">
                         <div class="row filterRow">
                             <input type="text" placeholder="User" class="filterInput" asp-for="searchUser" />
                         </div>
@@ -55,16 +46,22 @@
                             </select>
                         </div>
                         <div class="row filterRow">
-                            <div class="col-12 filterBtnRow">
-                                <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
-                                <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
-                            </div>
+                            <div class="col-12 filterBtnRow"><button type="reset" class="filterBtnSecon">Clear Filter </button></div>
+                            <div class="col-12 filterBtnRow"><button type="submit" class="filterBtn">Apply Filter</button></div>
                         </div>
-
                     </form>
                 </div>
-
             </div>
+        </div>
+
+        <!-- Filter Button Sidebar -->
+        <div class="col filterLeft" style="flex: 0 0 3.5vw; padding: 1vw; overflow-y: clip">
+            {% comment %} <button class ="btn miniToggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#search" title="Show Filter">
+                <i class="fa-solid fa-sliders"></i>
+            </button> {% endcomment %}
+            <button class="miniToggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#search" title="Show Filter">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
         </div>
 
         <!-- Log Display -->

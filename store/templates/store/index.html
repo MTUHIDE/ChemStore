@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="offcanvas-body search">
-                    <form method = "post">
+                    <form method = "post" id="filterForm">
                         {% csrf_token %}
                         {{ filter_form }}
                         <div class="row filterRow">
