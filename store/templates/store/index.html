@@ -40,16 +40,16 @@
                     <h4 class="offcanvas-title" >Add/Remove Chemicals</h4>
                 </div>
                 <div class="offcanvas-body addRmvBtns">
+                    <button type="button" class="searchPageBtns contBtn" id="addChemicalBtn" data-toggle="modal" data-target="#add-modal" onclick="getAddModal()">
+                        Add
+                    </button>
+                </div>
+                <div class="offcanvas-body addRmvBtns">
                     <!-- TODO: reimplement the pointer-events thing -->
                     <button type="button" class="searchPageBtns contBtnSecon" id="initiateDelBtn" onclick="deleteModeOn()">
                             <!-- style="pointer-events: @((Model.DisplayContainers.Count() == 0) ? " none" : "initial" )"-->
                             <!-- disabled="@((Model.DisplayContainers.Count() == 0) ? " disabled" : null)" -->
                         Remove
-                    </button>
-                </div>
-                <div class="offcanvas-body addRmvBtns">
-                    <button type="button" class="searchPageBtns contBtn" id="addChemicalBtn" data-toggle="modal" data-target="#add-modal" onclick="getAddModal()">
-                        Add
                     </button>
                 </div>
             </div>
