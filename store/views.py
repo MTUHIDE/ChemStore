@@ -6,7 +6,6 @@ from .forms import FilterForm
 
 
 def index(request):
-    # TODO: Handle pagination
     # Everything in the dictionary can be referenced by the template
 
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
@@ -40,10 +39,6 @@ def index(request):
 
     else:
         form = FilterForm()
-        # TODO: do pagination (25 per page)
-        # if no page number already, default to 1
-        # otherwise go either up or down based on input? idk
-        # how does this work
 
     paginator = Paginator(containers, 25)
 
@@ -52,7 +47,6 @@ def index(request):
 
     data = {
         "filter_form": form,
-        # "containers": containers,
         "page_obj": page_obj
     }
     return render(request, "store/index.html", data)
