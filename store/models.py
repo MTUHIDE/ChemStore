@@ -72,3 +72,9 @@ class HazardPictogram(models.Model):
     pictogram_id = models.AutoField(primary_key=True)
     image = models.ImageField()
     description = models.CharField(max_length=100)
+
+# ! This is a placeholder until we get SSO integration and can tell exactly what fields are needed
+class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
