@@ -1,6 +1,6 @@
 Django~=4.2.19
 python-dotenv~=1.0.1
-whitenoise~=6.9.0
+servestatic==3.0.1
 django-bootstrap5==25.1
 pillow~=11.1
 fontawesomefree==6.6.0
