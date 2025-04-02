@@ -83,7 +83,7 @@ class User(models.Model):
 class Log(models.Model):
     timestamp = models.DateTimeField()
     user_id = models.ForeignKey("User", on_delete=models.SET_NULL, null=True)
-    old_value = models.CharField(max_length=100, null=True)
-    new_value = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=500)
-    notes = models.CharField(max_length=500)
+    old_value = models.TextField(null=True)
+    new_value = models.TextField(null=True)
+    description = models.TextField()
+    notes = models.TextField()
