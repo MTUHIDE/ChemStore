@@ -7,7 +7,22 @@ Any IDE that supports Python and Django can be used. PyCharm is recommended, and
 
 ## Python Setup
 1. Install the latest version of [Python 3.9](https://www.python.org/downloads/release/python-3913/)  
-The easiest way to install an manage python versions is with [uv](https://github.com/astral-sh/uv).
+
+The easiest way to install and manage python versions is with [uv](https://github.com/astral-sh/uv), which is highly recommended for this project.  
+There are a few ways to install uv.  
+Direct command line installation:
+```bash
+# On Windows.
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+```bash
+# On macOS and Linux.
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+If you have [scoop](https://scoop.sh/) installed, you can also install uv with:
+```bash
+scoop install main/uv
+```
 Once uv is installed, you can simply clone the repository and run:
 ```bash
 uv sync
@@ -39,21 +54,17 @@ pip install .
 ## Database Setup
 The development database is SQLite, which is created automatically upon running:
 ```bash
-python manage.py migrate
+uv run python manage.py migrate
 ```
 The production database will be MySQL, and will be set up by the server administrator.
 
 ## Running the server
 There are two versions of the server: a synchronous (WSGI) server and an asynchronous (ASGI) server. The ASGI server allows asynchronous requests, which is useful for long-running tasks.  
-This project has the ability to use either server, but the ASGI server is recommended for production. The WSGI server gives better debug logs and information.
+This project has the ability to use either server, but the ASGI server is recommended for better asynchronous support.
 ### With uv installed
-If you have uv installed, you can run the WSGI server with:
+If you have uv installed, you can run the ASGI server with:
 ```bash
-uv run python manage.py runserver
-```
-or the ASGI server with:
-```bash
-uv run uvicorn chemstore.asgi:application
+uv run dev
 ```
 
 ### Without uv
@@ -66,17 +77,13 @@ uv run uvicorn chemstore.asgi:application
 .venv/bin/activate
 ```
 
-2. Run the WSGI server:
-```bash
-python manage.py runserver
-```
-or the ASGI server:
+2. Run the ASGI server:
 ```bash
 python -m uvicorn chemstore.asgi:application
 ```
 
 ## Running in deployment
-When running in deployment, a few changes need to be made. It's assumed uv is installed.  
+When running in deployment, a few changes need to be made. We use gunicorn to manage processes rather than uvicorn. It's assumed uv is installed.  
 Setup a .env file in the root directory with the following variables:
 ```dotenv
 DJANGO_KEY=<secret>  # See https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-SECRET_KEY

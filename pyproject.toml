@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "chemstore"
 version = "0.1.0"
@@ -18,3 +22,6 @@ deploy = [
     "gunicorn>=23.0.0",
     "uvicorn-worker>=0.3.0",
 ]
+
+[project.scripts]
+dev = "chemstore.run:rundev"
