@@ -123,39 +123,39 @@ button.accept-policy {
 }
 
 .hazard-corrosion {
-  background-image: url(../assets/hazards/corrosion-pictogram.jpg);
+  background-image: url(../images/hazards/corrosion-pictogram.jpg);
 }
 
 .hazard-environment {
-  background-image: url(../assets/hazards/environment-pictogram.jpg);
+  background-image: url(../images/hazards/environment-pictogram.jpg);
 }
 
 .hazard-exclamation {
-  background-image: url(../assets/hazards/exclamation-mark-pictogram.jpg);
+  background-image: url(../images/hazards/exclamation-mark-pictogram.jpg);
 }
 
 .hazard-bomb {
-  background-image: url(../assets/hazards/exploding-bomb-pictogram.jpg);
+  background-image: url(../images/hazards/exploding-bomb-pictogram.jpg);
 }
 
 .hazard-flame-circle {
-  background-image: url(../assets/hazards/flame-over-circle-pictogram.jpg);
+  background-image: url(../images/hazards/flame-over-circle-pictogram.jpg);
 }
 
 .hazard-flame {
-  background-image: url(../assets/hazards/flame-pictogram.jpg);
+  background-image: url(../images/hazards/flame-pictogram.jpg);
 }
 
 .hazard-gas {
-  background-image: url(../assets/hazards/gas-cylinder-pictogram.jpg);
+  background-image: url(../images/hazards/gas-cylinder-pictogram.jpg);
 }
 
 .hazard-health {
-  background-image: url(../assets/hazards/health-hazard-pictogram.jpg);
+  background-image: url(../images/hazards/health-hazard-pictogram.jpg);
 }
 
 .hazard-skull {
-  background-image: url(../assets/hazards/skull-pictogram.jpg);
+  background-image: url(../images/hazards/skull-pictogram.jpg);
 }
 
 .hazard-check {
