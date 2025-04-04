@@ -20,6 +20,7 @@ dependencies = [
 [project.optional-dependencies]
 deploy = [
     "gunicorn>=23.0.0",
+    "mysqlclient>=2.2.7",
     "uvicorn-worker>=0.3.0",
 ]
 
