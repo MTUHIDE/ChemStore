@@ -1,11 +1,13 @@
-<!-- We extend the base.html file -->
+<!-- We extend the debug-subpage.html file -->
 {% extends 'debug-subpage.html' %}
 
 <!-- Static files need to be loaded on every template file -->
 {% load static %}
 
-<!-- Set the first part of title -->
-{% block title %}User Debug{% endblock %}
+<!--
+The debug-subpage.html template already includes most of the table, so
+we just need to specify the thead row and tbody rows
+-->
 
 {% block thead %}
     <tr>
