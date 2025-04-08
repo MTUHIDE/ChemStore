@@ -1,0 +1,25 @@
+<!-- We extend the base.html file -->
+{% extends 'debug-subpage.html' %}
+
+<!-- Static files need to be loaded on every template file -->
+{% load static %}
+
+<!-- Set the first part of title -->
+{% block title %}User Debug{% endblock %}
+
+{% block thead %}
+    <tr>
+        <th scope="col">UserID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+    </tr>
+{%endblock%}
+{%block tbody%}
+    {% for item in model %}
+        <tr>
+            <td>{{ item.user_id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

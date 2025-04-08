@@ -100,12 +100,12 @@ debug_models = {
     "Hazard Statement": models.HazardStatement,
     "Location": models.Location,
     "Location Attribute": models.LocationAttribute,
-    # "Log": models.Log,
+    "Log": models.Log,
     "Precautionary Statement": models.PrecautionaryStatement,
     # "Role": models.Role,
     # "Role Permissions": models.RolePermissions,
     # "Statement Pictogram": models.StatementPictogram,
-    # "User": models.User,
+    "User": models.User,
 }
 
 
