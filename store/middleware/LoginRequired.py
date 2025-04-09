@@ -9,9 +9,9 @@ class LoginRequiredMiddleware:
 
     def __call__(self, request):
         if (not settings.DEBUG
-                and request.path != '/accounts/login/'
-                and request.path != '/accounts/cas-login/'
-                and request.path != '/accounts/logout/'
+                and not request.path.startswith(reverse('uniauth:login'))
+                and not request.path.startswith(reverse('uniauth:cas-login', kwargs={'institution': 'mtu'}))
+                and not request.path.startswith(reverse('uniauth:logout'))
                 and not request.user.is_authenticated):
             return redirect(f"{settings.LOGIN_URL}?next={request.path}")
         response = self.get_response(request)
