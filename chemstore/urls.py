@@ -17,8 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
 urlpatterns = [
     path("django_admin/", admin.site.urls),
     path("", include("store.urls")),
 ]
+
+if not settings.DEBUG:
+    urlpatterns.append(path("accounts/", include("uniauth.urls.cas_only"), name="uniauth"))

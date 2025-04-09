@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.conf import settings
 
 from . import models
 from .forms import FilterForm
 
 
 def index(request):
-    # Everything in the dictionary can be referenced by the template
-
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
 
     if request.method == "POST":
@@ -47,8 +46,18 @@ def index(request):
 
     data = {
         "filter_form": form,
-        "page_obj": page_obj
+        "page_obj": page_obj,
     }
+
+    if not settings.DEBUG:
+        # Try to get the user's short name from the session
+        short_name = request.session.get("attributes", {}).get("givenName")
+        if not short_name:
+            # If not found, throw an error
+            raise Exception("Short name not found in session attributes.")
+        # If found, add it to the data dictionary
+        data["short_name"] = short_name
+
     return render(request, "store/index.html", data)
 
 

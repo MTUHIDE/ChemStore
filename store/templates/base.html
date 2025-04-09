@@ -52,8 +52,7 @@
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
                             </div>
                         </div>
-                        <!-- TODO: display user's highest role here? is this still relevant? -->
-                        <!-- <span class="navbar-text">@User.Identity.Name - @role</span> -->
+                        <span class="navbar-text">{{ short_name }} - User</span>
                         <!-- TODO: is this even needed? can you ever be on the page without being logged in? -->
                         <!--
                         <li class="nav-item">

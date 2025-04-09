@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "store.apps.StoreConfig",
     "django_bootstrap5",
     "fontawesomefree",
+    "uniauth",
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "store.middleware.LoginRequired.LoginRequiredMiddleware"
+]
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "uniauth.backends.CASBackend"
 ]
 
 ROOT_URLCONF = "chemstore.urls"
@@ -149,6 +156,16 @@ STORAGES = {
 }
 
 SERVESTATIC_KEEP_ONLY_HASHED_FILES = True
+
+if not DEBUG:
+    # UniAuth settings
+    LOGIN_URL = "/accounts/login/"
+    UNIAUTH_LOGIN_DISPLAY_STANDARD = False  # Use CAS login only
+    UNIAUTH_LOGOUT_CAS_COMPLETELY = True
+else:
+    LOGIN_URL = "/accounts/login/"
+    UNIAUTH_LOGIN_DISPLAY_STANDARD = True
+    UNIAUTH_LOGIN_DISPLAY_CAS = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

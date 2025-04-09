@@ -10,6 +10,7 @@ requires-python = ">=3.9, <3.10"
 dependencies = [
     "django~=4.2.19",
     "django-bootstrap5==25.1",
+    "django-uniauth>=1.4.1",
     "fontawesomefree==6.6.0",
     "pillow~=11.1",
     "python-dotenv~=1.0.1",
