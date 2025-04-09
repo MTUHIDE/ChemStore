@@ -20,7 +20,7 @@ from django.urls import path, include
 from django.conf import settings
 
 urlpatterns = [
-    path("django_admin/", admin.site.urls),
+    # path("django_admin/", admin.site.urls),  # RIP
     path("", include("store.urls")),
 ]
 
