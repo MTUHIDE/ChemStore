@@ -84,42 +84,42 @@
 
 <!--Functionality for "add new" modal-->
 <script>
-    let modal = document.getElementById("addNewModal");
-    let btn = document.getElementById("addBtn");
-    let span = document.getElementById("close1");
+    let addModal = document.getElementById("addNewModal");
+    let addBtn = document.getElementById("addBtn");
+    let addSpan = document.getElementById("close1");
 
-    btn.onclick = function() {
-        modal.style.display = "block";
+    addBtn.onclick = function() {
+        addModal.style.display = "block";
     }
 
-    span.onclick = function() {
-        modal.style.display = "none";
+    addSpan.onclick = function() {
+        addModal.style.display = "none";
     }
 
     window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == addModal) {
+            addModal.style.display = "none";
         }
     }
 </script>
 
 <!--Functionality for "delete" modal-->
 <script>
-    let modal = document.getElementById("deleteModal");
-    let btn = document.getElementById("deleteBtn");
-    let span = document.getElementById("close2");
+    let delModal = document.getElementById("deleteModal");
+    let delBtn = document.getElementById("deleteBtn");
+    let delSpan = document.getElementById("close2");
 
-    btn.onclick = function() {
-        modal.style.display = "block";
+    delBtn.onclick = function() {
+        delModal.style.display = "block";
     }
 
-    span.onclick = function() {
-        modal.style.display = "none";
+    delSpan.onclick = function() {
+        delModal.style.display = "none";
     }
 
     window.onclick = function(event) {
-        if (event.target == modal) {
-        modal.style.display = "none";
+        if (event.target == delModal) {
+        delModal.style.display = "none";
         }
     }
 </script>

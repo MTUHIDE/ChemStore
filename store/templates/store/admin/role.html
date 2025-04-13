@@ -70,4 +70,67 @@
         </div>
    </div>
 </div>
+
+<!---Modal for add new button-->
+<div class="modal" id="addNewModal">
+    <div class="modalContent" id="addNewContent">
+        <span class="close" id="close1">&times;</span>
+        <p>Role Name:</p>
+        <input type="text" maxlength="40" placeholder="New Name" size="10"/>
+        <br /><br />
+        <button type="button" class="confirmBtn">Confirm</button>
+    </div>
+</div>
+
+<!--Modal for delete button-->
+<div class="modal" id="deleteModal">
+    <div class="modalContent" id="deleteModalContent">
+        <span class="close" id="close2">&times;</span>
+        <p>Are you sure you want to delete?:</p>
+        <button type="button" class="confirmBtn">Confirm</button>
+    </div>
+</div>
+
+<!--Functionality for "add new" modal-->
+<script>
+    let addModal = document.getElementById("addNewModal");
+    let addBtn = document.getElementById("addBtn");
+    let addSpan = document.getElementById("close1");
+
+    addBtn.onclick = function() {
+        addModal.style.display = "block";
+    }
+
+    addSpan.onclick = function() {
+        addModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == addModal) {
+            addModal.style.display = "none";
+        }
+    }
+</script>
+
+<!--Functionality for "delete" modal-->
+<script>
+    let delModal = document.getElementById("deleteModal");
+    let delBtn = document.getElementById("deleteBtn");
+    let delSpan = document.getElementById("close2");
+
+    delBtn.onclick = function() {
+        delModal.style.display = "block";
+    }
+
+    delSpan.onclick = function() {
+        delModal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == delModal) {
+        delModal.style.display = "none";
+        }
+    }
+</script>
+
 {% endblock %}
