@@ -37,6 +37,11 @@
     background-color: #fcce01;
 }
 
+    .confirmBtn:hover {
+        background-color: black;
+        color: purple;
+    }
+
 .close {
     color: #aaa;
     float: right;

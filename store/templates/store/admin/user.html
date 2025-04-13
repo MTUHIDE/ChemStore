@@ -9,21 +9,15 @@
 
 {% block head %}
 <style>
-    /* Ensure the full height of the page is utilized */
-    html, body {
-        height: 100%;
-        margin: 0;
-    }
-
     .d-flex {
-        height: 100vh; /* Make the container take up the full viewport height */
+        height: 100%; /* Make the container take up the full viewport height */
     }
 
     .sidebar {
         width: 250px;
         transition: width 0.3s, visibility 0.3s;
         visibility: visible;
-        height: 100vh;
+        height: 90%;
         position: relative;
     }
 
@@ -46,7 +40,7 @@
 
     .column {
         width: 45px;
-        height: 100vh;
+        height: 90%;
         visibility: hidden;
     }
 
@@ -58,7 +52,6 @@
         transition: margin-left 0.3s; /* Smooth transition for content adjustment */
         margin-left: 250px;
         flex-grow: 1;
-        overflow-y: auto;
     }
 
         .content.expanded {
