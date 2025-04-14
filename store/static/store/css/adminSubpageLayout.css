@@ -38,8 +38,25 @@
 }
 
     .confirmBtn:hover {
-        background-color: black;
-        color: purple;
+        color: white;
+        background-color: #fbad18;
+    }
+
+.adminButton {
+    font-size: 0.85vw;
+    font-weight: 600;
+    line-height: 0px;
+    width: 10%;
+    height: 2rem;
+    color: #262626;
+    border: 1px solid #fcce01;
+    border-radius: 8px;
+    background-color: #fcce01;
+}
+
+    .adminButton:hover {
+        color: white;
+        background-color: #fbad18;
     }
 
 .close {
