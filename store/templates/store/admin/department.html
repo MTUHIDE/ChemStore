@@ -66,13 +66,10 @@
 <div class="modal" id="addNewModal">
     <div class="modalContent" id="addNewContent">
         <span class="close" id="close1">&times;</span>
-        <form method="POST">
-            {% csrf_token %}
-            <p>Department Name:</p>
-            <input type="text" name="name" maxlength="40" placeholder="New Name" size="10"/>
-            <br /><br />
-            <button type="submit" class="confirmBtn">Confirm</button>
-        </form>
+        <p>Department Name:</p>
+        <input type="text" maxlength="40" placeholder="New Name" size="10"/>
+        <br /><br />
+        <button type="button" class="confirmBtn">Confirm</button>
     </div>
 </div>
 
