@@ -44,12 +44,18 @@
                         <div class="navbar-collapse collapse" id="navbarNav">
                             <div class="navbar-nav">
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
+                                {% if admin %} <!-- Temp admin variable in views.py index -->
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
+                                {% endif %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
                                 <!-- TODO: check if user is admin or developer -->
+                                {% if admin %} <!-- Temp admin variable in views.py index -->
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
+                                {% endif %}
                                 <!-- TODO: check if user is developer -->
+                                {% if admin %} <!-- Temp admin variable in views.py index -->
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
+                                {% endif %}
                             </div>
                         </div>
                         <span class="navbar-text">{{ short_name }} - User</span>

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.conf import settings
 
@@ -58,11 +58,18 @@ def index(request):
         # If found, add it to the data dictionary
         data["short_name"] = short_name
 
+    data["admin"] = False   # Temp admin variable for base.html if statements
+
     return render(request, "store/index.html", data)
 
 
 def log(request):
     data = {}
+    # Prevent non-admin user from entering/typing page URL
+    if 1:       # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index') # store = app_name, index = urlname
+
     return render(request, "store/log.html", data)
 
 
@@ -74,21 +81,41 @@ def contact(request):
 
 
 def admin_index(request):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:       # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index') # store = app_name, index = urlname
+
     return render(request, "store/admin/index.html")
 
 
 def admin_location(request):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+
     return render(
         request, "store/admin/location.html", {"model": models.Location.objects.all() }
     )
 
 
 def admin_user(request):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+
     return render(request, "store/admin/user.html")
     # return render(request, "store/admin/user.html", {"model": models.User.objects.all() })
 
 
 def admin_department(request):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+
     if request.method == "POST":
         dept_name = request.POST.get("name")  # "name" matches form field
         if dept_name:                         # Don’t allow blank submissions
@@ -103,6 +130,11 @@ def admin_department(request):
 
 
 def admin_role(request):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+
     return render(request, "store/admin/role.html")
     # return render(request, "store/admin/role.html", {"model": models.Role.objects.all()})
 
@@ -127,12 +159,22 @@ debug_models = {
 
 
 def debug_index(request):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:       # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index') # store = app_name, index = urlname
+
     return render(request, "store/debug/index.html", {
         "models": list(debug_models)
     })
 
 
 def debug_subpage(request, model_slug):
+    # Prevent non-admin user from entering/typing page URL
+    if 1:  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+
     model_name = model_slug.replace("-", " ").title()
     data = {
         "model_str": model_name.replace(" ", ""),
