@@ -139,9 +139,6 @@ def admin_department(request):
         dept_name = request.POST.get("name")  # "name" matches form field
         if dept_name:                         # Don’t allow blank submissions
             models.Department.objects.create(name=dept_name)    # Add name to table from post request
-        return render(      # Rerender page with updated departments table
-        request, "store/admin/department.html", {"model": models.Department.objects.all() }
-        )
 
     data = { "model": models.Department.objects.all() }
     data.update(get_user(request))
