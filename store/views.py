@@ -6,6 +6,22 @@ from . import models
 from .forms import FilterForm
 
 
+# Get any necessary user data from the session
+def get_user(request):
+    data = {}
+
+    if not settings.DEBUG:
+        # Try to get the user's short name from the session
+        short_name = request.session.get("attributes", {}).get("givenName")
+        if not short_name:
+            # If not found, throw an error
+            raise Exception("Short name not found in session attributes.")
+        # If found, add it to the data dictionary
+        data["short_name"] = short_name
+
+    return data
+
+
 def index(request):
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
 
@@ -48,21 +64,15 @@ def index(request):
         "filter_form": form,
         "page_obj": page_obj,
     }
-
-    if not settings.DEBUG:
-        # Try to get the user's short name from the session
-        short_name = request.session.get("attributes", {}).get("givenName")
-        if not short_name:
-            # If not found, throw an error
-            raise Exception("Short name not found in session attributes.")
-        # If found, add it to the data dictionary
-        data["short_name"] = short_name
+    data.update(get_user(request))
 
     return render(request, "store/index.html", data)
 
 
 def log(request):
     data = {}
+    data.update(get_user(request))
+
     return render(request, "store/log.html", data)
 
 
@@ -70,33 +80,47 @@ def contact(request):
     data = {
         "email": "jeholtre@mtu.edu",
     }
+    data.update(get_user(request))
     return render(request, "store/contact.html", data)
 
 
 def admin_index(request):
-    return render(request, "store/admin/index.html")
+    data = {}
+    data.update(get_user(request))
+
+    return render(request, "store/admin/index.html", data)
 
 
 def admin_location(request):
-    return render(
-        request, "store/admin/location.html", {"model": models.Location.objects.all() }
-    )
+    data = { "model": models.Location.objects.all() }
+    data.update(get_user(request))
+
+    return render(request, "store/admin/location.html", data)
 
 
 def admin_user(request):
-    return render(request, "store/admin/user.html")
-    # return render(request, "store/admin/user.html", {"model": models.User.objects.all() })
+    data = {
+        # "model": models.User.objects.all()
+    }
+    data.update(get_user(request))
+
+    return render(request, "store/admin/user.html", data)
 
 
 def admin_department(request):
-    return render(
-        request, "store/admin/department.html", {"model": models.Department.objects.all() }
-    )
+    data = { "model": models.Department.objects.all() }
+    data.update(get_user(request))
+
+    return render(request, "store/admin/department.html", data)
 
 
 def admin_role(request):
-    return render(request, "store/admin/role.html")
-    # return render(request, "store/admin/role.html", {"model": models.Role.objects.all()})
+    data = {
+        # "model": models.Role.objects.all()
+    }
+    data.update(get_user(request))
+
+    return render(request, "store/admin/role.html", data)
 
 
 debug_models = {
@@ -119,9 +143,10 @@ debug_models = {
 
 
 def debug_index(request):
-    return render(request, "store/debug/index.html", {
-        "models": list(debug_models)
-    })
+    data = { "models": list(debug_models) }
+    data.update(get_user(request))
+
+    return render(request, "store/debug/index.html", data)
 
 
 def debug_subpage(request, model_slug):
@@ -130,9 +155,11 @@ def debug_subpage(request, model_slug):
         "model_str": model_name.replace(" ", ""),
         "model": debug_models[model_name].objects.all()
     }
+    data.update(get_user(request))
     return render(request, f"store/debug/{model_slug}.html", data)
 
 
 def privacy(request):
     data = {}
+    data.update(get_user(request))
     return render(request, "store/privacy.html", data)
