@@ -70,8 +70,8 @@ class PrecautionaryStatement(models.Model):
 
 class HazardPictogram(models.Model):
     pictogram_id = models.AutoField(primary_key=True)
-    image = models.ImageField()
     description = models.CharField(max_length=100)
+    pictogram = models.ImageField(null=True) # Null is allowed for testing
 
 # ! This is a placeholder until we get SSO integration and can tell exactly what fields are needed
 class User(models.Model):
@@ -79,11 +79,38 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
 
-# ! Are these the correct types?
+# ! Should validate typing and constraints of the tables below with full team
 class Log(models.Model):
+    id = models.IntegerField(primary_key=True)
     timestamp = models.DateTimeField()
     user_id = models.ForeignKey("User", on_delete=models.SET_NULL, null=True)
+    table = models.CharField(max_length=100, null=True)
+    key1 = models.CharField(max_length=10, null=True)
+    key2 = models.CharField(max_length=10, null=True)
+    action = models.TextField(null=True)
     old_value = models.TextField(null=True)
     new_value = models.TextField(null=True)
-    description = models.TextField()
-    notes = models.TextField()
+    description = models.TextField(null=True)
+    notes = models.TextField(null=True)
+
+class Role(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+
+class RolePermissions(models.Model):
+    role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
+    location_id = models.ForeignKey("Location", on_delete=models.CASCADE)
+    permission = models.TextField(primary_key=True)
+    has_perm = models.BooleanField()
+
+class ContainerHazards(models.Model):
+    container_id = models.ForeignKey("Container", on_delete=models.CASCADE)
+    h_code = models.ForeignKey("HazardStatement", on_delete=models.CASCADE)
+
+class StatementPictogram(models.Model): # Has an extra "id" field in the databse.
+    gh_code = models.ForeignKey("HazardPictogram", on_delete=models.CASCADE)
+    h_code = models.ForeignKey("HazardStatement", on_delete=models.CASCADE)
+
+class HazardPrecaution(models.Model): # Has an extra "id" field in the database
+    h_code = models.ForeignKey("HazardStatement", on_delete=models.CASCADE)
+    p_code = models.ForeignKey("PrecautionaryStatement", on_delete=models.CASCADE)
