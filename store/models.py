@@ -73,13 +73,7 @@ class HazardPictogram(models.Model):
     description = models.CharField(max_length=100)
     pictogram = models.ImageField(null=True) # Null is allowed for testing
 
-# ! This is a placeholder until we get SSO integration and can tell exactly what fields are needed
-class User(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-
-# ! Should validate typing and constraints of the tables below with full team
+# ! Should validate typing and constraints of the tables below with full team at some point
 class Log(models.Model):
     id = models.IntegerField(primary_key=True)
     timestamp = models.DateTimeField()
@@ -96,6 +90,13 @@ class Log(models.Model):
 class Role(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+
+class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
+    department_id = models.ForeignKey("Department", on_delete=models.CASCADE)
 
 class RolePermissions(models.Model):
     role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
