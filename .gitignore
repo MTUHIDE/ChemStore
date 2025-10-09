@@ -3,3 +3,4 @@
 /staticfiles/
 **/__pycache__/
 /uv.lock
+/.idea/
