@@ -96,7 +96,7 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
-    department_id = models.ForeignKey("Department", on_delete=models.CASCADE)
+    department_id = models.ForeignKey("Department", on_delete=models.CASCADE, null=True)
 
 class RolePermissions(models.Model):
     role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
