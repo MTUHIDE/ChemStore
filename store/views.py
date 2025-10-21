@@ -7,20 +7,55 @@ from .forms import FilterForm
 
 # data = {'admin' : True}
 
-# Get any necessary user data from the session
+# Ensure minimum roles exist (`Developer` in debug, `User` and `Admin` in production)
+def validate_roles(request):
+    req_roles = [ "Developer" ] if settings.DEBUG else [ "User", "Admin" ]
+    for role_name in req_roles:
+        if len(models.Role.objects.filter(name=role_name)) == 0:
+            models.Role.objects.create(name=role_name)
+
+# Checks if the user is in the database, adds them if they're not, and returns the user's row from the db
 def get_user(request):
-    data = {}
+    # Make sure necessary roles exist
+    validate_roles(request)
 
-    if not settings.DEBUG:
-        # Try to get the user's short name from the session
-        short_name = request.session.get("attributes", {}).get("givenName")
-        if not short_name:
-            # If not found, throw an error
-            raise Exception("Short name not found in session attributes.")
-        # If found, add it to the data dictionary
-        data["short_name"] = short_name
+    users = models.User.objects
 
-    return data
+    if settings.DEBUG:
+        # If User table is empty, create & return a dev user object. Otherwise, return existing dev user object
+        if users.count() == 0:
+            role = models.Role.objects.get(name="Developer")
+            return users.create(user_id=0, name="Dev User", email="dev@dev.dev", role_id=role)
+        else:
+            return users.get(user_id=0)
+
+    else:
+        # Get user attributes from session
+        attr = request.session.get("attributes", {})
+
+        # Get UID from session attributes
+        uid = attr.get("uid")
+        if not uid:
+            raise Exception("UID not found in session attributes.")
+
+        # If UID is not in User table, create & return an object for the user. Otherwise, return user object
+        if len(users.filter(user_id=uid)) == 0:
+            # Get preferred full name and email from session attributes
+            name = attr.get("displayName")
+            email = attr.get("mail")
+            if not name:
+                raise Exception("Display Name not found in session attributes.")
+            if not email:
+                raise Exception("Email not found in session attributes.")
+
+            # Get default role
+            role = models.Role.objects.get(name="User")
+
+            # Create & return user object from user's data
+            return users.create(user_id=uid, name=name, email=email, role_id=role)
+        else:
+            # Return user object
+            return users.get(user_id=uid)
 
 
 def index(request):
@@ -65,7 +100,7 @@ def index(request):
         "filter_form": form,
         "page_obj": page_obj,
     }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     data["admin"] = False   # Temp admin variable for base.html if statements
 
@@ -79,7 +114,7 @@ def log(request):
         return redirect('store:index') # store = app_name, index = urlname
 
     data = {}
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/log.html", data)
 
@@ -88,7 +123,7 @@ def contact(request):
     data = {
         "email": "chemstores@mtu.edu",
     }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
     return render(request, "store/contact.html", data)
 
 
@@ -99,7 +134,7 @@ def admin_index(request):
         return redirect('store:index') # store = app_name, index = urlname
 
     data = {}
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/admin/index.html", data)
 
@@ -111,7 +146,7 @@ def admin_location(request):
         return redirect('store:index')  # store = app_name, index = urlname
 
     data = { "model": models.Location.objects.all() }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/admin/location.html", data)
 
@@ -127,7 +162,7 @@ def admin_user(request):
         "roles": models.Role.objects.all(),         # Send role model into HTML
         "departments": models.Department.objects.all()  # Send department model into HTML
     }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/admin/user.html", data)
 
@@ -144,7 +179,7 @@ def admin_department(request):
             models.Department.objects.create(name=dept_name)    # Add name to table from post request
 
     data = { "model": models.Department.objects.all() }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/admin/department.html", data)
 
@@ -158,7 +193,7 @@ def admin_role(request):
     data = {
         "model": models.Role.objects.all()
     }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/admin/role.html", data)
 
@@ -189,7 +224,7 @@ def debug_index(request):
         return redirect('store:index') # store = app_name, index = urlname
 
     data = { "models": list(debug_models) }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
 
     return render(request, "store/debug/index.html", data)
 
@@ -205,11 +240,11 @@ def debug_subpage(request, model_slug):
         "model_str": model_name.replace(" ", ""),
         "model": debug_models[model_name].objects.all()
     }
-    data.update(get_user(request))
+    data["user"] = get_user(request)
     return render(request, f"store/debug/{model_slug}.html", data)
 
 
 def privacy(request):
     data = {}
-    data.update(get_user(request))
+    data["user"] = get_user(request)
     return render(request, "store/privacy.html", data)
