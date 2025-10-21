@@ -86,7 +86,7 @@ def log(request):
 
 def contact(request):
     data = {
-        "email": "jeholtre@mtu.edu",
+        "email": "chemstores@mtu.edu",
     }
     data.update(get_user(request))
     return render(request, "store/contact.html", data)
