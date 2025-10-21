@@ -75,14 +75,18 @@
                 <button class="btn btn-warning w-100 mb-3" onclick="toggleSidebar()">Toggle Sidebar</button>
                 <div id="filterContent">
                     <h6>Filters</h6>
-                    <label for="nameFilter">Name:</label>
-                    <input type="text" id="nameFilter" class="form-control mb-2" placeholder="Filter by name">
-                    <label for="roleFilter">Role:</label>
-                    <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
-                    <label for="deptFilter">Department:</label>
-                    <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
-                    <h6> </h6>
-                    <button class="btn btn-primary w-80 mb-3">Apply Filters</button>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="nameFilter">Name:</label>
+                        <input type="text" id="nameFilter" class="form-control mb-2" placeholder="Filter by name">
+                        <label for="roleFilter">Role:</label>
+                        <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
+                        <label for="deptFilter">Department:</label>
+                        <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
+                        <h6> </h6>
+                        <button type="submit" name="action" value="filter"
+                                class="btn btn-primary w-80 mb-3">Apply Filters</button>
+                    </form>
                 </div>
                 <div id="editContent">
                     <h6>Edit</h6>
@@ -98,19 +102,19 @@
                     <div class="d-inline-flex">
                         <label for="roleEdit" class="me-3">Role:</label>
                         <select class="form-select" id="roleEditor">
-                            <option selected>Role</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Developer</option>
-                            <option value="3">User</option>
+                            <option value="" selected>Role</option>
+                            {% for role in roles %}     <!-- Get all roles from model -->
+                                <option value="{{ role.id }}">{{ role.name }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="d-inline-flex">
                         <label for="departmentEdit" class="me-2">Dept:</label>
                         <select class="form-select" id="departmentEditor">
-                            <option selected>Department</option>
-                            <option value="1">Computer Science</option>
-                            <option value="2">Engineering</option>
-                            <option value="3">Chemistry</option>
+                            <option value="" selected>Department</option>
+                             {% for depart in departments %} <!-- Get all departments from model -->
+                                <option value="{{ depart.department_id }}">{{ depart.name }}</option>
+                             {% endfor %}
                         </select>
                     </div>
                     <h6> </h6>
@@ -147,9 +151,11 @@
                             <input type="checkbox" id="{{ item.id }}" />
                         </td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.username }}</td>
-                        <td>{% if item.role %}{{ item.role.name }}{% endif %}</td>
-                        <td>{% if item.department %}{{ item.department.name }}{% endif %}</td>
+                        <td>{{ item.username}}</td>
+                        <!-- role_id is the name of the attribute -->
+                        <!-- The extra _id is created from Django because of foreign keys -->
+                        <td>{% if item.role_id_id %}{{ item.role_id.name }}{% endif %}</td>
+                        <td>{% if item.department_id_id %}{{ item.department_id.name }}{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
