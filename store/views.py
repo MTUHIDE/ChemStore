@@ -5,58 +5,21 @@ from django.conf import settings
 from . import models
 from .forms import FilterForm
 
-# data = {'admin' : True}
+data = {}
 
-# Ensure minimum roles exist (`Developer` in debug, `User` and `Admin` in production)
-def validate_roles(request):
-    req_roles = [ "Developer" ] if settings.DEBUG else [ "User", "Admin" ]
-    for role_name in req_roles:
-        if len(models.Role.objects.filter(name=role_name)) == 0:
-            models.Role.objects.create(name=role_name)
-
-# Checks if the user is in the database, adds them if they're not, and returns the user's row from the db
+# Get any necessary user data from the session
 def get_user(request):
-    # Make sure necessary roles exist
-    validate_roles(request)
 
-    users = models.User.objects
+    if not settings.DEBUG:
+        # Try to get the user's short name from the session
+        short_name = request.session.get("attributes", {}).get("givenName")
+        if not short_name:
+            # If not found, throw an error
+            raise Exception("Short name not found in session attributes.")
+        # If found, add it to the data dictionary
+        data["short_name"] = short_name
 
-    if settings.DEBUG:
-        # If User table is empty, create & return a dev user object. Otherwise, return existing dev user object
-        if users.count() == 0:
-            role = models.Role.objects.get(name="Developer")
-            return users.create(user_id=0, name="Dev User", email="dev@dev.dev", role_id=role)
-        else:
-            return users.get(user_id=0)
-
-    else:
-        # Get user attributes from session
-        attr = request.session.get("attributes", {})
-
-        # Get UID from session attributes
-        uid = attr.get("uid")
-        if not uid:
-            raise Exception("UID not found in session attributes.")
-
-        # If UID is not in User table, create & return an object for the user. Otherwise, return user object
-        if len(users.filter(user_id=uid)) == 0:
-            # Get preferred full name and email from session attributes
-            name = attr.get("displayName")
-            email = attr.get("mail")
-            if not name:
-                raise Exception("Display Name not found in session attributes.")
-            if not email:
-                raise Exception("Email not found in session attributes.")
-
-            # Get default role
-            role = models.Role.objects.get(name="User")
-
-            # Create & return user object from user's data
-            return users.create(user_id=uid, name=name, email=email, role_id=role)
-        else:
-            # Return user object
-            return users.get(user_id=uid)
-
+    return data
 
 def index(request):
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
@@ -96,104 +59,74 @@ def index(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    data = {
-        "filter_form": form,
-        "page_obj": page_obj,
-    }
-    data["user"] = get_user(request)
+    data["filter_form"] = form
+    data["page_obj"] = page_obj
 
-    data["admin"] = False   # Temp admin variable for base.html if statements
-
+    data.update(get_user(request))
     return render(request, "store/index.html", data)
 
-
 def log(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:       # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index') # store = app_name, index = urlname
-
-    data = {}
-    data["user"] = get_user(request)
+    check_permission()
+    data.update(get_user(request))
 
     return render(request, "store/log.html", data)
 
-
 def contact(request):
-    data = {
-        "email": "chemstores@mtu.edu",
-    }
-    data["user"] = get_user(request)
+    data["email"] = "jeholtre@mtu.edu"
+    data.update(get_user(request))
     return render(request, "store/contact.html", data)
 
+def check_permission():
+    user = models.User.objects.get(user_id=0)
+    role = user.role_id
+
+    if role.name == "Admin":
+        # Set the user to have admin role if it is implied in the database
+        data["admin"] = True
+    # Prevent non-admin user from entering/typing page URL
+    else:  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+    return
 
 def admin_index(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:       # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index') # store = app_name, index = urlname
-
-    data = {}
-    data["user"] = get_user(request)
+    check_permission()
+    data.update(get_user(request))
 
     return render(request, "store/admin/index.html", data)
 
-
 def admin_location(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
-    data = { "model": models.Location.objects.all() }
-    data["user"] = get_user(request)
+    check_permission()
+    data["model"] = models.Location.objects.all()
+    data.update(get_user(request))
 
     return render(request, "store/admin/location.html", data)
 
-
 def admin_user(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
-    data = {
-        "model": models.User.objects.all(),
-        "roles": models.Role.objects.all(),         # Send role model into HTML
-        "departments": models.Department.objects.all()  # Send department model into HTML
-    }
-    data["user"] = get_user(request)
+    check_permission()
+    data["model"] = models.User.objects.all()
+    data.update(get_user(request))
 
     return render(request, "store/admin/user.html", data)
 
 
 def admin_department(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
+    check_permission()
     if request.method == "POST":
         dept_name = request.POST.get("name")  # "name" matches form field
         if dept_name:                         # Don’t allow blank submissions
             models.Department.objects.create(name=dept_name)    # Add name to table from post request
 
-    data = { "model": models.Department.objects.all() }
-    data["user"] = get_user(request)
+    data["model"] = models.Department.objects.all()
+    data.update(get_user(request))
 
     return render(request, "store/admin/department.html", data)
 
 
 def admin_role(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
-    data = {
-        "model": models.Role.objects.all()
-    }
-    data["user"] = get_user(request)
+    check_permission()
+    data["model"] = models.Role.objects.all()
+    data.update(get_user(request))
 
     return render(request, "store/admin/role.html", data)
 
@@ -218,33 +151,22 @@ debug_models = {
 
 
 def debug_index(request):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:       # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index') # store = app_name, index = urlname
-
-    data = { "models": list(debug_models) }
-    data["user"] = get_user(request)
+    check_permission()
+    data["models"] = list(debug_models)
+    data.update(get_user(request))
 
     return render(request, "store/debug/index.html", data)
 
 
 def debug_subpage(request, model_slug):
-    # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
+    check_permission()
     model_name = model_slug.replace("-", " ").title()
-    data = {
-        "model_str": model_name.replace(" ", ""),
-        "model": debug_models[model_name].objects.all()
-    }
-    data["user"] = get_user(request)
+    data["model_str"] = model_name.replace(" ", "")
+    data["model"] = debug_models[model_name].objects.all()
+    data.update(get_user(request))
     return render(request, f"store/debug/{model_slug}.html", data)
 
 
 def privacy(request):
-    data = {}
-    data["user"] = get_user(request)
+    data.update(get_user(request))
     return render(request, "store/privacy.html", data)
