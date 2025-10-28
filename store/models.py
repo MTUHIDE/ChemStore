@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Container(models.Model):
-    container_id = models.AutoField(primary_key=True)
     location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
     product_name = models.CharField(max_length=100)
     size = models.DecimalField(max_digits=5, decimal_places=2)
@@ -22,7 +21,6 @@ class ContainerChemicals(models.Model):
 
 
 class Location(models.Model):
-    location_id = models.AutoField(primary_key=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     level = models.IntegerField(null=True)
     name = models.CharField(max_length=100)
@@ -42,12 +40,10 @@ class Location(models.Model):
 
 
 class LocationAttribute(models.Model):
-    attribute_id = models.AutoField(primary_key=True)
     value = models.CharField(max_length=100)
 
 
 class Department(models.Model):
-    department_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -69,13 +65,11 @@ class PrecautionaryStatement(models.Model):
     statement = models.TextField()
 
 class HazardPictogram(models.Model):
-    pictogram_id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=100)
     pictogram = models.ImageField(null=True) # Null is allowed for testing
 
 # ! Should validate typing and constraints of the tables below with full team at some point
 class Log(models.Model):
-    id = models.IntegerField(primary_key=True)
     timestamp = models.DateTimeField()
     user_id = models.ForeignKey("User", on_delete=models.SET_NULL, null=True)
     table = models.CharField(max_length=100, null=True)
@@ -88,7 +82,6 @@ class Log(models.Model):
     notes = models.TextField(null=True)
 
 class Role(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
 class User(models.Model):
