@@ -92,7 +92,7 @@ class Role(models.Model):
     name = models.CharField(max_length=100)
 
 class User(models.Model):
-    id = models.BigIntegerField(primary_key=True) # UID from SSO
+    user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
     role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
