@@ -57,6 +57,19 @@ def get_user(request):
             # Return user object
             return users.get(id=uid)
 
+def get_permissions(request):
+    data = {}
+    data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":
+        data["pages"] = ["Index", "Contact", "Log", "Admin", "Debug", "Privacy"]
+    elif data["user"].role.name == "SuperAdmin":
+        data["pages"] = ["Index", "Contact", "Log", "Admin", "Debug", "Privacy"]
+    elif data["user"].role.name == "Admin":
+        data["pages"] = ["Index", "Contact", "Log", "Admin", "Privacy"]
+    elif data["user"].role.name == "User":
+        data["pages"] = ["Index", "Contact", "Privacy"]
+    return
 
 def index(request):
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
@@ -109,12 +122,12 @@ def index(request):
 
 def log(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:       # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index') # store = app_name, index = urlname
-
     data = {}
     data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":       # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index') # store = app_name, index = urlname
 
     return render(request, "store/log.html", data)
 
@@ -129,47 +142,50 @@ def contact(request):
 
 def admin_index(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:       # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index') # store = app_name, index = urlname
-
     data = {}
     data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":       # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index') # store = app_name, index = urlname
 
     return render(request, "store/admin/index.html", data)
 
 
 def admin_location(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
+    data = {"model": models.Location.objects.all()}
+    data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
         # User is not an admin role
         return redirect('store:index')  # store = app_name, index = urlname
-
-    data = { "model": models.Location.objects.all() }
-    data["user"] = get_user(request)
 
     return render(request, "store/admin/location.html", data)
 
 
 def admin_user(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
     data = {
         "model": models.User.objects.all(),
-        "roles": models.Role.objects.all(),         # Send role model into HTML
+        "roles": models.Role.objects.all(),  # Send role model into HTML
         "departments": models.Department.objects.all()  # Send department model into HTML
     }
     data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
 
     return render(request, "store/admin/user.html", data)
 
 
 def admin_department(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
+    data = {"model": models.Department.objects.all()}
+    data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
         # User is not an admin role
         return redirect('store:index')  # store = app_name, index = urlname
 
@@ -178,22 +194,19 @@ def admin_department(request):
         if dept_name:                         # Don’t allow blank submissions
             models.Department.objects.create(name=dept_name)    # Add name to table from post request
 
-    data = { "model": models.Department.objects.all() }
-    data["user"] = get_user(request)
-
     return render(request, "store/admin/department.html", data)
 
 
 def admin_role(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
     data = {
         "model": models.Role.objects.all()
     }
     data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
 
     return render(request, "store/admin/role.html", data)
 
@@ -219,28 +232,29 @@ debug_models = {
 
 def debug_index(request):
     # Prevent non-admin user from entering/typing page URL
-    if 0:       # Temp if statement figuring out how to implement with roles
+    data = {"models": list(debug_models)}
+    data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":       # Temp if statement figuring out how to implement with roles
         # User is not an admin role
         return redirect('store:index') # store = app_name, index = urlname
-
-    data = { "models": list(debug_models) }
-    data["user"] = get_user(request)
 
     return render(request, "store/debug/index.html", data)
 
 
 def debug_subpage(request, model_slug):
     # Prevent non-admin user from entering/typing page URL
-    if 0:  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
-        return redirect('store:index')  # store = app_name, index = urlname
-
     model_name = model_slug.replace("-", " ").title()
     data = {
         "model_str": model_name.replace(" ", ""),
         "model": debug_models[model_name].objects.all()
     }
     data["user"] = get_user(request)
+
+    if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
+        # User is not an admin role
+        return redirect('store:index')  # store = app_name, index = urlname
+
     return render(request, f"store/debug/{model_slug}.html", data)
 
 
