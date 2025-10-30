@@ -44,16 +44,17 @@
                         <div class="navbar-collapse collapse" id="navbarNav">
                             <div class="navbar-nav">
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
-                                {% if admin %} <!-- Temp admin variable in views.py index -->
+                                <!-- TODO: check permissions instead of hardcoding role names, preferably in code instead of here -->
+                                {% if user.role.name == "Admin" or user.role.name == "Developer" %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
                                 {% endif %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
                                 <!-- TODO: check if user is admin or developer -->
-                                {% if admin %} <!-- Temp admin variable in views.py index -->
+                                {% if user.role.name == "Admin" or user.role.name == "Developer" %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
                                 {% endif %}
                                 <!-- TODO: check if user is developer -->
-                                {% if admin %} <!-- Temp admin variable in views.py index -->
+                                {% if user.role.name == "Developer" %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:debug' %}">Debug</a>
                                 {% endif %}
                             </div>
