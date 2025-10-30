@@ -25,9 +25,9 @@ def get_user(request):
         # If User table is empty, create & return a dev user object. Otherwise, return existing dev user object
         if users.count() == 0:
             role = models.Role.objects.get(name="Developer")
-            return users.create(user_id=0, name="Dev User", email="dev@dev.dev", role_id=role)
+            return users.create(id=0, name="Dev User", email="dev@dev.dev", role=role)
         else:
-            return users.get(user_id=0)
+            return users.get(id=0)
 
     else:
         # Get user attributes from session
@@ -39,7 +39,7 @@ def get_user(request):
             raise Exception("UID not found in session attributes.")
 
         # If UID is not in User table, create & return an object for the user. Otherwise, return user object
-        if len(users.filter(user_id=uid)) == 0:
+        if len(users.filter(id=uid)) == 0:
             # Get preferred full name and email from session attributes
             name = attr.get("displayName")
             email = attr.get("mail")
@@ -52,10 +52,10 @@ def get_user(request):
             role = models.Role.objects.get(name="User")
 
             # Create & return user object from user's data
-            return users.create(user_id=uid, name=name, email=email, role_id=role)
+            return users.create(id=uid, name=name, email=email, role=role)
         else:
             # Return user object
-            return users.get(user_id=uid)
+            return users.get(id=uid)
 
 
 def index(request):
