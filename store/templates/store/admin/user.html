@@ -81,11 +81,21 @@
                     <form method="POST">
                         {% csrf_token %}
                         <label for="nameFilter">Name:</label>
-                        <input type="text" id="nameFilter" class="form-control mb-2" placeholder="Filter by name">
+                        <input type="text" id="nameFilter" name="name" class="form-control mb-2" placeholder="Filter by name">
                         <label for="roleFilter">Role:</label>
-                        <input type="text" id="roleFilter" class="form-control mb-2" placeholder="Filter by role">
+                        <select class="form-select" id="roleFilter" name="role">
+                            <option value="" selected>Filter by role</option>
+                            {% for role in roles %}     <!-- Get all roles from model -->
+                                <option value="{{ role.id }}">{{ role.name }}</option>
+                            {% endfor %}
+                        </select>
                         <label for="deptFilter">Department:</label>
-                        <input type="text" id="deptFilter" class="form-control" placeholder="Filter by department">
+                        <select class="form-select" id="deptFilter" name="department">
+                            <option value="" selected>Filter by department</option>
+                             {% for depart in departments %} <!-- Get all departments from model -->
+                                <option value="{{ depart.id }}">{{ depart.name }}</option>
+                             {% endfor %}
+                        </select>
                         <h6> </h6>
                         <button type="submit" name="action" value="filter"
                                 class="btn btn-primary w-80 mb-3">Apply Filters</button>
@@ -116,12 +126,13 @@
                         <select class="form-select" id="departmentEditor">
                             <option value="" selected>Department</option>
                              {% for depart in departments %} <!-- Get all departments from model -->
-                                <option value="{{ depart.department_id }}">{{ depart.name }}</option>
+                                <option value="{{ depart.id }}">{{ depart.name }}</option>
                              {% endfor %}
                         </select>
                     </div>
                     <h6> </h6>
-                    <button class="btn btn-primary btn-lg w-80 mb-3">Save</button>
+                    <button type="submit" name="action" value="edit"
+                            class="btn btn-primary btn-lg w-80 mb-3">Save</button>
                 <br>    <!-- Add buffer so save button is not blocked by footer -->
                 <br>    <!-- When window is small -->
                 <br>
@@ -159,9 +170,8 @@
                         <td>{{ item.name }}</td>
                         <td>{{ item.username}}</td>
                         <!-- role_id is the name of the attribute -->
-                        <!-- The extra _id is created from Django because of foreign keys -->
-                        <td>{% if item.role_id_id %}{{ item.role_id.name }}{% endif %}</td>
-                        <td>{% if item.department_id_id %}{{ item.department_id.name }}{% endif %}</td>
+                        <td>{% if item.role_id %}{{ item.role.name }}{% endif %}</td>
+                        <td>{% if item.department_id %}{{ item.department.name }}{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

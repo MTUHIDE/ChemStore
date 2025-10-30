@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.conf import settings
 
 from . import models
-from .forms import FilterForm
+from .forms import FilterForm, FilterAdminUser
 
 # data = {'admin' : True}
 
@@ -167,7 +167,6 @@ def admin_location(request):
 def admin_user(request):
     # Prevent non-admin user from entering/typing page URL
     data = {
-        "model": models.User.objects.all(),
         "roles": models.Role.objects.all(),  # Send role model into HTML
         "departments": models.Department.objects.all()  # Send department model into HTML
     }
@@ -176,6 +175,29 @@ def admin_user(request):
     if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
         # User is not an admin role
         return redirect('store:index')  # store = app_name, index = urlname
+
+    users = models.User.objects.all()
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        if action == "filter":
+            form = FilterAdminUser(request.POST)
+            if form.is_valid():
+                if form.cleaned_data["name"]:
+                    users = users.filter(name__icontains=form.cleaned_data["name"])
+
+                if form.cleaned_data["role"]:
+                    users = users.filter(role=form.cleaned_data["role"])
+                if form.cleaned_data["department"]:
+                    users = users.filter(department=form.cleaned_data["department"])
+
+                data["model"] = users
+
+        # elif action == "edit":
+
+    else:
+        data["model"] = users
 
     return render(request, "store/admin/user.html", data)
 

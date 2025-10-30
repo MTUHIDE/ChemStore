@@ -1,6 +1,6 @@
 from django.forms import Form, CharField, TextInput, SelectMultiple, ModelChoiceField
 
-from .models import Department
+from .models import Department, Role
 
 
 class FilterForm(Form):
@@ -24,3 +24,12 @@ class FilterForm(Form):
                                   label="",
                                   queryset=Department.objects.all(),
                                   empty_label="Select a department")
+
+class FilterAdminUser(Form):
+    name = CharField(required=False)
+
+    role = ModelChoiceField(required=False,
+                            queryset=Role.objects.all())
+
+    department = ModelChoiceField(required=False,
+                                  queryset=Department.objects.all())
