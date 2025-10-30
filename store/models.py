@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Container(models.Model):
-    container_id = models.AutoField(primary_key=True)
     location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
     product_name = models.CharField(max_length=100)
     size = models.DecimalField(max_digits=5, decimal_places=2)
@@ -22,7 +21,6 @@ class ContainerChemicals(models.Model):
 
 
 class Location(models.Model):
-    location_id = models.AutoField(primary_key=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
     level = models.IntegerField(null=True)
     name = models.CharField(max_length=100)
@@ -42,12 +40,10 @@ class Location(models.Model):
 
 
 class LocationAttribute(models.Model):
-    attribute_id = models.AutoField(primary_key=True)
     value = models.CharField(max_length=100)
 
 
 class Department(models.Model):
-    department_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -69,15 +65,13 @@ class PrecautionaryStatement(models.Model):
     statement = models.TextField()
 
 class HazardPictogram(models.Model):
-    pictogram_id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=100)
     pictogram = models.ImageField(null=True) # Null is allowed for testing
 
 # ! Should validate typing and constraints of the tables below with full team at some point
 class Log(models.Model):
-    id = models.IntegerField(primary_key=True)
     timestamp = models.DateTimeField()
-    user_id = models.ForeignKey("User", on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey("User", on_delete=models.SET_NULL, null=True)
     table = models.CharField(max_length=100, null=True)
     key1 = models.CharField(max_length=10, null=True)
     key2 = models.CharField(max_length=10, null=True)
@@ -88,24 +82,23 @@ class Log(models.Model):
     notes = models.TextField(null=True)
 
 class Role(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
 
 class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100)
-    role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
-    department_id = models.ForeignKey("Department", on_delete=models.CASCADE, null=True)
+    role = models.ForeignKey("Role", on_delete=models.CASCADE)
+    department = models.ForeignKey("Department", on_delete=models.CASCADE, null=True)
 
 class RolePermissions(models.Model):
-    role_id = models.ForeignKey("Role", on_delete=models.CASCADE)
-    location_id = models.ForeignKey("Location", on_delete=models.CASCADE)
+    role = models.ForeignKey("Role", on_delete=models.CASCADE)
+    location = models.ForeignKey("Location", on_delete=models.CASCADE)
     permission = models.TextField(primary_key=True)
     has_perm = models.BooleanField()
 
 class ContainerHazards(models.Model):
-    container_id = models.ForeignKey("Container", on_delete=models.CASCADE)
+    container = models.ForeignKey("Container", on_delete=models.CASCADE)
     h_code = models.ForeignKey("HazardStatement", on_delete=models.CASCADE)
 
 class StatementPictogram(models.Model): # Has an extra "id" field in the databse.
