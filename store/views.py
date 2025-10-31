@@ -57,19 +57,15 @@ def get_user(request):
             # Return user object
             return users.get(id=uid)
 
-def get_permissions(request):
-    data = {}
-    data["user"] = get_user(request)
+def get_permissions(user):
+    allowed_pages = {
+        "Developer": ["Index", "Contact", "Log", "Admin", "Debug", "Privacy"],
+        "Admin": ["Index", "Contact", "Log", "Admin", "Privacy"],
+        "User": ["Index", "Contact", "Privacy"],
+    }
 
-    if data["user"].role.name != "Developer":
-        data["pages"] = ["Index", "Contact", "Log", "Admin", "Debug", "Privacy"]
-    elif data["user"].role.name == "SuperAdmin":
-        data["pages"] = ["Index", "Contact", "Log", "Admin", "Debug", "Privacy"]
-    elif data["user"].role.name == "Admin":
-        data["pages"] = ["Index", "Contact", "Log", "Admin", "Privacy"]
-    elif data["user"].role.name == "User":
-        data["pages"] = ["Index", "Contact", "Privacy"]
-    return
+    return allowed_pages[user.role.name]
+
 
 def index(request):
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
