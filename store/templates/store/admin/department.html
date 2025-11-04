@@ -27,7 +27,9 @@
 
     {% if model %}
     <div class="table-responsive">
-        <table class="table table-bordered table-sm">
+        <form id="deleteForm" method="POST">
+            {% csrf_token %}
+            <table class="table table-bordered table-sm">
             <thead>
                 <tr>
                     <th class="checkboxCol"></th>
@@ -38,7 +40,7 @@
                 {% for item in model %}
                     <tr>
                         <td class="checkboxCol">
-                            <input type="checkbox" id="{{ item.department_id }}" />
+                            <input type="checkbox" id="dept-{{ item.id }}" name="selected" value="{{ item.id }}" />
                         </td>
                         <td>
                             {{ item.name }}
@@ -46,7 +48,8 @@
                     </tr>
                 {% endfor %}
             </tbody>
-        </table>
+            </table>
+        </form>
     </div>
     {% else %}
     <div>Table is empty.</div>
@@ -77,11 +80,11 @@
 </div>
 
 <!--Modal for delete button-->
-<div class="modal" id="deleteModal">
+    <div class="modal" id="deleteModal">
     <div class="modalContent" id="deleteModalContent">
         <span class="close" id="close2">&times;</span>
         <p>Are you sure you want to delete?:</p>
-        <button type="button" class="confirmBtn">Confirm</button>
+        <button type="button" class="confirmBtn" id="deleteConfirm">Confirm</button>
     </div>
 </div>
 
@@ -99,11 +102,11 @@
         addModal.style.display = "none";
     }
 
-    window.onclick = function(event) {
+    window.addEventListener('click', function(event) {
         if (event.target == addModal) {
             addModal.style.display = "none";
         }
-    }
+    });
 </script>
 
 <!--Functionality for "delete" modal-->
@@ -113,6 +116,7 @@
     let delSpan = document.getElementById("close2");
 
     delBtn.onclick = function() {
+        // open the modal to confirm deletion
         delModal.style.display = "block";
     }
 
@@ -120,10 +124,25 @@
         delModal.style.display = "none";
     }
 
-    window.onclick = function(event) {
+    window.addEventListener('click', function(event) {
         if (event.target == delModal) {
-        delModal.style.display = "none";
+            delModal.style.display = "none";
         }
+    });
+
+    // When the confirm button in the delete modal is clicked, submit the delete form
+    let deleteConfirmBtn = document.getElementById('deleteConfirm');
+    deleteConfirmBtn.onclick = function() {
+        // Ensure at least one checkbox is checked
+        let checked = document.querySelectorAll('input[type="checkbox"][name="selected"]:checked');
+        if (checked.length === 0) {
+            alert('No departments selected to delete.');
+            return;
+        }
+
+        // Submit the form which contains the selected checkboxes
+        let deleteForm = document.getElementById('deleteForm');
+        deleteForm.submit();
     }
 </script>
 {% endblock %}

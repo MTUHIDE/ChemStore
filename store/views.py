@@ -208,9 +208,16 @@ def admin_department(request):
         return redirect('store:index')  # store = app_name, index = urlname
 
     if request.method == "POST":
-        dept_name = request.POST.get("name")  # "name" matches form field
-        if dept_name:                         # Don’t allow blank submissions
-            models.Department.objects.create(name=dept_name)    # Add name to table from post request
+        # If deletion is requested, a list of selected ids will be in request.POST.getlist('selected')
+        selected = request.POST.getlist('selected')
+        if selected:
+            # Delete all selected departments
+            models.Department.objects.filter(id__in=selected).delete()
+        else:
+            # Otherwise handle add-new behavior
+            dept_name = request.POST.get("name")  # "name" matches form field
+            if dept_name:                         # Don’t allow blank submissions
+                models.Department.objects.create(name=dept_name)    # Add name to table from post request
 
     return render(request, "store/admin/department.html", data)
 
