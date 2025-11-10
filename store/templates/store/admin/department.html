@@ -66,7 +66,7 @@
 </div>
 
 <!---Modal for add new button-->
-<div class="modal" id="addNewModal">
+<div class="modal" id="addNewModal" style="z-index: 11"> <!-- Z-index needed for stacking order-->
     <div class="modalContent" id="addNewContent">
         <span class="close" id="close1">&times;</span>
         <form method="POST">
@@ -80,7 +80,7 @@
 </div>
 
 <!--Modal for delete button-->
-    <div class="modal" id="deleteModal">
+    <div class="modal" id="deleteModal" style="z-index: 11"> <!-- Z-index needed for stacking order-->
     <div class="modalContent" id="deleteModalContent">
         <span class="close" id="close2">&times;</span>
         <p>Are you sure you want to delete?:</p>

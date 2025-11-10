@@ -8,6 +8,7 @@
 {% block title %}Users{% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
 <style>
     .d-flex {
         height: 100%; /* Make the container take up the full viewport height */
@@ -131,7 +132,7 @@
                         </select>
                     </div>
                     <h6> </h6>
-                    <button type="submit" name="action" value="edit"
+                    <button name="action" id="editBtn"
                             class="btn btn-primary btn-lg w-80 mb-3">Save</button>
                 <br>    <!-- Add buffer so save button is not blocked by footer -->
                 <br>    <!-- When window is small -->
@@ -183,6 +184,15 @@
     </div>
 </div>
 
+    <!--Modal for edit button-->
+    <div class="modal" id="editModal" style="z-index: 11"> <!-- Z-index needed for stacking order-->
+        <div class="modalContent" id="editModalContent">
+            <span class="close" id="close">&times;</span>
+            <p>Are you sure you want to edit?</p>
+            <button type="button" class="confirmBtn" id="editConfirm">Confirm</button>
+        </div>
+    </div>
+
 <script>
     /* Function to toggle the sidebar visibility */
     function toggleSidebar() {
@@ -194,4 +204,27 @@
         column.classList.toggle("visible");
     }
 </script>
+
+
+<!--Functionality for "edit User" modal-->
+<script>
+    let editModal = document.getElementById("editModal");
+    let editBtn = document.getElementById("editBtn");
+    let editSpan = document.getElementById("close");
+
+    editBtn.onclick = function() {
+        editModal.style.display = "block";
+    }
+
+    editSpan.onclick = function() {
+        editModal.style.display = "none";
+    }
+
+    window.addEventListener('click', function(event) {
+        if (event.target == editModal) {
+            editModal.style.display = "none";
+        }
+    });
+</script>
+
 {% endblock %}
