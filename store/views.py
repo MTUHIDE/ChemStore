@@ -188,7 +188,55 @@ def admin_user(request):
 
                 data["model"] = users
 
-        # elif action == "edit":
+        elif action == "edit":
+            # Bulk edit user fields: name, email, role, department
+            # Expecting multiple selected ids in request.POST.getlist('selected') added by the JS
+            selected = request.POST.getlist('selected')
+
+            # Fallback to single user_id for compatibility
+            if not selected:
+                single = request.POST.get('user_id')
+                if single:
+                    selected = [single]
+
+            if selected:
+                # values from form; empty string means "no change" for name/email/role,
+                # for department we treat empty string as clearing the department
+                name = request.POST.get("name")
+                email = request.POST.get("email")
+                role_id = request.POST.get("role")
+                dept_id = request.POST.get("department")
+
+                for uid in selected:
+                    try:
+                        user_obj = models.User.objects.get(id=uid)
+                    except models.User.DoesNotExist:
+                        continue
+
+                    # Apply changes only when a value is present (not None and not empty)
+                    if name:
+                        user_obj.name = name
+                    if email:
+                        user_obj.email = email
+
+                    if role_id:
+                        try:
+                            user_obj.role = models.Role.objects.get(id=role_id)
+                        except models.Role.DoesNotExist:
+                            pass
+
+                    # Department: if dept_id is provided and non-empty, set it; if explicitly empty string, clear it
+                    if dept_id:
+                        try:
+                            user_obj.department = models.Department.objects.get(id=dept_id)
+                        except models.Department.DoesNotExist:
+                            user_obj.department = None
+                    # If dept_id is blank or not provided, do not change department
+
+                    user_obj.save()
+
+            # After processing, redirect back to the admin_user page to avoid resubmission
+            return redirect('store:admin_user')
 
     else:
         data["model"] = users

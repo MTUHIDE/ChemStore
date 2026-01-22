@@ -104,36 +104,44 @@
                 </div>
                 <div id="editContent">
                     <h6>Edit</h6>
-                    <div class="d-inline-flex">
-                        <!-- Using d-flex to put things on the same line/row -->
-                        <label for="nameEdit" class="me-2">Name:</label>
-                        <input type="text" id="nameEditor" class="form-control mb-2" placeholder="Edit name">
-                    </div>
-                    <div class="d-inline-flex">
-                        <label for="usernameEdit" class="me-2">Uname:</label>
-                        <input type="text" id="usernameEditor" class="form-control mb-2" placeholder="Edit username">
-                    </div>
-                    <div class="d-inline-flex">
-                        <label for="roleEdit" class="me-3">Role:</label>
-                        <select class="form-select" id="roleEditor">
-                            <option value="" selected>Role</option>
-                            {% for role in roles %}     <!-- Get all roles from model -->
-                                <option value="{{ role.id }}">{{ role.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="d-inline-flex">
-                        <label for="departmentEdit" class="me-2">Dept:</label>
-                        <select class="form-select" id="departmentEditor">
-                            <option value="" selected>Department</option>
-                             {% for depart in departments %} <!-- Get all departments from model -->
-                                <option value="{{ depart.id }}">{{ depart.name }}</option>
-                             {% endfor %}
-                        </select>
-                    </div>
-                    <h6> </h6>
-                    <button name="action" id="editBtn"
-                            class="btn btn-primary btn-lg w-80 mb-3">Save</button>
+                    <!-- Edit form: submits POST with action=edit -->
+                    <form id="editForm" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" name="user_id" id="userIdField" value="">
+
+                        <div class="d-inline-flex">
+                            <!-- Using d-flex to put things on the same line/row -->
+                            <label for="nameEdit" class="me-2">Name:</label>
+                            <input type="text" id="nameEditor" name="name" class="form-control mb-2" placeholder="Edit name">
+                        </div>
+                        <div class="d-inline-flex">
+                            <label for="usernameEdit" class="me-2">Uname:</label>
+                            <!-- username mapped to email field in the model (project uses email) -->
+                            <input type="text" id="usernameEditor" name="email" class="form-control mb-2" placeholder="Edit username/email">
+                        </div>
+                        <div class="d-inline-flex">
+                            <label for="roleEdit" class="me-3">Role:</label>
+                            <select class="form-select" id="roleEditor" name="role">
+                                <option value="" selected>Role</option>
+                                {% for role in roles %}     <!-- Get all roles from model -->
+                                    <option value="{{ role.id }}">{{ role.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-inline-flex">
+                            <label for="departmentEdit" class="me-2">Dept:</label>
+                            <select class="form-select" id="departmentEditor" name="department">
+                                <option value="" selected>Department</option>
+                                 {% for depart in departments %} <!-- Get all departments from model -->
+                                    <option value="{{ depart.id }}">{{ depart.name }}</option>
+                                 {% endfor %}
+                            </select>
+                        </div>
+                        <h6> </h6>
+                        <button type="button" name="action" id="editBtn"
+                                class="btn btn-primary btn-lg w-80 mb-3" disabled>Edit User</button>
+                    </form>
                 <br>    <!-- Add buffer so save button is not blocked by footer -->
                 <br>    <!-- When window is small -->
                 <br>
@@ -166,10 +174,15 @@
                     <tr>
                         <td>
                             <!-- Checkbox for selecting a user -->
-                            <input type="checkbox" id="{{ item.id }}" />
+                <input type="checkbox" id="user-{{ item.id }}" class="user-checkbox" 
+                    data-user-id="{{ item.id }}" 
+                    data-name="{{ item.name|escapejs }}" 
+                    data-username="{{ item.email|escapejs }}" 
+                    data-role-id="{% if item.role_id %}{{ item.role.id }}{% endif %}" 
+                    data-dept-id="{% if item.department_id %}{{ item.department.id }}{% endif %}" />
                         </td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.username}}</td>
+                        <td>{{ item.email }}</td>
                         <!-- role_id is the name of the attribute -->
                         <td>{% if item.role_id %}{{ item.role.name }}{% endif %}</td>
                         <td>{% if item.department_id %}{{ item.department.name }}{% endif %}</td>
@@ -208,14 +221,66 @@
 
 <!--Functionality for "edit User" modal-->
 <script>
+    // Elements
     let editModal = document.getElementById("editModal");
     let editBtn = document.getElementById("editBtn");
     let editSpan = document.getElementById("close");
+    let editConfirm = document.getElementById("editConfirm");
+    let editForm = document.getElementById("editForm");
+    let userIdField = document.getElementById("userIdField");
+    let nameEditor = document.getElementById("nameEditor");
+    let usernameEditor = document.getElementById("usernameEditor");
+    let roleEditor = document.getElementById("roleEditor");
+    let departmentEditor = document.getElementById("departmentEditor");
 
-    editBtn.onclick = function() {
-        editModal.style.display = "block";
+    // Allow multi-select checkboxes; do NOT autofill the edit form when selecting
+    const checkboxes = Array.from(document.querySelectorAll('.user-checkbox'));
+
+    function updateSelectionState() {
+        const selected = checkboxes.filter(cb => cb.checked);
+        // Enable edit button if at least one selected
+        editBtn.disabled = selected.length === 0;
     }
 
+    checkboxes.forEach(cb => cb.addEventListener('change', updateSelectionState));
+    // initialize
+    updateSelectionState();
+
+    // Open modal when edit button clicked (only enabled when >=1 user selected)
+    editBtn.onclick = function() {
+        if (!editBtn.disabled) {
+            editModal.style.display = "block";
+        }
+    }
+
+    // When confirm is clicked in modal, append selected user ids to the form and submit
+    editConfirm.onclick = function() {
+        const selected = checkboxes.filter(cb => cb.checked).map(cb => cb.dataset.userId).filter(Boolean);
+        if (selected.length === 0) {
+            editModal.style.display = "none";
+            return;
+        }
+
+        // Remove any previously added hidden inputs named 'selected'
+        Array.from(editForm.querySelectorAll('input[name="selected"]')).forEach(e => e.remove());
+
+        // Add a hidden input for each selected user id so server can getlist('selected')
+        selected.forEach(id => {
+            const inp = document.createElement('input');
+            inp.type = 'hidden';
+            inp.name = 'selected';
+            inp.value = id;
+            editForm.appendChild(inp);
+        });
+
+        // For compatibility, set userIdField to first selected (not used for bulk)
+        userIdField.value = selected[0] || '';
+
+        // Submit the form
+        editForm.submit();
+    }
+
+    // Close modal handlers
     editSpan.onclick = function() {
         editModal.style.display = "none";
     }
