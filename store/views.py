@@ -23,9 +23,9 @@ def get_user(request):
         # If User table is empty, create & return a dev user object. Otherwise, return existing dev user object
         if users.count() == 0:
             role = models.Role.objects.get(name="Developer")
-            return users.create(id=1, name="Dev User", email="dev@dev.dev", role=role)
+            return users.create(id=0, name="Dev User", email="dev@dev.dev", role=role)
         else:
-            return users.get(id=1)
+            return users.get(id=0)
 
     else:
         # Get user attributes from session
@@ -283,18 +283,6 @@ def admin_role(request):
     if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
         # User is not an admin role
         return redirect('store:index')  # store = app_name, index = urlname
-
-    if request.method == "POST":
-        # If deletion is requested, a list of selected ids will be in request.POST.getlist('selected')
-        selected = request.POST.getlist('selected')
-        if selected:
-            # Delete all selected roles
-            models.Role.objects.filter(id__in=selected).delete()
-        else:
-            # Otherwise handle add-new behavior
-            role_name = request.POST.get("name")  # "name" matches form field
-            if role_name:                         # Don't allow blank submissions
-                models.Role.objects.create(name=role_name)    # Add name to table from post request
 
     return render(request, "store/admin/role.html", data)
 
