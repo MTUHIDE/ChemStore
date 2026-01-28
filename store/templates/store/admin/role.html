@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
 
 <style>
-    {% comment %} button {
+    /* 
+    button {
         background-color: #ffcd00;
         width: 150px;
         height: 40px;
@@ -20,7 +21,8 @@
 
     a {
         color: black;
-    } {% endcomment %}
+    }
+    */
 
     .btn-primary{
         background-color: #ffcd00;
@@ -38,24 +40,27 @@
 
     {% if model %}
     <div class="table-responsive">
-        <table class="table table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th class="checkboxCol"></th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in model %}
+        <form id="deleteForm" method="POST">
+            {% csrf_token %}
+            <table class="table table-bordered table-sm">
+                <thead>
                     <tr>
-                        <td class="checkboxCol">
-                            <input type="checkbox" id="{{ item.id }}" />
-                        </td>
-                        <td>{{ item.name }}</td>
+                        <th class="checkboxCol"></th>
+                        <th>Name</th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for item in model %}
+                        <tr>
+                            <td class="checkboxCol">
+                                <input type="checkbox" id="role-{{ item.id }}" name="selected" value="{{ item.id }}" />
+                            </td>
+                            <td>{{ item.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
     </div>
     {% else %}
     <div>Table is empty.</div>
@@ -75,10 +80,13 @@
 <div class="modal" id="addNewModal">
     <div class="modalContent" id="addNewContent">
         <span class="close" id="close1">&times;</span>
-        <p>Role Name:</p>
-        <input type="text" maxlength="40" placeholder="New Name" size="10"/>
-        <br /><br />
-        <button type="button" class="confirmBtn">Confirm</button>
+        <form method="POST">
+            {% csrf_token %}
+            <p>Role Name:</p>
+            <input type="text" name="name" maxlength="40" placeholder="New Name" size="10"/>
+            <br /><br />
+            <button type="submit" class="confirmBtn">Confirm</button>
+        </form>
     </div>
 </div>
 
@@ -87,7 +95,7 @@
     <div class="modalContent" id="deleteModalContent">
         <span class="close" id="close2">&times;</span>
         <p>Are you sure you want to delete?:</p>
-        <button type="button" class="confirmBtn">Confirm</button>
+        <button type="button" class="confirmBtn" id="delConfirmBtn">Confirm</button>
     </div>
 </div>
 
@@ -130,6 +138,21 @@
         if (event.target == delModal) {
         delModal.style.display = "none";
         }
+    }
+
+    // When the confirm button in the delete modal is clicked, submit the delete form
+    let delConfirmBtn = document.getElementById('delConfirmBtn');
+    delConfirmBtn.onclick = function() {
+        // Ensure at least one checkbox is checked
+        let checked = document.querySelectorAll('input[type="checkbox"][name="selected"]:checked');
+        if (checked.length === 0) {
+            alert('No roles selected to delete.');
+            return;
+        }
+
+        // Submit the form which contains the selected checkboxes
+        let deleteForm = document.getElementById('deleteForm');
+        deleteForm.submit();
     }
 </script>
 
