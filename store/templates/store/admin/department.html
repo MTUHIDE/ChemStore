@@ -30,24 +30,24 @@
         <form id="deleteForm" method="POST">
             {% csrf_token %}
             <table class="table table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th class="checkboxCol"></th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in model %}
+                <thead>
                     <tr>
-                        <td class="checkboxCol">
-                            <input type="checkbox" id="dept-{{ item.id }}" name="selected" value="{{ item.id }}" />
-                        </td>
-                        <td>
-                            {{ item.name }}
-                        </td>
+                        <th class="checkboxCol"></th>
+                        <th>Name</th>
                     </tr>
-                {% endfor %}
-            </tbody>
+                </thead>
+                <tbody>
+                    {% for item in model %}
+                        <tr>
+                            <td class="checkboxCol">
+                                <input type="checkbox" id="dept-{{ item.id }}" name="selected" value="{{ item.id }}" />
+                            </td>
+                            <td>
+                                {{ item.name }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </form>
     </div>

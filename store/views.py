@@ -281,6 +281,18 @@ def admin_role(request):
         # User is not an admin role
         return redirect('store:index')  # store = app_name, index = urlname
 
+    if request.method == "POST":
+        # If deletion is requested, a list of selected ids will be in request.POST.getlist('selected')
+        selected = request.POST.getlist('selected')
+        if selected:
+            # Delete all selected roles
+            models.Role.objects.filter(id__in=selected).delete()
+        else:
+            # Otherwise handle add-new behavior
+            role_name = request.POST.get("name")  # "name" matches form field
+            if role_name:                         # Don't allow blank submissions
+                models.Role.objects.create(name=role_name)    # Add name to table from post request
+    
     return render(request, "store/admin/role.html", data)
 
 
