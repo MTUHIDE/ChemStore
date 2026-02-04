@@ -118,10 +118,10 @@
                         <div class="d-inline-flex">
                             <label for="usernameEdit" class="me-2">Username:</label>
                             <!-- username mapped to email field in the model (project uses email) -->
-                            <input type="text" id="usernameEditor" name="email" class="form-control mb-2" placeholder="Edit username/email">
+                            <input type="text" id="usernameEditor" name="email" class="form-control mb-2" placeholder="Edit username">
                         </div>
                         <div class="d-inline-flex">
-                            <label for="roleEdit" class="me-3">Role:</label>
+                            <label for="roleEdit" class="me-2">Role:</label>
                             <select class="form-select" id="roleEditor" name="role">
                                 <option value="" selected>Role</option>
                                 {% for role in roles %}     <!-- Get all roles from model -->

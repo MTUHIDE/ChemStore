@@ -84,7 +84,7 @@
             <p>Role Name:</p>
             <input type="text" maxlength="40" name="name" placeholder="New Name" size="10"/>
             <br /><br />
-            <button type="button" class="confirmBtn">Confirm</button>
+            <button type="submit" class="confirmBtn">Confirm</button>
         </form>
     </div>
 </div>
@@ -112,11 +112,11 @@
         addModal.style.display = "none";
     }
 
-    window.onclick = function(event) {
+    window.addEventListener('click', function(event) {
         if (event.target == addModal) {
             addModal.style.display = "none";
         }
-    }
+    });
 </script>
 
 <!--Functionality for "delete" modal-->

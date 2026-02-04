@@ -45,12 +45,12 @@
                             <div class="navbar-nav">
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:index' %}">Home</a>
                                 <!-- TODO: check permissions instead of hardcoding role names, preferably in code instead of here -->
-                                {% if user.role.name == "Admin" or user.role.name == "Developer" %}
+                                {% if user.role.name != "User" %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:log' %}">Log</a>
                                 {% endif %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:contact' %}">Contact</a>
-                                <!-- TODO: check if user is admin or developer -->
-                                {% if user.role.name == "Admin" or user.role.name == "Developer" %}
+                                <!-- TODO: check if user is not user -->
+                                {% if user.role.name != "User" %}
                                 <a class="nav-item nav-link text-dark" href="{% url 'store:admin' %}">Admin</a>
                                 {% endif %}
                                 <!-- TODO: check if user is developer -->
@@ -79,7 +79,7 @@
             <!-- Footer -->
             <footer class="footer py-3 border-top text-muted bg-white" style="z-index:10;">
                 <div class="container-fluid">
-                    &copy; 2025 - ChemStore - <a href="{% url 'store:privacy' %}">Privacy</a>
+                    &copy; 2026 - ChemStore - <a href="{% url 'store:privacy' %}">Privacy</a>
                 </div>
             </footer>
         </div>
