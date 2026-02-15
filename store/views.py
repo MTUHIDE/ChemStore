@@ -277,8 +277,8 @@ def admin_role(request):
     }
     data["user"] = get_user(request)
 
-    if data["user"].role.name == "User":  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
+    if data["user"].role.name == "User" or data["user"].role.name == "Admin":  # Temp if statement figuring out how to implement with roles
+        # User is not a super admin or developer
         return redirect('store:index')  # store = app_name, index = urlname
 
     if request.method == "POST":
@@ -320,8 +320,8 @@ def debug_index(request):
     data = {"models": list(debug_models)}
     data["user"] = get_user(request)
 
-    if data["user"].role.name == "User":       # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
+    if data["user"].role.name != "Developer":       # Temp if statement figuring out how to implement with roles
+        # User is not a developer
         return redirect('store:index') # store = app_name, index = urlname
 
     return render(request, "store/debug/index.html", data)
@@ -336,8 +336,8 @@ def debug_subpage(request, model_slug):
     }
     data["user"] = get_user(request)
 
-    if data["user"].role.name == "User":  # Temp if statement figuring out how to implement with roles
-        # User is not an admin role
+    if data["user"].role.name != "Developer":  # Temp if statement figuring out how to implement with roles
+        # User is not a developer
         return redirect('store:index')  # store = app_name, index = urlname
 
     return render(request, f"store/debug/{model_slug}.html", data)
