@@ -6,7 +6,7 @@ class Container(models.Model):
     product_name = models.CharField(max_length=100)
     size = models.DecimalField(max_digits=5, decimal_places=2)
     notes = models.TextField(blank=True)
-    hazards = models.ManyToManyField("HazardStatement", blank=True)
+    hazards = models.ManyToManyField("HazardStatement", blank=True, through='ContainerHazards')
 
 
 class ContainerChemicals(models.Model):
@@ -65,8 +65,9 @@ class PrecautionaryStatement(models.Model):
     statement = models.TextField()
 
 class HazardPictogram(models.Model):
+    gh_code = models.CharField(max_length=10, primary_key=True)
     description = models.CharField(max_length=100)
-    pictogram = models.ImageField(null=True) # Null is allowed for testing
+    pictogram = models.ImageField(upload_to='hazard_pictograms/', null=True) # Null is allowed for testing
 
 # ! Should validate typing and constraints of the tables below with full team at some point
 class Log(models.Model):

@@ -148,12 +148,24 @@
                                         </td>
                                         <td class="a">
                                             {% comment %} TODO: actually implement conditional rendering based on data {% endcomment %}
-                                            <span class="hazards">
+
+                                                {% for hazard in container.hazards.all %}
+
+                                                    {% for sp in hazard.statementpictogram_set.all %}
+                                                        <img src="{{ sp.gh_code.pictogram.url }}"
+                                                             alt="{{ sp.gh_code.description }}"
+                                                             width="25">
+                                                    {% endfor %}
+                                                {% empty %}
+                                                    None
+                                                {% endfor %}
+                                                {% comment %}
                                                 <span class="hazard {% cycle "hazard-exclamation" "hazard-skull" "hazard-gas" "hazard-environment" "hazard-bomb" "hazard-corrosion" %}"></span>
-                                            </span>
+                                                {% endcomment %}
+                                            </img>
                                         </td>
                                         <td class="a">
-                                            qqq uu
+                                            {{ container.size }}
                                             {% comment %} TODO: display container's size I guess? {% endcomment %}
                                             {% comment %} @Html.DisplayFor(modelItem => item.conChem.Quantity)
                                             @EnumHelper.GetDisplayValue((Units)item.con.Unit) {% endcomment %}
