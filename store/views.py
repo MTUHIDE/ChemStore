@@ -71,31 +71,46 @@ def index(request):
     containers = models.Container.objects.all().order_by("product_name")  # order by container name by default
 
     if request.method == "POST":
-        form = FilterForm(request.POST)
-        if form.is_valid():
-            containers = containers.filter(
-                product_name__icontains=form.cleaned_data["container_name"] # case-insensitive container name
-            )
+        action = request.POST.get("action")
 
-            if form.cleaned_data["cas_number"]:
-                # filter by chemical CAS number
-                containers = containers.filter(containerchemicals__chemical_cas__icontains=form.cleaned_data["cas_number"])
+        if action == "filter":
+            form = FilterForm(request.POST)
+            if form.is_valid():
+                containers = containers.filter(
+                    product_name__icontains=form.cleaned_data["container_name"] # case-insensitive container name
+                )
 
-            if form.cleaned_data["location"]:
-                # filter by location
-                containers = containers.filter(location__name__icontains=form.cleaned_data["location"])
+                if form.cleaned_data["cas_number"]:
+                    # filter by chemical CAS number
+                    containers = containers.filter(containerchemicals__chemical_cas__icontains=form.cleaned_data["cas_number"])
 
-            if form.cleaned_data["hazard"]:
-                # filter by hazard statement
-                # this needs to be separate because if the hazard is blank, it will filter out all containers that have no hazards
-                containers = containers.filter(hazards__hazard_code__icontains=form.cleaned_data["hazard"])
+                if form.cleaned_data["location"]:
+                    # filter by location
+                    containers = containers.filter(location__name__icontains=form.cleaned_data["location"])
 
-            if form.cleaned_data["department"]:
-                # filter by department
-                # this needs to be separate because if the department is blank, it will filter out all containers
-                containers = containers.filter(location__department=form.cleaned_data["department"])
+                if form.cleaned_data["hazard"]:
+                    # filter by hazard statement
+                    # this needs to be separate because if the hazard is blank, it will filter out all containers that have no hazards
+                    containers = containers.filter(hazards__hazard_code__icontains=form.cleaned_data["hazard"])
 
-            print(containers.all().count())  # for debugging purposes
+                if form.cleaned_data["department"]:
+                    # filter by department
+                    # this needs to be separate because if the department is blank, it will filter out all containers
+                    containers = containers.filter(location__department=form.cleaned_data["department"])
+
+                print(containers.all().count())  # for debugging purposes
+
+        elif action == "insert":
+            product_name = request.POST.get("name")
+            full_name = request.POST.get("full_name")
+            location = request.POST.get("location")
+            # hazard
+            size = request.POST.get("size")
+            # Department
+
+            models.Container.objects.create(product_name=product_name, notes=full_name, location_id=location, size=size)
+
+            form = FilterForm()
 
     else:
         form = FilterForm()
@@ -108,6 +123,7 @@ def index(request):
     data = {
         "filter_form": form,
         "page_obj": page_obj,
+        "locations": models.Location.objects.all()  # Send department model into HTML
     }
     data["user"] = get_user(request)
 

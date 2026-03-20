@@ -9,6 +9,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'store/css/searchItemLayout.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/adminSubpageLayout.css' %}">
 {% endblock %}
 
 <!-- Everything in this block will be inserted into the body block in base.html -->
@@ -28,7 +29,7 @@
                         {% csrf_token %}
                         {{ filter_form }}
                         <div class="row filterRow">
-                            <div class="col-12 filterBtnRow"><button type="submit" class="btn filterBtn">Apply Filter</button></div>
+                            <div class="col-12 filterBtnRow"><button type="submit" class="btn filterBtn" name="action" value="filter">Apply Filter</button></div>
                             <div class="col-12 filterBtnRow"><a href="." class="btn filterBtnSecon">Clear Filter</a></div>
                         </div>
                     </form>
@@ -40,7 +41,7 @@
                     <h4 class="offcanvas-title" >Add/Remove Chemicals</h4>
                 </div>
                 <div class="offcanvas-body addRmvBtns">
-                    <button type="button" class="searchPageBtns contBtn" id="addChemicalBtn" data-toggle="modal" data-target="#add-modal" onclick="getAddModal()">
+                    <button type="button" class="searchPageBtns contBtn" id="addBtn" data-bs-dismiss="offcanvas">
                         Add
                     </button>
                 </div>
@@ -284,17 +285,30 @@
 
             <!--New Create Modal HTML-->
 
-            <div class="modal fade" tabindex="-1" role="dialog" id="add-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Add New Container</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="add-modal-body"></div>
-                    </div>
+            <div class="modal" id="addNewModal" style="z-index: 11">
+                <div class="modalContent" id="addNewContent">
+                    <span class="close" id="close1">&times;</span>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h3>Insert New Container</h3>
+                        <br />
+                        <p>Container Name:
+                            <input type="text" maxlength="40" name="name" placeholder="Name (H2O)" size="14"/></p>
+                        <p>Full Name:
+                            <input type="text" maxlength="64" name="full_name" placeholder="Full Name (Water)" size="20"></p>
+                        <label>Location:</label>
+                            <select class="form-select" style="width: 220px; display: inline" id="roleFilter" name="location">
+                                <option value="" selected>Select Location</option>
+                                {% for l in locations %}     <!-- Get all locations from model -->
+                                    <option value="{{ l.id }}">{{ l.name }}</option>
+                                {% endfor %}
+                            </select>
+                        <br /><br />
+                        <p>Size:
+                            <input type="number" step="0.01" name="size"/></p>
+                        <br />
+                        <button type="submit" class="confirmBtn" name="action" value="insert">Confirm</button>
+                    </form>
                 </div>
             </div>
 
@@ -385,6 +399,7 @@
             });
     }
 
+    <!--
     function getAddModal() {
         fetch(`?handler=AddModal`)
             .then((response) => {
@@ -395,7 +410,30 @@
                 getRoomsOfBuilding();
             });
     }
+    -->
 </script>
+
+    <!--Functionality for "add new" modal-->
+    <script>
+        let addModal = document.getElementById("addNewModal");
+        let addBtn = document.getElementById("addBtn");
+        let addSpan = document.getElementById("close1");
+
+        addBtn.onclick = function() {
+            addModal.style.display = "block";
+        }
+
+        addSpan.onclick = function() {
+            addModal.style.display = "none";
+        }
+
+        window.addEventListener('click', function(event) {
+            if (event.target == addModal) {
+                addModal.style.display = "none";
+            }
+        });
+    </script>
+
 
 <!-- <script>
     function showCreateAlert() {
