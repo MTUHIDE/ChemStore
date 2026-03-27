@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.conf import settings
+from enum import Enum
 
 from . import models
 from .forms import FilterForm, FilterAdminUser
@@ -57,14 +58,82 @@ def get_user(request):
             # Return user object
             return users.get(id=uid)
 
-def get_permissions(user):
-    allowed_pages = {
-        "Developer": ["Index", "Contact", "Log", "Admin", "Debug", "Privacy"],
-        "Admin": ["Index", "Contact", "Log", "Admin", "Privacy"],
-        "User": ["Index", "Contact", "Privacy"],
-    }
 
-    return allowed_pages[user.role.name]
+    """
+    Normalize a permission argument into the exact value stored in the database.
+
+    The caller can pass either:
+    - an enum member (for example `Permission.CAN_EDIT_USER`), or
+    - a raw database value (for example a string or int, depending on enum type).
+
+    Args:
+        permission: Enum member or raw DB permission value.
+
+    Returns:
+        Any: Normalized value suitable for ORM filtering.
+    """
+def _permission_to_db_value(permission):
+    # Accept Enum members and raw DB values.
+    if isinstance(permission, Enum):
+        return permission.value
+    return permission
+
+
+    """
+    Get all enabled permission values for a user as a set.
+
+    Args:
+        user: `models.User` instance.
+        location: Optional `models.Location` to scope permissions.
+
+    Returns:
+        set[Any]: Permission values where `has_perm=True`.
+
+    Notes:
+        - Values are raw DB enum values (for example strings/ints), not labels.
+        - Returns an empty set for missing/invalid users.
+    """
+def get_permissions(user, location=None):
+    if not user or not user.role:
+        return set()
+
+    # Start with this role's enabled permissions and narrow by location if given.
+    query = models.RolePermissions.objects.filter(role=user.role, has_perm=True)
+    if location is not None:
+        query = query.filter(location=location)
+
+    permissions = set()
+    for rp in query:
+        if rp.has_perm:
+            permissions.add(rp.permission)
+    return permissions
+
+
+    """
+    Check whether a user has one specific permission.
+
+    Args:
+        user: `models.User` instance.
+        permission: Permission enum member or raw DB value.
+        location: Optional `models.Location` to scope the check.
+
+    Returns:
+        bool: True only when a matching row exists with `has_perm=True`.
+    """
+def has_permission(user, permission, location=None):
+    if not user or not user.role:
+        return False
+
+    permission_value = _permission_to_db_value(permission)
+    query = models.RolePermissions.objects.filter(
+        role=user.role,
+        permission=permission_value,
+        has_perm=True,
+    )
+    if location is not None:
+        query = query.filter(location=location)
+
+    return query.exists()
 
 
 def index(request):

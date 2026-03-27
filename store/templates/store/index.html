@@ -109,30 +109,30 @@
                                 <th scope="col">
                                     Container Name
                                     {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
-                                    {% comment %} <button type="submit" class="btn" form="filterForm" name="sortMethod" value="0">
-                                        <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
-                                    (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
-                                    </button>
+                                    <!-- <button type="submit" class="btn" form="filterForm" name="sortMethod" value="0"> -->
+                                        <!-- <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" : -->
+                                    <!-- (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg"> -->
+                                    <!-- </button> -->
                                     <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
-                                    <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden>
-                                    <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> --> {% endcomment %}
+                                    <!-- <input name="prevSort" form="filterForm" asp-for="prevSort" type="number" value="@Model.prevSort" hidden> -->
+                                    <!--<button type="submit" form="filterForm" name="sortMethod" class="searchPageBtns regBtn" value="4"> Dep </button> -->
                                 </th>
                                 <th scope="col">
                                     Location
                                     {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
-                                    {% comment %} <button type="submit" class="btn" form="filterForm" name="sortMethod" value="2">
-                                        <img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" :
-                                    (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
-                                    </button> {% endcomment %}
+                                    <!-- <button type="submit" class="btn" form="filterForm" name="sortMethod" value="2"> -->
+                                        <!--<img src="@((Model.prevSort == 2) ? "assets/upTableSort.png" : -->
+                                    <!-- (Model.prevSort == 3) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg"> -->
+                                    <!-- </button> -->
                                 </th>
                                 <th scope="col">Hazards</th>
                                 <th scope="col">
                                     Size
                                     {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
-                                    {% comment %} <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true">
-                                        <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg">
-                                    </button>
-                                    <input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden> {% endcomment %}
+                                    <!-- <button type="submit" class="blankImgButton" form="filterForm" name="revNums" class="btn tableButton" value="true"> -->
+                                        <!-- <img src="@((Model.revNumsPrev == true) ? "assets/downTableSort.png" : "assets/upTableSort.png")" class="img tableSort" id="buttonImg"> -->
+                                    <!-- </button> -->
+                                    <!--<input name="revNumsPrev" form="filterForm" asp-for="revNumsPrev" type="text" value="@Model.revNumsPrev" hidden> -->
                                 </th>
                             </tr>
                         </thead>
@@ -160,10 +160,10 @@
                                         </td>
                                         <td class="a">
                                             <i class="fa-solid fa-pen-to-square"></i>
-                                            {% comment %} <button type="button" class="btn" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerID)">
-                                                <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
-                                            </button>
-                                            <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerID" style="display: none"> {% endcomment %}
+                                            <!-- <button type="button" class="btn" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerID)"> -->
+                                                <!-- <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px"> -->
+                                            <!-- </button> -->
+                                            <!-- <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerID" style="display: none"> -->
                                         </td>
                                     </tr>
                                     {% comment %} <tr class="moreInformation">

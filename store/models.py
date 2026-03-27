@@ -101,7 +101,7 @@ class ContainerHazards(models.Model):
     container = models.ForeignKey("Container", on_delete=models.CASCADE)
     h_code = models.ForeignKey("HazardStatement", on_delete=models.CASCADE)
 
-class StatementPictogram(models.Model): # Has an extra "id" field in the databse.
+class StatementPictogram(models.Model): # Has an extra "id" field in the database.
     gh_code = models.ForeignKey("HazardPictogram", on_delete=models.CASCADE)
     h_code = models.ForeignKey("HazardStatement", on_delete=models.CASCADE)
 
