@@ -102,14 +102,49 @@ def index(request):
 
         elif action == "insert":
             product_name = request.POST.get("name")
-            full_name = request.POST.get("full_name")
-            location = request.POST.get("location")
-            # hazard
             size = request.POST.get("size")
+            location_name = request.POST.get("location")
+            # Convert location name to its location id
+            location = models.Location.objects.get(name=location_name)
+            notes = request.POST.get("notes")
             # Department
 
-            models.Container.objects.create(product_name=product_name, notes=full_name, location_id=location, size=size)
+            # Insert container into database
+            new_container = models.Container.objects.create(product_name=product_name, notes=notes, location=location, size=size)
+            # save inserted container to new_container
 
+            # Loop through all chemicals being added to container
+            i = 0
+            while f'chemicals[{i}][name]' in request.POST:
+                name = request.POST.get(f'chemicals[{i}][name]')
+
+                if name:  # skip empty rows
+                    models.ContainerChemicals.objects.create(
+                        container=new_container,
+                        chemical_cas=name,
+                        pubchem_cid=0,
+                        quantity=request.POST.get(f'chemicals[{i}][quantity]') or 0,
+                        preferred_unit=request.POST.get(f'chemicals[{i}][unit]') or "",
+                        state_of_matter="unknown",
+                        manufacturer=request.POST.get(f'chemicals[{i}][manufacturer]') or "",
+                        catalog_number=request.POST.get(f'chemicals[{i}][catalog]') or "",
+                    )
+
+                i += 1
+
+            # Get list of hazards
+            hazards = request.POST.getlist("hazards")
+
+            # Insert hazards to container
+            for hazard in hazards:
+                models.ContainerHazards.objects.create(
+                    container=new_container,
+                    h_code_id=hazard
+                )
+
+            form = FilterForm()
+
+        else:
             form = FilterForm()
 
     else:
@@ -123,7 +158,8 @@ def index(request):
     data = {
         "filter_form": form,
         "page_obj": page_obj,
-        "locations": models.Location.objects.all()  # Send department model into HTML
+        "locations": models.Location.objects.all(),  # Send location model into HTML
+        "hazards": models.HazardStatement.objects.all(),
     }
     data["user"] = get_user(request)
 

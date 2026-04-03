@@ -6,7 +6,7 @@ class Container(models.Model):
     product_name = models.CharField(max_length=100)
     size = models.DecimalField(max_digits=5, decimal_places=2)
     notes = models.TextField(blank=True)
-    hazards = models.ManyToManyField("HazardStatement", blank=True)
+    hazards = models.ManyToManyField("HazardStatement", through="ContainerHazards", blank=True)
 
 
 class ContainerChemicals(models.Model):

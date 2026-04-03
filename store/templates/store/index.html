@@ -285,29 +285,76 @@
 
             <!--New Create Modal HTML-->
 
-            <div class="modal" id="addNewModal" style="z-index: 11">
-                <div class="modalContent" id="addNewContent">
+            <div class="modal" id="addNewModal" style="z-index: 11; overflow-y: hidden">
+                <div class="modalContent" id="addNewContent" style="margin: 7% auto">
                     <span class="close" id="close1">&times;</span>
+
                     <form method="POST">
                         {% csrf_token %}
-                        <h3>Insert New Container</h3>
-                        <br />
-                        <p>Container Name:
-                            <input type="text" maxlength="40" name="name" placeholder="Name (H2O)" size="14"/></p>
-                        <p>Full Name:
-                            <input type="text" maxlength="64" name="full_name" placeholder="Full Name (Water)" size="20"></p>
-                        <label>Location:</label>
-                            <select class="form-select" style="width: 220px; display: inline" id="roleFilter" name="location">
-                                <option value="" selected>Select Location</option>
-                                {% for l in locations %}     <!-- Get all locations from model -->
-                                    <option value="{{ l.id }}">{{ l.name }}</option>
-                                {% endfor %}
-                            </select>
-                        <br /><br />
-                        <p>Size:
-                            <input type="number" step="0.01" name="size"/></p>
-                        <br />
-                        <button type="submit" class="confirmBtn" name="action" value="insert">Confirm</button>
+
+                        <h3>Create Container</h3>
+
+                        <div class="row align-items-start" style="overflow-x: auto">
+
+                            <!-- LEFT COLUMN -->
+                            <div class="col">
+                                <h4>Container Info</h4>
+                                <br />
+                                <p>Container Name:
+                                    <input type="text" name="name" placeholder="Name (H2O)" autocomplete="off"/>
+                                </p>
+                                <p>Size:
+                                    <input type="number" step="0.01" name="size"/>
+                                </p>
+                                <label for="location">Location:</label>
+                                <input id="location" list="locations" name="location" placeholder="MTU" autocomplete="off">
+                                <datalist id="locations">
+                                    {% for l in locations %}
+                                        <option value="{{ l.name }}" data-id="{{ l.id }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                                <br /><br />
+                                <p>Hazards:</p>
+                                <div style="overflow-y: auto; max-height: 100px">
+                                    {% for h in hazards %}
+                                        <input type="checkbox" name="hazards" value="{{ h.hazard_code }}">
+                                        {{ h.hazard_code }} - {{ h.hazard_class }}
+                                        <br />
+                                    {% endfor %}
+                                </div>
+                                <br />
+                                <p><label for="note">Notes:</label></p>
+                                <textarea id="note" name="notes" rows="5" cols="40%" style="resize: none"></textarea>
+                                <br /><br />
+                                <button type="submit" class="confirmBtn" name="action" value="insert">
+                                    Create
+                                </button>
+                            </div>
+
+                            <!-- RIGHT COLUMN -->
+                            <div class="col" style="overflow-y: auto; max-height: 65vh;">
+                                <h4>Chemicals</h4>
+                                <details open>
+                                    <summary><strong>Chemical 1</strong></summary>
+                                    <input type="text" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
+                                    <br /><br />
+                                    <p>Quantity: <input type="text" name="chemicals[0][quantity]"></p>
+                                    <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
+                                    <p>Manufacturer: <input type="text" name="chemicals[0][manufacturer]"></p>
+                                    <p>Catalog Number: <input type="text" name="chemicals[0][catalog]"></p>
+                                </details>
+
+                                <div id="chemicals-container">
+                                    <!-- Chemical blocks will go here -->
+                                </div>
+                                <br />
+
+                                <button type="button" class="greenBtn" onclick="addChemical()">
+                                    + Add Chemical
+                                </button>
+                            </div>
+
+                        </div>
                     </form>
                 </div>
             </div>
@@ -347,6 +394,23 @@
         </div>
     </div>
 </div>
+
+    <template id="chemical-template">
+        <details class="chemical-item">
+            <summary>
+                <strong>Chemical __LABEL__</strong>
+                <button type="button" class="redBtn" onclick="removeChemical(this)">Remove</button>
+            </summary>
+
+            <input type="text" name="chemicals[__INDEX__][name]" placeholder="[__INDEX__]" autocomplete="off"/>
+            <br /><br />
+
+            <p>Quantity: <input type="text" name="chemicals[__INDEX__][quantity]"></p>
+            <p>Preferred Unit: <input type="text" name="chemicals[__INDEX__][unit]"></p>
+            <p>Manufacturer: <input type="text" name="chemicals[__INDEX__][manufacturer]"></p>
+            <p>Catalog Number: <input type="text" name="chemicals[__INDEX__][catalog]"></p>
+        </details>
+    </template>
 
 <script>
     function clearForm($form) {
@@ -624,5 +688,47 @@
             }
         });
     }
+</script>
+
+<script>
+// Script to add and remove chemicals when inserting a new container
+let chemicalIndex = 1;
+
+function addChemical() {
+    const template = document.getElementById("chemical-template").innerHTML;
+    const container = document.getElementById("chemicals-container");
+
+    // Replace placeholder with actual index
+    const html = template
+        .replaceAll("__INDEX__", chemicalIndex)
+        .replaceAll("__LABEL__", chemicalIndex + 1); // label = index + 1
+
+    container.insertAdjacentHTML("beforeend", html);
+
+    chemicalIndex++;
+}
+
+function removeChemical(button) {
+    const chemicalItem = button.closest(".chemical-item");
+    chemicalItem.remove();
+    renumberChemicals();
+}
+
+// When a chemical is removed this ensures the numbers always stay in order
+function renumberChemicals() {
+    const items = document.querySelectorAll(".chemical-item");
+
+    items.forEach((item, index) => {
+        // Update title
+        item.querySelector("summary strong").textContent = `Chemical ${index + 2}`;
+
+        // Update all input names
+        item.querySelectorAll("input").forEach(input => {
+            input.name = input.name.replace(/\[\d+\]/, `[${index + 1}]`);
+        });
+    });
+
+    chemicalIndex = items.length + 1; // Update for add chemical function
+}
 </script>
 {% endblock %}
