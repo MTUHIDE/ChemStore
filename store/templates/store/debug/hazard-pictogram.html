@@ -12,6 +12,7 @@ we just need to specify the thead row and tbody rows
 {% block thead %}
     <tr>
         <th scope="col">PictogramID</th>
+        <th scope="col">path</th>
         <th scope="col">image</th>
         <th scope="col">Description</th>
     </tr>
@@ -20,8 +21,11 @@ we just need to specify the thead row and tbody rows
 {%block tbody%}
     {% for item in model %}
         <tr>
-            <td>{{ item.pictogram_id }}</td>
-            <td>{{ item.image }}</td>
+            <td>{{ item.gh_code }}</td>
+            <td>{{ item.pictogram }}</td>
+            <td><img src="{{ item.pictogram.url }}"
+                     alt="{{ item.description }}"
+                     width="40"></td>
             <td>{{ item.description }}</td>
         </tr>
     {% endfor %}
