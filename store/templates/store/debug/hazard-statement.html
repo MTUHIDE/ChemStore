@@ -30,7 +30,12 @@ we just need to specify the thead row and tbody rows
         <td>{{ item.category }}</td>
         <td>{{ item.signal_word }}</td>
         <td>{{ item.precautionary_statements }}</td>
-        <td>{{ item.pictograms }}</td>
+        <td>{% for sp in item.statementpictogram_set.all %}
+            <img src="{{ sp.gh_code.pictogram.url }}"
+                 width="25">
+            {% empty %}
+            None
+        {% endfor %}</td>
     </tr>
 {% endfor %}
 {% endblock %}
