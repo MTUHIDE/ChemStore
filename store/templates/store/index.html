@@ -286,7 +286,7 @@
             <!--New Create Modal HTML-->
 
             <div class="modal" id="addNewModal" style="z-index: 11; overflow-y: hidden">
-                <div class="modalContent" id="addNewContent" style="margin: 7% auto">
+                <div class="modalContent" id="addNewContent" style="margin: 6.5% auto">
                     <span class="close" id="close1">&times;</span>
 
                     <form method="POST">
@@ -297,7 +297,7 @@
                         <div class="row align-items-start" style="overflow-x: auto">
 
                             <!-- LEFT COLUMN -->
-                            <div class="col">
+                            <div class="col", style="overflow-y: auto; max-height: 70vh;">
                                 <h4>Container Info</h4>
                                 <br />
                                 <p>Container Name:
@@ -326,6 +326,13 @@
                                 <p><label for="note">Notes:</label></p>
                                 <textarea id="note" name="notes" rows="5" cols="40%" style="resize: none"></textarea>
                                 <br /><br />
+
+                                {% if error %}
+                                    <p style="color: red; margin-bottom: 5px;">
+                                        {{ error }}
+                                    </p>
+                                {% endif %}
+
                                 <button type="submit" class="confirmBtn" name="action" value="insert">
                                     Create
                                 </button>
@@ -338,7 +345,7 @@
                                     <summary><strong>Chemical 1</strong></summary>
                                     <input type="text" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
                                     <br /><br />
-                                    <p>Quantity: <input type="text" name="chemicals[0][quantity]"></p>
+                                    <p>Quantity: <input type="number" name="chemicals[0][quantity]"></p>
                                     <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
                                     <p>Manufacturer: <input type="text" name="chemicals[0][manufacturer]"></p>
                                     <p>Catalog Number: <input type="text" name="chemicals[0][catalog]"></p>
@@ -402,10 +409,10 @@
                 <button type="button" class="redBtn" onclick="removeChemical(this)">Remove</button>
             </summary>
 
-            <input type="text" name="chemicals[__INDEX__][name]" placeholder="[__INDEX__]" autocomplete="off"/>
+            <input type="text" name="chemicals[__INDEX__][name]" placeholder="Search popup" autocomplete="off"/>
             <br /><br />
 
-            <p>Quantity: <input type="text" name="chemicals[__INDEX__][quantity]"></p>
+            <p>Quantity: <input type="number" name="chemicals[__INDEX__][quantity]"></p>
             <p>Preferred Unit: <input type="text" name="chemicals[__INDEX__][unit]"></p>
             <p>Manufacturer: <input type="text" name="chemicals[__INDEX__][manufacturer]"></p>
             <p>Catalog Number: <input type="text" name="chemicals[__INDEX__][catalog]"></p>
@@ -730,5 +737,13 @@ function renumberChemicals() {
 
     chemicalIndex = items.length + 1; // Update for add chemical function
 }
+</script>
+
+<script>
+    {% if error %}
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("addNewModal").style.display = "block";
+        });
+    {% endif %}
 </script>
 {% endblock %}

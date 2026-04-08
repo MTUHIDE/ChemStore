@@ -105,7 +105,24 @@ def index(request):
             size = request.POST.get("size")
             location_name = request.POST.get("location")
             # Convert location name to its location id
-            location = models.Location.objects.get(name=location_name)
+            try:
+                location = models.Location.objects.get(name=location_name)
+            except models.Location.DoesNotExist:
+                form = FilterForm()
+
+                paginator = Paginator(containers, 25)
+
+                page_number = request.GET.get("page")
+                page_obj = paginator.get_page(page_number)
+
+                return render(request, "store/index.html", {
+                "error": "Please select a valid location.",
+                "locations": models.Location.objects.all(),
+                "hazards": models.HazardStatement.objects.all(),
+                "filter_form": form,
+                "page_obj": page_obj,
+                "user": get_user(request),
+            })
             notes = request.POST.get("notes")
             # Department
 
