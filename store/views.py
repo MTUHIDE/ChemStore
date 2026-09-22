@@ -102,7 +102,7 @@ def index(request):
 
         elif action == "insert":
             product_name = request.POST.get("name")
-            size = request.POST.get("size")
+            quantity = request.POST.get("quantity")
             location_name = request.POST.get("location")
             # Convert location name to its location id
             try:
@@ -127,7 +127,10 @@ def index(request):
             # Department
 
             # Insert container into database
-            new_container = models.Container.objects.create(product_name=product_name, notes=notes, location=location, size=size)
+            new_container = models.Container.objects.create(product_name=product_name,
+                                                            notes=notes,
+                                                            location=location,
+                                                            size=quantity)
             # save inserted container to new_container
 
             # Loop through all chemicals being added to container
@@ -140,7 +143,7 @@ def index(request):
                         container=new_container,
                         chemical_cas=name,
                         pubchem_cid=0,
-                        quantity=request.POST.get(f'chemicals[{i}][quantity]') or 0,
+                        quantity=request.POST.get(f'chemicals[{i}][size]') or 0,
                         preferred_unit=request.POST.get(f'chemicals[{i}][unit]') or "",
                         state_of_matter="unknown",
                         manufacturer=request.POST.get(f'chemicals[{i}][manufacturer]') or "",
@@ -361,7 +364,7 @@ def admin_role(request):
             role_name = request.POST.get("name")  # "name" matches form field
             if role_name:                         # Don't allow blank submissions
                 models.Role.objects.create(name=role_name)    # Add name to table from post request
-    
+
     return render(request, "store/admin/role.html", data)
 
 
