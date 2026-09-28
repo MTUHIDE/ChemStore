@@ -73,3 +73,10 @@
         text-decoration: none;
         cursor: pointer;
     }
+#addNewModal .dropdown-menu {
+    min-width: 4.5rem;
+    font-size: 0.875rem;
+}
+#addNewModal .dropdown-item {
+    padding: 0.25rem 0.75rem;
+}

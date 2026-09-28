@@ -283,88 +283,138 @@
         </div>
 </div> -->
 
-            <!--New Create Modal HTML-->
+<!--New Create Modal HTML-->
+<div class="modal" id="addNewModal" style="z-index: 11; overflow-y: hidden">
+  <div class="modalContent" id="addNewContent" style="margin: 4.5% auto">
+    <form method="POST" class="text-start">
+      {% csrf_token %}
 
-            <div class="modal" id="addNewModal" style="z-index: 11; overflow-y: hidden">
-                <div class="modalContent" id="addNewContent" style="margin: 6.5% auto">
-                    <span class="close" id="close1">&times;</span>
+      <!-- Main Header (includes the close button) -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold text-secondary mb-0">CREATE CONTAINER</h3>
+        <!-- Close Button -->
+        <span class="close fs-3" id="close1" style="cursor: pointer;">&times;</span>
+      </div>
 
-                    <form method="POST">
-                        {% csrf_token %}
+      <div class="row gx-4">
+        <!-- Left Column: Container Info-->
+        <div class="col-md-6">
+          <h5 class="fw-bold mb-2">CONTAINER INFO</h5>
 
-                        <h3>Create Container</h3>
+          <!-- Container Card -->
+          <div class="bg-white p-3 rounded-4 shadow-sm">
 
-                        <div class="row align-items-start" style="overflow-x: auto">
-
-                            <!-- LEFT COLUMN -->
-                            <div class="col", style="overflow-y: auto; max-height: 70vh;">
-                                <h4>Container Info</h4>
-                                <br />
-                                <p>Container Name:
-                                    <input type="text" name="name" placeholder="Name (H2O)" autocomplete="off"/>
-                                </p>
-                                <p>Size:
-                                    <input type="number" step="0.01" name="size"/>
-                                </p>
-                                <label for="location">Location:</label>
-                                <input id="location" list="locations" name="location" placeholder="MTU" autocomplete="off">
-                                <datalist id="locations">
-                                    {% for l in locations %}
-                                        <option value="{{ l.name }}" data-id="{{ l.id }}"></option>
-                                    {% endfor %}
-                                </datalist>
-                                <br /><br />
-                                <p>Hazards:</p>
-                                <div style="overflow-y: auto; max-height: 100px">
-                                    {% for h in hazards %}
-                                        <input type="checkbox" name="hazards" value="{{ h.hazard_code }}">
-                                        {{ h.hazard_code }} - {{ h.hazard_class }}
-                                        <br />
-                                    {% endfor %}
-                                </div>
-                                <br />
-                                <p><label for="note">Notes:</label></p>
-                                <textarea id="note" name="notes" rows="5" cols="40%" style="resize: none"></textarea>
-                                <br /><br />
-
-                                {% if error %}
-                                    <p style="color: red; margin-bottom: 5px;">
-                                        {{ error }}
-                                    </p>
-                                {% endif %}
-
-                                <button type="submit" class="confirmBtn" name="action" value="insert">
-                                    Create
-                                </button>
-                            </div>
-
-                            <!-- RIGHT COLUMN -->
-                            <div class="col" style="overflow-y: auto; max-height: 65vh;">
-                                <h4>Chemicals</h4>
-                                <details open>
-                                    <summary><strong>Chemical 1</strong></summary>
-                                    <input type="text" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
-                                    <br /><br />
-                                    <p>Quantity: <input type="number" name="chemicals[0][quantity]"></p>
-                                    <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
-                                    <p>Manufacturer: <input type="text" name="chemicals[0][manufacturer]"></p>
-                                    <p>Catalog Number: <input type="text" name="chemicals[0][catalog]"></p>
-                                </details>
-
-                                <div id="chemicals-container">
-                                    <!-- Chemical blocks will go here -->
-                                </div>
-                                <br />
-
-                                <button type="button" class="greenBtn" onclick="addChemical()">
-                                    + Add Chemical
-                                </button>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
+            <!-- Name -->
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-1">Container Name</label>
+              <input type="text" class="form-control form-control-sm rounded-pill" autocomplete="off" name="name">
             </div>
+
+            <!-- Quantity -->
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-1">Quantity</label>
+              <input type="number" step="0.01" class="form-control form-control-sm rounded-pill" name="size">
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-1">Location</label>
+              <input id="location" list="locations" name="location" class="form-control form-control-sm rounded-pill" autocomplete="off">
+              <datalist id="locations">
+                {% for l in locations %}
+                  <option value="{{ l.name }}" data-id="{{ l.id }}"></option>
+                {% endfor %}
+              </datalist>
+            </div>
+
+            <!-- Hazards -->
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-1">Hazards</label>
+              <!-- The design of the hazards box requires several components nested in each other -->
+              <!-- The outer box (scrolls horizontally) -->
+              <div class="border rounded p-2 d-flex flex-row gap-2 overflow-auto">
+                {% for h in hazards %}
+                  <!-- tiles -->
+                  <div class="border rounded p-2 d-flex flex-column align-items-center flex-shrink-0" style="width: 70px;">
+                    <!-- images -->
+                    <!-- TODO: find out how to display the images cuz I have no idea how to do that -->
+                    <!-- checkboxes -->
+                     <!-- TODO: find out how to display the checkboxes-->
+                     <input type="checkbox" name="hazards" >
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Note -->
+            <div class="mb-0">
+              <label class="form-label text-muted small mb-1" for="note">Notes</label>
+              <textarea class="form-control rounded-3" id="note" name="notes" rows="3" style="resize: none"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Chemical Info -->
+        <div class="col-md-6 d-flex flex-column">
+          <h5 class="fw-bold mb-2">CHEMICALS</h5>
+
+          <!-- Chemical Cards (scrolls when there are several) -->
+          <div id="chemicals-container" style="max-height: 300px; overflow-y: auto;">
+            <div class="mb-3 shadow-sm chemical-item">
+              <!-- header -->
+              <div class="bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center">
+                <span class="me-2">▼</span> <strong class="chemical-title">CHEMICAL 1</strong>
+              </div>
+              <!-- body -->
+              <div class="bg-white p-3 rounded-bottom-3 border border-top-0">
+                <div class="mb-3">
+                  <label class="form-label text-muted small mb-1">Chemical Name</label>
+                  <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[0][name]">
+                </div>
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label class="form-label text-muted small mb-1">Size</label>
+                    <div class="input-group input-group-sm">
+                      <input type="number" class="form-control rounded-start-pill" name="chemicals[0][quantity]">
+                        <input type="hidden" class="unit-input" name="chemicals[0][unit]" value="">
+                        <button class="btn btn-secondary dropdown-toggle rounded-end-pill unit-btn" type="button" data-bs-toggle="dropdown">unit</button>                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item unit-option" href="#" data-unit="mL">mL</a></li>
+                        <li><a class="dropdown-item unit-option" href="#" data-unit="L">L</a></li>
+                        <li><a class="dropdown-item unit-option" href="#" data-unit="g">g</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label class="form-label text-muted small mb-1">Catalog Number</label>
+                    <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[0][catalog]">
+                  </div>
+                </div>
+                <div class="mb-1">
+                  <label class="form-label text-muted small mb-1">Manufacturer</label>
+                  <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[0][manufacturer]">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Centered Add Button -->
+          <div class="text-center my-3">
+            <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" onclick="addChemical()">
+              + ADD ANOTHER CHEMICAL
+            </button>
+          </div>
+
+          <!-- Bottom Right Submit Button -->
+          <div class="d-flex justify-content-end mt-auto">
+            <button type="submit" class="btn btn-secondary rounded-pill px-4 fw-bold" name="action" value="insert">
+              CREATE
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>     
 
             <!--New Edit Modal HTML-->
 
@@ -402,21 +452,50 @@
     </div>
 </div>
 
+<!-- Chemical template (chemicals after chemical 1 are cloned using this if you update the default make sure to default this as well)-->
     <template id="chemical-template">
-        <details class="chemical-item">
-            <summary>
-                <strong>Chemical __LABEL__</strong>
-                <button type="button" class="redBtn" onclick="removeChemical(this)">Remove</button>
-            </summary>
+    <div class="mb-3 shadow-sm chemical-item">
+        <!-- header -->
+         <div class="bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center justify-content-between"><div>
+            <span class="me-2">▼</span>
+            <strong class="chemical-title">Chemical __LABEL__</strong>
+            </div>
+            <!-- remove button -->
+            <button type="button" class="btn btn-sm btn-danger py-0 px-2" onclick="removeChemical(this)">Remove</button>
+        </div>
+        <!-- body -->
+            <div class="bg-white p-3 rounded-bottom-3 border border-top-0">
+            <div class="mb-3">
+            <label class="form-label text-muted small mb-1">Chemical Name</label>
+            <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[__INDEX__][name]" autocomplete="off"/>
+            </div>
 
-            <input type="text" name="chemicals[__INDEX__][name]" placeholder="Search popup" autocomplete="off"/>
-            <br /><br />
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label class="form-label text-muted small mb-1">Quantity</label>
+                    <div class="input-group input-group-sm">
+                    <input type="number" class="form-control rounded-start-pill" name="chemicals[__INDEX__][quantity]">
+                    <input type="hidden" class="unit-input" name="chemicals[__INDEX__][unit]" value="">
+                    <button class="btn btn-secondary dropdown-toggle rounded-end-pill unit-btn" type="button" data-bs-toggle="dropdown">unit</button>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item unit-option" href="#" data-unit="mL">mL</a></li>
+                    <li><a class="dropdown-item unit-option" href="#" data-unit="L">L</a></li>
+                    <li><a class="dropdown-item unit-option" href="#" data-unit="g">g</a></li>
+                    </ul>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="form-label text-muted small mb-1">Catalog Number</label>
+                    <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[__INDEX__][catalog]">
+                </div>
+            </div>
 
-            <p>Quantity: <input type="number" name="chemicals[__INDEX__][quantity]"></p>
-            <p>Preferred Unit: <input type="text" name="chemicals[__INDEX__][unit]"></p>
-            <p>Manufacturer: <input type="text" name="chemicals[__INDEX__][manufacturer]"></p>
-            <p>Catalog Number: <input type="text" name="chemicals[__INDEX__][catalog]"></p>
-        </details>
+            <div class="mb-1">
+                <label class="form-label text-muted small mb-1">Manufacturer</label>
+                <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[__INDEX__][manufacturer]">
+            </div>
+        </div>
+    </div>
     </template>
 
 <script>
@@ -727,15 +806,15 @@ function renumberChemicals() {
 
     items.forEach((item, index) => {
         // Update title
-        item.querySelector("summary strong").textContent = `Chemical ${index + 2}`;
+        item.querySelector(".chemical-title").textContent = `Chemical ${index + 1}`;
 
         // Update all input names
         item.querySelectorAll("input").forEach(input => {
-            input.name = input.name.replace(/\[\d+\]/, `[${index + 1}]`);
+            input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
         });
     });
 
-    chemicalIndex = items.length + 1; // Update for add chemical function
+    chemicalIndex = items.length; // Update for add chemical function
 }
 </script>
 
@@ -745,5 +824,18 @@ function renumberChemicals() {
             document.getElementById("addNewModal").style.display = "block";
         });
     {% endif %}
+</script>
+
+<script>
+// Picking a unit (refer to dropdown in right column part of creation modal for context) show it on the button and store it in the input
+document.addEventListener("click", function (e) {
+    const option = e.target.closest(".unit-option");
+    if (!option) return;
+    e.preventDefault();
+
+    const group = option.closest(".input-group");
+    group.querySelector(".unit-btn").textContent = option.dataset.unit;
+    group.querySelector(".unit-input").value = option.dataset.unit;
+});
 </script>
 {% endblock %}
