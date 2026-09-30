@@ -377,7 +377,9 @@
                     <div class="input-group input-group-sm">
                       <input type="number" class="form-control rounded-start-pill" name="chemicals[0][quantity]">
                         <input type="hidden" class="unit-input" name="chemicals[0][unit]" value="">
-                        <button class="btn btn-secondary dropdown-toggle rounded-end-pill unit-btn" type="button" data-bs-toggle="dropdown">unit</button>                      <ul class="dropdown-menu">
+                        <button class="btn btn-secondary dropdown-toggle rounded-end-pill unit-btn" type="button" data-bs-toggle="dropdown">unit</button>                      
+                        <ul class="dropdown-menu">
+                            <!-- TODO: Get confirmation on units provided -->
                         <li><a class="dropdown-item unit-option" href="#" data-unit="mL">mL</a></li>
                         <li><a class="dropdown-item unit-option" href="#" data-unit="L">L</a></li>
                         <li><a class="dropdown-item unit-option" href="#" data-unit="g">g</a></li>
@@ -472,7 +474,7 @@
 
             <div class="row mb-3">
                 <div class="col-6">
-                    <label class="form-label text-muted small mb-1">Quantity</label>
+                    <label class="form-label text-muted small mb-1">Size</label>
                     <div class="input-group input-group-sm">
                     <input type="number" class="form-control rounded-start-pill" name="chemicals[__INDEX__][quantity]">
                     <input type="hidden" class="unit-input" name="chemicals[__INDEX__][unit]" value="">
