@@ -4,8 +4,33 @@ from django.conf import settings
 
 from . import models
 from .forms import FilterForm, FilterAdminUser
+from .pubchem import PubChem
+import requests
+from django.http import JsonResponse
 
 # data = {'admin' : True}
+
+
+def chemical_search(request):
+    query = request.GET.get("q", "").strip()
+
+    if not query:
+        return JsonResponse([], safe=False)
+
+    pubchem = PubChem()
+
+    try:
+        chemicals = pubchem.autocomplete(query)
+
+        return JsonResponse(
+            chemicals[:10],
+            safe=False
+        )
+
+    except Exception as e:
+        print("PubChem error:", e)
+
+        return JsonResponse([], safe=False)
 
 # Ensure minimum roles exist (`Developer` in debug, `User` and `Admin` in production)
 def validate_roles(request):

@@ -343,12 +343,14 @@
                                 <h4>Chemicals</h4>
                                 <details open>
                                     <summary><strong>Chemical 1</strong></summary>
-                                    <input type="text" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
+                                    <input type="text" id="chemical-0" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
+                                    <div id="chemical-dropdown-0"></div>
                                     <br /><br />
                                     <p>Size: <input min="0"type="number" step="0.01" name="chemicals[0][size]"></p>
                                     <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
                                     <p>Manufacturer: <input type="text" name="chemicals[0][manufacturer]"></p>
                                     <p>Catalog Number: <input type="text" name="chemicals[0][catalog]"></p>
+                                    
                                 </details>
 
                                 <div id="chemicals-container">
@@ -358,6 +360,7 @@
 
                                 <button type="button" class="greenBtn" onclick="addChemical()">
                                     + Add Chemical
+
                                 </button>
                             </div>
 
@@ -407,9 +410,11 @@
             <summary>
                 <strong>Chemical __LABEL__</strong>
                 <button type="button" class="redBtn" onclick="removeChemical(this)">Remove</button>
+
             </summary>
 
             <input type="text" name="chemicals[__INDEX__][name]" placeholder="Search popup" autocomplete="off"/>
+            <div id="chemical-dropdown-0"></div>
             <br /><br />
 
             <p>Quantity: <input type="number" name="chemicals[__INDEX__][quantity]"></p>
@@ -746,4 +751,91 @@ function renumberChemicals() {
         });
     {% endif %}
 </script>
+
+// Script to handle chemical search and dropdown
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const input = document.getElementById("chemical-0");
+    const dropdown = document.getElementById("chemical-dropdown-0");
+
+    let timeout;
+
+    input.addEventListener("input", function () {
+
+        clearTimeout(timeout);
+
+        const query = input.value.trim();
+
+        timeout = setTimeout(function () {
+
+            fetch("/chemical-search/?q=" + encodeURIComponent(query))
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Server returned " + response.status);
+                    }
+
+                    return response.json();
+                })
+                .then(chemicals => {
+
+                    dropdown.innerHTML = "";
+
+                    chemicals.forEach(chemical => {
+
+                        const option = document.createElement("div");
+
+                        option.textContent = chemical;
+                        option.className = "chemical-option";
+
+                        option.addEventListener("click", function () {
+                            input.value = chemical;
+                            dropdown.innerHTML = "";
+                        });
+
+                        dropdown.appendChild(option);
+                    });
+
+                })
+                .catch(error => {
+                    console.error("Chemical search error:", error);
+                });
+
+        }, 30);
+    });
+});
+</script>
+
+<style>
+
+.chemical-search {
+    position: relative;
+    width: 200px;
+}
+
+#chemical-dropdown-0 {
+    position: relative;
+    /* top: 100%; */
+    left: 0;
+    right: 0;
+
+    width: 200px;
+
+    background: white;
+    border: 1px solid #ccc;
+
+    z-index: 1000;
+}
+
+.chemical-option {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.chemical-option:hover {
+    background-color: #eeeeee;
+}
+
+</style>
+
 {% endblock %}
