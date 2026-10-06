@@ -343,8 +343,8 @@
                                 <h4>Chemicals</h4>
                                 <details open>
                                     <summary><strong>Chemical 1</strong></summary>
-                                    <input type="text" id="chemical-0" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
-                                    <div id="chemical-dropdown-0"></div>
+                                    <input type="text" id="chemical-0" name="chemicals[0][name]" class="chemical-input" placeholder="Search popup" autocomplete="off"/>
+                                    <div id="chemical-dropdown-0" class="chemical-dropdown"></div>
                                     <br /><br />
                                     <p>Size: <input min="0"type="number" step="0.01" name="chemicals[0][size]"></p>
                                     <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
@@ -413,8 +413,8 @@
 
             </summary>
 
-            <input type="text" name="chemicals[__INDEX__][name]" placeholder="Search popup" autocomplete="off"/>
-            <div id="chemical-dropdown-0"></div>
+            <input type="text" name="chemicals[__INDEX__][name]" class="chemical-input" id="chemical-__INDEX__" placeholder="Search popup" autocomplete="off"/>
+            <div id="chemical-dropdown-__INDEX__" class="chemical-dropdown"></div>
             <br /><br />
 
             <p>Quantity: <input type="number" name="chemicals[__INDEX__][quantity]"></p>
@@ -703,9 +703,18 @@
 </script>
 
 <script>
-// Script to add and remove chemicals when inserting a new container
+// Initialize the chemical index to 1 since the first chemical is already present in the form
 let chemicalIndex = 1;
+document.addEventListener("DOMContentLoaded", function () {
+    // 
+    setupChemicalSearch(
+        document.getElementById("chemical-0"),
+        document.getElementById("chemical-dropdown-0")
+    );
 
+});
+
+// Script to add and remove chemicals when inserting a new container
 function addChemical() {
     const template = document.getElementById("chemical-template").innerHTML;
     const container = document.getElementById("chemicals-container");
@@ -714,9 +723,13 @@ function addChemical() {
     const html = template
         .replaceAll("__INDEX__", chemicalIndex)
         .replaceAll("__LABEL__", chemicalIndex + 1); // label = index + 1
-
     container.insertAdjacentHTML("beforeend", html);
-
+    // Setup the search functionality for the new chemical input
+    const newChemical = container.lastElementChild;
+    const newInput = newChemical.querySelector(".chemical-input");
+    const newDropdown = newChemical.querySelector(".chemical-dropdown");
+    setupChemicalSearch(newInput, newDropdown);
+    
     chemicalIndex++;
 }
 
@@ -742,53 +755,26 @@ function renumberChemicals() {
 
     chemicalIndex = items.length + 1; // Update for add chemical function
 }
-</script>
 
-<script>
-    {% if error %}
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("addNewModal").style.display = "block";
-        });
-    {% endif %}
-</script>
-
-// Script to handle chemical search and dropdown
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const input = document.getElementById("chemical-0");
-    const dropdown = document.getElementById("chemical-dropdown-0");
-
-    let timeout;
-
-    input.addEventListener("input", function () {
-
+function setupChemicalSearch(input, dropdown) {
+    let timeout; // 300ms timer after input
+    input.addEventListener("input", function () { // Run when user changes input
         clearTimeout(timeout);
-
         const query = input.value.trim();
-
         timeout = setTimeout(function () {
-
-            fetch("/chemical-search/?q=" + encodeURIComponent(query))
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("Server returned " + response.status);
-                    }
-
-                    return response.json();
-                })
-                .then(chemicals => {
+            fetch("/chemical-search/?q=" + encodeURIComponent(query)) // Fetch chemicals from the server
+                .then(response => response.json()) // Django returns JSON
+                .then(chemicals => { // All chemicals are stored in array "chemicals"
 
                     dropdown.innerHTML = "";
-
-                    chemicals.forEach(chemical => {
+                    chemicals.forEach(function (chemical) { // For each chemical, create a div and put each elementin the dropdown
 
                         const option = document.createElement("div");
 
                         option.textContent = chemical;
                         option.className = "chemical-option";
 
-                        option.addEventListener("click", function () {
+                        option.addEventListener("click", function () { // Input chemical on click and clear dropdown
                             input.value = chemical;
                             dropdown.innerHTML = "";
                         });
@@ -801,41 +787,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Chemical search error:", error);
                 });
 
-        }, 30);
+        }, 300);
     });
-});
+}
+
 </script>
 
-<style>
-
-.chemical-search {
-    position: relative;
-    width: 200px;
-}
-
-#chemical-dropdown-0 {
-    position: relative;
-    /* top: 100%; */
-    left: 0;
-    right: 0;
-
-    width: 200px;
-
-    background: white;
-    border: 1px solid #ccc;
-
-    z-index: 1000;
-}
-
-.chemical-option {
-    padding: 8px;
-    cursor: pointer;
-}
-
-.chemical-option:hover {
-    background-color: #eeeeee;
-}
-
-</style>
+<script>
+    {% if error %}
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("addNewModal").style.display = "block";
+        });
+    {% endif %}
+</script>
 
 {% endblock %}

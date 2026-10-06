@@ -10,26 +10,19 @@ from django.http import JsonResponse
 
 # data = {'admin' : True}
 
-
 def chemical_search(request):
     query = request.GET.get("q", "").strip()
 
     if not query:
         return JsonResponse([], safe=False)
-
     pubchem = PubChem()
 
     try:
         chemicals = pubchem.autocomplete(query)
-
-        return JsonResponse(
-            chemicals[:10],
-            safe=False
-        )
+        return JsonResponse(chemicals[:10],safe=False)  # Return only the first 10 results
 
     except Exception as e:
         print("PubChem error:", e)
-
         return JsonResponse([], safe=False)
 
 # Ensure minimum roles exist (`Developer` in debug, `User` and `Admin` in production)
@@ -43,9 +36,7 @@ def validate_roles(request):
 def get_user(request):
     # Make sure necessary roles exist
     validate_roles(request)
-
     users = models.User.objects
-
     if settings.DEBUG:
         # If User table is empty, create & return a dev user object. Otherwise, return existing dev user object
         if users.count() == 0:
