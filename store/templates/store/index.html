@@ -344,6 +344,7 @@
                                 <details open>
                                     <summary><strong>Chemical 1</strong></summary>
                                     <input type="text" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
+                                    <p>CAS Number: <input type="text" maxlength="12" name="chemicals[0][cas]"></p>
                                     <br /><br />
                                     <p>Size: <input min="0"type="number" step="0.01" name="chemicals[0][size]"></p>
                                     <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
@@ -410,6 +411,7 @@
             </summary>
 
             <input type="text" name="chemicals[__INDEX__][name]" placeholder="Search popup" autocomplete="off"/>
+            <p>CAS Number: <input type="text" maxlength="12" name="chemicals[__INDEX__][cas]"></p>
             <br /><br />
 
             <p>Quantity: <input type="number" name="chemicals[__INDEX__][quantity]"></p>
