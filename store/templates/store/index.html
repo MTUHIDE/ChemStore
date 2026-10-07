@@ -310,7 +310,9 @@
                                 <input id="location" list="locations" name="location" placeholder="MTU" autocomplete="off">
                                 <datalist id="locations">
                                     {% for l in locations %}
-                                        <option value="{{ l.name }}" data-id="{{ l.id }}"></option>
+                                        {% if not l.hasChild %} 
+                                            <option value="{{ l.name }}" data-id="{{ l.id }}"></option>
+                                        {% endif %}
                                     {% endfor %}
                                 </datalist>
                                 <br /><br />

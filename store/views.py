@@ -107,6 +107,8 @@ def index(request):
             # Convert location name to its location id
             try:
                 location = models.Location.objects.get(name=location_name)
+                if location.hasChild():
+                    raise models.Location.DoesNotExist
             except models.Location.DoesNotExist:
                 form = FilterForm()
 

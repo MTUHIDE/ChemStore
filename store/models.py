@@ -29,6 +29,10 @@ class Location(models.Model):
     is_hidden = models.BooleanField(default=False)
     attributes = models.ManyToManyField("LocationAttribute")
 
+    def hasChild(self):
+        #checks if this location is a parent to any other objects (leaf node) and returns boolean
+        return Location.objects.all().filter(parent=self).exists()
+
     def __str__(self):
         # include all parent locations in the string
         location = self
