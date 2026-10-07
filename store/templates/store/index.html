@@ -282,6 +282,26 @@
         </div>
         </div>
 </div> -->
+<style>
+/* Chemical arrow CSS */
+  .chem-header {
+    cursor: pointer;
+    transition: border-radius .2s;
+  }
+  .chem-header .arrow {
+    display: inline-block;
+    transition: transform .2s;
+  }
+
+  .chem-header.collapsed .arrow {
+    transform: rotate(-90deg);
+  }
+
+  .chem-header.collapsed {
+    border-bottom-left-radius: var(--bs-border-radius-lg, .5rem);
+    border-bottom-right-radius: var(--bs-border-radius-lg, .5rem);
+  }
+  </style>
 
 <!--New Create Modal HTML-->
 <div class="modal" id="addNewModal" style="z-index: 11; overflow-y: hidden">
@@ -360,18 +380,22 @@
 
           <!-- Chemical Cards (scrolls when there are several) -->
           <div id="chemicals-container" style="max-height: 300px; overflow-y: auto;">
-            <div class="mb-3 shadow-sm chemical-item">
+            <div class="mb-3 shadow-sm chemical-item rounded-3">
               <!-- header -->
-              <div class="bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center">
-                <span class="me-2">▼</span> <strong class="chemical-title">CHEMICAL 1</strong>
+              <div class="chem-header bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center" 
+              data-bs-toggle="collapse" data-bs-target="#chemical-body-0"
+              aria-expanded="true" aria-controls="chemical-body-0">
+              <span class="arrow me-2">▼</span> 
+              <strong class="chemical-title">Chemical 1</strong>
               </div>
               <!-- body -->
-              <div class="bg-white p-3 rounded-bottom-3 border border-top-0">
-                <div class="mb-3">
+              <div class="collapse show" id="chemical-body-0">
+                <div class="bg-white p-3 rounded-bottom-3 border border-top-0">
+                    <div class="mb-3">
                   <label class="form-label text-muted small mb-1">Chemical Name</label>
                   <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[0][name]">
-                </div>
-                <div class="row mb-3">
+                    </div>
+                  <div class="row mb-3">
                   <div class="col-6">
                     <label class="form-label text-muted small mb-1">Size</label>
                     <div class="input-group input-group-sm">
@@ -379,7 +403,6 @@
                         <input type="hidden" class="unit-input" name="chemicals[0][unit]" value="">
                         <button class="btn btn-secondary dropdown-toggle rounded-end-pill unit-btn" type="button" data-bs-toggle="dropdown">unit</button>                      
                         <ul class="dropdown-menu">
-                            <!-- TODO: Get confirmation on units provided -->
                         <li><a class="dropdown-item unit-option" href="#" data-unit="mL">mL</a></li>
                         <li><a class="dropdown-item unit-option" href="#" data-unit="L">L</a></li>
                         <li><a class="dropdown-item unit-option" href="#" data-unit="g">g</a></li>
@@ -395,10 +418,10 @@
                   <label class="form-label text-muted small mb-1">Manufacturer</label>
                   <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[0][manufacturer]">
                 </div>
-              </div>
+                </div>
+                </div>
             </div>
-          </div>
-
+        </div>
           <!-- Centered Add Button -->
           <div class="text-center my-3">
             <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" onclick="addChemical()">
@@ -456,24 +479,30 @@
 
 <!-- Chemical template (chemicals after chemical 1 are cloned using this if you update the default make sure to default this as well)-->
     <template id="chemical-template">
-    <div class="mb-3 shadow-sm chemical-item">
+    <div class="mb-3 shadow-sm chemical-item rounded-3">
         <!-- header -->
-         <div class="bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center justify-content-between"><div>
-            <span class="me-2">▼</span>
+         <div class="chem-header bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center justify-content-between"
+            data-bs-toggle="collapse" data-bs-target="#chemical-body-__UID__"
+            aria-expanded="true" aria-controls="chemical-body-__UID__">
+            <div>
+            <span class="arrow me-2">▼</span>
             <strong class="chemical-title">Chemical __LABEL__</strong>
             </div>
             <!-- remove button -->
-            <button type="button" class="btn btn-sm btn-danger py-0 px-2" onclick="removeChemical(this)">Remove</button>
+            <button type="button" class="btn btn-sm btn-danger py-0 px-2" 
+            onclick="event.stopPropagation(); removeChemical(this)">Remove</button>
         </div>
         <!-- body -->
+            <div class=" collapse show" id="chemical-body-__UID__">
             <div class="bg-white p-3 rounded-bottom-3 border border-top-0">
             <div class="mb-3">
             <label class="form-label text-muted small mb-1">Chemical Name</label>
             <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[__INDEX__][name]" autocomplete="off"/>
             </div>
-
             <div class="row mb-3">
                 <div class="col-6">
+
+                    <!-- Size dropdown -->
                     <label class="form-label text-muted small mb-1">Size</label>
                     <div class="input-group input-group-sm">
                     <input type="number" class="form-control rounded-start-pill" name="chemicals[__INDEX__][quantity]">
@@ -497,6 +526,7 @@
                 <input type="text" class="form-control form-control-sm rounded-pill" name="chemicals[__INDEX__][manufacturer]">
             </div>
         </div>
+      </div>
     </div>
     </template>
 
@@ -781,19 +811,21 @@
 <script>
 // Script to add and remove chemicals when inserting a new container
 let chemicalIndex = 1;
+let chemicalUID = 1; // Unique ID for each chemical to avoid duplicate IDs in the DOM
 
 function addChemical() {
     const template = document.getElementById("chemical-template").innerHTML;
     const container = document.getElementById("chemicals-container");
 
-    // Replace placeholder with actual index
     const html = template
         .replaceAll("__INDEX__", chemicalIndex)
-        .replaceAll("__LABEL__", chemicalIndex + 1); // label = index + 1
+        .replaceAll("__LABEL__", chemicalIndex + 1) // label = index + 1
+        .replaceAll("__UID__", chemicalUID); // unique ID for collapse
 
     container.insertAdjacentHTML("beforeend", html);
 
     chemicalIndex++;
+    chemicalUID++; // Increment the unique ID for the next chemical
 }
 
 function removeChemical(button) {
