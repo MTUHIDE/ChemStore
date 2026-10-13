@@ -143,7 +143,7 @@ def index(request):
                 if name:  # skip empty rows
                     models.ContainerChemicals.objects.create(
                         container=new_container,
-                        chemical_cas=name,
+                        chemical_cas=request.POST.get(f'chemicals[{i}][cas]'),
                         pubchem_cid=0,
                         quantity=request.POST.get(f'chemicals[{i}][size]') or 0,
                         preferred_unit=request.POST.get(f'chemicals[{i}][unit]') or "",
