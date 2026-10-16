@@ -160,11 +160,15 @@
                                             @EnumHelper.GetDisplayValue((Units)item.con.Unit) {% endcomment %}
                                         </td>
                                         <td class="a">
-                                            <i class="fa-solid fa-pen-to-square"></i>
-                                            {% comment %} <button type="button" class="btn" name="editTableBtn" data-toggle="modal" data-target="#edit-modal" onclick="getEditModal(@item.con.ContainerID)">
+                                            <!-- This was the og button code, not sure how important it is so i was hesitant to delete-->
+                                             <!-- <button type="button" class="btn" name="editTableBtn" style="background-color: #6f42c1; color: white;" data-toggle="modal" data-target="#edit-modal" onclick="openEdit()">
                                                 <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
+                                            </button> -->
+                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#view-modal">
+                                                <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
-                                            <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerID" style="display: none"> {% endcomment %}
+
+                                            <input name="chemicalsToDelete" type="checkbox" onchange="toggleDeleteButton()" onclick="event.stopPropagation()" value="@item.con.ContainerID" style="display: none">
                                         </td>
                                     </tr>
                                     {% comment %} <tr class="moreInformation">
@@ -369,16 +373,31 @@
                 </div>
             </div>
 
-            <!--New Edit Modal HTML-->
+            <!--View Container Modal HTML-->
 
+            <div class="modal fade" tabindex="-1" role="dialog" id="view-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">View Container</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="view-modal-body">
+                            <button type="button" class="btn" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#edit-modal">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--New Edit Modal HTML-->
             <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Edit Container</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" id="edit-modal-body"></div>
                     </div>
@@ -474,7 +493,7 @@
             });
     }
 
-    <!--
+    //<!--
     function getAddModal() {
         fetch(`?handler=AddModal`)
             .then((response) => {
@@ -485,7 +504,8 @@
                 getRoomsOfBuilding();
             });
     }
-    -->
+    //-->
+
 </script>
 
     <!--Functionality for "add new" modal-->
@@ -750,4 +770,17 @@ function renumberChemicals() {
         });
     {% endif %}
 </script>
+
+<!-- Modal Backdrop -->
+<style>
+    .modal-backdrop {
+        z-index: 1050 !important;
+    }
+
+    .modal {
+        z-index: 1055 !important;
+    }
+
+</style>
+
 {% endblock %}
