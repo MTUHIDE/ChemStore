@@ -345,13 +345,15 @@
                                 <h4>Chemicals</h4>
                                 <details open>
                                     <summary><strong>Chemical 1</strong></summary>
-                                    <input type="text" name="chemicals[0][name]" placeholder="Search popup" autocomplete="off"/>
+                                    <input type="text" id="chemical-0" name="chemicals[0][name]" class="chemical-input" placeholder="Search popup" autocomplete="off"/>
+                                    <div id="chemical-dropdown-0" class="chemical-dropdown"></div>
                                     <p>CAS Number: <input type="text" maxlength="12" name="chemicals[0][cas]"></p>
                                     <br /><br />
                                     <p>Size: <input min="0"type="number" step="0.01" name="chemicals[0][size]"></p>
                                     <p>Preferred Unit: <input type="text" name="chemicals[0][unit]"></p>
                                     <p>Manufacturer: <input type="text" name="chemicals[0][manufacturer]"></p>
                                     <p>Catalog Number: <input type="text" name="chemicals[0][catalog]"></p>
+
                                 </details>
 
                                 <div id="chemicals-container">
@@ -361,6 +363,7 @@
 
                                 <button type="button" class="greenBtn" onclick="addChemical()">
                                     + Add Chemical
+
                                 </button>
                             </div>
 
@@ -410,9 +413,11 @@
             <summary>
                 <strong>Chemical __LABEL__</strong>
                 <button type="button" class="redBtn" onclick="removeChemical(this)">Remove</button>
+
             </summary>
 
-            <input type="text" name="chemicals[__INDEX__][name]" placeholder="Search popup" autocomplete="off"/>
+            <input type="text" name="chemicals[__INDEX__][name]" class="chemical-input" id="chemical-__INDEX__" placeholder="Search popup" autocomplete="off"/>
+            <div id="chemical-dropdown-__INDEX__" class="chemical-dropdown"></div>
             <p>CAS Number: <input type="text" maxlength="12" name="chemicals[__INDEX__][cas]"></p>
             <br /><br />
 
@@ -702,9 +707,18 @@
 </script>
 
 <script>
-// Script to add and remove chemicals when inserting a new container
+// Initialize the chemical index to 1 since the first chemical is already present in the form
 let chemicalIndex = 1;
+document.addEventListener("DOMContentLoaded", function () {
+    //
+    setupChemicalSearch(
+        document.getElementById("chemical-0"),
+        document.getElementById("chemical-dropdown-0")
+    );
 
+});
+
+// Script to add and remove chemicals when inserting a new container
 function addChemical() {
     const template = document.getElementById("chemical-template").innerHTML;
     const container = document.getElementById("chemicals-container");
@@ -713,8 +727,12 @@ function addChemical() {
     const html = template
         .replaceAll("__INDEX__", chemicalIndex)
         .replaceAll("__LABEL__", chemicalIndex + 1); // label = index + 1
-
     container.insertAdjacentHTML("beforeend", html);
+    // Setup the search functionality for the new chemical input
+    const newChemical = container.lastElementChild;
+    const newInput = newChemical.querySelector(".chemical-input");
+    const newDropdown = newChemical.querySelector(".chemical-dropdown");
+    setupChemicalSearch(newInput, newDropdown);
 
     chemicalIndex++;
 }
@@ -741,6 +759,42 @@ function renumberChemicals() {
 
     chemicalIndex = items.length + 1; // Update for add chemical function
 }
+
+function setupChemicalSearch(input, dropdown) {
+    let timeout; // 300ms timer after input
+    input.addEventListener("input", function () { // Run when user changes input
+        clearTimeout(timeout);
+        const query = input.value.trim();
+        timeout = setTimeout(function () {
+            fetch("/chemical-search/?q=" + encodeURIComponent(query)) // Fetch chemicals from the server
+                .then(response => response.json()) // Django returns JSON
+                .then(chemicals => { // All chemicals are stored in array "chemicals"
+
+                    dropdown.innerHTML = "";
+                    chemicals.forEach(function (chemical) { // For each chemical, create a div and put each elementin the dropdown
+
+                        const option = document.createElement("div");
+
+                        option.textContent = chemical;
+                        option.className = "chemical-option";
+
+                        option.addEventListener("click", function () { // Input chemical on click and clear dropdown
+                            input.value = chemical;
+                            dropdown.innerHTML = "";
+                        });
+
+                        dropdown.appendChild(option);
+                    });
+
+                })
+                .catch(error => {
+                    console.error("Chemical search error:", error);
+                });
+
+        }, 300);
+    });
+}
+
 </script>
 
 <script>
@@ -750,4 +804,5 @@ function renumberChemicals() {
         });
     {% endif %}
 </script>
+
 {% endblock %}
