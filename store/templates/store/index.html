@@ -111,7 +111,7 @@
                                     Container Name
                                     {% comment %} TODO: add up and down arrow icons for toggling sorting {% endcomment %}
                                     {% comment %} <button type="submit" class="btn" form="filterForm" name="sortMethod" value="0">
-                                        <img src="@((Model.prevSort == 0) ? "assets/upTableSort.png" :
+                                        <img src="@((Model.prevSort == 0) ? "assets/.png" :
                                     (Model.prevSort == 1) ? "assets/downTableSort.png" : "assets/neutralTableSort.png")" class="img tableSort" id="buttonImg">
                                     </button>
                                     <!--<button type="submit" form="filterForm" name="sortMethod" class="btn tableButton" value="0"> Chemical Name </button> -->
@@ -164,7 +164,9 @@
                                              <!-- <button type="button" class="btn" name="editTableBtn" style="background-color: #6f42c1; color: white;" data-toggle="modal" data-target="#edit-modal" onclick="openEdit()">
                                                 <img src="assets\edit_symbol.png" class="img edit" id="buttonImg" style="width: 15px">
                                             </button> -->
-                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#view-modal">
+                                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#view-modal" title="view"
+                                                data-name = "{{ container.product_name }}" data-location = "{{ container.location }}" data-size = "{{ container.size }}"
+                                                onclick = "openView(this)">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
 
@@ -373,24 +375,55 @@
                 </div>
             </div>
 
-            <!--View Container Modal HTML-->
+=            <!--View Container Modal HTML-->
 
             <div class="modal fade" tabindex="-1" role="dialog" id="view-modal">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">View Container</h5>
+                <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                    <div class="modal-content view-modal-content p-3">
+
+                        <!-- Main Header and Close Button -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold text-secondary mb-0">CONTAINER INFO</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div> 
+
+                        <div class="row gx-4">
+                        <!-- Left Column: Container Info -->
+                         <div class="col-md-6">
+
+                            <!-- Basic Info Card: Name/Quanity/Location -->
+                            <div class="bg-white p-3 rounded-4 mb-3">
+                                <!-- Dynamic data insertion from past data-->
+                                <p class="mb-2"><strong>Name: </strong><span id="view-name"></span></p>
+                                <p class="mb-2"><strong>Quantity:</strong><span id="view-size"></span></p>
+                                <p class="mb-2"><strong>Location:</strong><span id="view-location"></span></p>
+                            </div>
+                            
+                            <!-- Advance Info Card: Harzards/Notes -->
+                            <div class="bg-white p-3 rounded-4 mb-3">
+                                <strong class="small">Hazards</strong>
+                                <div id="view-hazards" class="border rounded p-2 d-flex flex-row gap-2 overflow-auto mb-3"></div>
+                                <strong class="small">Notes</strong>
+                                <div id="view-notes" class="border rounded p-2 view-notes"></div>
+                            </div>
                         </div>
-                        <div class="modal-body" id="view-modal-body">
-                            <button type="button" class="btn" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#edit-modal">
-                                <i class="fa-solid fa-pen-to-square"></i>
+
+                        <!-- Right Column: Chemical Info -->
+                        <div class="col-md-6 d-flex flex-column">
+                            <h5 class="fw-bold mb-2">CHEMICALS</h5>
+                            <div id="view-chemicals" class="view-chemicals"></div>
+                            <div class="d-flex justify-content-end mt-auto pt-3">
+
+                            <!-- Edit button -->
+                            <button type="button" class="btn btn-secondary rounded-pill px-4 fw-bold" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#edit-modal">
+                                EDIT
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
             <!--New Edit Modal HTML-->
             <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -441,6 +474,32 @@
             <p>Catalog Number: <input type="text" name="chemicals[__INDEX__][catalog]"></p>
         </details>
     </template>
+        
+    <template id="view-chemical-template">
+        <div class="mb-3 shadow-sm rounded-3">
+            <div class="view-chem-header bg-secondary text-white p-2 rounded-top-3 d-flex align-items-center" data-bs-toggle="collapse" aria-expanded="true">
+                <span class="arrow me-2">▼</span>
+                <strong class="view-chem-title"></strong>
+            </div>
+            <div class="collapse show">
+                <div class="bg-white p-3 rounded-bottom-3 border border-top-0">
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <div class="text-muted small">Size</div>
+                            <div class="view-chem-size"></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted small">Catalog Number</div>
+                            <div class="view-chem-catalog"></div>
+                        </div>
+                    </div>
+                    <div class="text-muted small">Manufacturer</div>
+                    <div class="view-chem-manufacturer"></div>
+                </div>
+            </div>
+        </div>
+    </template>        
+    
 
 <script>
     function clearForm($form) {
@@ -782,5 +841,56 @@ function renumberChemicals() {
     }
 
 </style>
+
+<!-- View Modal CSS -->
+ <style>
+#view-modal .modal-dialog { max-width: 800px; }
+.view-modal-content { background-color: #c9d1da; border: 0; border-radius: 1rem; }
+.view-notes { min-height: 120px; white-space: pre-wrap; }
+.view-chemicals { max-height: 300px; overflow-y: auto; }
+.view-chem-header { cursor: pointer; transition: border-radius .2s; }
+.view-chem-header .arrow { display: inline-block; transition: transform .2s; }
+.view-chem-header.collapsed .arrow { transform: rotate(-90deg); }
+.view-chem-header.collapsed {
+  border-bottom-left-radius: var(--bs-border-radius-lg, .5rem);
+  border-bottom-right-radius: var(--bs-border-radius-lg, .5rem);
+}
+ </style>
+
+<script>
+let chemCount = 0;
+
+function setText(id, text) {
+    document.getElementById(id).textContent = text || "";
+}
+
+function openView(btn) {
+    setText("view-name", btn.dataset.name);
+    setText("view-size", btn.dataset.size);
+    setText("view-location", btn.dataset.location);
+
+    // hazards, notes and chemicals come in once the backend sends them
+    showHazards([]);
+    setText("view-notes", "");
+    showChemicals([]);
+}
+
+function showHazards(hazardClasses) {
+    const box = document.getElementById("view-hazards");
+    box.innerHTML = "";
+
+    for (const name of hazardClasses) {
+        const icon = document.createElement("span");
+        icon.className = "hazard " + name;
+        box.appendChild(icon);
+    }
+}
+//pain and suffering
+function showChemicals(chemicals) {
+    // TO:DO Somehow get chemicals
+    }
+}
+</script>
+
 
 {% endblock %}
