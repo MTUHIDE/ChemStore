@@ -10,27 +10,15 @@
 {% block body %}
 <div class="container-fluid">
     <h1 class="display-5 text-center">Locations</h1>
+        <h2 class="display-5 text-center">Test</h2>
+            <div style="padding-left: 100px;">
+                {% for item in model %}
+                    <li>{{item.parent}} --> {{ item.name }}</li>
 
-    <div style="padding-left: 80px;">
-        <form>
-            Name: <br />
-            <input type="text"> <br>
-            Department: <br>
-            <input type="text"> <br>
-            Supervisor: <br>
-            &emsp; Name: <br>
-            &emsp; <input type="text"> <br>
-            &emsp; Email: <br>
-            &emsp; <input type="text"> <br>
-            &emsp; Department: <br>
-            &emsp; <input type="text"> <br>
-            Attributes: <br>
-            <!--Add area for user input into attributes-->
-            Hidden?
-            <input type="checkbox" /> <br>
-            Permissions:
-            <!--Add area for user input into permissions-->
-        </form>
-    </div>
+                    {% empty %}
+                    <li><strong>Template works, but locations is empty</strong></li>
+                {% endfor %}
+            </div>
 </div>
 {% endblock %}
+
