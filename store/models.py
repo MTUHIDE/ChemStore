@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.html import format_html, format_html_join
 
 
 class Container(models.Model):
@@ -32,6 +33,29 @@ class Location(models.Model):
     def has_child(self):
         #checks if this location is a parent to any other objects (leaf node) and returns boolean
         return Location.objects.all().filter(parent=self).exists()
+
+    def get_children(self):
+        if self.has_child == False:
+            return null
+        return Location.objects.all().filter(parent=self)
+
+    def render_tree(self):
+        children = list(self.get_children())
+
+        if not children:
+            return format_html("<li>{}</li>", self.name)
+
+        children_html = format_html_join(
+            "",
+            "{}",
+            ((child.render_tree(),) for child in children)
+        )
+
+        return format_html(
+            "<li><details open><summary>{}</summary><ul>{}</ul></details></li>",
+            self.name,
+            children_html
+        )
 
     def __str__(self):
         # include all parent locations in the string

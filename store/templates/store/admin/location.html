@@ -10,27 +10,17 @@
 {% block body %}
 <div class="container-fluid">
     <h1 class="display-5 text-center">Locations</h1>
-
-    <div style="padding-left: 80px;">
-        <form>
-            Name: <br />
-            <input type="text"> <br>
-            Department: <br>
-            <input type="text"> <br>
-            Supervisor: <br>
-            &emsp; Name: <br>
-            &emsp; <input type="text"> <br>
-            &emsp; Email: <br>
-            &emsp; <input type="text"> <br>
-            &emsp; Department: <br>
-            &emsp; <input type="text"> <br>
-            Attributes: <br>
-            <!--Add area for user input into attributes-->
-            Hidden?
-            <input type="checkbox" /> <br>
-            Permissions:
-            <!--Add area for user input into permissions-->
-        </form>
-    </div>
+        <div style="padding-left: 100px;">
+            <h3>Location Tree</h3>
+                <ul class = "location-tree">
+                {% for item in model %}
+                    {% if not item.parent %}
+                        {{ item.render_tree }}
+                    {% endif %}
+                    {% empty %}
+                        <li>No locations found.</li>
+                {% endfor %}
+            </div>
 </div>
 {% endblock %}
+
