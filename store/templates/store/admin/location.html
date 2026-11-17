@@ -10,13 +10,15 @@
 {% block body %}
 <div class="container-fluid">
     <h1 class="display-5 text-center">Locations</h1>
-        <h2 class="display-5 text-center">Test</h2>
-            <div style="padding-left: 100px;">
+        <div style="padding-left: 100px;">
+            <h3>Location Tree</h3>
+                <ul class = "location-tree">
                 {% for item in model %}
-                    <li>{{item.parent}} --> {{ item.name }}</li>
-
+                    {% if not item.parent %}
+                        {{ item.render_tree }}
+                    {% endif %}
                     {% empty %}
-                    <li><strong>Template works, but locations is empty</strong></li>
+                        <li>No locations found.</li>
                 {% endfor %}
             </div>
 </div>
